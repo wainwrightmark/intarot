@@ -1,0 +1,44 @@
+[package]
+name = "cyberpunk-soothsayers"
+version = "0.1.0"
+edition = "2021"
+authors = ["Mark Wainwright <wainwrightml@gmail.com>"]
+license = "MIT"
+keywords = ["astrology", "ai"]
+default-run = "cyberpunk-soothsayers"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+include-flate = "0.1.4"
+
+itertools = "0.10"
+serde = { version = "1", features = ["derive", "rc"] }
+strum = {version = "0.24", features = ["derive"]}
+rand = {version = "0.8"}
+regex= {version="1.6", features=["std", "perf",  ]}
+lazy_static = "1"
+
+log = "0.4"
+wasm-logger = "0.2"
+yew = { git = "https://github.com/yewstack/yew.git", features = ["csr",] }
+yewdux = { git = "https://github.com/intendednull/yewdux.git" }
+wasm-bindgen-futures = "0.4"
+wasm-bindgen= { version = "0.2", features = ["serde"] }
+instant = { version = "0.1", features = [ "wasm-bindgen", "inaccurate" ] }
+js-sys = "0.3"
+getrandom = {version="0.2", features=["js"]}
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+    "HtmlInputElement",
+    "HtmlSelectElement",
+]
+
+
+[profile.release]
+panic = 'abort'
+codegen-units = 1
+lto = true
+opt-level = 3
