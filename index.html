@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -8,15 +8,15 @@
     />
     <meta name="apple-mobile-web-app-capable" content="yes" />
 
-    <title>Cyberpunk Soothsayers</title>
+    <title>The Eighth Arcana</title>
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Cyberpunk Soothsayers" />
+    <meta property="og:title" content="The Eighth Arcana" />
     <meta
       property="og:url"
       content="https://wainwrightmark.github.io/Cyberpunk_soothsayers/"
     />
-    <meta property="og:site_name" content="Cyberpunk Soothsayers" />
+    <meta property="og:site_name" content="The Eighth Arcana" />
     <meta
       property="og:description"
       content="Reveal your future through the technology of the future!"
@@ -28,12 +28,14 @@
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       rel="stylesheet"
     />
-    <link data-trunk rel="css" href="css/pico.min.css" />
+
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.8.3/dist/paper.min.css">
+
 
     <link data-trunk rel="css" href="styles.css" />
   </head>
 
-  <body>
+  <body style="background: var(--main-background)">
     <link rel="rust" data-trunk href="Cargo.toml" data-bin="cyberpunk-soothsayers" />
   </body>
 </html>
@@ -44,20 +46,12 @@
     overscroll-behavior-x: none;
     overscroll-behavior-y: none;
   }
-
-  body.dark {
-    --bg-color: #000;
-    --bg-secondary-color: #131316;
-    --font-color: #f5f5f5;
-    --color-grey: #ccc;
-    --color-darkGrey: #777;
-  }
 </style>
-<script>
+<!-- <script>
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
   ) {
     document.body.classList.add("dark");
   }
-</script>
+</script> -->
