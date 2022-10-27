@@ -23,13 +23,68 @@ pub fn app() -> Html {
         // </div>
         <div class="sm-4 col" style="margin: auto; width: 10em;">
         <SoothsayerSelect/>
+        // <Carousel/>
         </div>
         <div class="sm-4 col" style="margin: auto; width: 10em;">
         <SignDropdown/>
+
         </div>
         <div class="sm-4 col" style="margin: auto; width: 100em;">
         <ImageView/>
+
         </div>
+        <div class="sm-4 col" style="margin: auto; width: 10em;">
+        <RerollButton/>
+        </div>
+            </div>
+        </div>
+    }
+}
+
+#[function_component(RerollButton)]
+pub fn reroll_button() -> Html {
+    let reroll =
+        Dispatch::<ImageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| s.reroll());
+
+    html! {
+        <button id="reroll-button" aria-label="Reroll" onclick={reroll}>{"Reroll"}</button>
+    }
+}
+
+#[function_component(Carousel)]
+pub fn carousel() -> Html {
+    let (image_state, _) = use_store::<ImageState>();
+    let select_previous =
+        Dispatch::<ImageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| {
+            s.soothsayer = s.soothsayer.map(|ss| ss.previous()).flatten();
+        });
+
+    let select_next = Dispatch::<ImageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| {
+        s.soothsayer = s
+            .soothsayer
+            .map_or(Some(Soothsayer::Madame), |ss| ss.next());
+    });
+
+    let items = Soothsayer::iter()
+    .map(|ss|{
+        let selected = image_state.soothsayer == Some(ss) || image_state.soothsayer.is_none() && ss == Soothsayer::Madame;
+        let classes = if selected {classes!("carousel-item", "carousel-item-visible")} else{classes!("carousel-item", "carousel-item-hidden")};
+        html!(
+            <div class={classes}>
+                <h2 class="soothsayer-name">{ss.name()}</h2>
+                <img class="soothsayer-image" src={format!("https://drive.google.com/uc?export=view&id={}", ss.image_id()) } 
+                     alt={ss.name()} />
+            </div>
+        )
+    }).collect_vec();
+
+    html! {
+        <div class="carousel">
+            {items}
+
+            <div class="carousel-actions">
+                <button id="carousel-button-prev" aria-label="Previous" onclick={select_previous}></button>
+                <button id="carousel-button-next" aria-label="Next" onclick={select_next}></button>
             </div>
         </div>
     }
@@ -40,20 +95,15 @@ pub fn image_view() -> Html {
     let (image_state, _) = use_store::<ImageState>();
     let image_meta_option = image_state.get_image_meta();
 
-    if let Some(image_meta) = image_meta_option {
-        let images = image_meta
-            
-            .iter()
-            .map(|img| {
-                html! {
-                    <img style="border-radius: 20px; border-color: black" src={format!("https://drive.google.com/uc?export=view&id={}", img.id.clone()) }/>
-                }
-            }).take(1)
-            .collect_vec();
-
+    if let Some(img) = image_meta_option {
         html! {
                     <div class="grid">
-          {images}
+                    <div class="prophecy-image-container">
+                        <div class="prophecy-image-text">{img.card.name()}</div>
+                        <img class="prophecy-image" src={format!("https://drive.google.com/uc?export=view&id={}", img.id.clone()) }/>
+
+
+                        </div>
         </div>
                 }
     } else {
