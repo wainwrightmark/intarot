@@ -63,13 +63,16 @@
 .soothsayer-image{
     border-radius: 20px; 
     border-color: var(--success-dark);
+    width: -webkit-fill-available;
+    width: -moz-available;
 }
 
 .prophecy-image{
     border: 2px solid;
     border-radius: 20px;
     border-color: var(--success-dark);
-    
+    width: -webkit-fill-available;
+    width: -moz-available;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
 }

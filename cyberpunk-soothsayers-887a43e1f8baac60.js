@@ -639,7 +639,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('cyberpunk-soothsayers-d9eae0352dde00c7_bg.wasm', import.meta.url);
+        input = new URL('cyberpunk-soothsayers-887a43e1f8baac60_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
