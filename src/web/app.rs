@@ -47,7 +47,7 @@ pub fn reroll_button() -> Html {
         Dispatch::<ImageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| s.reroll());
 
     html! {
-        <button id="reroll-button" aria-label="Reroll" onclick={reroll}>{"Reroll"}</button>
+        <button id="reroll-button" aria-label="Reroll" onclick={reroll}>{"Draw Another"}</button>
     }
 }
 
