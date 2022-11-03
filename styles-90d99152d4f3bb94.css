@@ -35,8 +35,8 @@
 
 .carousel .carousel-actions button {
     border-radius: 50px;
-    background-color: white;
-    border: 0;
+    background-color: lightgray;    
+    border-color: black;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -45,11 +45,11 @@
 }
 
 .carousel .carousel-actions button#carousel-button-prev {
-    margin-left: 20px; /* prevent previous button from touching the side*/
+    margin-left: -5%; /* prevent previous button from touching the side*/
 }
 
 .carousel .carousel-actions button#carousel-button-next {
-    margin-right: 20px;  /* prevent next button from touching the side*/
+    margin-right: -5%;  /* prevent next button from touching the side*/
 }
 
 .carousel-dots {
@@ -65,9 +65,28 @@
     border-color: var(--success-dark);
     width: -webkit-fill-available;
     width: -moz-available;
+    aspect-ratio: 448/576;    
+     animation-duration: 1s;
+    animation-name: fade-in;
 }
 
-.prophecy-image{
+.prophecy-image-container{
+    position: relative;
+    perspective: 1000px;
+    height:fit-content;
+}
+
+.prophecy-image-card{
+    position: relative;
+    transform-style: preserve-3d;
+    animation-duration: 3s;
+    animation-name: card-in;
+    width: 100%;
+  height: 100%;
+}
+
+.prophecy-image-front, .prophecy-image-back, .prophecy-image-ghost {
+    
     border: 2px solid;
     border-radius: 20px;
     border-color: var(--success-dark);
@@ -75,12 +94,50 @@
     width: -moz-available;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
+    aspect-ratio: 1 / 2;
+    backface-visibility: hidden;
+  }
+
+  .prophecy-image-ghost{
+    position: relative;
+    visibility: hidden;
+
 }
 
-.prophecy-image-container{
-    position: relative;
-    
+.prophecy-image-front{
+    position: absolute;
+
 }
+
+.prophecy-image-back{
+    position: absolute;
+    background-color: var(--primary);
+    transform: rotateY(180deg);
+
+    color: var(--primary);
+}
+
+@keyframes card-in {
+    from {
+        transform: rotateY(180deg);
+    }
+  
+    to {
+      transform: rotateY(0deg);
+    }
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 100%;
+    }
+  }
+
+
 
 .prophecy-image-text {
     background-color: var(--muted);
