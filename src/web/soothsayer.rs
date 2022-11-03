@@ -18,26 +18,23 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 
 pub enum Soothsayer {
     #[strum(props(
-        name = "Madame Sosoteris",
-        description = "...",
-        image_id = "1j89ck-bSrCQgj_3PAnhjpWJa0rn3QI04",
-        image_filter = "paul nash",
-    ))]
-    Madame,
-    // #[strum(props(
-    //     name = "Jean-Baptiste",
-    //     description = "...",
-    //     image_id = "1Ie2-TscFSr4QlEYlD3SQJsWFhQCPIzoH",
-    //     image_filter = "marc chagall"
-    // ))]
-    // Jazzman,
-    #[strum(props(
         name = "Astralia Plontë",
         description = "...",
         image_id = "1G1Tpwc9HE1Zi2sUZLfAR1wIO0b7ZiOGL",
         image_filter = "rebecca guay",
     ))]
     Astralia,
+
+
+    #[strum(props(
+        name = "Madame Sosoteris",
+        description = "...",
+        image_id = "1j89ck-bSrCQgj_3PAnhjpWJa0rn3QI04",
+        image_filter = "paul nash",
+    ))]
+    Madame,
+    
+    
     #[strum(props(
         name = "Maledictus Andronichus",
         description = "...",
@@ -45,6 +42,15 @@ pub enum Soothsayer {
         image_filter = "hieronymus",
     ))]
     Maledictus,
+
+
+    // #[strum(props(
+    //     name = "Jean-Baptiste",
+    //     description = "...",
+    //     image_id = "1Ie2-TscFSr4QlEYlD3SQJsWFhQCPIzoH",
+    //     image_filter = "marc chagall"
+    // ))]
+    // Jazzman,
 }
 
 impl Soothsayer {
@@ -65,22 +71,24 @@ impl Soothsayer {
         self.into()
     }
 
+    pub fn first() -> Self{
+        Soothsayer::Astralia
+    }
+
     pub fn previous(&self) -> Option<Self> {
         use Soothsayer::*;
         match self {
-            Madame => None,
-            // Jazzman => Some(Madame),
-            Astralia => Some(Madame),
-            Maledictus => Some(Astralia),
+            Astralia => None,
+            Madame => Some(Astralia),            
+            Maledictus => Some(Madame),
         }
     }
 
     pub fn next(&self) -> Option<Self> {
         use Soothsayer::*;
         match self {
-            Madame => Some(Astralia),
-            //Jazzman => Some(Astralia),
-            Astralia => Some(Maledictus),
+            Astralia => Some(Madame),
+            Madame => Some(Maledictus),            
             Maledictus => None,
         }
     }
