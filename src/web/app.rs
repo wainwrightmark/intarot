@@ -157,7 +157,6 @@ pub fn image_view() -> Html {
         html! {
                     <div class="grid">
                     <div class="prophecy-image-container">
-                        <div class="prophecy-image-text">{img.card.name()}</div>
                         <div class="prophecy-image-card" key={img.id.clone()}>
                             <img class="prophecy-image-front"  src={format!("https://drive.google.com/uc?export=view&id={}", img.id.clone()) }/>
                             <div class="prophecy-image-back"/>

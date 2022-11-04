@@ -18,19 +18,17 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 
 pub enum Soothsayer {
     #[strum(props(
-        name = "Astralia Plontë",
+        name = "Evelyn Musgrave",
         description = "...",
-        image_id = "1G1Tpwc9HE1Zi2sUZLfAR1wIO0b7ZiOGL",
-        image_filter = "rebecca guay",
+        image_id = "1G1Tpwc9HE1Zi2sUZLfAR1wIO0b7ZiOGL",        
     ))]
-    Astralia,
+    EvelynMusgrave,
 
 
     #[strum(props(
         name = "Madame Sosoteris",
         description = "...",
-        image_id = "1j89ck-bSrCQgj_3PAnhjpWJa0rn3QI04",
-        image_filter = "paul nash",
+        image_id = "1j89ck-bSrCQgj_3PAnhjpWJa0rn3QI04",        
     ))]
     Madame,
     
@@ -38,8 +36,7 @@ pub enum Soothsayer {
     #[strum(props(
         name = "Maledictus Andronichus",
         description = "...",
-        image_id = "1b6tCkQta6RH4TxvGiCwd0skY6VVGTtgH",
-        image_filter = "hieronymus",
+        image_id = "1b6tCkQta6RH4TxvGiCwd0skY6VVGTtgH",        
     ))]
     Maledictus,
 
@@ -56,7 +53,7 @@ pub enum Soothsayer {
 impl Soothsayer {
     pub fn filter_image(&self, name: &str) -> bool {
         name.to_ascii_lowercase()
-            .contains(self.get_str("image_filter").unwrap())
+            .contains(self.get_str("name").unwrap().to_ascii_lowercase().as_str())
     }
 
     pub fn image_id(&self) -> &'static str {
@@ -72,14 +69,14 @@ impl Soothsayer {
     }
 
     pub fn first() -> Self{
-        Soothsayer::Astralia
+        Soothsayer::EvelynMusgrave
     }
 
     pub fn previous(&self) -> Option<Self> {
         use Soothsayer::*;
         match self {
-            Astralia => None,
-            Madame => Some(Astralia),            
+            EvelynMusgrave => None,
+            Madame => Some(EvelynMusgrave),            
             Maledictus => Some(Madame),
         }
     }
@@ -87,7 +84,7 @@ impl Soothsayer {
     pub fn next(&self) -> Option<Self> {
         use Soothsayer::*;
         match self {
-            Astralia => Some(Madame),
+            EvelynMusgrave => Some(Madame),
             Madame => Some(Maledictus),            
             Maledictus => None,
         }
@@ -138,7 +135,7 @@ pub enum StarSign {
 impl StarSign {
     pub fn filter_image(&self, name: &str) -> bool {
         name.to_ascii_lowercase()
-            .contains(self.get_str("image_filter").unwrap())
+            .contains(self.name().to_ascii_lowercase().as_str())
     }
 
     pub fn name(&self) -> &'static str {
@@ -175,7 +172,7 @@ pub enum Card {
     Magician,
     #[strum(props(image_filter = "moon", name = "The Moon"))]
     Moon,
-    #[strum(props(image_filter = "wheel", name = "The Wheel of Fortune"))]
+    #[strum(props(image_filter = "wheel", name = "Wheel of Fortune"))]
     Wheel,
     #[strum(props(image_filter = "aerialist", name = "The Hanged Man"))]
     Hanged,
@@ -214,7 +211,7 @@ pub enum Card {
 impl Card {
     pub fn filter_image(&self, name: &str) -> bool {
         name.to_ascii_lowercase()
-            .contains(self.get_str("image_filter").unwrap())
+            .contains(self.get_str("name").unwrap().to_ascii_lowercase().as_str())
     }
 
     pub fn name(&self) -> &'static str {

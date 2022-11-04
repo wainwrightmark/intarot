@@ -87,13 +87,13 @@
 
 .prophecy-image-front, .prophecy-image-back, .prophecy-image-ghost {
     
-    border: 2px solid;
-    border-radius: 20px;
-    border-color: var(--success-dark);
+    /* border: 2px solid;
+    
+    border-color: black; */
+    border: none;
+    border-radius: 10px;
     width: -webkit-fill-available;
     width: -moz-available;
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
     aspect-ratio: 1 / 2;
     backface-visibility: hidden;
   }
@@ -139,17 +139,7 @@
 
 
 
-.prophecy-image-text {
-    background-color: var(--muted);
-    border: 2px solid;
-    border-radius: 20px;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;    
-    border-color: var(--success-dark);
-    border-bottom-width: 0px;    
-    color: var(--primary-text);
-    text-align: center;
-  }
+
 
 .dot {
     opacity: 0.7; /* gray out dots for slides not being visted */
