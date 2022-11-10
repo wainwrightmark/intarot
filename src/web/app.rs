@@ -112,17 +112,8 @@ pub fn soothsayer_page() -> Html {
             {items}
 
             <div class="carousel-actions">
-                {if image_state.can_previous_soothsayer(){
-                    html!{
-                        <button id="carousel-button-prev" aria-label="Previous" onclick={select_previous}></button>
-                    }
-                } else{html!{<></>}}}
-
-                {if image_state.can_next_soothsayer(){
-                    html!{
-                        <button id="carousel-button-next" aria-label="Next"  disabled={!image_state.can_next_soothsayer()} onclick={select_next}></button>
-                    }
-                } else{html!{<></>}}}
+            <button id="carousel-button-prev" aria-label="Previous" disabled={!image_state.can_previous_soothsayer()} onclick={select_previous}></button>
+            <button id="carousel-button-next" aria-label="Next" disabled={!image_state.can_next_soothsayer()} onclick={select_next}></button>
 
 
             </div>
