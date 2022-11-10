@@ -778,7 +778,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('eighth-arcana-b5b0314e9cfad69a_bg.wasm', import.meta.url);
+        input = new URL('eighth-arcana-d949ed9bae662b57_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
