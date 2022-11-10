@@ -2,7 +2,7 @@ use itertools::Itertools;
 
 use std::str::FromStr;
 
-use strum::IntoEnumIterator;
+use strum::{IntoEnumIterator, EnumProperty};
 use web_sys::HtmlSelectElement;
 use yew::prelude::*;
 use yewdux::prelude::*;
@@ -13,7 +13,7 @@ use crate::web::prelude::*;
 pub fn app() -> Html {
     html! {
         <div class="site">
-            <div class="container-sm" >
+            <div class="container" >
             <Content/>
             </div>
         </div>
@@ -98,19 +98,33 @@ pub fn soothsayer_page() -> Html {
                 <h5 class="soothsayer-name" style="text-align: center;">{ss.name()}</h5>
                 <img class="soothsayer-image" src={format!("https://drive.google.com/uc?export=view&id={}", ss.image_id()) } 
                      alt={ss.name()} />
+                    <p class="soothsayer-text" >
+                    {ss.get_str("description")}
+                    </p>
             </div>
         )
     }).collect_vec();
 
     html! {
         <>
-        <div class="sm-4 col" style="margin: auto; width: 100em;">
+        <div class="sm-4 col" style="margin: auto; width: 100em; padding:unset;">
         <div class="carousel">
             {items}
 
             <div class="carousel-actions">
-                <button id="carousel-button-prev" aria-label="Previous" disabled={!image_state.can_previous_soothsayer()} onclick={select_previous}></button>
-                <button id="carousel-button-next" aria-label="Next"  disabled={!image_state.can_next_soothsayer()} onclick={select_next}></button>
+                {if image_state.can_previous_soothsayer(){
+                    html!{
+                        <button id="carousel-button-prev" aria-label="Previous" onclick={select_previous}></button>
+                    }
+                } else{html!{<></>}}}
+                
+                {if image_state.can_next_soothsayer(){
+                    html!{
+                        <button id="carousel-button-next" aria-label="Next"  disabled={!image_state.can_next_soothsayer()} onclick={select_next}></button>
+                    }
+                } else{html!{<></>}}}
+                
+                
             </div>
         </div>
         </div>

@@ -18,7 +18,8 @@
 }
 
 .carousel .carousel-item img {
-    width: 100%;
+    width: 80%;
+    margin-left: 10%;
     max-width: 600px;
     height: auto;
 }
@@ -29,8 +30,8 @@
     width: 100%;
     justify-content: space-between; /* put space between the navigation buttons */
     position: absolute; /* position navigation buttons on top */
-    top: 50%; /* center navigation buttons on the slide */
-    transform: translateY(-50%); /* align navigation buttons */
+    top: 25%; /* center navigation buttons on the slide */
+    /*transform: translateY(100%); /* align navigation buttons */
 }
 
 .carousel .carousel-actions button {
@@ -58,6 +59,7 @@
 
 .soothsayer-name{
     color: var(--muted-text);
+    margin: 1em;
 }
 
 .soothsayer-image{
