@@ -2,7 +2,7 @@ use itertools::Itertools;
 
 use std::str::FromStr;
 
-use strum::{IntoEnumIterator, EnumProperty};
+use strum::{EnumProperty, IntoEnumIterator};
 use web_sys::HtmlSelectElement;
 use yew::prelude::*;
 use yewdux::prelude::*;
@@ -27,7 +27,7 @@ pub fn content() -> Html {
     match image_state.as_ref() {
         ImageState::OpeningPage(_) => html!(<FrontPage />),
         ImageState::SoothsayerPage(_, _) => html!(<SoothsayerPage />),
-        ImageState::CardPage(_, _, _) => html!(<ImagePage />),
+        ImageState::CardPage(_, _, _, _) => html!(<ImagePage />),
     }
 }
 
@@ -117,14 +117,14 @@ pub fn soothsayer_page() -> Html {
                         <button id="carousel-button-prev" aria-label="Previous" onclick={select_previous}></button>
                     }
                 } else{html!{<></>}}}
-                
+
                 {if image_state.can_next_soothsayer(){
                     html!{
                         <button id="carousel-button-next" aria-label="Next"  disabled={!image_state.can_next_soothsayer()} onclick={select_next}></button>
                     }
                 } else{html!{<></>}}}
-                
-                
+
+
             </div>
         </div>
         </div>
@@ -165,24 +165,72 @@ pub fn image_page() -> Html {
 #[function_component(ImageView)]
 pub fn image_view() -> Html {
     let (image_state, _) = use_store::<ImageState>();
-    let image_meta_option = image_state.get_image_meta();
+    let (metas_state, _)  = use_store::<ImageMetaState>();
+    let image_meta_option = image_state.get_image_meta(&metas_state);
 
-    if let Some(img) = image_meta_option {
-        html! {
-                    <div class="grid">
-                    <div class="prophecy-image-container">
-                        <div class="prophecy-image-card" key={img.id.clone()}>
-                            <img class="prophecy-image-front"  src={format!("https://drive.google.com/uc?export=view&id={}", img.id.clone()) }/>
-                            <div class="prophecy-image-back"/>
-                            <div class="prophecy-image-ghost"/>
-                        </div>
+    let toggle = Dispatch::<ImageState>::new()
+        .reduce_mut_callback_with(|s, _: MouseEvent| s.toggle_show_description());
 
-                        </div>
-        </div>
-                }
+    let show_description = image_state.show_description();
+
+    let image_classes = if show_description {
+        classes!("prophecy-image-front", "image_greyed")
     } else {
-        html!(<></>)
+        classes!("prophecy-image-front")
+    };
+
+    let (description_state, _) = use_store::<ImageDescriptionState>();
+
+    let Some(img) = image_meta_option else{
+        return html!(<></>);
+    };
+
+    let Some(description) = 
+    description_state.descriptions.as_ref().map(|map|map.get(&(img.soothsayer, img.card))).flatten() else{
+        return html!(<></>);
+    };
+
+    html! {
+        <div class="grid">
+        <div class="prophecy-image-container">
+            <div class="prophecy-image-card" key={img.id.clone()}>
+                <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", img.id.clone()) } onclick={toggle} />
+                {
+                    if show_description{
+                        html!{
+                            <p class="image-overlay">
+                                <span>
+                                {description.representation.clone()}
+                                </span>
+                                <br/>
+                                <br/>
+                                <span>
+                                {description.guidance.clone()}
+                                </span>
+                                <br/>
+                                <br/>
+                                <span>
+                                {description.specific_guidance.clone()}
+                                </span>
+                            </p>
+                        }
+                    }
+                    else{
+                        html!{
+                            <></>
+                        }
+
+                    }
+                }
+                <div class="prophecy-image-back"/>
+                <div class="prophecy-image-ghost"/>
+            </div>
+
+            </div>
+</div>
     }
+        
+    
 }
 
 #[function_component(SignDropdown)]
@@ -216,35 +264,3 @@ pub fn sign_dropdown() -> Html {
         </select>
     )
 }
-
-// #[function_component(SoothsayerSelect)]
-// pub fn soothsayer_dropdown() -> Html {
-//     let onchange = Dispatch::<ImageState>::new().reduce_mut_callback_with(|s, e: Event| {
-//         let input: HtmlSelectElement = e.target_unchecked_into();
-//         let value = input.value();
-//         if let Ok(soothsayer) = Soothsayer::from_str(&value) {
-//             s.soothsayer = Some(soothsayer);
-//         } else {
-//             s.soothsayer = None;
-//         }
-//     });
-
-//     let current_soothsayer = use_selector::<ImageState, _, _>(|x| x.soothsayer);
-
-//     let options = Soothsayer::iter()
-//         .into_iter()
-//         .map(|soothsayer| {
-//             let selected = Some(soothsayer) == *current_soothsayer;
-//             html!(  <option value={soothsayer.repr()} {selected}>{soothsayer.name()}</option>
-//             )
-//         })
-//         .collect_vec();
-
-//     html!(
-//         <select {onchange}  style="background: var(--main-background)">
-//         <option value="" disabled={true} selected={current_soothsayer.is_none()}>{"Soothsayer"}</option>
-
-//             {options}
-//         </select>
-//     )
-// }

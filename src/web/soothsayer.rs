@@ -6,6 +6,7 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
     Clone,
     Eq,
     PartialEq,
+    Ord,PartialOrd,
     Debug,
     Serialize,
     Deserialize,
@@ -95,6 +96,7 @@ impl Soothsayer {
 #[derive(
     Copy,
     Clone,
+    Ord,PartialOrd,
     Eq,
     PartialEq,
     Debug,
@@ -153,6 +155,7 @@ impl StarSign {
     Clone,
     Eq,
     PartialEq,
+    Ord,PartialOrd,
     Debug,
     Serialize,
     Deserialize,

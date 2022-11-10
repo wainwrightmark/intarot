@@ -62,6 +62,18 @@
     margin: 1em;
 }
 
+.image-overlay{
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    transform: translateX(-5%);
+    color: black;
+}
+
+.image_greyed{
+    opacity: 40%;
+}
+
 .soothsayer-image{
     border-radius: 20px; 
     border-color: var(--success-dark);
