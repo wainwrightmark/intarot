@@ -1,4 +1,4 @@
-use std::str::FromStr;
+use std::{str::FromStr, io::BufRead, rc::Rc};
 
 use itertools::Itertools;
 use strum::IntoEnumIterator;
@@ -17,7 +17,7 @@ impl FromStr for ImageMeta {
     type Err = &'static str;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let (id, file_name) = s.split_once('\t').unwrap();
+        let (id, file_name) = s.split_terminator(',').next_tuple().unwrap();
 
         let soothsayer = Soothsayer::iter()
             .find(|ss| ss.filter_image(file_name))
@@ -40,8 +40,6 @@ impl FromStr for ImageMeta {
     }
 }
 
-include_flate::flate!(static DATA: str from "data.txt");
+// include_flate::flate!(static DATA: str from "data.txt");
 
-lazy_static::lazy_static! {
-    pub static ref IMAGEMETAS: Vec<ImageMeta> = DATA.lines().map(|x|ImageMeta::from_str(x).unwrap()).collect_vec();
-}
+
