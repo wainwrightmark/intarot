@@ -72,6 +72,7 @@
     left: 10%;
     transform: translateX(-5%);
     color: black;
+    pointer-events: none;
 }
 
 .image_greyed{
@@ -108,7 +109,7 @@
     /* border: 2px solid;
     
     border-color: black; */
-    border: none;
+    /* border: none; */
     border-radius: 10px;
     width: -webkit-fill-available;
     width: -moz-available;
