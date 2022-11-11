@@ -1,5 +1,5 @@
-.site{
-    overflow-y: hidden;
+.container{
+    overflow: hidden;
 }
 
 .carousel {
