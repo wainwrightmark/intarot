@@ -785,11 +785,11 @@ function getImports() {
         const ret = getObject(arg0).sessionStorage;
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
     }, arguments) };
-    imports.wbg.__wbindgen_closure_wrapper1507 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1509 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 74, __wbg_adapter_26);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper2297 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper2299 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 74, __wbg_adapter_29);
         return addHeapObject(ret);
     };
@@ -828,7 +828,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('eighth-arcana-b823c1bf7309726b_bg.wasm', import.meta.url);
+        input = new URL('eighth-arcana-d96fa91861aee2c3_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
