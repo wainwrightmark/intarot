@@ -1,6 +1,6 @@
 use crate::web::prelude::*;
 use itertools::Itertools;
-use std::{collections::BTreeMap, io::BufRead,  str::FromStr};
+use std::{collections::BTreeMap, io::BufRead, str::FromStr};
 
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use serde::{Deserialize, Serialize};
@@ -11,7 +11,7 @@ use yewdux::prelude::*;
 
 #[derive(PartialEq, Eq, Store, Default)]
 pub struct ImageMetaState {
-    pub metas: Option<Vec<ImageMeta>>, //TODO bTreeMap
+    pub metas: Option<BTreeMap<(StarSign, Soothsayer, Card), ImageMeta>>, //TODO bTreeMap
 }
 
 impl ImageMetaState {
@@ -26,11 +26,12 @@ impl ImageMetaState {
         let data = result?;
         let bytes = data.bytes().await?;
         let lines = bytes.lines();
-        let result = lines
+        let result: BTreeMap<_, ImageMeta> = lines
             .skip(1) //skip headers
             .filter_map(|x| x.ok())
             .map(move |x| ImageMeta::from_str(x.as_str()).unwrap())
-            .collect_vec();
+            .map(|x| ((x.sign, x.soothsayer, x.card), x))
+            .collect();
         Ok(ImageMetaState {
             metas: result.into(),
         })

@@ -4,7 +4,8 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 #[derive(
     Copy,
     Clone,
-    Ord,PartialOrd,
+    Ord,
+    PartialOrd,
     Eq,
     PartialEq,
     Debug,
@@ -15,9 +16,11 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
     EnumIter,
     EnumCount,
     IntoStaticStr,
+    Default,
 )]
 pub enum StarSign {
     #[strum(props(image_filter = "aries",))]
+    #[default]
     Aries,
     #[strum(props(image_filter = "taurus",))]
     Taurus,

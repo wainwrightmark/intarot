@@ -1,6 +1,6 @@
 use crate::web::prelude::*;
 use itertools::Itertools;
-use std::{collections::BTreeMap, io::BufRead,  str::FromStr};
+use std::{collections::BTreeMap, io::BufRead, str::FromStr};
 
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use serde::{Deserialize, Serialize};

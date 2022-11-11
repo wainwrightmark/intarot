@@ -18,7 +18,7 @@ impl Default for ImageDescription {
     fn default() -> Self {
         Self {
             soothsayer: Soothsayer::EvelynMusgrave, //whatever
-            card: Card::Magician, //whatever
+            card: Card::Magician,                   //whatever
             representation: Default::default(),
             guidance: Default::default(),
             specific_guidance: Default::default(),
@@ -32,11 +32,11 @@ impl FromStr for ImageDescription {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let (ss_str, card_str, representation, guidance, specific_guidance) =
             s.split_terminator('\t').next_tuple().unwrap();
-        
+
         let Some(soothsayer) = Soothsayer::from_str(ss_str).ok() else{
             bail!("Could not parse soothsayer: {}", ss_str);
         };
-        
+
         let Some(card) = Card::from_str(card_str).ok() else{
             bail!("Could not parse card: {}", card_str);
         };

@@ -6,7 +6,8 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
     Clone,
     Eq,
     PartialEq,
-    Ord,PartialOrd,
+    Ord,
+    PartialOrd,
     Debug,
     Serialize,
     Deserialize,
@@ -15,17 +16,17 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
     EnumIter,
     EnumCount,
     IntoStaticStr,
+    Default,
 )]
 
 pub enum Soothsayer {
     #[strum(props(
         name = "Evelyn Musgrave",
         description = "A daughter of the wild English countryside, she grew up roaming the forests that ramble up to the ruined walls of her family estate. Inspired by the mythic tales of old England she draws the world through a prism of courtly love and mystical devotion. Her tarot speaks of ancient knowledge, and the possibility of beauty found in madness. ",
-        image_id = "1G1Tpwc9HE1Zi2sUZLfAR1wIO0b7ZiOGL",        
-
+        image_id = "1G1Tpwc9HE1Zi2sUZLfAR1wIO0b7ZiOGL",
     ))]
+    #[default]
     EvelynMusgrave,
-
 
     #[strum(props(
         name = "Madame Sosoteris",
@@ -33,15 +34,13 @@ pub enum Soothsayer {
         image_id = "1fGHNqfcFzQua9nieqK9F7VsfR7q9uVNt",
     ))]
     Madame,
-    
+
     #[strum(props(
         name = "Maledictus Andronichus",
         description = "There is a dark fleshy space between the skin of sanity and the bone of madness and Maledictus is its prisoner. Beset by tortured visions of a world he cannot control, his tarot takes shape from these half-images of wild despair; a desperate warning to all who seek his guidance. Though even in his darkest depictions the faintest glimmer of hopeful prophecy survives.",
-        image_id = "1b6tCkQta6RH4TxvGiCwd0skY6VVGTtgH",        
+        image_id = "1b6tCkQta6RH4TxvGiCwd0skY6VVGTtgH",
     ))]
     Maledictus,
-
-
     // #[strum(props(
     //     name = "Jean-Baptiste",
     //     description = "...",
@@ -69,7 +68,7 @@ impl Soothsayer {
         self.into()
     }
 
-    pub fn first() -> Self{
+    pub fn first() -> Self {
         Soothsayer::EvelynMusgrave
     }
 
@@ -77,7 +76,7 @@ impl Soothsayer {
         use Soothsayer::*;
         match self {
             EvelynMusgrave => None,
-            Madame => Some(EvelynMusgrave),            
+            Madame => Some(EvelynMusgrave),
             Maledictus => Some(Madame),
         }
     }
@@ -86,10 +85,8 @@ impl Soothsayer {
         use Soothsayer::*;
         match self {
             EvelynMusgrave => Some(Madame),
-            Madame => Some(Maledictus),            
+            Madame => Some(Maledictus),
             Maledictus => None,
         }
     }
 }
-
-

@@ -157,17 +157,6 @@
   }
 
 
-
-
-
-.dot {
-    opacity: 0.7; /* gray out dots for slides not being visted */
-}
-
-.dot:focus {
-    border: 1px solid black; /* dot for currently visited slide */
-}
-
 /* hanlde smooth transitions between slides */
 @keyframes fadeVisibility {
     0% {
@@ -176,4 +165,8 @@
     100% {
         opacity: 1;
     }
+}
+
+.star_sign_dropdown{
+    background: var(--main-background)
 }

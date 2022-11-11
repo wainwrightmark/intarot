@@ -1,26 +1,129 @@
+use core::panic;
+use std::{default, rc::Rc};
+
 use itertools::Itertools;
 
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use serde::{Deserialize, Serialize};
 
-use crate::data::prelude::*;
+use crate::{data::prelude::*, SoothsayerPage};
 
 use yewdux::prelude::*;
+
+use super::{card_page::CardPage, messages::*, opening_page::OpeningPage};
 
 #[derive(PartialEq, Eq, Store, Clone, Serialize, Deserialize)]
 #[store(storage = "local")]
 pub enum PageState {
-    OpeningPage(Option<StarSign>),
-    SoothsayerPage(StarSign, Soothsayer),
-    CardPage(StarSign, Soothsayer, u64, bool),
+    OpeningPage(OpeningPage),
+    SoothsayerPage(SoothsayerPage),
+    CardPage(CardPage),
 }
 
 impl Default for PageState {
     fn default() -> Self {
-        Self::OpeningPage(None)
+        Self::OpeningPage(Default::default())
     }
 }
 
+impl ButtonMessage<PageState> for ResetMessage {
+    fn can_apply(state: &PageState) -> bool {
+        true
+    }
+
+    fn get_name() -> &'static str {
+        "Reset"
+    }
+}
+impl ButtonMessage<PageState> for ProceedMessage {
+    fn can_apply(state: &PageState) -> bool {
+        match state {
+            PageState::OpeningPage(o) => match o.star_sign {
+                Some(star_sign) => true,
+                None => false,
+            },
+            PageState::SoothsayerPage(s) => true,
+            PageState::CardPage(_) => false,
+        }
+    }
+
+    fn get_name() -> &'static str {
+        "Proceed"
+    }
+}
+impl ButtonMessage<PageState> for DrawMessage {
+    fn can_apply(state: &PageState) -> bool {
+        match state {
+            PageState::CardPage(_) => true,
+            _ => false,
+        }
+    }
+
+    fn get_name() -> &'static str {
+        "Draw"
+    }
+}
+impl ButtonMessage<PageState> for ShuffleMessage {
+    fn can_apply(state: &PageState) -> bool {
+        match state {
+            PageState::CardPage(_) => true,
+            _ => false,
+        }
+    }
+
+    fn get_name() -> &'static str {
+        "Shuffle"
+    }
+}
+
+impl Reducer<PageState> for ResetMessage {
+    fn apply(self, _: std::rc::Rc<PageState>) -> std::rc::Rc<PageState> {
+        PageState::default().into()
+    }
+}
+impl Reducer<PageState> for ProceedMessage {
+    fn apply(self, state: std::rc::Rc<PageState>) -> std::rc::Rc<PageState> {
+        match state.as_ref() {
+            PageState::OpeningPage(o) => match o.star_sign {
+                Some(star_sign) => Rc::new(PageState::SoothsayerPage(SoothsayerPage {
+                    star_sign,
+                    ..Default::default()
+                })),
+                None => state,
+            },
+            PageState::SoothsayerPage(s) => Rc::new(PageState::CardPage(s.into())),
+            PageState::CardPage(_) => state,
+        }
+    }
+}
+impl Reducer<PageState> for DrawMessage {
+    fn apply(self, state: Rc<PageState>) -> Rc<PageState> {
+        match state.as_ref() {
+            PageState::CardPage(cp) => Rc::new(PageState::CardPage(cp.clone().draw_card())),
+            _ => state,
+        }
+    }
+}
+impl Reducer<PageState> for ShuffleMessage {
+    fn apply(self, state: Rc<PageState>) -> Rc<PageState> {
+        match state.as_ref() {
+            PageState::CardPage(cp) => Rc::new(PageState::CardPage(cp.clone().shuffle())),
+            _ => state,
+        }
+    }
+}
+impl Reducer<PageState> for ToggleDescriptionMessage {
+    fn apply(self, state: Rc<PageState>) -> Rc<PageState> {
+        match state.as_ref() {
+            PageState::CardPage(cp) => {
+                Rc::new(PageState::CardPage(cp.clone().toggle_description()))
+            }
+            _ => state,
+        }
+    }
+}
+
+/*
 impl PageState {
     pub fn reset(&mut self) {
         *self = Self::default()
@@ -139,34 +242,6 @@ impl PageState {
         }
     }
 
-    pub fn get_image_meta(&self, meta_state: &super::prelude::ImageMetaState) -> Option<ImageMeta> {
-        match self {
-            PageState::OpeningPage(_) => None,
-            PageState::SoothsayerPage(_, _) => None,
-            PageState::CardPage(sign, soothsayer, seed, _) => {
-                let mut seeded_rng = StdRng::seed_from_u64(*seed);
 
-                //let meta_state = Dispatch::<ImageMetaState>::new().get();
-                let Some(all_metas) = meta_state.metas.as_ref()
-                else{
-                    return None;
-                };
-                let metas = all_metas
-                    .iter()
-                    .filter(|x| x.sign == *sign && x.soothsayer == *soothsayer)
-                    .cloned()
-                    .collect_vec();
-
-                if metas.is_empty() {
-                    return None;
-                }
-
-                let index = seeded_rng.gen_range(0..metas.len());
-
-                let meta = metas.get(index).map(|x| x.clone());
-
-                meta
-            }
-        }
-    }
 }
+ */

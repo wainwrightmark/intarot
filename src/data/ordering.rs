@@ -5,6 +5,12 @@ use std::{marker::PhantomData, ops::Range};
 )]
 pub struct Ordering(pub u128);
 
+impl From<u128> for Ordering {
+    fn from(value: u128) -> Self {
+        Self(value)
+    }
+}
+
 impl Ordering {
     ///Reorder an array in sorted order to this ordering
     pub fn reorder<T>(&self, arr: &mut [T]) {
@@ -56,8 +62,7 @@ mod tests {
 
     #[test]
     pub fn all_possible_orderings_are_unique() -> Result<(), anyhow::Error> {
-
-        let mut set: HashSet<[i32;4]> = Default::default();
+        let mut set: HashSet<[i32; 4]> = Default::default();
 
         for o in Ordering::get_range(&4) {
             let ordering = Ordering(o);
