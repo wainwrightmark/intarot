@@ -3,7 +3,7 @@ use std::str::FromStr;
 use anyhow::bail;
 use itertools::Itertools;
 
-use crate::web::prelude::*;
+use crate::data::prelude::*;
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct ImageDescription {

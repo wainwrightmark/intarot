@@ -7,7 +7,8 @@ use web_sys::HtmlSelectElement;
 use yew::prelude::*;
 use yewdux::prelude::*;
 
-use crate::web::prelude::*;
+use crate::data::prelude::*;
+use crate::state::prelude::*;
 
 #[function_component(App)]
 pub fn app() -> Html {
@@ -22,20 +23,20 @@ pub fn app() -> Html {
 
 #[function_component(Content)]
 pub fn content() -> Html {
-    let (image_state, _) = use_store::<ImageState>();
+    let (image_state, _) = use_store::<PageState>();
 
     match image_state.as_ref() {
-        ImageState::OpeningPage(_) => html!(<FrontPage />),
-        ImageState::SoothsayerPage(_, _) => html!(<SoothsayerPage />),
-        ImageState::CardPage(_, _, _, _) => html!(<ImagePage />),
+        PageState::OpeningPage(_) => html!(<FrontPage />),
+        PageState::SoothsayerPage(_, _) => html!(<SoothsayerPage />),
+        PageState::CardPage(_, _, _, _) => html!(<ImagePage />),
     }
 }
 
 #[function_component(ProceedButton)]
 pub fn proceed_button() -> Html {
-    let (image_state, _) = use_store::<ImageState>();
+    let (image_state, _) = use_store::<PageState>();
     let proceed =
-        Dispatch::<ImageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| s.proceed());
+        Dispatch::<PageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| s.proceed());
 
     html! {
         <button id="proceed-button" aria-label="Proceed" disabled={!image_state.can_proceed()} onclick={proceed}>{"Proceed"}</button>
@@ -45,7 +46,7 @@ pub fn proceed_button() -> Html {
 #[function_component(ResetButton)]
 pub fn reset_button() -> Html {
     let reset =
-        Dispatch::<ImageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| s.reset());
+        Dispatch::<PageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| s.reset());
 
     html! {
         <button id="proceed-button" aria-label="Reset" onclick={reset}>{"Reset"}</button>
@@ -80,11 +81,11 @@ pub fn front_page() -> Html {
 
 #[function_component(SoothsayerPage)]
 pub fn soothsayer_page() -> Html {
-    let (image_state, _) = use_store::<ImageState>();
-    let select_previous = Dispatch::<ImageState>::new()
+    let (image_state, _) = use_store::<PageState>();
+    let select_previous = Dispatch::<PageState>::new()
         .reduce_mut_callback_with(|s, _: MouseEvent| s.previous_soothsayer());
 
-    let select_next = Dispatch::<ImageState>::new()
+    let select_next = Dispatch::<PageState>::new()
         .reduce_mut_callback_with(|s, _: MouseEvent| s.next_soothsayer());
 
     let soothsayer = image_state.get_soothsayer();
@@ -129,7 +130,7 @@ pub fn soothsayer_page() -> Html {
 #[function_component(RerollButton)]
 pub fn reroll_button() -> Html {
     let reroll =
-        Dispatch::<ImageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| s.reroll());
+        Dispatch::<PageState>::new().reduce_mut_callback_with(|s, _: MouseEvent| s.reroll());
 
     html! {
         <button id="reroll-button" aria-label="Reroll" onclick={reroll}>{"Draw Another"}</button>
@@ -155,11 +156,11 @@ pub fn image_page() -> Html {
 
 #[function_component(ImageView)]
 pub fn image_view() -> Html {
-    let (image_state, _) = use_store::<ImageState>();
+    let (image_state, _) = use_store::<PageState>();
     let (metas_state, _)  = use_store::<ImageMetaState>();
     let image_meta_option = image_state.get_image_meta(&metas_state);
 
-    let toggle = Dispatch::<ImageState>::new()
+    let toggle = Dispatch::<PageState>::new()
         .reduce_mut_callback_with(|s, _: MouseEvent| s.toggle_show_description());
 
     let show_description = image_state.show_description();
@@ -226,7 +227,7 @@ pub fn image_view() -> Html {
 
 #[function_component(SignDropdown)]
 pub fn sign_dropdown() -> Html {
-    let onchange = Dispatch::<ImageState>::new().reduce_mut_callback_with(|s, e: Event| {
+    let onchange = Dispatch::<PageState>::new().reduce_mut_callback_with(|s, e: Event| {
         let input: HtmlSelectElement = e.target_unchecked_into();
         let value = input.value();
         if let Ok(sign) = StarSign::from_str(&value) {
@@ -236,7 +237,7 @@ pub fn sign_dropdown() -> Html {
         }
     });
 
-    let current_sign = use_selector::<ImageState, _, _>(|x| x.get_sign());
+    let current_sign = use_selector::<PageState, _, _>(|x| x.get_sign());
 
     let options = StarSign::iter()
         .into_iter()

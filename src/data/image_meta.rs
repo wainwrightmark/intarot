@@ -3,7 +3,7 @@ use std::str::FromStr;
 use itertools::Itertools;
 use strum::IntoEnumIterator;
 
-use crate::web::prelude::*;
+use crate::data::prelude::*;
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct ImageMeta {
