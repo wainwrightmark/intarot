@@ -1,4 +1,4 @@
-use std::{ops::Range};
+use std::ops::Range;
 
 #[derive(
     Copy, Clone, Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, Default,

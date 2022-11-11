@@ -1,12 +1,8 @@
-
-use std::{rc::Rc};
-
-
-
+use std::rc::Rc;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{SoothsayerPage};
+use crate::SoothsayerPage;
 
 use yewdux::prelude::*;
 

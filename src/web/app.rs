@@ -1,12 +1,5 @@
-
-
-
-
-
-
 use yew::prelude::*;
 use yewdux::prelude::*;
-
 
 use crate::state::prelude::*;
 use crate::web::cards_view::CardsView;

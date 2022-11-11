@@ -1,5 +1,3 @@
-
-
 use crate::state::prelude::*;
 use crate::web::prelude::*;
 pub mod data;

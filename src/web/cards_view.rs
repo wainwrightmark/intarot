@@ -1,17 +1,9 @@
-
-
-
-
-
-
 use yew::prelude::*;
 use yewdux::prelude::*;
 
 use crate::data::prelude::*;
 use crate::state::prelude::*;
 use crate::web::button_component::ButtonComponent;
-
-
 
 #[function_component(CardsControl)]
 pub fn cards_control() -> Html {
@@ -69,8 +61,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
         classes!("prophecy-image-front")
     };
 
-    let Some(description) = 
-    description_state.descriptions.as_ref()
+    let Some(description) = description_state.descriptions.as_ref()
     .map(|map|map
         .get(&(props.meta.soothsayer, props.meta.card)))
         .flatten() else{
