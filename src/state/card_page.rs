@@ -1,5 +1,5 @@
 use itertools::Itertools;
-use rand::thread_rng;
+
 use rand::Rng;
 use strum::EnumCount;
 use strum::IntoEnumIterator;

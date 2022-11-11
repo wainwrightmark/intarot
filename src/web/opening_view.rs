@@ -1,13 +1,13 @@
-use itertools::Itertools;
 
-use std::str::FromStr;
 
-use strum::{EnumProperty, IntoEnumIterator};
-use web_sys::HtmlSelectElement;
+
+
+
+
 use yew::prelude::*;
 use yewdux::prelude::*;
 
-use crate::data::prelude::*;
+
 use crate::state::choose_star_sign_message::ChooseStarSignMessage;
 use crate::state::prelude::*;
 use crate::web::prelude::*;

@@ -12,7 +12,7 @@ use super::prelude::{PageState, SelectMessage};
 pub struct ChooseStarSignMessage(Option<StarSign>);
 
 impl Reducer<PageState> for ChooseStarSignMessage {
-    fn apply(self, state: Rc<PageState>) -> Rc<PageState> {
+    fn apply(self, _state: Rc<PageState>) -> Rc<PageState> {
         Rc::new(PageState::OpeningPage(super::prelude::OpeningPage {
             star_sign: self.0,
         }))

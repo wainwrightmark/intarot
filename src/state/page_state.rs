@@ -1,12 +1,12 @@
-use core::panic;
-use std::{default, rc::Rc};
 
-use itertools::Itertools;
+use std::{rc::Rc};
 
-use rand::{rngs::StdRng, Rng, SeedableRng};
+
+
+
 use serde::{Deserialize, Serialize};
 
-use crate::{data::prelude::*, SoothsayerPage};
+use crate::{SoothsayerPage};
 
 use yewdux::prelude::*;
 
@@ -27,7 +27,7 @@ impl Default for PageState {
 }
 
 impl ButtonMessage<PageState> for ResetMessage {
-    fn can_apply(state: &PageState) -> bool {
+    fn can_apply(_state: &PageState) -> bool {
         true
     }
 
@@ -39,10 +39,10 @@ impl ButtonMessage<PageState> for ProceedMessage {
     fn can_apply(state: &PageState) -> bool {
         match state {
             PageState::OpeningPage(o) => match o.star_sign {
-                Some(star_sign) => true,
+                Some(_star_sign) => true,
                 None => false,
             },
-            PageState::SoothsayerPage(s) => true,
+            PageState::SoothsayerPage(_s) => true,
             PageState::CardPage(_) => false,
         }
     }

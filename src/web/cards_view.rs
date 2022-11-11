@@ -1,9 +1,9 @@
-use itertools::Itertools;
 
-use std::str::FromStr;
 
-use strum::{EnumProperty, IntoEnumIterator};
-use web_sys::HtmlSelectElement;
+
+
+
+
 use yew::prelude::*;
 use yewdux::prelude::*;
 
@@ -11,7 +11,7 @@ use crate::data::prelude::*;
 use crate::state::prelude::*;
 use crate::web::button_component::ButtonComponent;
 
-use self::_CardViewProps::{meta, show_description};
+
 
 #[function_component(CardsControl)]
 pub fn cards_control() -> Html {

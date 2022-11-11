@@ -1,6 +1,6 @@
 //StarSign, Soothsayer
 
-use crate::data::prelude::{Ordering, Soothsayer, StarSign};
+use crate::data::prelude::{Soothsayer, StarSign};
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Default)]
 pub struct SoothsayerPage {

@@ -1,11 +1,11 @@
-use std::{borrow::Cow, rc::Rc};
+
 
 use yew::{Classes, Html};
 use yewdux::store::Reducer;
 
-use crate::data::prelude::StarSign;
 
-use super::prelude::PageState;
+
+
 
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct ResetMessage {}
