@@ -62,9 +62,8 @@ pub fn card_view(props: &CardViewProps) -> Html {
     };
 
     let Some(description) = description_state.descriptions.as_ref()
-    .map(|map|map
-        .get(&(props.meta.soothsayer, props.meta.card)))
-        .flatten() else{
+    .and_then(|map|map
+        .get(&(props.meta.soothsayer, props.meta.card))) else{
         return html!(<></>);
     };
 

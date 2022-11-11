@@ -39,7 +39,7 @@ impl SelectCarouselMessage<PageState> for ChooseSoothsayerMessage {
     }
 
     fn get_values() -> Vec<Self> {
-        Soothsayer::iter().map(|x| Self(x)).collect_vec()
+        Soothsayer::iter().map(Self).collect_vec()
     }
 
     fn get_current_value(state: &PageState) -> Self {

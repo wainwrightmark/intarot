@@ -19,7 +19,7 @@ impl Ordering {
         for i in 0..arr.len() {
             let index = (rem % ((arr.len() - i) as u128)) as usize;
             arr.swap(i, index + i);
-            rem = rem / ((arr.len() - i) as u128);
+            rem /= (arr.len() - i) as u128;
         }
     }
 

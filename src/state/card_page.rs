@@ -66,14 +66,14 @@ impl CardPage {
 
         self.ordering.reorder(&mut cards);
 
-        let metas = cards
+        
+
+        cards
             .into_iter()
             .take(self.cards_drawn)
             .flat_map(|card| all_metas.get(&(self.star_sign, self.soothsayer, card)))
             .cloned()
-            .collect_vec();
-
-        metas
+            .collect_vec()
     }
 }
 

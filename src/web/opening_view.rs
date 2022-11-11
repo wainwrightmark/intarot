@@ -1,5 +1,4 @@
 use yew::prelude::*;
-use yewdux::prelude::*;
 
 use crate::state::choose_star_sign_message::ChooseStarSignMessage;
 use crate::state::prelude::*;

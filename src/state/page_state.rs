@@ -49,10 +49,7 @@ impl ButtonMessage<PageState> for ProceedMessage {
 }
 impl ButtonMessage<PageState> for DrawMessage {
     fn can_apply(state: &PageState) -> bool {
-        match state {
-            PageState::CardPage(_) => true,
-            _ => false,
-        }
+        matches!(state, PageState::CardPage(_))
     }
 
     fn get_name() -> &'static str {
@@ -61,10 +58,7 @@ impl ButtonMessage<PageState> for DrawMessage {
 }
 impl ButtonMessage<PageState> for ShuffleMessage {
     fn can_apply(state: &PageState) -> bool {
-        match state {
-            PageState::CardPage(_) => true,
-            _ => false,
-        }
+        matches!(state, PageState::CardPage(_))
     }
 
     fn get_name() -> &'static str {

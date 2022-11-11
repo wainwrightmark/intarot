@@ -81,8 +81,8 @@ pub fn carousel_component<S: SelectCarouselMessage<TState> + 'static, TState: St
                 classes!("carousel-item", "carousel-item-hidden")
             };
 
-            let html = value.get_html(classes);
-            html
+            
+            value.get_html(classes)
         })
         .collect_vec();
 

@@ -22,8 +22,8 @@ impl Reducer<PageState> for ChooseStarSignMessage {
 impl SelectMessage<PageState> for ChooseStarSignMessage {
     fn get_values() -> Vec<Self> {
         std::iter::once(None)
-            .chain(StarSign::iter().map(|x| Some(x)))
-            .map(|x| Self(x))
+            .chain(StarSign::iter().map(Some))
+            .map(Self)
             .collect_vec()
     }
 

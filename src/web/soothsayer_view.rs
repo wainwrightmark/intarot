@@ -1,5 +1,4 @@
 use yew::prelude::*;
-use yewdux::prelude::*;
 
 use crate::state::choose_soothsayer_message::ChooseSoothsayerMessage;
 use crate::state::prelude::*;
