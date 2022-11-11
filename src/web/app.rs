@@ -10,7 +10,7 @@ use crate::web::soothsayer_view::SoothsayerView;
 pub fn app() -> Html {
     html! {
         <div class="site">
-            <div class="container" >
+            <div class="container-md" >
             <Content/>
             </div>
         </div>

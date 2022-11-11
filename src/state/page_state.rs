@@ -1,8 +1,9 @@
 use std::rc::Rc;
 
 use serde::{Deserialize, Serialize};
+use strum::EnumCount;
 
-use crate::SoothsayerPage;
+use crate::{SoothsayerPage, data::prelude::Card};
 
 use yewdux::prelude::*;
 
@@ -49,11 +50,23 @@ impl ButtonMessage<PageState> for ProceedMessage {
 }
 impl ButtonMessage<PageState> for DrawMessage {
     fn can_apply(state: &PageState) -> bool {
-        matches!(state, PageState::CardPage(_))
+        let PageState::CardPage(p) = state else{return false};
+        p.cards_drawn < Card::COUNT
     }
 
     fn get_name() -> &'static str {
         "Draw"
+    }
+}
+
+impl ButtonMessage<PageState> for ReplaceMessage {
+    fn can_apply(state: &PageState) -> bool {
+        let PageState::CardPage(p) = state else{return false};
+        p.cards_drawn > 1
+    }
+
+    fn get_name() -> &'static str {
+        "Replace"
     }
 }
 impl ButtonMessage<PageState> for ShuffleMessage {
@@ -90,6 +103,15 @@ impl Reducer<PageState> for DrawMessage {
     fn apply(self, state: Rc<PageState>) -> Rc<PageState> {
         match state.as_ref() {
             PageState::CardPage(cp) => Rc::new(PageState::CardPage(cp.clone().draw_card())),
+            _ => state,
+        }
+    }
+}
+
+impl Reducer<PageState> for ReplaceMessage {
+    fn apply(self, state: Rc<PageState>) -> Rc<PageState> {
+        match state.as_ref() {
+            PageState::CardPage(cp) => Rc::new(PageState::CardPage(cp.clone().replace_card())),
             _ => state,
         }
     }

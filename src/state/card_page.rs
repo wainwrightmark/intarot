@@ -42,6 +42,14 @@ impl CardPage {
         self.show_description = false;
         self
     }
+    
+    pub fn replace_card(mut self) -> Self {
+        if self.cards_drawn > 1 {
+            self.cards_drawn -= 1;
+        }
+        self.show_description = false;
+        self
+    }
 
     pub fn shuffle(mut self) -> Self {
         let mut rng = rand::thread_rng();

@@ -5,11 +5,8 @@
     margin: 0 auto;
 }
 
-.carousel .carousel-item{
-
-}
 .carousel .carousel-item-hidden {
-    display: none; /* hide all slide images not currently being viewed */
+    display: none;
 }
 
 .carousel .carousel-item-visible {
@@ -87,6 +84,8 @@
   grid-template-rows: 1fr;
   grid-column: 1 / 1;
   grid-row: 1 / 1;
+  transition-property: visibility, all;
+  transition-duration: 1s, 1s;
 }
 
 .prophecy-image {

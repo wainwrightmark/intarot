@@ -12,13 +12,12 @@ pub fn cards_control() -> Html {
         <div class="sm-4 col" style="margin: auto; width: 100em;">
         <CardsView />
         </div>
-        <div class="sm-4 col" style="margin: auto; width: 10em;">
+        <div class="sm-4 row" style="margin: auto;">
         <ButtonComponent<DrawMessage, PageState> />
-        </div>
-        <div class="sm-4 col" style="margin: auto; width: 10em;">
+        <ButtonComponent<ReplaceMessage, PageState> />
+        
         <ButtonComponent<ShuffleMessage, PageState> />
-        </div>
-        <div class="sm-4 col" style="margin: auto; width: 10em;">
+
         <ButtonComponent<ResetMessage, PageState> />
         </div>
         </>
@@ -98,31 +97,46 @@ fn card_view(props: &CardViewProps) -> Html{
   
     let style = if props.index + 1 == props.total_cards{
         format!(
-            "transform: translateX(15em) translateY(5em) rotateZ(30deg); visibility: hidden;",            
+            "transform:  translateX(15em) translateY(5em) rotateZ(30deg); visibility: hidden;",            
         )
               
     }
     else if top_card{
         let angle = 0;
         format!(
-            "transform: rotateZ({}deg); transition: {}s;",
-            angle,
-            3
+            "transform: rotateZ({}deg); transition-duration: 1s, 3s",
+            angle
         )  
     }
     else
     {
-        let angle = if props.index % 2 == 0{
-            15 + ((props.total_cards as isize - props.index as isize) * -1)
-        }
-        else{
-            -15 + ((props.total_cards as isize - props.index as isize) * 1)
-        };
-        //let angle = ;        
+        let angle = match props.index % 4 {
+            0=>15 + ((props.index as isize) * -1),
+            1=> -20 + (( props.index as isize) * 1),
+            2=> 20 + ((props.index as isize) * -1),
+            _=> -15 + ((props.index as isize) * 1),
+            
+        };   
+        
+        let translate_x = match props.index % 4 {
+            0=> 1,
+            1=> -1,
+            2=> 2,
+            _=> -2,            
+        };   
+        
+        let translate_y = match props.index % 4 {
+            0=> 1,
+            1=> 2,
+            2=> -2,
+            _=> -1,            
+        };   
+        
         format!(
-            "transform: rotateZ({}deg); transition: {}s;",
-            angle,
-            1
+            "transform: translateX({}em) translateY({}em)  rotateZ({}deg);s; pointer-events: none;",
+            translate_x,
+            translate_y,
+            angle
 
         )  
     };   
