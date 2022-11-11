@@ -17,6 +17,7 @@ pub struct CardPage {
     pub ordering: Ordering,
     pub cards_drawn: usize,
     pub show_description: bool,
+    pub max_drawn: usize
 }
 
 impl From<&SoothsayerPage> for CardPage {
@@ -30,6 +31,7 @@ impl From<&SoothsayerPage> for CardPage {
             ordering: ordering.into(),
             cards_drawn: 1,
             show_description: false,
+            max_drawn: 2
         }
     }
 }
@@ -38,6 +40,7 @@ impl CardPage {
     pub fn draw_card(mut self) -> Self {
         if self.cards_drawn < Card::COUNT {
             self.cards_drawn += 1;
+            self.max_drawn = self.max_drawn.max(self.cards_drawn + 1);
         }
         self.show_description = false;
         self
@@ -55,7 +58,7 @@ impl CardPage {
         let mut rng = rand::thread_rng();
         let ordering = rng.gen_range(Ordering::get_range(&Card::COUNT));
 
-        self.cards_drawn = 1;
+        self.cards_drawn = 0;
         self.ordering = ordering.into();
         self
     }

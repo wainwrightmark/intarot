@@ -44,7 +44,7 @@ fn cards_view() -> Html {
     let items = metas
         .into_iter()
         //.take(cp.cards_drawn)
-        .take(total_cards) 
+        .take(cp.max_drawn) 
         .enumerate()
         
         .map(|(index, image_meta)| 
@@ -98,6 +98,36 @@ fn card_view(props: &CardViewProps) -> Html{
     let style = if props.index + 1 == props.total_cards{
         format!(
             "transform:  translateX(15em) translateY(5em) rotateZ(30deg); visibility: hidden;",            
+        )
+              
+    }else if props.index + 1 >= props.total_cards{
+        let angle = match props.index % 4 {
+            0=>15 + ((props.index as isize) * -10),
+            1=> -20 + (( props.index as isize) * 10),
+            2=> 20 + ((props.index as isize) * -10),
+            _=> -15 + ((props.index as isize) * 10),
+            
+        };   
+        
+        let translate_x = match props.index % 4 {
+            0=> 10,
+            1=> -10,
+            2=> 20,
+            _=> -20,            
+        };   
+        
+        let translate_y = match props.index % 4 {
+            0=> 10,
+            1=> 20,
+            2=> -20,
+            _=> -10,            
+        };   
+
+        format!(
+            "transform:  translateX({}em) translateY({}em) rotateZ({}deg); visibility: hidden;",                  
+            translate_x,
+            translate_y,
+            angle,
         )
               
     }

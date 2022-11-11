@@ -1,3 +1,6 @@
+.site{
+    overflow-y: hidden;
+}
 
 .carousel {
     max-width: 600px;
