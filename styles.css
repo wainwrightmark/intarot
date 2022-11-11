@@ -57,27 +57,18 @@
     margin-right: -5%;  /* prevent next button from touching the side*/
 }
 
-.carousel-dots {
-    text-align: center; 
+.cards-grid{
+    display: grid;
+    grid-template-columns: 1fr;
 }
+
 
 .soothsayer-name{
     color: var(--muted-text);
     margin: 1em;
 }
 
-.image-overlay{
-    position: absolute;
-    top: 25%;
-    left: 10%;
-    transform: translateX(-5%);
-    color: black;
-    pointer-events: none;
-}
 
-.image_greyed{
-    opacity: 40%;
-}
 
 .soothsayer-image{
     border-radius: 20px; 
@@ -89,62 +80,47 @@
     animation-name: fade-in;
 }
 
-.prophecy-image-container{
-    position: relative;
-    perspective: 1000px;
-    height:fit-content;
+
+.prophecy-card{    
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
 }
 
-.prophecy-image-card{
-    position: relative;
-    transform-style: preserve-3d;
-    animation-duration: 3s;
-    animation-name: card-in;
-    width: 100%;
-  height: 100%;
-}
-
-.prophecy-image-front, .prophecy-image-back, .prophecy-image-ghost {
+.prophecy-image {
     
-    /* border: 2px solid;
-    
-    border-color: black; */
-    /* border: none; */
     border-radius: 10px;
     width: -webkit-fill-available;
     width: -moz-available;
     aspect-ratio: 1 / 2;
-    backface-visibility: hidden;
+    
   }
 
-  .prophecy-image-ghost{
+.prophecy-back{
+    border-radius: 10px;
+    background-color: white;
+}
+
+
+.prophecy-back, .prophecy-image, .image-overlay{
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.image-overlay-text{
     position: relative;
-    visibility: hidden;
-
+    top: 10%;
+    margin: 10%;
+    color: black;
+    pointer-events: none;
 }
 
-.prophecy-image-front{
-    position: absolute;
-
+.image_greyed{
+    opacity: 40%;
 }
 
-.prophecy-image-back{
-    position: absolute;
-    background-color: var(--primary);
-    transform: rotateY(180deg);
-
-    color: var(--primary);
-}
-
-@keyframes card-in {
-    from {
-        transform: rotateY(180deg);
-    }
-  
-    to {
-      transform: rotateY(0deg);
-    }
-  }
   
   @keyframes fade-in {
     from {
@@ -155,17 +131,6 @@
       opacity: 100%;
     }
   }
-
-
-/* hanlde smooth transitions between slides */
-@keyframes fadeVisibility {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
 
 .star_sign_dropdown{
     background: var(--main-background)

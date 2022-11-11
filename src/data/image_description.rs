@@ -1,4 +1,4 @@
-use std::str::FromStr;
+use std::{str::FromStr, borrow::Cow};
 
 use anyhow::bail;
 use itertools::Itertools;
@@ -9,9 +9,9 @@ use crate::data::prelude::*;
 pub struct ImageDescription {
     pub soothsayer: Soothsayer,
     pub card: Card,
-    pub representation: String,
-    pub guidance: String,
-    pub specific_guidance: String,
+    pub representation: Cow<'static, str>,
+    pub guidance: Cow<'static, str>,
+    pub specific_guidance: Cow<'static, str>,
 }
 
 impl Default for ImageDescription {
@@ -44,9 +44,9 @@ impl FromStr for ImageDescription {
         Ok(ImageDescription {
             soothsayer,
             card,
-            representation: representation.to_string(),
-            guidance: guidance.to_string(),
-            specific_guidance: specific_guidance.to_string(),
+            representation: representation.to_string() .into(),
+            guidance: guidance.clone().to_string().into(),
+            specific_guidance: specific_guidance.clone() .to_string().into(),
         })
     }
 }

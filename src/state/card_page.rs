@@ -39,6 +39,7 @@ impl CardPage {
         if self.cards_drawn < Card::COUNT {
             self.cards_drawn += 1;
         }
+        self.show_description = false;
         self
     }
 
@@ -46,7 +47,7 @@ impl CardPage {
         let mut rng = rand::thread_rng();
         let ordering = rng.gen_range(Ordering::get_range(&Card::COUNT));
 
-        self.cards_drawn = 0;
+        self.cards_drawn = 1;
         self.ordering = ordering.into();
         self
     }
@@ -56,7 +57,7 @@ impl CardPage {
         self
     }
 
-    pub fn get_image_meta(&self, meta_state: &super::prelude::ImageMetaState) -> Vec<ImageMeta> {
+    pub fn get_possible_image_metas(&self, meta_state: &super::prelude::ImageMetaState) -> Vec<ImageMeta> {
         let Some(all_metas) = meta_state.metas.as_ref()
                 else{
                     return Default::default();
@@ -64,13 +65,10 @@ impl CardPage {
 
         let mut cards = Card::iter().collect_vec();
 
-        self.ordering.reorder(&mut cards);
-
-        
+        self.ordering.reorder(&mut cards);        
 
         cards
-            .into_iter()
-            .take(self.cards_drawn)
+            .into_iter()            
             .flat_map(|card| all_metas.get(&(self.star_sign, self.soothsayer, card)))
             .cloned()
             .collect_vec()
