@@ -1,5 +1,3 @@
-//StarSign, Soothsayer
-
 use crate::data::prelude::{Soothsayer, StarSign};
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Default)]

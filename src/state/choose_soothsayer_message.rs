@@ -1,11 +1,11 @@
 use itertools::Itertools;
 use strum::{EnumProperty, IntoEnumIterator};
 use yew::html;
-use yewdux::store::Reducer;
+use yewdux::{store::Reducer, prelude::Dispatch};
 
 use crate::data::prelude::Soothsayer;
 
-use super::{messages::SelectCarouselMessage, prelude::PageState, soothsayer_page::SoothsayerPage};
+use super::{messages::{SelectCarouselMessage, ProceedMessage}, prelude::PageState, soothsayer_page::SoothsayerPage};
 
 #[derive(Copy, Clone, PartialEq, Default)]
 pub struct ChooseSoothsayerMessage(Soothsayer);
@@ -26,10 +26,15 @@ impl Reducer<PageState> for ChooseSoothsayerMessage {
 
 impl SelectCarouselMessage<PageState> for ChooseSoothsayerMessage {
     fn get_html(&self, classes: yew::Classes) -> yew::Html {
+
+        let onclick = Dispatch::<PageState>::new().apply_callback(|_| ProceedMessage::default());
         html!(
             <div class={classes}>
                 <h5 class="soothsayer-name" style="text-align: center;">{self.0.name()}</h5>
-                <img class="soothsayer-image" src={format!("https://drive.google.com/uc?export=view&id={}", self.0.image_id()) }
+                <img class="soothsayer-image" onclick={onclick}
+                
+                
+                src={format!("https://drive.google.com/uc?export=view&id={}", self.0.image_id()) }
                      alt={self.0.name()} />
                     <p class="soothsayer-text" >
                     {self.0.get_str("description")}
