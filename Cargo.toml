@@ -23,6 +23,9 @@ log = "0.4"
 wasm-logger = "0.2"
 yew = { git = "https://github.com/yewstack/yew.git", features = ["csr",] }
 yewdux = { git = "https://github.com/intendednull/yewdux.git" }
+yew-hooks = { git = "https://github.com/jetli/yew-hooks.git" }
+
+
 wasm-bindgen-futures = "0.4"
 wasm-bindgen= { version = "0.2", features = ["serde"] }
 instant = { version = "0.1", features = [ "wasm-bindgen", "inaccurate" ] }
@@ -30,7 +33,7 @@ js-sys = "0.3"
 getrandom = {version="0.2", features=["js"]}
 reqwest = { version = "0.11", features = ["blocking"] }
 anyhow = "1.0.66"
-ntest = "0.8.1"
+ntest = "0.9.0"
 
 
 [dependencies.web-sys]

@@ -3,7 +3,7 @@ use yew::prelude::*;
 use crate::state::choose_soothsayer_message::ChooseSoothsayerMessage;
 use crate::state::prelude::*;
 use crate::web::button_component::ButtonComponent;
-use crate::web::select_component::CarouselComponent;
+use crate::web::carousel_component::CarouselComponent;
 
 #[function_component(SoothsayerView)]
 pub fn soothsayer_view() -> Html {
