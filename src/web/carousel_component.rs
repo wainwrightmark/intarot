@@ -11,9 +11,6 @@ pub fn carousel_component<S: SelectCarouselMessage<TState> + 'static, TState: St
     let node =  use_node_ref();
     let swipe_state = use_swipe(node.clone());
 
-   
-
-
     let values = S::get_values();
     let current_value_rc = use_selector(|state: &TState| S::get_current_value(state));
     let current_value = current_value_rc.as_ref();
@@ -60,8 +57,8 @@ pub fn carousel_component<S: SelectCarouselMessage<TState> + 'static, TState: St
         use_effect_with_deps(move |direction| {
             // Do something based on direction.
             match **direction {
-                UseSwipeDirection::Left => Dispatch::<TState>::new().apply(previous),
-                UseSwipeDirection::Right => Dispatch::<TState>::new().apply(next),
+                UseSwipeDirection::Left => Dispatch::<TState>::new().apply(next),
+                UseSwipeDirection::Right => Dispatch::<TState>::new().apply(previous),
                 _ => (),
             }
             || ()
