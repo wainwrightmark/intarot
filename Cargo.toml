@@ -23,7 +23,7 @@ log = "0.4"
 wasm-logger = "0.2"
 yew = { git = "https://github.com/yewstack/yew.git", features = ["csr",] }
 yewdux = { git = "https://github.com/intendednull/yewdux.git" }
-yew-hooks = { git = "https://github.com/jetli/yew-hooks.git" }
+yew-hooks = { git = "https://github.com/jetli/yew-hooks.git", rev = "3a8dd7cd5ae8edad1d1be46156597bf4a7ba8d1e" }
 
 
 wasm-bindgen-futures = "0.4"

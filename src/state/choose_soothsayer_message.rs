@@ -5,7 +5,7 @@ use yewdux::{store::Reducer, prelude::Dispatch};
 
 use crate::data::prelude::Soothsayer;
 
-use super::{messages::{SelectCarouselMessage, ProceedMessage}, prelude::PageState, soothsayer_page::SoothsayerPage};
+use super::{messages::{SelectCarouselMessage}, prelude::PageState, soothsayer_page::SoothsayerPage, proceed_message::ProceedMessage};
 
 #[derive(Copy, Clone, PartialEq, Default)]
 pub struct ChooseSoothsayerMessage(Soothsayer);

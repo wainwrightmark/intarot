@@ -32,22 +32,7 @@ impl ButtonMessage<PageState> for ResetMessage {
         "Reset"
     }
 }
-impl ButtonMessage<PageState> for ProceedMessage {
-    fn can_apply(state: &PageState) -> bool {
-        match state {
-            PageState::OpeningPage(o) => match o.star_sign {
-                Some(_star_sign) => true,
-                None => false,
-            },
-            PageState::SoothsayerPage(_s) => true,
-            PageState::CardPage(_) => false,
-        }
-    }
 
-    fn get_name() -> &'static str {
-        "Proceed"
-    }
-}
 impl ButtonMessage<PageState> for DrawMessage {
     fn can_apply(state: &PageState) -> bool {
         let PageState::CardPage(p) = state else{return false};
@@ -84,21 +69,7 @@ impl Reducer<PageState> for ResetMessage {
         PageState::default().into()
     }
 }
-impl Reducer<PageState> for ProceedMessage {
-    fn apply(self, state: std::rc::Rc<PageState>) -> std::rc::Rc<PageState> {
-        match state.as_ref() {
-            PageState::OpeningPage(o) => match o.star_sign {
-                Some(star_sign) => Rc::new(PageState::SoothsayerPage(SoothsayerPage {
-                    star_sign,
-                    ..Default::default()
-                })),
-                None => state,
-            },
-            PageState::SoothsayerPage(s) => Rc::new(PageState::CardPage(s.into())),
-            PageState::CardPage(_) => state,
-        }
-    }
-}
+
 impl Reducer<PageState> for DrawMessage {
     fn apply(self, state: Rc<PageState>) -> Rc<PageState> {
         match state.as_ref() {

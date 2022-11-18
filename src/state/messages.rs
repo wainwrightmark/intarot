@@ -3,8 +3,7 @@ use yewdux::store::Reducer;
 
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct ResetMessage {}
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
-pub struct ProceedMessage {}
+
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct DrawMessage {}
 

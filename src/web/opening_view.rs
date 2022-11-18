@@ -2,6 +2,7 @@ use yew::prelude::*;
 
 use crate::state::choose_star_sign_message::ChooseStarSignMessage;
 use crate::state::prelude::*;
+use crate::state::proceed_message::ProceedMessage;
 use crate::web::prelude::*;
 
 #[function_component(OpeningView)]

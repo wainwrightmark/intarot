@@ -2,6 +2,7 @@ use yew::prelude::*;
 
 use crate::state::choose_soothsayer_message::ChooseSoothsayerMessage;
 use crate::state::prelude::*;
+use crate::state::proceed_message::ProceedMessage;
 use crate::web::button_component::ButtonComponent;
 use crate::web::carousel_component::CarouselComponent;
 

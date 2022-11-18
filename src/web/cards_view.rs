@@ -118,9 +118,9 @@ fn card_view(props: &CardViewProps) -> Html{
         
         let translate_y = match props.index % 4 {
             0=> 10,
-            1=> 20,
-            2=> -20,
-            _=> -10,            
+            1=> -20,
+            2=> -10,
+            _=> 20,            
         };   
 
         format!(
@@ -157,7 +157,7 @@ fn card_view(props: &CardViewProps) -> Html{
         
         let translate_y = match props.index % 4 {
             0=> 1,
-            1=> 2,
+            1=> 0,
             2=> -2,
             _=> -1,            
         };   

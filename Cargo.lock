@@ -1817,7 +1817,7 @@ dependencies = [
 [[package]]
 name = "yew-hooks"
 version = "0.1.56"
-source = "git+https://github.com/jetli/yew-hooks.git#3a8dd7cd5ae8edad1d1be46156597bf4a7ba8d1e"
+source = "git+https://github.com/jetli/yew-hooks.git?rev=3a8dd7cd5ae8edad1d1be46156597bf4a7ba8d1e#3a8dd7cd5ae8edad1d1be46156597bf4a7ba8d1e"
 dependencies = [
  "gloo 0.7.0",
  "js-sys",

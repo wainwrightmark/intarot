@@ -7,6 +7,7 @@ mod meta_state;
 mod opening_page;
 mod page_state;
 mod soothsayer_page;
+pub mod proceed_message;
 
 pub mod prelude {
     pub use crate::state::description_state::*;
@@ -20,4 +21,5 @@ pub mod prelude {
 
     pub use crate::state::choose_soothsayer_message;
     pub use crate::state::choose_star_sign_message;
+    pub use crate::state::proceed_message;
 }
