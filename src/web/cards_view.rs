@@ -176,6 +176,7 @@ fn card_view(props: &CardViewProps) -> Html {
 
     html! {
             <div class={card_classes} style = {style} >
+            <div class="prophecy-back"> </div>                      
                     <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone()) } onclick={toggle} />
                     {
                         if show_description{
