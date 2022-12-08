@@ -13,9 +13,9 @@ pub fn soothsayer_view() -> Html {
         <div class="sm-4 col" style="margin: auto; width: 100em; padding:unset;">
         <CarouselComponent<ChooseSoothsayerMessage, PageState> />
         </div>
-        <div class="sm-4 col" style="margin: auto; width: 10em;">
-        <ButtonComponent<ProceedMessage, PageState>/>
-        </div>
+        // <div class="sm-4 col" style="margin: auto; width: 10em;">
+        // <ButtonComponent<ProceedMessage, PageState>/>
+        // </div>
         </>
     }
 }

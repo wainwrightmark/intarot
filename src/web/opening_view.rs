@@ -23,7 +23,7 @@ pub fn opening_view() -> Html {
             </div>
             <div class="sm-4 col" style="margin: auto; width: 100em;">
             <SelectComponent<ChooseStarSignMessage, PageState> />
-            <ButtonComponent<ProceedMessage, PageState> />
+            // <ButtonComponent<ProceedMessage, PageState> />
             </div>
         </div>
     }
