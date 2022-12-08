@@ -21,11 +21,11 @@ pub fn opening_view() -> Html {
         {"Each of our soothsayers will offer you an interpretation of the card they draw for you, but their portentous drawings may contain the seed of further truth - only you will recognise the signs that fate has chosen for you."}
         </p>
             </div>
-            
+
             <SelectComponent<ChooseStarSignMessage, PageState> style="margin:auto;"/>
-            
+
             // <ButtonComponent<ProceedMessage, PageState> />
-            
+
         </div>
     }
 }

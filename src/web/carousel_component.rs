@@ -8,7 +8,7 @@ use crate::state::prelude::*;
 #[function_component(CarouselComponent)]
 pub fn carousel_component<S: SelectCarouselMessage<TState> + 'static, TState: Store>(//props: &ClassAndStyle,
 ) -> Html {
-    let node =  use_node_ref();
+    let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
 
     let values = S::get_values();
@@ -46,23 +46,25 @@ pub fn carousel_component<S: SelectCarouselMessage<TState> + 'static, TState: St
                 classes!("carousel-item", "carousel-item-hidden")
             };
 
-            
             value.get_html(classes)
         })
         .collect_vec();
 
-     // You can depend on direction/swiping etc.
-     {
+    // You can depend on direction/swiping etc.
+    {
         let swipe_state = swipe_state.clone();
-        use_effect_with_deps(move |direction| {
-            // Do something based on direction.
-            match **direction {
-                UseSwipeDirection::Left => Dispatch::<TState>::new().apply(next),
-                UseSwipeDirection::Right => Dispatch::<TState>::new().apply(previous),
-                _ => (),
-            }
-            || ()
-        }, swipe_state.direction);
+        use_effect_with_deps(
+            move |direction| {
+                // Do something based on direction.
+                match **direction {
+                    UseSwipeDirection::Left => Dispatch::<TState>::new().apply(next),
+                    UseSwipeDirection::Right => Dispatch::<TState>::new().apply(previous),
+                    _ => (),
+                }
+                || ()
+            },
+            swipe_state.direction,
+        );
     }
 
     html! {

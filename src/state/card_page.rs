@@ -17,7 +17,7 @@ pub struct CardPage {
     pub ordering: Ordering,
     pub cards_drawn: usize,
     pub show_description: bool,
-    pub max_drawn: usize
+    pub max_drawn: usize,
 }
 
 impl From<&SoothsayerPage> for CardPage {
@@ -31,7 +31,7 @@ impl From<&SoothsayerPage> for CardPage {
             ordering: ordering.into(),
             cards_drawn: 1,
             show_description: false,
-            max_drawn: 2
+            max_drawn: 2,
         }
     }
 }
@@ -45,7 +45,7 @@ impl CardPage {
         self.show_description = false;
         self
     }
-    
+
     pub fn replace_card(mut self) -> Self {
         if self.cards_drawn > 1 {
             self.cards_drawn -= 1;
@@ -68,7 +68,10 @@ impl CardPage {
         self
     }
 
-    pub fn get_possible_image_metas(&self, meta_state: &super::prelude::ImageMetaState) -> Vec<ImageMeta> {
+    pub fn get_possible_image_metas(
+        &self,
+        meta_state: &super::prelude::ImageMetaState,
+    ) -> Vec<ImageMeta> {
         let Some(all_metas) = meta_state.metas.as_ref()
                 else{
                     return Default::default();
@@ -76,10 +79,10 @@ impl CardPage {
 
         let mut cards = Card::iter().collect_vec();
 
-        self.ordering.reorder(&mut cards);        
+        self.ordering.reorder(&mut cards);
 
         cards
-            .into_iter()            
+            .into_iter()
             .flat_map(|card| all_metas.get(&(self.star_sign, self.soothsayer, card)))
             .cloned()
             .collect_vec()

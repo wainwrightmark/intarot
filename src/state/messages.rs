@@ -8,7 +8,7 @@ pub struct ResetMessage {}
 pub struct DrawMessage {}
 
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
-pub struct ReplaceMessage{}
+pub struct ReplaceMessage {}
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct ShuffleMessage {}
 #[derive(Default, Copy, Clone, PartialEq, Eq)]

@@ -1,4 +1,4 @@
-use std::{str::FromStr, borrow::Cow};
+use std::{borrow::Cow, str::FromStr};
 
 use anyhow::bail;
 use itertools::Itertools;
@@ -44,9 +44,9 @@ impl FromStr for ImageDescription {
         Ok(ImageDescription {
             soothsayer,
             card,
-            representation: representation.to_string() .into(),
+            representation: representation.to_string().into(),
             guidance: guidance.clone().to_string().into(),
-            specific_guidance: specific_guidance.clone() .to_string().into(),
+            specific_guidance: specific_guidance.clone().to_string().into(),
         })
     }
 }

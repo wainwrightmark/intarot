@@ -13,16 +13,14 @@ pub struct ChooseStarSignMessage(Option<StarSign>);
 
 impl Reducer<PageState> for ChooseStarSignMessage {
     fn apply(self, _state: Rc<PageState>) -> Rc<PageState> {
-
-        if let Some(star_sign) = self.0{
+        if let Some(star_sign) = self.0 {
             Rc::new(PageState::SoothsayerPage(super::prelude::SoothsayerPage {
                 star_sign,
-                soothsayer: crate::data::prelude::Soothsayer::Madame
+                soothsayer: crate::data::prelude::Soothsayer::Madame,
             }))
-        }
-        else{
+        } else {
             Rc::new(PageState::OpeningPage(super::prelude::OpeningPage {
-                star_sign: None
+                star_sign: None,
             }))
         }
     }

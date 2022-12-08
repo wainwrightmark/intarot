@@ -6,8 +6,8 @@ pub mod messages;
 mod meta_state;
 mod opening_page;
 mod page_state;
-mod soothsayer_page;
 pub mod proceed_message;
+mod soothsayer_page;
 
 pub mod prelude {
     pub use crate::state::description_state::*;

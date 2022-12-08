@@ -3,7 +3,7 @@ use std::rc::Rc;
 use serde::{Deserialize, Serialize};
 use strum::EnumCount;
 
-use crate::{SoothsayerPage, data::prelude::Card};
+use crate::{data::prelude::Card, SoothsayerPage};
 
 use yewdux::prelude::*;
 
