@@ -10,7 +10,7 @@ use yewdux::prelude::*;
 use super::{card_page::CardPage, messages::*, opening_page::OpeningPage};
 
 #[derive(PartialEq, Eq, Store, Clone, Serialize, Deserialize)]
-#[store(storage = "local")]
+// #[store(storage = "local")]
 pub enum PageState {
     OpeningPage(OpeningPage),
     SoothsayerPage(SoothsayerPage),

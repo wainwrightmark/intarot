@@ -12,13 +12,13 @@ pub fn cards_control() -> Html {
         <div class="sm-4 col" style="margin: auto; width: 100em;">
         <CardsView />
         </div>
-        <div class="sm-4 row" style="margin: auto;">
+        <div class="sm-4 row flex-middle" style="margin: auto;">
         <ButtonComponent<DrawMessage, PageState> />
         <ButtonComponent<ReplaceMessage, PageState> />
         
         <ButtonComponent<ShuffleMessage, PageState> />
 
-        <ButtonComponent<ResetMessage, PageState> />
+        // <ButtonComponent<ResetMessage, PageState> />
         </div>
         </>
     )

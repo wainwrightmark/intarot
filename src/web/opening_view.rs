@@ -9,7 +9,7 @@ use crate::web::prelude::*;
 pub fn opening_view() -> Html {
     html! {
         <div>
-        <div class="sm-4 col" style="margin: auto; width: 100em;">
+        <div class="sm-4 col">
 
         <h3 style="color: gold; text-align: center;">
         {"The Eighth Arcana"}
@@ -21,10 +21,11 @@ pub fn opening_view() -> Html {
         {"Each of our soothsayers will offer you an interpretation of the card they draw for you, but their portentous drawings may contain the seed of further truth - only you will recognise the signs that fate has chosen for you."}
         </p>
             </div>
-            <div class="sm-4 col" style="margin: auto; width: 100em;">
-            <SelectComponent<ChooseStarSignMessage, PageState> />
+            
+            <SelectComponent<ChooseStarSignMessage, PageState> style="margin:auto;"/>
+            
             // <ButtonComponent<ProceedMessage, PageState> />
-            </div>
+            
         </div>
     }
 }

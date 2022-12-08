@@ -30,19 +30,19 @@
     width: 100%;
     justify-content: space-between; /* put space between the navigation buttons */
     position: absolute; /* position navigation buttons on top */
-    top: 25%; /* center navigation buttons on the slide */
+    top: 25vh; /* center navigation buttons on the slide */
     /*transform: translateY(100%); /* align navigation buttons */
 }
 
 .carousel .carousel-actions button {
-    border-radius: 25px;
+    border-radius: 12px;
     background-color: transparent;    
     border-color: black;
-    font-size: 16px;
-    font-weight: bold;
     cursor: pointer;
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
+    padding: 0%;
+    transform: none;
 }
 
 .carousel .carousel-actions button[disabled] {
@@ -50,11 +50,11 @@
 }
 
 .carousel .carousel-actions button#carousel-button-prev {
-    margin-left: -5%; /* prevent previous button from touching the side*/
+    margin-left: 2%; /* prevent previous button from touching the side*/
 }
 
 .carousel .carousel-actions button#carousel-button-next {
-    margin-right: -5%;  /* prevent next button from touching the side*/
+    margin-right: 2%;  /* prevent next button from touching the side*/
 }
 
 .cards-grid{
