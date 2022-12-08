@@ -7,7 +7,7 @@ use crate::web::opening_view::OpeningView;
 use crate::web::soothsayer_view::SoothsayerView;
 
 #[function_component(App)]
-pub fn app() -> Html {
+pub fn app() -> Html {    
     html! {
         <div class="site">
             <div class="container" >

@@ -1,5 +1,7 @@
 use std::rc::Rc;
 
+use yew::Hook;
+use yew_hooks::use_location;
 use yewdux::store::Reducer;
 
 use super::{prelude::PageState, messages::ButtonMessage, soothsayer_page::SoothsayerPage};
@@ -35,7 +37,10 @@ impl Reducer<PageState> for ProceedMessage {
                 })),
                 None => state,
             },
-            PageState::SoothsayerPage(s) => Rc::new(PageState::CardPage(s.into())),
+            PageState::SoothsayerPage(s) => {
+                Rc::new(PageState::CardPage(s.into()))                
+
+            },
             PageState::CardPage(_) => state,
         }
     }
