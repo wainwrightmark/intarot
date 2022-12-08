@@ -10,7 +10,7 @@ use crate::web::carousel_component::CarouselComponent;
 pub fn soothsayer_view() -> Html {
     html! {
         <>
-        <div class="sm-4 col" style="margin: auto; width: 100em; padding:unset;">
+        <div class="sm-4 col" style="margin: auto; width: 90em; padding:unset;">
         <CarouselComponent<ChooseSoothsayerMessage, PageState> />
         </div>
         // <div class="sm-4 col" style="margin: auto; width: 10em;">

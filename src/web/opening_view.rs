@@ -9,7 +9,7 @@ use crate::web::prelude::*;
 pub fn opening_view() -> Html {
     html! {
         <div>
-        <div class="sm-4 col">
+        <div class="sm-4 col" style="margin: auto;">
 
         <h3 style="color: gold; text-align: center;">
         {"The Eighth Arcana"}

@@ -1,4 +1,5 @@
 use yew::prelude::*;
+use yew_hooks::{UseSwipeDirection, use_swipe};
 use yewdux::prelude::*;
 
 use crate::data::prelude::*;
@@ -7,19 +8,29 @@ use crate::web::button_component::ButtonComponent;
 
 #[function_component(CardsControl)]
 pub fn cards_control() -> Html {
+    let node =  use_node_ref();
+    let swipe_state = use_swipe(node.clone());
+
+    // You can depend on direction/swiping etc.
+    {
+        let swipe_state = swipe_state.clone();
+        use_effect_with_deps(move |direction| {
+            // Do something based on direction.
+            match **direction {
+                UseSwipeDirection::Left => Dispatch::<PageState>::new().apply(ReplaceMessage{}),
+                UseSwipeDirection::Right => Dispatch::<PageState>::new().apply(DrawMessage{}),
+                _ => (),
+            }
+            || ()
+        }, swipe_state.direction);
+    }
+
     html!(
         <>
-        <div class="sm-4 col" style="margin: auto; width: 100em;">
+        <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
         <CardsView />
         </div>
-        <div class="sm-4 row flex-middle" style="margin: auto;">
-        <ButtonComponent<DrawMessage, PageState> />
-        <ButtonComponent<ReplaceMessage, PageState> />
-        
-        <ButtonComponent<ShuffleMessage, PageState> />
 
-        // <ButtonComponent<ResetMessage, PageState> />
-        </div>
         </>
     )
 }
@@ -29,6 +40,8 @@ fn cards_view() -> Html {
     let (metas_state, _) = use_store::<ImageMetaState>();
     let (descriptions_state, _) = use_store::<ImageDescriptionState>();
     let (page_state, _) = use_store::<PageState>();
+
+    
 
     let PageState::CardPage(cp) = page_state.as_ref() else{
         return html!();
@@ -97,7 +110,7 @@ fn card_view(props: &CardViewProps) -> Html{
   
     let style = if props.index + 1 == props.total_cards{
         format!(
-            "transform:  translateX(15em) translateY(5em) rotateZ(30deg); visibility: hidden;",            
+            "transform:  translateX(-15em) translateY(5em) rotateZ(-30deg); visibility: hidden;",            
         )
               
     }else if props.index + 1 >= props.total_cards{
@@ -173,8 +186,7 @@ fn card_view(props: &CardViewProps) -> Html{
     
 
     html! {
-                <div class={card_classes} style = {style} >
-                <div class="prophecy-back"> </div>                      
+                <div class={card_classes} style = {style} >                
                         <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone()) } onclick={toggle} />
                         {
                             if show_description{

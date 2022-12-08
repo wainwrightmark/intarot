@@ -1,6 +1,11 @@
 .container{
     overflow: hidden;
+    width: 100%;
 }
+
+body, html {
+    overflow: hidden
+  }
 
 .carousel {
     max-width: 600px;
@@ -15,6 +20,8 @@
 .carousel .carousel-item-visible {
     display: block; /* show current slide image */
     animation: fadeVisibility 0.5s; /* for fading effect when switching between slides */
+    max-width: 90vw;
+    margin: auto;
 }
 
 .carousel .carousel-item img {
