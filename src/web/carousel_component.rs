@@ -73,8 +73,8 @@ pub fn carousel_component<S: SelectCarouselMessage<TState> + 'static, TState: St
             {items}
 
             <div class="carousel-actions">
-            <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous}></button>
-            <button id="carousel-button-next" aria-label="Next" disabled={!can_select_next} onclick={select_next}></button>
+            <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous}>{"❰"}</button>
+            <button id="carousel-button-next" aria-label="Next" disabled={!can_select_next} onclick={select_next}>{"❱"}</button>
 
 
             </div>

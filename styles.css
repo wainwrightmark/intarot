@@ -43,12 +43,12 @@ body, html {
 
 .carousel-actions button {
     border-radius: 12px;
-    background-color: transparent;    
-    border-color: black;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    padding: 0%;
+    /* background-color: transparent;     */
+    /* border-color: black; */
+    /* cursor: pointer; */
+    /* width: 20px;
+    height: 20px; */
+    /* padding: 0%; */
     transform: none;
 }
 
@@ -63,12 +63,14 @@ body, html {
 
 .card-actions button{
     border-radius: 12px;
-    background-color: transparent;    
-    border-color: black;
-    cursor: pointer;
-    width: 20px;
+    background-color: transparent;
+    border-color: transparent;
+    
+    /* cursor: pointer; */
+    /* width: 20px;
     height: 20px;
-    padding: 0%;
+    padding: 0%; */
+    box-shadow: none;
     transform: none;
 }
 

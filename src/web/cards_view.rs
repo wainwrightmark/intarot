@@ -45,8 +45,8 @@ pub fn cards_control() -> Html {
 
         <CardsView />
         <div class="card-actions">
-        <button id="card-button-prev" aria-label="Previous" disabled={!can_replace}  onclick={select_previous}></button>
-        <button id="card-button-next" aria-label="Next" onclick={select_next}></button>
+        <button id="card-button-prev" aria-label="Previous" disabled={!can_replace}  onclick={select_previous}>{"❰"}</button>
+        <button id="card-button-next" aria-label="Next" onclick={select_next}>{"❱"}</button>
         </div>
         </div>
 
