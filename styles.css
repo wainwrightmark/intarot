@@ -32,7 +32,7 @@ body, html {
 }
 
 /* Navigation control styles */
-.carousel .carousel-actions {
+.carousel-actions {
     display: flex;
     width: 100%;
     justify-content: space-between; /* put space between the navigation buttons */
@@ -41,7 +41,7 @@ body, html {
     /*transform: translateY(100%); /* align navigation buttons */
 }
 
-.carousel .carousel-actions button {
+.carousel-actions button {
     border-radius: 12px;
     background-color: transparent;    
     border-color: black;
@@ -50,6 +50,38 @@ body, html {
     height: 20px;
     padding: 0%;
     transform: none;
+}
+
+.card-actions{
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* put space between the navigation buttons */
+    position: absolute; /* position navigation buttons on top */
+    top: 25vh; /* center navigation buttons on the slide */
+    left: 0%;
+}
+
+.card-actions button{
+    border-radius: 12px;
+    background-color: transparent;    
+    border-color: black;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    padding: 0%;
+    transform: none;
+}
+
+.card-actions button[disabled] {
+    visibility: hidden;
+}
+
+ .card-actions button#card-button-prev {
+    margin-left: 2%; /* prevent previous button from touching the side*/
+}
+
+.card-actions button#card-button-next {
+    margin-right: 2%;  /* prevent next button from touching the side*/
 }
 
 .carousel .carousel-actions button[disabled] {

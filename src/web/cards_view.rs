@@ -30,11 +30,28 @@ pub fn cards_control() -> Html {
         );
     }
 
+    let can_replace = use_selector(|x: &PageState| match x {
+        PageState::OpeningPage(_) => false,
+        PageState::SoothsayerPage(_) => false,
+        PageState::CardPage(cp) => cp.cards_drawn > 1,
+    }).as_ref().clone();
+
+    let select_previous = Dispatch::<PageState>::new().apply_callback(move |_| ReplaceMessage{});
+    let select_next = Dispatch::<PageState>::new().apply_callback(move |_| DrawMessage{});
+
     html!(
         <>
         <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
+
         <CardsView />
+        <div class="card-actions">
+        <button id="card-button-prev" aria-label="Previous" disabled={!can_replace}  onclick={select_previous}></button>
+        <button id="card-button-next" aria-label="Next" onclick={select_next}></button>
         </div>
+        </div>
+
+        
+
 
         </>
     )

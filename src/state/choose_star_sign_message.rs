@@ -16,7 +16,7 @@ impl Reducer<PageState> for ChooseStarSignMessage {
         if let Some(star_sign) = self.0 {
             Rc::new(PageState::SoothsayerPage(super::prelude::SoothsayerPage {
                 star_sign,
-                soothsayer: crate::data::prelude::Soothsayer::Madame,
+                soothsayer: crate::data::prelude::Soothsayer::first(),
             }))
         } else {
             Rc::new(PageState::OpeningPage(super::prelude::OpeningPage {
