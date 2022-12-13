@@ -19,9 +19,9 @@ pub fn cards_control() -> Html {
                 // Do something based on direction.
                 match **direction {
                     UseSwipeDirection::Left => {
-                        Dispatch::<PageState>::new().apply(ReplaceMessage {})
+                        Dispatch::<PageState>::new().apply(DrawMessage {})
                     }
-                    UseSwipeDirection::Right => Dispatch::<PageState>::new().apply(DrawMessage {}),
+                    UseSwipeDirection::Right => Dispatch::<PageState>::new().apply(ReplaceMessage {}),
                     _ => (),
                 }
                 || ()
@@ -129,7 +129,7 @@ fn card_view(props: &CardViewProps) -> Html {
 
     let style = if props.index + 1 == props.total_cards {
         format!(
-            "transform:  translateX(-15em) translateY(5em) rotateZ(-30deg); visibility: hidden;",
+            "transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden;",
         )
     } else if props.index + 1 >= props.total_cards {
         let angle = match props.index % 4 {
