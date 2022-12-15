@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
+use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr, Display};
 
 #[derive(
     Copy,
@@ -17,6 +17,7 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
     EnumCount,
     IntoStaticStr,
     Default,
+    Display
 )]
 
 pub enum Soothsayer {
@@ -58,6 +59,10 @@ impl Soothsayer {
 
     pub fn image_id(&self) -> &'static str {
         self.get_str("image_id").unwrap()
+    }
+    
+    pub fn description(&self) -> &'static str {
+        self.get_str("description").unwrap()
     }
 
     pub fn name(&self) -> &'static str {

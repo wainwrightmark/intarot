@@ -4,14 +4,26 @@ use yewdux::prelude::*;
 
 use crate::data::prelude::*;
 use crate::state::prelude::*;
-use crate::web::button_component::ButtonComponent;
+
+#[derive(Properties, PartialEq, Clone)]
+pub struct CardControlProps {    
+    pub sign: StarSign,
+    pub soothsayer: Soothsayer
+}
 
 #[function_component(CardsControl)]
-pub fn cards_control() -> Html {
+pub fn cards_control(props: &CardControlProps) -> Html {
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
 
-    // You can depend on direction/swiping etc.
+    
+
+    let (cp, dispatch) = use_store::<CardPageState>();
+    let props = props.clone();
+    use_effect(move ||{
+        dispatch.reduce(|x|x.on_load(props.sign, props.soothsayer))
+    });
+
     {
         let swipe_state = swipe_state.clone();
         use_effect_with_deps(
@@ -19,9 +31,9 @@ pub fn cards_control() -> Html {
                 // Do something based on direction.
                 match **direction {
                     UseSwipeDirection::Left => {
-                        Dispatch::<PageState>::new().apply(DrawMessage {})
+                        Dispatch::<CardPageState>::new().apply(DrawMessage {})
                     }
-                    UseSwipeDirection::Right => Dispatch::<PageState>::new().apply(ReplaceMessage {}),
+                    UseSwipeDirection::Right => Dispatch::<CardPageState>::new().apply(ReplaceMessage {}),
                     _ => (),
                 }
                 || ()
@@ -30,42 +42,15 @@ pub fn cards_control() -> Html {
         );
     }
 
-    let can_replace = use_selector(|x: &PageState| match x {
-        PageState::OpeningPage(_) => false,
-        PageState::SoothsayerPage(_) => false,
-        PageState::CardPage(cp) => cp.cards_drawn > 1,
-    }).as_ref().clone();
+    
 
-    let select_previous = Dispatch::<PageState>::new().apply_callback(move |_| ReplaceMessage{});
-    let select_next = Dispatch::<PageState>::new().apply_callback(move |_| DrawMessage{});
+    let can_replace =cp.cards_drawn > 1;
 
-    html!(
-        <>
-        <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
+    let select_previous = Dispatch::<CardPageState>::new().apply_callback(move |_| ReplaceMessage{});
+    let select_next = Dispatch::<CardPageState>::new().apply_callback(move |_| DrawMessage{});
 
-        <CardsView />
-        <div class="card-actions">
-        <button id="card-button-prev" aria-label="Previous" disabled={!can_replace}  onclick={select_previous}>{"❰"}</button>
-        <button id="card-button-next" aria-label="Next" onclick={select_next}>{"❱"}</button>
-        </div>
-        </div>
-
-        
-
-
-        </>
-    )
-}
-
-#[function_component(CardsView)]
-fn cards_view() -> Html {
     let (metas_state, _) = use_store::<ImageMetaState>();
-    let (descriptions_state, _) = use_store::<ImageDescriptionState>();
-    let (page_state, _) = use_store::<PageState>();
-
-    let PageState::CardPage(cp) = page_state.as_ref() else{
-        return html!();
-    };
+    let (descriptions_state, _) = use_store::<ImageDescriptionState>();    
 
     let Some(ds) = descriptions_state.descriptions.as_ref() else{
         return html!();
@@ -86,15 +71,21 @@ fn cards_view() -> Html {
             let key = image_meta.card.name().clone();
             //let top_card = index + 1 == metas_len;
             html!(<CardView index={index} meta={image_meta} show_description={s_d} description={description} total_cards={total_cards} key={key} />)
-        })
-
-        
-        
+        })        
         .collect::<Html>();
+
     html!(
+        <>
+        <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
         <div class="cards-grid" key="cards-grid">
         { items }
         </div>
+        <div class="card-actions">
+        <button id="card-button-prev" aria-label="Previous" disabled={!can_replace}  onclick={select_previous}>{"❰"}</button>
+        <button id="card-button-next" aria-label="Next" onclick={select_next}>{"❱"}</button>
+        </div>
+        </div>    
+        </>
     )
 }
 
@@ -109,7 +100,7 @@ struct CardViewProps {
 
 #[function_component(CardView)]
 fn card_view(props: &CardViewProps) -> Html {
-    let toggle = Dispatch::<PageState>::new().apply_callback(|_| ToggleDescriptionMessage {});
+    let toggle = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
     let mut card_classes = classes!("prophecy-card");
     let mut image_classes = classes!("prophecy-image");

@@ -1,42 +1,61 @@
+use std::rc::Rc;
+
 use itertools::Itertools;
 
 use rand::Rng;
+use rand::rngs::ThreadRng;
 use strum::EnumCount;
 use strum::IntoEnumIterator;
+use yewdux::store::Store;
 
 use crate::data::prelude::Card;
 use crate::data::prelude::ImageMeta;
 use crate::data::prelude::{Ordering, Soothsayer, StarSign};
 
-use super::soothsayer_page::SoothsayerPage;
-
-#[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Default)]
-pub struct CardPage {
+#[derive(PartialEq, Eq, Clone, Copy, serde:: Serialize, serde::Deserialize,  Store)]
+pub struct CardPageState {
     pub star_sign: StarSign,
     pub soothsayer: Soothsayer,
     pub ordering: Ordering,
     pub cards_drawn: usize,
     pub show_description: bool,
     pub max_drawn: usize,
+    
 }
 
-impl From<&SoothsayerPage> for CardPage {
-    fn from(value: &SoothsayerPage) -> Self {
-        let mut rng = rand::thread_rng();
-
-        let ordering = rng.gen_range(Ordering::get_range(&Card::COUNT));
-        CardPage {
-            star_sign: value.star_sign,
-            soothsayer: value.soothsayer,
-            ordering: ordering.into(),
+impl Default for CardPageState{
+    fn default() -> Self {
+        let ordering = Ordering(ThreadRng::default().gen_range(Ordering::get_range(&22)));
+        Self { 
             cards_drawn: 1,
-            show_description: false,
-            max_drawn: 2,
-        }
+            max_drawn: 1, 
+            ordering,
+            star_sign: Default::default(),
+            soothsayer: Default::default(),
+            show_description: false
+         }
     }
 }
 
-impl CardPage {
+
+impl CardPageState {
+
+    pub fn on_load( self: Rc::<Self>,new_sign: StarSign, new_soothsayer: Soothsayer )-> Rc::<Self>
+    {
+        if new_sign != self.star_sign || new_soothsayer != self.soothsayer{
+           Self{
+                star_sign: new_sign,
+                soothsayer: new_soothsayer,
+                ..Default::default()
+            }.into()
+        }
+        else{
+            self
+        }
+
+        
+    }
+
     pub fn draw_card(mut self) -> Self {
         self.show_description = false;
         if self.cards_drawn < Card::COUNT {
@@ -73,6 +92,7 @@ impl CardPage {
 
     pub fn get_possible_image_metas(
         &self,
+        
         meta_state: &super::prelude::ImageMetaState,
     ) -> Vec<ImageMeta> {
         let Some(all_metas) = meta_state.metas.as_ref()

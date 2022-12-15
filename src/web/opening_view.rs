@@ -1,12 +1,34 @@
-use yew::prelude::*;
+use std::str::FromStr;
 
-use crate::state::choose_star_sign_message::ChooseStarSignMessage;
-use crate::state::prelude::*;
-use crate::state::proceed_message::ProceedMessage;
+use itertools::Itertools;
+use strum::IntoEnumIterator;
+use web_sys::HtmlSelectElement;
+use yew::prelude::*;
+use yew_router::prelude::use_navigator;
+
+use crate::data::prelude::StarSign;
 use crate::web::prelude::*;
 
 #[function_component(OpeningView)]
 pub fn opening_view() -> Html {
+    let navigator = use_navigator().unwrap();
+
+    let onchange = Callback::from(move |e: Event| {
+        let input: HtmlSelectElement = e.target_unchecked_into();
+        let s = input.value();
+
+        if let Ok(sign) = StarSign::from_str(s.as_str()) {
+            navigator.push(&Route::Soothsayer { sign });
+        }
+    });
+
+    let options = StarSign::iter()
+    .map(|value| {        
+        html!(  <option value={value.repr()} selected={false} disabled={false}> {value.name()}  </option>
+        )
+    })
+    .collect_vec();
+
     html! {
         <div>
         <div class="sm-4 col" style="margin: auto;">
@@ -21,11 +43,10 @@ pub fn opening_view() -> Html {
         {"Each of our soothsayers will offer you an interpretation of the card they draw for you, but their portentous drawings may contain the seed of further truth - only you will recognise the signs that fate has chosen for you."}
         </p>
             </div>
-
-            <SelectComponent<ChooseStarSignMessage, PageState> style="margin:auto;"/>
-
-            // <ButtonComponent<ProceedMessage, PageState> />
-
+            <select {onchange} class="" style="margin:auto;">
+                    <option selected={true} disabled={true}> {"Choose Star Sign"}  </option>
+                    {options}
+                </select>
         </div>
     }
 }

@@ -1,5 +1,6 @@
 use crate::state::prelude::*;
 use crate::web::prelude::*;
+
 pub mod data;
 pub mod state;
 pub mod web;
@@ -11,3 +12,4 @@ fn main() {
     wasm_bindgen_futures::spawn_local(ImageDescriptionState::setup());
     yew::Renderer::<App>::new().render();
 }
+
