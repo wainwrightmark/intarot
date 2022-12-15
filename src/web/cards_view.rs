@@ -8,7 +8,8 @@ use crate::state::prelude::*;
 #[derive(Properties, PartialEq, Clone)]
 pub struct CardControlProps {    
     pub sign: StarSign,
-    pub soothsayer: Soothsayer
+    pub soothsayer: Soothsayer,
+    pub ordering: Ordering
 }
 
 #[function_component(CardsControl)]
@@ -21,7 +22,7 @@ pub fn cards_control(props: &CardControlProps) -> Html {
     let (cp, dispatch) = use_store::<CardPageState>();
     let props = props.clone();
     use_effect(move ||{
-        dispatch.reduce(|x|x.on_load(props.sign, props.soothsayer))
+        dispatch.reduce(|x|x.on_load(props.sign, props.soothsayer, props.ordering))
     });
 
     {

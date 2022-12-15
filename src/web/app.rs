@@ -1,4 +1,4 @@
-use crate::data::prelude::{Soothsayer, StarSign};
+use crate::data::prelude::{Soothsayer, StarSign, Ordering};
 use crate::web::opening_view::OpeningView;
 use crate::web::soothsayer_view::SoothsayerView;
 use yew::prelude::*;
@@ -12,10 +12,11 @@ pub enum Route {
     Opening,
     #[at("/:sign")]
     Soothsayer { sign: StarSign },
-    #[at("/:sign/:soothsayer")]
+    #[at("/:sign/:soothsayer/:ordering")]
     Card {
         sign: StarSign,
         soothsayer: Soothsayer,
+        ordering: Ordering
     },
 }
 
@@ -41,9 +42,9 @@ fn switch(routes: Route) -> Html {
             <SoothsayerView sign={sign} />
             
         },
-        Route::Card { sign, soothsayer } => html! {
+        Route::Card { sign, soothsayer, ordering } => html! {
             
-            <CardsControl sign={sign} soothsayer={soothsayer}/>
+            <CardsControl sign={sign} soothsayer={soothsayer} ordering={ordering}/>
             
              },
     }

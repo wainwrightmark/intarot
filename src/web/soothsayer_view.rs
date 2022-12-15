@@ -3,8 +3,9 @@ use strum::{IntoEnumIterator, EnumCount};
 use yew::prelude::*;
 use yew_hooks::{UseSwipeDirection, use_swipe};
 use yew_router::prelude::use_navigator;
+use yewdux::prelude::{use_selector, use_store_value};
 
-use crate::data::prelude::{Soothsayer, StarSign};
+use crate::{data::prelude::{Soothsayer, StarSign}, state::prelude::CardPageState};
 use super::app::Route;
 
 
@@ -15,6 +16,7 @@ pub struct SoothsayerProps {
 
 #[function_component(SoothsayerView)]
 pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
+    let card_page_state = use_store_value::<CardPageState>();
     
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
@@ -49,9 +51,11 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                 let soothsayer = soothsayer.clone();
                 let sign = props.sign.clone();
                 let navigator = navigator.clone();
+                let card_page_state = card_page_state.as_ref().clone();
                 Callback::from(move |_e: MouseEvent| {
-                    
-                    navigator.push(&Route::Card { sign, soothsayer });
+
+                    let ordering = card_page_state.get_new_ordering_if_changed(sign, soothsayer); 
+                    navigator.push(&Route::Card { sign, soothsayer, ordering });
                 })
             };
             html!(

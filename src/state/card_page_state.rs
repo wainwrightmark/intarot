@@ -25,7 +25,7 @@ pub struct CardPageState {
 
 impl Default for CardPageState{
     fn default() -> Self {
-        let ordering = Ordering(ThreadRng::default().gen_range(Ordering::get_range(&22)));
+        let ordering = Ordering::gen(22);
         Self { 
             cards_drawn: 1,
             max_drawn: 1, 
@@ -40,20 +40,28 @@ impl Default for CardPageState{
 
 impl CardPageState {
 
-    pub fn on_load( self: Rc::<Self>,new_sign: StarSign, new_soothsayer: Soothsayer )-> Rc::<Self>
+    pub fn get_new_ordering_if_changed(&self, star_sign: StarSign, soothsayer: Soothsayer)-> Ordering{
+        if self.star_sign == star_sign && self.soothsayer == soothsayer{
+            self.ordering
+        }
+        else{
+            Ordering::gen(22)
+        }
+    }
+
+    pub fn on_load( self: Rc::<Self>,new_sign: StarSign, new_soothsayer: Soothsayer, new_ordering: Ordering )-> Rc::<Self>
     {
-        if new_sign != self.star_sign || new_soothsayer != self.soothsayer{
+        if new_sign != self.star_sign || new_soothsayer != self.soothsayer || new_ordering != self.ordering{
            Self{
                 star_sign: new_sign,
                 soothsayer: new_soothsayer,
+                ordering: new_ordering,
                 ..Default::default()
             }.into()
         }
         else{
             self
-        }
-
-        
+        }        
     }
 
     pub fn draw_card(mut self) -> Self {
@@ -111,5 +119,3 @@ impl CardPageState {
             .collect_vec()
     }
 }
-
-//StarSign, Soothsayer, u64, bool

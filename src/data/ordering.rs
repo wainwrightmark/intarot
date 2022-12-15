@@ -1,9 +1,25 @@
-use std::ops::Range;
+use std::{ops::Range, str::FromStr, num::ParseIntError, fmt::Display};
+
+use rand::{rngs::ThreadRng, Rng};
 
 #[derive(
     Copy, Clone, Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, Default,
 )]
 pub struct Ordering(pub u128);
+
+impl FromStr for Ordering{
+    type Err = ParseIntError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        u128::from_str(s).map(|x| Self(x))
+    }
+}
+
+impl Display for Ordering{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.0.fmt(f)
+    }
+}
 
 impl From<u128> for Ordering {
     fn from(value: u128) -> Self {
@@ -12,6 +28,11 @@ impl From<u128> for Ordering {
 }
 
 impl Ordering {
+
+    pub fn gen(count: usize) -> Self{
+        Self(ThreadRng::default().gen_range(Ordering::get_range(&count)))
+    }
+
     ///Reorder an array in sorted order to this ordering
     pub fn reorder<T>(&self, arr: &mut [T]) {
         let mut rem = self.0;
