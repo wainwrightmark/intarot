@@ -9,6 +9,8 @@ use super::cards_view::CardsControl;
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
     #[at("/")]
+    #[not_found]
+
     Opening,
     #[at("/:sign")]
     Soothsayer { sign: StarSign },

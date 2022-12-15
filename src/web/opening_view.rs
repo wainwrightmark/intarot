@@ -13,9 +13,9 @@ use crate::web::prelude::*;
 pub fn opening_view() -> Html {
     let navigator = use_navigator().unwrap();
 
-    let paragraph1 = include_str!(r#"..\text\opening_p1.txt"#);
-    let paragraph2 = include_str!(r#"..\text\opening_p2.txt"#);
-    let paragraph3 = include_str!(r#"..\text\opening_p3.txt"#);
+    let paragraph1 = include_str!(r#"../text/opening_p1.txt"#);
+    let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
+    let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
 
 
     let onchange = Callback::from(move |e: Event| {
