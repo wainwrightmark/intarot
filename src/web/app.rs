@@ -10,9 +10,9 @@ use super::cards_view::CardsControl;
 pub enum Route {
     #[at("/")]
     Opening,
-    #[at("/soothsayer/:sign")]
+    #[at("/:sign")]
     Soothsayer { sign: StarSign },
-    #[at("/card/:sign/:soothsayer")]
+    #[at("/:sign/:soothsayer")]
     Card {
         sign: StarSign,
         soothsayer: Soothsayer,
