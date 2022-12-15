@@ -1,11 +1,11 @@
 [package]
-name = "eighth-arcana"
+name = "intarot"
 version = "0.1.0"
 edition = "2021"
 authors = ["Mark Wainwright <wainwrightml@gmail.com>"]
 license = "MIT"
 keywords = ["astrology", "tarot", "ai"]
-default-run = "eighth-arcana"
+default-run = "intarot"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
