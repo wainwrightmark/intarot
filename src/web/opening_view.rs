@@ -13,6 +13,11 @@ use crate::web::prelude::*;
 pub fn opening_view() -> Html {
     let navigator = use_navigator().unwrap();
 
+    let paragraph1 = include_str!(r#"..\text\opening_p1.txt"#);
+    let paragraph2 = include_str!(r#"..\text\opening_p2.txt"#);
+    let paragraph3 = include_str!(r#"..\text\opening_p3.txt"#);
+
+
     let onchange = Callback::from(move |e: Event| {
         let input: HtmlSelectElement = e.target_unchecked_into();
         let s = input.value();
@@ -28,25 +33,31 @@ pub fn opening_view() -> Html {
         )
     })
     .collect_vec();
-
+    
+    
     html! {
-        <div>
-        <div class="sm-4 col" style="margin: auto;">
+        <div class="site"  style="overflow: auto;">
+            <div class="container" style="overflow: auto;" >
+            <div class="sm-4 col" style="margin: auto;">
 
-        <h3 style="color: gold; text-align: center;">
-        {"intarot"}
-        </h3>
-        <p>
-        {"intarot brings tarot into the space that lies beyond the limits of the world. Our lives are lost in wandering, the deterministic patterns of our destiny masked in the grey fog of randomness. Our soothsayers can help reveal the path your feet should tread."}
-        </p>
-        <p>
-        {"Each of our soothsayers will offer you an interpretation of the card they draw for you, but their portentous drawings may contain the seed of further truth - only you will recognise the signs that fate has chosen for you."}
-        </p>
+            <h3 style="color: gold; text-align: center;">
+            {"intarot"}
+            </h3>
+            <p>
+            {paragraph1}
+            </p>
+            <p>
+            {paragraph2}
+            </p>
+            <p>
+            {paragraph3}
+            </p>
+                </div>
+                <select {onchange} class="" style="margin:auto;">
+                        <option selected={true} disabled={true}> {"Choose Star Sign"}  </option>
+                        {options}
+                    </select>
             </div>
-            <select {onchange} class="" style="margin:auto;">
-                    <option selected={true} disabled={true}> {"Choose Star Sign"}  </option>
-                    {options}
-                </select>
         </div>
     }
 }

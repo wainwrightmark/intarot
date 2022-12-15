@@ -76,6 +76,8 @@ pub fn cards_control(props: &CardControlProps) -> Html {
 
     html!(
         <>
+        <div class="site" style="overflow: hidden ">
+            <div class="container" >
         <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
         <div class="cards-grid" key="cards-grid">
         { items }
@@ -83,6 +85,8 @@ pub fn cards_control(props: &CardControlProps) -> Html {
         <div class="card-actions">
         <button id="card-button-prev" aria-label="Previous" disabled={!can_replace}  onclick={select_previous}>{"❰"}</button>
         <button id="card-button-next" aria-label="Next" onclick={select_next}>{"❱"}</button>
+        </div>
+        </div>    
         </div>
         </div>    
         </>
@@ -183,6 +187,7 @@ fn card_view(props: &CardViewProps) -> Html {
     };
 
     html! {
+        
             <div class={card_classes} style = {style} >
             <div class="prophecy-back"> </div>                      
                     <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone()) } onclick={toggle} />
@@ -214,7 +219,6 @@ fn card_view(props: &CardViewProps) -> Html {
                             }
                         }
                     }
-
-                </div>
+        </div>
     }
 }

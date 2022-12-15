@@ -55,9 +55,9 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                 })
             };
             html!(
-                <div class={classes}>
+                <div class={classes}  onclick={onclick}>
                     <h5 class="soothsayer-name" style="text-align: center;">{soothsayer.name()}</h5>
-                    <img class="soothsayer-image" onclick={onclick}
+                    <img class="soothsayer-image"
         
         
                     src={format!("https://drive.google.com/uc?export=view&id={}", soothsayer.image_id()) }
@@ -89,6 +89,8 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
 
     html! {
         <>
+        <div class="site" style="overflow: hidden ">
+            <div class="container" >
         <div class="sm-4 col" style="margin: auto; width: 90em; padding:unset;">
         <div class="carousel" ref={node}>
             {items}
@@ -97,13 +99,11 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
             <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous}>{"❰"}</button>
             <button id="carousel-button-next" aria-label="Next" disabled={!can_select_next} onclick={select_next}>{"❱"}</button>
 
-
             </div>
         </div>
         </div>
-        // <div class="sm-4 col" style="margin: auto; width: 10em;">
-        // <ButtonComponent<ProceedMessage, PageState>/>
-        // </div>
+        </div>
+        </div>
         </>
     }
 }
