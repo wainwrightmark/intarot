@@ -3,7 +3,6 @@ use std::rc::Rc;
 use itertools::Itertools;
 
 use rand::Rng;
-use rand::rngs::ThreadRng;
 use strum::EnumCount;
 use strum::IntoEnumIterator;
 use yewdux::store::Store;
@@ -12,7 +11,7 @@ use crate::data::prelude::Card;
 use crate::data::prelude::ImageMeta;
 use crate::data::prelude::{Ordering, Soothsayer, StarSign};
 
-#[derive(PartialEq, Eq, Clone, Copy, serde:: Serialize, serde::Deserialize,  Store)]
+#[derive(PartialEq, Eq, Clone, Copy, serde:: Serialize, serde::Deserialize, Store)]
 pub struct CardPageState {
     pub star_sign: StarSign,
     pub soothsayer: Soothsayer,
@@ -20,48 +19,57 @@ pub struct CardPageState {
     pub cards_drawn: usize,
     pub show_description: bool,
     pub max_drawn: usize,
-    
+    // pub share_dialog_open: bool,
 }
 
-impl Default for CardPageState{
+impl Default for CardPageState {
     fn default() -> Self {
         let ordering = Ordering::gen(22);
-        Self { 
+        Self {
             cards_drawn: 1,
-            max_drawn: 1, 
+            max_drawn: 1,
             ordering,
             star_sign: Default::default(),
             soothsayer: Default::default(),
-            show_description: false
-         }
+            show_description: false,
+            // share_dialog_open: false,
+        }
     }
 }
 
-
 impl CardPageState {
-
-    pub fn get_new_ordering_if_changed(&self, star_sign: StarSign, soothsayer: Soothsayer)-> Ordering{
-        if self.star_sign == star_sign && self.soothsayer == soothsayer{
+    pub fn get_new_ordering_if_changed(
+        &self,
+        star_sign: StarSign,
+        soothsayer: Soothsayer,
+    ) -> Ordering {
+        if self.star_sign == star_sign && self.soothsayer == soothsayer {
             self.ordering
-        }
-        else{
+        } else {
             Ordering::gen(22)
         }
     }
 
-    pub fn on_load( self: Rc::<Self>,new_sign: StarSign, new_soothsayer: Soothsayer, new_ordering: Ordering )-> Rc::<Self>
-    {
-        if new_sign != self.star_sign || new_soothsayer != self.soothsayer || new_ordering != self.ordering{
-           Self{
+    pub fn on_load(
+        self: Rc<Self>,
+        new_sign: StarSign,
+        new_soothsayer: Soothsayer,
+        new_ordering: Ordering,
+    ) -> Rc<Self> {
+        if new_sign != self.star_sign
+            || new_soothsayer != self.soothsayer
+            || new_ordering != self.ordering
+        {
+            Self {
                 star_sign: new_sign,
                 soothsayer: new_soothsayer,
                 ordering: new_ordering,
                 ..Default::default()
-            }.into()
-        }
-        else{
+            }
+            .into()
+        } else {
             self
-        }        
+        }
     }
 
     pub fn draw_card(mut self) -> Self {
@@ -97,10 +105,15 @@ impl CardPageState {
         self.show_description = !self.show_description;
         self
     }
+    
+    // pub fn toggle_dialog_open(mut self) -> Self {
+    //     self.share_dialog_open = !self.share_dialog_open;
+    //     self
+    // }
 
     pub fn get_possible_image_metas(
         &self,
-        
+
         meta_state: &super::prelude::ImageMetaState,
     ) -> Vec<ImageMeta> {
         let Some(all_metas) = meta_state.metas.as_ref()

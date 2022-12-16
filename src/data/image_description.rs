@@ -1,7 +1,8 @@
-use std::{borrow::Cow, str::FromStr};
+use std::{str::FromStr};
 
 use anyhow::bail;
 use itertools::Itertools;
+use yew::AttrValue;
 
 use crate::data::prelude::*;
 
@@ -9,9 +10,9 @@ use crate::data::prelude::*;
 pub struct ImageDescription {
     pub soothsayer: Soothsayer,
     pub card: Card,
-    pub representation: Cow<'static, str>,
-    pub guidance: Cow<'static, str>,
-    pub specific_guidance: Cow<'static, str>,
+    pub representation: AttrValue,
+    pub guidance: AttrValue,
+    pub specific_guidance: AttrValue,
 }
 
 impl Default for ImageDescription {
@@ -23,6 +24,12 @@ impl Default for ImageDescription {
             guidance: Default::default(),
             specific_guidance: Default::default(),
         }
+    }
+}
+
+impl ImageDescription{
+    pub fn full_description(&self)-> AttrValue{
+        format!("{}\n{}\n{}", self.representation, self.guidance, self.specific_guidance).into()
     }
 }
 

@@ -57,3 +57,9 @@ impl Reducer<CardPageState> for ToggleDescriptionMessage {
         Rc::new(state.to_owned().toggle_description())
     }
 }
+
+// impl Reducer<CardPageState> for ToggleShareDialogMessage {
+//     fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+//         Rc::new(state.to_owned().toggle_dialog_open())
+//     }
+// }

@@ -4,10 +4,12 @@ mod cards_view;
 mod opening_view;
 mod select_component;
 mod soothsayer_view;
+pub mod share_component;
 
 pub mod prelude {
 
     pub use crate::web::app::*;
     pub use crate::web::button_component::*;
     pub use crate::web::select_component::*;
+    pub use crate::web::share_component::*;
 }

@@ -12,6 +12,9 @@ pub struct ShuffleMessage {}
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct ToggleDescriptionMessage {}
 
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
+pub struct ToggleShareDialogMessage{}
+
 pub trait ButtonMessage<S>: Reducer<S> + Default + Copy + Clone {
     /// Whether this message can be applied to the state
     fn can_apply(state: &S) -> bool;

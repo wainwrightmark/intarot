@@ -1,9 +1,11 @@
+use web_sys::HtmlDialogElement;
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 use yewdux::prelude::*;
 
 use crate::data::prelude::*;
 use crate::state::prelude::*;
+use crate::web::prelude::ShareComponent;
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct CardControlProps {    
@@ -79,6 +81,7 @@ pub fn cards_control(props: &CardControlProps) -> Html {
         <>
         <div class="site" style="overflow: hidden ">
             <div class="container" >
+           
         <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
         <div class="cards-grid" key="cards-grid">
         { items }
@@ -89,7 +92,7 @@ pub fn cards_control(props: &CardControlProps) -> Html {
         </div>
         </div>    
         </div>
-        </div>    
+        </div>            
         </>
     )
 }
@@ -106,6 +109,7 @@ struct CardViewProps {
 #[function_component(CardView)]
 fn card_view(props: &CardViewProps) -> Html {
     let toggle = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleDescriptionMessage {});
+    // let open_share_dialog = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleShareDialogMessage {});
 
     let mut card_classes = classes!("prophecy-card");
     let mut image_classes = classes!("prophecy-image");
@@ -191,11 +195,11 @@ fn card_view(props: &CardViewProps) -> Html {
         
             <div class={card_classes} style = {style} >
             <div class="prophecy-back"> </div>                      
-                    <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone()) } onclick={toggle} />
+                    <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone()) } onclick={toggle.clone()} />
                     {
                         if show_description{
                             html!{
-                                <div class="image-overlay">
+                                <div class="image-overlay" style="pointer-events:none;">
                                 <p class="image-overlay-text">
                                     <span>
                                     {props.description.representation.clone()}
@@ -211,6 +215,24 @@ fn card_view(props: &CardViewProps) -> Html {
                                     {props.description.specific_guidance.clone()}
                                     </span>
                                 </p>
+                                <div class="row flex-spaces child-borders" style="margin-top: 3rem;">
+                    <label class="paper-btn margin" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
+                  </div>
+                  <br/>
+                  <input class="modal-state" id="modal-2" type="checkbox"/>
+                  <div class="modal" style="pointer-events:auto;">
+                    <label class="modal-bg" for="modal-2"></label>
+                    <div class="modal-body">
+                      <h4 class="modal-title">{"Share"}</h4>
+                                <ShareComponent 
+                                title="intarot" 
+                                url={"https://www.intarot.com"} 
+                                text={props.description.full_description()} 
+                                media={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone())}>
+                                </ShareComponent>
+                        
+                    </div>
+                  </div>
                                 </div>
                             }
                         }

@@ -147,6 +147,7 @@
 .prophecy-back, .prophecy-image, .image-overlay{
     grid-row: 1;
     grid-column: 1;
+    z-index: 10;
 }
 
 .image-overlay-text{
@@ -174,4 +175,9 @@
 
 .star_sign_dropdown{
     background: var(--main-background)
+}
+
+.share-icon{
+    margin-left: 0rem !important;
+    margin-right: 1rem !important;
 }
