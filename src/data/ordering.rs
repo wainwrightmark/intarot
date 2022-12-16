@@ -1,4 +1,4 @@
-use std::{ops::Range, str::FromStr, num::ParseIntError, fmt::Display};
+use std::{fmt::Display, num::ParseIntError, ops::Range, str::FromStr};
 
 use rand::{rngs::ThreadRng, Rng};
 
@@ -7,7 +7,7 @@ use rand::{rngs::ThreadRng, Rng};
 )]
 pub struct Ordering(pub u128);
 
-impl FromStr for Ordering{
+impl FromStr for Ordering {
     type Err = ParseIntError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -15,7 +15,7 @@ impl FromStr for Ordering{
     }
 }
 
-impl Display for Ordering{
+impl Display for Ordering {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.0.fmt(f)
     }
@@ -28,8 +28,7 @@ impl From<u128> for Ordering {
 }
 
 impl Ordering {
-
-    pub fn gen(count: usize) -> Self{
+    pub fn gen(count: usize) -> Self {
         Self(ThreadRng::default().gen_range(Ordering::get_range(&count)))
     }
 

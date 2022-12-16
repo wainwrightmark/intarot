@@ -18,5 +18,5 @@
 // pub fn select_component<S: SelectMessage<TState> + 'static, TState: Store>(
 //     props: &ClassAndStyle,
 // ) -> Html {
-    
+
 // }

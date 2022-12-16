@@ -1,7 +1,6 @@
 use yew::{Classes, Html};
 use yewdux::store::Reducer;
 
-
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct DrawMessage {}
 
@@ -13,7 +12,7 @@ pub struct ShuffleMessage {}
 pub struct ToggleDescriptionMessage {}
 
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
-pub struct ToggleShareDialogMessage{}
+pub struct ToggleShareDialogMessage {}
 
 pub trait ButtonMessage<S>: Reducer<S> + Default + Copy + Clone {
     /// Whether this message can be applied to the state

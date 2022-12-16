@@ -12,4 +12,3 @@ fn main() {
     wasm_bindgen_futures::spawn_local(ImageDescriptionState::setup());
     yew::Renderer::<App>::new().render();
 }
-

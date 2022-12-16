@@ -17,7 +17,6 @@ pub fn opening_view() -> Html {
     let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
     let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
 
-
     let onchange = Callback::from(move |e: Event| {
         let input: HtmlSelectElement = e.target_unchecked_into();
         let s = input.value();
@@ -28,13 +27,12 @@ pub fn opening_view() -> Html {
     });
 
     let options = StarSign::iter()
-    .map(|value| {        
+    .map(|value| {
         html!(  <option value={value.repr()} selected={false} disabled={false}> {value.name()}  </option>
         )
     })
     .collect_vec();
-    
-    
+
     html! {
         <div class="site"  style="overflow: auto;">
             <div class="container" style="overflow: auto;" >

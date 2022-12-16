@@ -1,7 +1,7 @@
 use std::rc::Rc;
 use strum::EnumCount;
 
-use crate::{data::prelude::Card};
+use crate::data::prelude::Card;
 
 use yewdux::prelude::*;
 

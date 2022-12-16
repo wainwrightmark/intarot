@@ -35,7 +35,6 @@
 //                 <h5 class="soothsayer-name" style="text-align: center;">{self.0.name()}</h5>
 //                 <img class="soothsayer-image" onclick={onclick}
 
-
 //                 src={format!("https://drive.google.com/uc?export=view&id={}", self.0.image_id()) }
 //                      alt={self.0.name()} />
 //                     <p class="soothsayer-text" >

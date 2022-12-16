@@ -1,23 +1,25 @@
 use itertools::Itertools;
-use strum::{IntoEnumIterator, EnumCount};
+use strum::{EnumCount, IntoEnumIterator};
 use yew::prelude::*;
-use yew_hooks::{UseSwipeDirection, use_swipe};
+use yew_hooks::{use_swipe, UseSwipeDirection};
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::{use_selector, use_store_value};
 
-use crate::{data::prelude::{Soothsayer, StarSign}, state::prelude::CardPageState};
 use super::app::Route;
-
+use crate::{
+    data::prelude::{Soothsayer, StarSign},
+    state::prelude::CardPageState,
+};
 
 #[derive(Properties, PartialEq)]
-pub struct SoothsayerProps {    
+pub struct SoothsayerProps {
     pub sign: StarSign,
 }
 
 #[function_component(SoothsayerView)]
 pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
     let card_page_state = use_store_value::<CardPageState>();
-    
+
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
     let state = use_state(|| Soothsayer::EvelynMusgrave);
@@ -29,9 +31,15 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
     let previous = current_value.previous().unwrap_or(current_value);
     let next = current_value.next().unwrap_or(current_value);
 
-    let select_previous = {let state = state.clone(); Callback::from(move |_| state.set(previous))} ;
+    let select_previous = {
+        let state = state.clone();
+        Callback::from(move |_| state.set(previous))
+    };
 
-    let select_next = {let state = state.clone(); Callback::from(move |_| state.set(next))} ;
+    let select_next = {
+        let state = state.clone();
+        Callback::from(move |_| state.set(next))
+    };
 
     let can_select_previous = current_index != 0;
     let can_select_next = current_index + 1 < Soothsayer::COUNT;
@@ -54,7 +62,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                 let card_page_state = card_page_state.as_ref().clone();
                 Callback::from(move |_e: MouseEvent| {
 
-                    let ordering = card_page_state.get_new_ordering_if_changed(sign, soothsayer); 
+                    let ordering = card_page_state.get_new_ordering_if_changed(sign, soothsayer);
                     navigator.push(&Route::Card { sign, soothsayer, ordering });
                 })
             };
@@ -62,8 +70,6 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                 <div class={classes}  onclick={onclick}>
                     <h5 class="soothsayer-name" style="text-align: center;">{soothsayer.name()}</h5>
                     <img class="soothsayer-image"
-        
-        
                     src={format!("https://drive.google.com/uc?export=view&id={}", soothsayer.image_id()) }
                          alt={soothsayer.name()} />
                         <p class="soothsayer-text" >
@@ -114,5 +120,4 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
 
 // fn get_html(soothsayer: Soothsayer, classes: Classes, navigator: &navigator::Navigator, sign: StarSign) -> Html {
 
-    
 // }

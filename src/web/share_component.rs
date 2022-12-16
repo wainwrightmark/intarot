@@ -1,8 +1,7 @@
 use yew::prelude::*;
 
-
 #[derive(Properties, PartialEq)]
-pub struct ShareProps {    
+pub struct ShareProps {
     pub title: AttrValue,
     pub url: AttrValue,
     pub text: AttrValue,
@@ -17,23 +16,24 @@ pub fn share_component(props: &ShareProps) -> Html {
     let media = url_escape::encode_www_form_urlencoded(&props.media);
 
     let facebook_href = format!("https://www.facebook.com/sharer/sharer.php?u={url}");
-    let pinterest_href = format!("https://pinterest.com/pin/create/button/?url={url}&description={text}&media={media}");
+    let pinterest_href = format!(
+        "https://pinterest.com/pin/create/button/?url={url}&description={text}&media={media}"
+    );
     let twitter_href = format!("https://twitter.com/intent/tweet?url={url}&text={text}"); //${t.via?`&via=${t.via}
     let whatsapp_href = format!("https://wa.me/?text={title}%0D%0A{url}%0D%0A%0D%0A{text}"); //${t.via?`&via=${t.via}
     let reddit_href = format!("https://www.reddit.com/submit?title={title}&url={url}");
     let telegram_href = format!("https://telegram.me/share/url?url={url}&text={text}");
-    let mastodon_href = format!("https://toot.kytta.dev/?text={title}%0D%0A{url}%0D%0A%0D%0A{text}");// ${t.via?`%0D%0A%0D%0A${t.via}`:""}");
-//     Facebook
+    let mastodon_href =
+        format!("https://toot.kytta.dev/?text={title}%0D%0A{url}%0D%0A%0D%0A{text}"); // ${t.via?`%0D%0A%0D%0A${t.via}`:""}");
+                                                                                      //     Facebook
 
-// Pintrest
-// Twitter
+    // Pintrest
+    // Twitter
 
-
-// Whatsapp
-// Reddit
-// telegram
-// Mastodon
-
+    // Whatsapp
+    // Reddit
+    // telegram
+    // Mastodon
 
     html!(
         <div class="shareon" style="display: grid; grid-template-columns: auto auto auto auto;">

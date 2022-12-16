@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr, Display};
+use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 
 #[derive(
     Copy,
@@ -17,7 +17,7 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr, Displa
     EnumCount,
     IntoStaticStr,
     Default,
-    Display
+    Display,
 )]
 pub enum StarSign {
     #[strum(props(image_filter = "aries",))]

@@ -1,4 +1,4 @@
-use std::{str::FromStr};
+use std::str::FromStr;
 
 use anyhow::bail;
 use itertools::Itertools;
@@ -27,9 +27,13 @@ impl Default for ImageDescription {
     }
 }
 
-impl ImageDescription{
-    pub fn full_description(&self)-> AttrValue{
-        format!("{}\n{}\n{}", self.representation, self.guidance, self.specific_guidance).into()
+impl ImageDescription {
+    pub fn full_description(&self) -> AttrValue {
+        format!(
+            "{}\n{}\n{}",
+            self.representation, self.guidance, self.specific_guidance
+        )
+        .into()
     }
 }
 

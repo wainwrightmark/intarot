@@ -105,7 +105,7 @@ impl CardPageState {
         self.show_description = !self.show_description;
         self
     }
-    
+
     // pub fn toggle_dialog_open(mut self) -> Self {
     //     self.share_dialog_open = !self.share_dialog_open;
     //     self
