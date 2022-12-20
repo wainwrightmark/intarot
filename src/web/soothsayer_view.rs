@@ -105,9 +105,9 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
         <div class="carousel" ref={node}>
             {items}
 
-            <div class="carousel-actions">
-            <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous}>{"❰"}</button>
-            <button id="carousel-button-next" aria-label="Next" disabled={!can_select_next} onclick={select_next}>{"❱"}</button>
+            <div class="carousel-actions" style="pointer-events: none;">
+            <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous} style="pointer-events: auto;">{"❰"}</button>
+            <button id="carousel-button-next" aria-label="Next" disabled={!can_select_next} onclick={select_next} style="pointer-events: auto;">{"❱"}</button>
 
             </div>
         </div>
