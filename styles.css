@@ -111,7 +111,8 @@
 
 .soothsayer-image{
     border-radius: 20px; 
-    border-color: var(--success-dark);
+    border-style: hidden;
+    /* border-color: var(--success-dark); */
     width: -webkit-fill-available;
     width: -moz-available;
     aspect-ratio: 448/576;    
@@ -119,7 +120,18 @@
     animation-name: fade-in;
     cursor: pointer;
     box-shadow: 0px 0px 5px #888;
+    animation: shadow-glow 3s linear 0s infinite alternate;
 }
+
+@keyframes shadow-glow {
+    from {
+      box-shadow: 10px 10px 10px #888;
+    }
+  
+    to {
+        box-shadow: 10px 10px 10px #000;
+    }
+  }
 
 
 .prophecy-card{    
