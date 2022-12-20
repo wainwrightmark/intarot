@@ -66,12 +66,26 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                     navigator.push(&Route::Card { sign, soothsayer, ordering });
                 })
             };
+
+            let select_previous = select_previous.clone();
+            let select_next = select_next.clone();
             html!(
-                <div class={classes}  onclick={onclick}>
+                <div class={classes}  >
                     <h5 class="soothsayer-name" style="text-align: center;">{soothsayer.name()}</h5>
+
+                    
+                    <div>
                     <img class="soothsayer-image"
+                    onclick={onclick}
                     src={format!("https://drive.google.com/uc?export=view&id={}", soothsayer.image_id()) }
                          alt={soothsayer.name()} />
+                         <div class="carousel-actions" style="pointer-events: none;">
+            <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous} style="pointer-events: auto;">{"❰"}</button>
+            <button id="carousel-button-next" aria-label="Next" disabled={!can_select_next} onclick={select_next} style="pointer-events: auto;">{"❱"}</button>
+
+            </div>
+                    </div>
+
                         <p class="soothsayer-text" >
                         {soothsayer.description()}
                         </p>
@@ -105,11 +119,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
         <div class="carousel" ref={node}>
             {items}
 
-            <div class="carousel-actions" style="pointer-events: none;">
-            <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous} style="pointer-events: auto;">{"❰"}</button>
-            <button id="carousel-button-next" aria-label="Next" disabled={!can_select_next} onclick={select_next} style="pointer-events: auto;">{"❱"}</button>
-
-            </div>
+            
         </div>
         </div>
         </div>

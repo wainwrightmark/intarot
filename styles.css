@@ -34,7 +34,8 @@
     width: 100%;
     justify-content: space-between; /* put space between the navigation buttons */
     position: absolute; /* position navigation buttons on top */
-    top: 25vh; /* center navigation buttons on the slide */
+    left: 0;
+    top: 25%; /* center navigation buttons on the slide */
     /*transform: translateY(100%); /* align navigation buttons */
 }
 
