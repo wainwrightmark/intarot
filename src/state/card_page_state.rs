@@ -2,7 +2,7 @@ use std::rc::Rc;
 
 use itertools::Itertools;
 
-use rand::Rng;
+// use rand::Rng;
 use strum::EnumCount;
 use strum::IntoEnumIterator;
 use yewdux::store::Store;
@@ -93,14 +93,14 @@ impl CardPageState {
         self
     }
 
-    pub fn shuffle(mut self) -> Self {
-        let mut rng = rand::thread_rng();
-        let ordering = rng.gen_range(Ordering::get_range(&Card::COUNT));
+    // pub fn shuffle(mut self) -> Self {
+    //     let mut rng = rand::thread_rng();
+    //     let ordering = rng.gen_range(Ordering::get_range(&Card::COUNT));
 
-        self.cards_drawn = 0;
-        self.ordering = ordering.into();
-        self
-    }
+    //     self.cards_drawn = 0;
+    //     self.ordering = ordering.into();
+    //     self
+    // }
 
     pub fn toggle_description(mut self) -> Self {
         self.show_description = !self.show_description;

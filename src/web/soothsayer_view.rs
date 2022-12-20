@@ -19,7 +19,7 @@ pub struct SoothsayerProps {
 #[function_component(SoothsayerView)]
 pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
     let card_page_state = use_store_value::<CardPageState>();
-
+    let navigator = use_navigator().unwrap();
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
     let state = use_state(|| Soothsayer::EvelynMusgrave);
@@ -43,8 +43,6 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
 
     let can_select_previous = current_index != 0;
     let can_select_next = current_index + 1 < Soothsayer::COUNT;
-
-    let navigator = use_navigator().unwrap();
 
     let items = Soothsayer::iter()
         .map(|soothsayer| {
@@ -127,7 +125,3 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
         </>
     }
 }
-
-// fn get_html(soothsayer: Soothsayer, classes: Classes, navigator: &navigator::Navigator, sign: StarSign) -> Html {
-
-// }

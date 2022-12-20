@@ -26,15 +26,6 @@ impl ButtonMessage<CardPageState> for ReplaceMessage {
         "Replace"
     }
 }
-impl ButtonMessage<CardPageState> for ShuffleMessage {
-    fn can_apply(_state: &CardPageState) -> bool {
-        true
-    }
-
-    fn get_name() -> &'static str {
-        "Shuffle"
-    }
-}
 
 impl Reducer<CardPageState> for DrawMessage {
     fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
@@ -47,19 +38,9 @@ impl Reducer<CardPageState> for ReplaceMessage {
         Rc::new(state.to_owned().replace_card())
     }
 }
-impl Reducer<CardPageState> for ShuffleMessage {
-    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
-        Rc::new(state.to_owned().shuffle())
-    }
-}
 impl Reducer<CardPageState> for ToggleDescriptionMessage {
     fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
         Rc::new(state.to_owned().toggle_description())
     }
 }
 
-// impl Reducer<CardPageState> for ToggleShareDialogMessage {
-//     fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
-//         Rc::new(state.to_owned().toggle_dialog_open())
-//     }
-// }

@@ -1,10 +1,11 @@
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
+use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
 use crate::data::prelude::*;
 use crate::state::prelude::*;
-use crate::web::prelude::ShareComponent;
+use crate::web::prelude::{ShareComponent, Route};
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct CardControlProps {
@@ -110,6 +111,8 @@ struct FinalCardViewProps {
 
 #[function_component(FinalCardView)]
 fn final_card_view(props: &FinalCardViewProps) -> Html {
+    let card_page_state = use_store_value::<CardPageState>();
+    let navigator = use_navigator().unwrap();
     let card_classes = classes!("prophecy-card");
 
     let top_card = 24 == props.total_cards;
@@ -123,8 +126,17 @@ fn final_card_view(props: &FinalCardViewProps) -> Html {
     } else {
         format!("transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;",)
     };
+    let sign = card_page_state.star_sign;
+    let soothsayer = card_page_state.soothsayer;
 
-    let shuffle = Dispatch::<CardPageState>::new().apply_callback(move |_| ShuffleMessage {});
+    let shuffle = Callback::from(move |_e: MouseEvent| {
+        let ordering = Ordering::gen(22);
+        navigator.push(&Route::Card {
+            sign,
+            soothsayer,
+            ordering,
+        });
+    });
 
     html! {
 
@@ -140,7 +152,7 @@ fn final_card_view(props: &FinalCardViewProps) -> Html {
                         <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem;">
                             <button  style="pointer-events:auto;" onclick={shuffle}>{"Shuffle"}</button>
                             <label class="paper-btn margin" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
-                            
+
                         </div>
                         <br/>
                         <input class="modal-state" id="modal-2" type="checkbox"/>
