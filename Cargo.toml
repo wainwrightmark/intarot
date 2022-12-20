@@ -31,6 +31,7 @@ anyhow = "1.0.66"
 yew-router = "0.17.0"
 url-escape = "0.1.1"
 chrono = {version="0.4", features = ["serde", "wasmbind"]}
+wee_alloc = "0.4.5"
 
 [dev-dependencies]
 ntest = "0.9.0"
