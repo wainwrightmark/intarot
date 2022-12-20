@@ -44,7 +44,8 @@ pub fn cards_control(props: &CardControlProps) -> Html {
         );
     }
 
-    let can_replace = cp.cards_drawn > 1;
+    let can_previous = cp.cards_drawn > 1;
+    let can_next = cp.cards_drawn < 23;
 
     let select_previous =
         Dispatch::<CardPageState>::new().apply_callback(move |_| ReplaceMessage {});
@@ -60,6 +61,13 @@ pub fn cards_control(props: &CardControlProps) -> Html {
     let metas = cp.get_possible_image_metas(metas_state.as_ref());
     let total_cards = cp.cards_drawn + 1; //display an extra card to preload the image
     let s_d: bool = cp.show_description;
+
+    let final_card = if true {
+        Some(html!(<FinalCardView total_cards={total_cards} key={"final card"} />))
+    } else {
+        None
+    };
+
     let items = metas
         .into_iter()
         //.take(cp.cards_drawn)
@@ -72,6 +80,7 @@ pub fn cards_control(props: &CardControlProps) -> Html {
             //let top_card = index + 1 == metas_len;
             html!(<CardView index={index} meta={image_meta} show_description={s_d} description={description} total_cards={total_cards} key={key} />)
         })
+        .chain(final_card)
         .collect::<Html>();
 
     html!(
@@ -84,14 +93,74 @@ pub fn cards_control(props: &CardControlProps) -> Html {
         { items }
         </div>
         <div class="card-actions" style="pointer-events: none;">
-            <button id="card-button-prev" aria-label="Previous" disabled={!can_replace}  onclick={select_previous} style="pointer-events: auto;" >{"❰"}</button>
-            <button id="card-button-next" aria-label="Next" onclick={select_next}  style="pointer-events: auto;">{"❱"}</button>
+            <button id="card-button-prev" aria-label="Previous" disabled={!can_previous}  onclick={select_previous} style="pointer-events: auto;" >{"❰"}</button>
+            <button id="card-button-next" aria-label="Next"  disabled={!can_next} onclick={select_next}  style="pointer-events: auto;">{"❱"}</button>
         </div>
         </div>
         </div>
         </div>
         </>
     )
+}
+
+#[derive(Properties, PartialEq)]
+struct FinalCardViewProps {
+    pub total_cards: usize,
+}
+
+#[function_component(FinalCardView)]
+fn final_card_view(props: &FinalCardViewProps) -> Html {
+    let card_classes = classes!("prophecy-card");
+
+    let top_card = 24 == props.total_cards;
+
+    let style = if top_card {
+        let angle = 0;
+        format!(
+            "transform: rotateZ({}deg); transition-duration: 1s, 3s",
+            angle
+        )
+    } else {
+        format!("transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;",)
+    };
+
+    let shuffle = Dispatch::<CardPageState>::new().apply_callback(move |_| ShuffleMessage {});
+
+    html! {
+
+            <div class={card_classes} style = {style} >
+            <div class="prophecy-back prophecy-image" style="border: solid 2px black; background: antiquewhite;"> </div>
+                    <div class="image-overlay" style="pointer-events:none;">
+                        <p class="image-overlay-text">
+                            <span>
+                            {"You have reached the end of the deck"}
+                            </span>
+                            <br/>
+                        </p>
+                        <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem;">
+                            <button  style="pointer-events:auto;" onclick={shuffle}>{"Shuffle"}</button>
+                            <label class="paper-btn margin" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
+                            
+                        </div>
+                        <br/>
+                        <input class="modal-state" id="modal-2" type="checkbox"/>
+                        <div class="modal" style="pointer-events:auto;">
+                             <label class="modal-bg" for="modal-2"></label>
+                            <div class="modal-body">
+                            <h4 class="modal-title">{"Share"}</h4>
+                            <ShareComponent
+                            title="intarot"
+                            url={"https://www.intarot.com"}
+                            text={ include_str!(r#"../text/opening_p1.txt"#)}
+                            media={""}
+                            // media={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone())}
+                            >
+                            </ShareComponent>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
 }
 
 #[derive(Properties, PartialEq)]

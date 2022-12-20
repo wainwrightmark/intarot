@@ -74,13 +74,14 @@ impl CardPageState {
 
     pub fn draw_card(mut self) -> Self {
         self.show_description = false;
-        if self.cards_drawn < Card::COUNT {
+        if self.cards_drawn <= Card::COUNT {
             self.cards_drawn += 1;
             self.max_drawn = self.max_drawn.max(self.cards_drawn + 1);
 
             self
         } else {
-            self.shuffle()
+            self
+            // self.shuffle()
         }
     }
 
