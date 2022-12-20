@@ -1,4 +1,3 @@
-use web_sys::HtmlDialogElement;
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 use yewdux::prelude::*;
