@@ -114,6 +114,7 @@ fn final_card_view(props: &FinalCardViewProps) -> Html {
     let card_page_state = use_store_value::<CardPageState>();
     let navigator = use_navigator().unwrap();
     let card_classes = classes!("prophecy-card");
+    let image_classes = classes!("prophecy-image");
 
     let top_card = 24 == props.total_cards;
 
@@ -138,38 +139,41 @@ fn final_card_view(props: &FinalCardViewProps) -> Html {
         });
     });
 
+    
+
     html! {
 
             <div class={card_classes} style = {style} >
-            <div class="prophecy-back prophecy-image" style="border: solid 2px black; background: antiquewhite;"> </div>
-                    <div class="image-overlay" style="pointer-events:none;">
-                        <p class="image-overlay-text">
-                            <span>
-                            {"You have reached the end of the deck"}
-                            </span>
-                            <br/>
-                        </p>
-                        <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem;">
-                            <button  style="pointer-events:auto;" onclick={shuffle}>{"Shuffle"}</button>
-                            <label class="paper-btn margin" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
-
-                        </div>
+                <div class="prophecy-back"> </div>
+                <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", soothsayer.ad_image_id()) } />
+                <div class="image-overlay" style="pointer-events:none;">
+                    <p class="image-overlay-text">
+                        // <span>
+                        // {"You have reached the end of the deck"}
+                        // </span>
                         <br/>
-                        <input class="modal-state" id="modal-2" type="checkbox"/>
-                        <div class="modal" style="pointer-events:auto;">
-                             <label class="modal-bg" for="modal-2"></label>
-                            <div class="modal-body">
-                            <h4 class="modal-title">{"Share"}</h4>
-                            <ShareComponent
-                            title="intarot"
-                            url={"https://www.intarot.com"}
-                            text={ include_str!(r#"../text/opening_p1.txt"#)}
-                            media={""}
-                            // media={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone())}
-                            >
-                            </ShareComponent>
-                        </div>
+                    </p>
+                    <div class="row flex-spaces child-borders" style="margin-top: 13rem; margin-bottom: -3rem; flex-direction: column;">
+                        <button  style="pointer-events:auto;" onclick={shuffle}>{"Shuffle"}</button>
+                        <label class="paper-btn margin" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
+
                     </div>
+                    <br/>
+                    <input class="modal-state" id="modal-2" type="checkbox"/>
+                    <div class="modal" style="pointer-events:auto;">
+                            <label class="modal-bg" for="modal-2"></label>
+                        <div class="modal-body">
+                        <h4 class="modal-title">{"Share"}</h4>
+                        <ShareComponent
+                        title="intarot"
+                        url={"https://www.intarot.com"}
+                        text={ include_str!(r#"../text/opening_p1.txt"#)}
+                        media={""}
+                        // media={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone())}
+                        >
+                        </ShareComponent>
+                    </div>
+                </div>
                 </div>
             </div>
     }
