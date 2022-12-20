@@ -118,6 +118,7 @@
      animation-duration: 1s;
     animation-name: fade-in;
     cursor: pointer;
+    box-shadow: 0px 0px 5px #888;
 }
 
 
@@ -129,6 +130,7 @@
   grid-row: 1 / 1;
   transition-property: visibility, all;
   transition-duration: 1s, 1s;
+  
 }
 
 .prophecy-image {
@@ -138,6 +140,7 @@
     width: -moz-available;
     aspect-ratio: 1 / 2;
     cursor: pointer;
+    box-shadow: 0px 0px 5px #888;
   }
 
 .prophecy-back{
