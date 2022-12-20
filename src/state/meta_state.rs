@@ -2,6 +2,9 @@ use std::{collections::BTreeMap, io::BufRead, str::FromStr};
 
 use crate::data::prelude::*;
 
+use chrono::Datelike;
+use itertools::Itertools;
+use rand::{seq::SliceRandom, SeedableRng};
 use yewdux::prelude::*;
 
 #[derive(PartialEq, Eq, Store, Default)]
@@ -21,14 +24,31 @@ impl ImageMetaState {
         let data = result?;
         let bytes = data.bytes().await?;
         let lines = bytes.lines();
-        let result: BTreeMap<_, ImageMeta> = lines
+
+        let mut metas_vec = lines
             .skip(1) //skip headers
             .filter_map(|x| x.ok())
             .map(move |x| ImageMeta::from_str(x.as_str()).unwrap())
             .map(|x| ((x.sign, x.soothsayer, x.card), x))
-            .collect();
+            .collect_vec();
+
+        let today = get_today_date();
+        let seed = ((today.year().abs() as u32) * 2000)
+                + (today.month() * 100)
+                + today.day();
+        let mut rng: rand::rngs::StdRng = SeedableRng::seed_from_u64(seed as u64);
+
+        metas_vec.shuffle(&mut rng);
+
+        let result: BTreeMap<_, ImageMeta> = metas_vec.into_iter().collect();
         Ok(ImageMetaState {
             metas: result.into(),
         })
     }
+}
+
+
+fn get_today_date() -> chrono::NaiveDate {
+    let today = chrono::offset::Utc::now();
+    today.date_naive()
 }
