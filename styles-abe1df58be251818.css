@@ -34,7 +34,8 @@
     width: 100%;
     justify-content: space-between; /* put space between the navigation buttons */
     position: absolute; /* position navigation buttons on top */
-    top: 25vh; /* center navigation buttons on the slide */
+    left: 0;
+    top: 25%; /* center navigation buttons on the slide */
     /*transform: translateY(100%); /* align navigation buttons */
 }
 
@@ -110,13 +111,27 @@
 
 .soothsayer-image{
     border-radius: 20px; 
-    border-color: var(--success-dark);
+    border-style: hidden;
+    /* border-color: var(--success-dark); */
     width: -webkit-fill-available;
     width: -moz-available;
     aspect-ratio: 448/576;    
      animation-duration: 1s;
     animation-name: fade-in;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px #888;
+    animation: shadow-glow 3s linear 0s infinite alternate;
 }
+
+@keyframes shadow-glow {
+    from {
+      box-shadow: 10px 10px 10px #888;
+    }
+  
+    to {
+        box-shadow: 10px 10px 10px #000;
+    }
+  }
 
 
 .prophecy-card{    
@@ -127,6 +142,7 @@
   grid-row: 1 / 1;
   transition-property: visibility, all;
   transition-duration: 1s, 1s;
+  
 }
 
 .prophecy-image {
@@ -135,7 +151,8 @@
     width: -webkit-fill-available;
     width: -moz-available;
     aspect-ratio: 1 / 2;
-    
+    cursor: pointer;
+    box-shadow: 0px 0px 5px #888;
   }
 
 .prophecy-back{
@@ -180,4 +197,5 @@
 .share-icon{
     margin-left: 0rem !important;
     margin-right: 1rem !important;
+    background-image: none !important;
 }
