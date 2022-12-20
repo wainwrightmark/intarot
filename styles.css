@@ -117,6 +117,7 @@
     aspect-ratio: 448/576;    
      animation-duration: 1s;
     animation-name: fade-in;
+    cursor: pointer;
 }
 
 
@@ -136,7 +137,7 @@
     width: -webkit-fill-available;
     width: -moz-available;
     aspect-ratio: 1 / 2;
-    
+    cursor: pointer;
   }
 
 .prophecy-back{
