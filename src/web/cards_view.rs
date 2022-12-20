@@ -83,9 +83,9 @@ pub fn cards_control(props: &CardControlProps) -> Html {
         <div class="cards-grid" key="cards-grid">
         { items }
         </div>
-        <div class="card-actions">
-        <button id="card-button-prev" aria-label="Previous" disabled={!can_replace}  onclick={select_previous}>{"❰"}</button>
-        <button id="card-button-next" aria-label="Next" onclick={select_next}>{"❱"}</button>
+        <div class="card-actions" style="pointer-events: none;">
+            <button id="card-button-prev" aria-label="Previous" disabled={!can_replace}  onclick={select_previous} style="pointer-events: auto;" >{"❰"}</button>
+            <button id="card-button-next" aria-label="Next" onclick={select_next}  style="pointer-events: auto;">{"❱"}</button>
         </div>
         </div>
         </div>
@@ -125,7 +125,7 @@ fn card_view(props: &CardViewProps) -> Html {
     };
 
     let style = if props.index + 1 == props.total_cards {
-        format!("transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden;",)
+        format!("transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;",)
     } else if props.index + 1 >= props.total_cards {
         let angle = match props.index % 4 {
             0 => 15 + ((props.index as isize) * -10),
@@ -149,7 +149,7 @@ fn card_view(props: &CardViewProps) -> Html {
         };
 
         format!(
-            "transform:  translateX({}em) translateY({}em) rotateZ({}deg); visibility: hidden;",
+            "transform:  translateX({}em) translateY({}em) rotateZ({}deg); visibility: hidden; pointer-events: none;",
             translate_x, translate_y, angle,
         )
     } else if top_card {
