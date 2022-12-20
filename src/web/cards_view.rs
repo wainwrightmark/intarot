@@ -211,7 +211,7 @@ fn card_view(props: &CardViewProps) -> Html {
                                     {props.description.specific_guidance.clone()}
                                     </span>
                                 </p>
-                                <div class="row flex-spaces child-borders" style="margin-top: 3rem;">
+                                <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem;">
                     <label class="paper-btn margin" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
                   </div>
                   <br/>
