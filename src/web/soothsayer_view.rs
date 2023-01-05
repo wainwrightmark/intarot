@@ -84,7 +84,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                         <p class="soothsayer-text" >
                         {soothsayer.description()}
                         </p>
-                        <button onclick={onclick} class="btn-block">{"Choose"}</button>
+                        <button onclick={onclick} style="margin: auto; display: block;">{"Choose"}</button>
                 </div>
             )
         })
