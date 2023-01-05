@@ -78,11 +78,12 @@ pub fn cards_control(props: &CardControlProps) -> Html {
         {
             let description = ds[&(image_meta.soothsayer, image_meta.card)].clone();
             let key = image_meta.card.name().clone();
-            //let top_card = index + 1 == metas_len;
-            html!(<CardView index={index} meta={image_meta} show_description={s_d} description={description} total_cards={total_cards} key={key} />)
+            let should_shake = !cp.has_shown_description && index + 1 == cp.cards_drawn;
+            html!(<CardView index={index} meta={image_meta} show_description={s_d} description={description} total_cards={total_cards} key={key} should_shake={should_shake }  />)
         })
         .chain(final_card)
         .collect::<Html>();
+
 
     html!(
         <>
@@ -94,8 +95,8 @@ pub fn cards_control(props: &CardControlProps) -> Html {
         { items }
         </div>
         <div class="card-actions" style="pointer-events: none;">
-            <button id="card-button-prev" aria-label="Previous" disabled={!can_previous}  onclick={select_previous} style="pointer-events: auto;" >{"❰"}</button>
-            <button id="card-button-next" aria-label="Next"  disabled={!can_next} onclick={select_next}  style="pointer-events: auto;">{"❱"}</button>
+            <button id="card-button-prev" aria-label="Previous" disabled={!can_previous}  onclick={select_previous} style="pointer-events: auto;" class="card-arrow">{"❰"}</button>
+            <button id="card-button-next" aria-label="Next"  disabled={!can_next} onclick={select_next}  style="pointer-events: auto;" class="card-arrow">{"❱"}</button>
         </div>
         </div>
         </div>
@@ -186,11 +187,13 @@ struct CardViewProps {
     pub index: usize,
     pub description: ImageDescription,
     pub total_cards: usize,
+    pub should_shake: bool
 }
 
 #[function_component(CardView)]
 fn card_view(props: &CardViewProps) -> Html {
     let toggle = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleDescriptionMessage {});
+
     // let open_share_dialog = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleShareDialogMessage {});
 
     let mut card_classes = classes!("prophecy-card");
@@ -208,6 +211,10 @@ fn card_view(props: &CardViewProps) -> Html {
     } else {
         false
     };
+
+    if props.should_shake{
+        card_classes.push("card-shake");
+    }
 
     let style = if props.index + 1 == props.total_cards {
         format!("transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;",)

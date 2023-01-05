@@ -19,6 +19,7 @@ pub struct CardPageState {
     pub cards_drawn: usize,
     pub show_description: bool,
     pub max_drawn: usize,
+    pub has_shown_description: bool
     // pub share_dialog_open: bool,
 }
 
@@ -32,6 +33,7 @@ impl Default for CardPageState {
             star_sign: Default::default(),
             soothsayer: Default::default(),
             show_description: false,
+            has_shown_description: false
             // share_dialog_open: false,
         }
     }
@@ -104,6 +106,7 @@ impl CardPageState {
 
     pub fn toggle_description(mut self) -> Self {
         self.show_description = !self.show_description;
+        self.has_shown_description = true;
         self
     }
 
