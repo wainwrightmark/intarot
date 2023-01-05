@@ -5,6 +5,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 use super::cards_view::CardsControl;
+use crate::web::question_view::QuestionView;
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
@@ -13,6 +14,13 @@ pub enum Route {
     Opening,
     #[at("/:sign")]
     Soothsayer { sign: StarSign },
+
+    #[at("/:sign/:soothsayer")]
+    Question {
+        sign: StarSign,
+        soothsayer: Soothsayer,
+    },
+
     #[at("/:sign/:soothsayer/:ordering")]
     Card {
         sign: StarSign,
@@ -38,6 +46,11 @@ fn switch(routes: Route) -> Html {
         <OpeningView />
 
          },
+
+         Route::Question { sign, soothsayer }=> html!{
+            <QuestionView sign={sign} soothsayer={soothsayer} />
+         },
+
         Route::Soothsayer { sign } => html! {
 
             <SoothsayerView sign={sign} />

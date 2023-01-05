@@ -5,6 +5,7 @@ mod opening_view;
 mod select_component;
 pub mod share_component;
 mod soothsayer_view;
+pub mod question_view;
 
 pub mod prelude {
 

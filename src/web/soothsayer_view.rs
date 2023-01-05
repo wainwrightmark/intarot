@@ -18,7 +18,7 @@ pub struct SoothsayerProps {
 
 #[function_component(SoothsayerView)]
 pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
-    let card_page_state = use_store_value::<CardPageState>();
+
     let navigator = use_navigator().unwrap();
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
@@ -57,23 +57,8 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                 let soothsayer = soothsayer.clone();
                 let sign = props.sign.clone();
                 let navigator = navigator.clone();
-                let card_page_state = card_page_state.as_ref().clone();
                 Callback::from(move |_e: MouseEvent| {
-
-                    let ordering = card_page_state.get_new_ordering_if_changed(sign, soothsayer);
-                    navigator.push(&Route::Card { sign, soothsayer, ordering });
-                })
-            };
-
-            let buttonclick = {
-                let soothsayer = soothsayer.clone();
-                let sign = props.sign.clone();
-                let navigator = navigator.clone();
-                let card_page_state = card_page_state.as_ref().clone();
-                Callback::from(move |_e: MouseEvent| {
-
-                    let ordering = card_page_state.get_new_ordering_if_changed(sign, soothsayer);
-                    navigator.push(&Route::Card { sign, soothsayer, ordering });
+                    navigator.push(&Route::Question { sign, soothsayer });
                 })
             };
 
@@ -86,7 +71,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                     
                     <div>
                     <img class="soothsayer-image"
-                    onclick={onclick}
+                    onclick={onclick.clone()}
                     src={format!("https://drive.google.com/uc?export=view&id={}", soothsayer.image_id()) }
                          alt={soothsayer.name()} />
                          <div class="carousel-actions" style="pointer-events: none;">
@@ -99,7 +84,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                         <p class="soothsayer-text" >
                         {soothsayer.description()}
                         </p>
-                        <button onclick={buttonclick} class="btn-block">{"Choose"}</button>
+                        <button onclick={onclick} class="btn-block">{"Choose"}</button>
                 </div>
             )
         })
