@@ -220,3 +220,7 @@
     margin-right: 1rem !important;
     background-image: none !important;
 }
+
+.nice-button{
+    border-radius: 10px;
+}

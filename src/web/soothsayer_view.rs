@@ -80,11 +80,11 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
 
             </div>
                     </div>
-                    <h4 class="soothsayer-name" style="text-align: center;">{soothsayer.name()}</h4>
-                        <p class="soothsayer-text" >
+                    <h4 class="soothsayer-name" style="text-align: center; margin-top: 3vh; margin-bottom: 1vh;">{soothsayer.name()}</h4>
+                        <p class="soothsayer-text" style="margin-top: 0vh;" >
                         {soothsayer.description()}
                         </p>
-                        <button onclick={onclick} style="margin: auto; display: block;">{"Choose"}</button>
+                        <button onclick={onclick} class="nice-button" style="margin: auto; display: block;">{"Choose"}</button>
                 </div>
             )
         })

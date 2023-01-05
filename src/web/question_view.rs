@@ -69,7 +69,7 @@ pub fn question_view(props: &QuestionProps) -> Html {
                 <p style="margin: auto; animation-delay: -3s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Remember that truth comes from within"}</p>
                 </div>
                 <div class="row align-middle">
-                <button onclick={onclick} style="margin: auto; animation-delay: -1.5s;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Begin your reading"}</button>
+                <button onclick={onclick} style="margin: auto; animation-delay: -1.5s;" class={if *skipped_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
                 </div>
                 </div>
                 <div class="row">
