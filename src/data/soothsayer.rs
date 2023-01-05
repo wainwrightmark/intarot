@@ -33,7 +33,7 @@ pub enum Soothsayer {
     #[strum(props(
         name = "Madame Sosoteris",
         description = "The famous clairvoyante, last in a long line of European royalty. She lives alone on a wind-swept island, sketching the visions that the sea breeze brings her. Her tarot is infused with a fey wisdom; drawn in pale colours that resemble the light reflecting off shallow water and the strange salt-blanched objects that wash up daily on her shores. ",
-        image_id = "1fGHNqfcFzQua9nieqK9F7VsfR7q9uVNt",
+        image_id = "11ZUYdGy4iznMGozvmc0dev15NhSxYfUl",
         ad_image_id = "1w5MWJ358-8uoBX2O64zKGQW4WGwX_CIM",
     ))]
     Madame,
