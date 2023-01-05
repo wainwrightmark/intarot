@@ -41,17 +41,11 @@ pub enum Soothsayer {
     #[strum(props(
         name = "Maledictus Andronichus",
         description = "There is a dark fleshy space between the skin of sanity and the bone of madness and Maledictus is its prisoner. Beset by tortured visions of a world he cannot control, his tarot takes shape from these half-images of wild despair; a desperate warning to all who seek his guidance. Though even in his darkest depictions the faintest glimmer of hopeful prophecy survives.",
-        image_id = "1b6tCkQta6RH4TxvGiCwd0skY6VVGTtgH",
+        image_id = "1CVorkBI7HZ23gRJ580kdHwr0QWKNm1Rc",
         ad_image_id = "1wbCbeRF07B-93l87knjvTCubJCkJOqoY",
     ))]
     Maledictus,
-    // #[strum(props(
-    //     name = "Jean-Baptiste",
-    //     description = "...",
-    //     image_id = "1Ie2-TscFSr4QlEYlD3SQJsWFhQCPIzoH",
-    //     image_filter = "marc chagall"
-    // ))]
-    // Jazzman,
+
 }
 
 impl Soothsayer {
