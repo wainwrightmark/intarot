@@ -65,11 +65,23 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                 })
             };
 
+            let buttonclick = {
+                let soothsayer = soothsayer.clone();
+                let sign = props.sign.clone();
+                let navigator = navigator.clone();
+                let card_page_state = card_page_state.as_ref().clone();
+                Callback::from(move |_e: MouseEvent| {
+
+                    let ordering = card_page_state.get_new_ordering_if_changed(sign, soothsayer);
+                    navigator.push(&Route::Card { sign, soothsayer, ordering });
+                })
+            };
+
             let select_previous = select_previous.clone();
             let select_next = select_next.clone();
             html!(
                 <div class={classes}  >
-                    <h5 class="soothsayer-name" style="text-align: center;">{soothsayer.name()}</h5>
+                    <h5 class="soothsayer-name" style="text-align: center;">{"Choose Soothsayer"}</h5>
 
                     
                     <div>
@@ -83,10 +95,11 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
 
             </div>
                     </div>
-
+                    <h4 class="soothsayer-name" style="text-align: center;">{soothsayer.name()}</h4>
                         <p class="soothsayer-text" >
                         {soothsayer.description()}
                         </p>
+                        <button onclick={buttonclick} class="btn-block">{"Choose"}</button>
                 </div>
             )
         })
