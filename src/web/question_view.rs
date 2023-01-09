@@ -13,7 +13,7 @@ use crate::{
 
 #[derive(Properties, PartialEq)]
 pub struct QuestionProps {
-    pub sign: StarSign,
+    pub sign: Option<StarSign>,
     pub soothsayer: Soothsayer,
 }
 
@@ -28,11 +28,11 @@ pub fn question_view(props: &QuestionProps) -> Html {
         let navigator = navigator.clone();
         let card_page_state = card_page_state.as_ref().clone();
         Callback::from(move |_e: MouseEvent| {
-            let ordering = card_page_state.get_new_ordering_if_changed(sign, soothsayer);
+            let seed = card_page_state.get_new_seed_if_changed(sign, soothsayer);
             navigator.replace(&Route::Card {
-                sign,
+                sign: sign.into(),
                 soothsayer,
-                ordering,
+                seed,
             });
         })
     };

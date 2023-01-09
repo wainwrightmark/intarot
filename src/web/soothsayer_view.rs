@@ -13,7 +13,7 @@ use crate::{
 
 #[derive(Properties, PartialEq)]
 pub struct SoothsayerProps {
-    pub sign: StarSign,
+    pub sign: Option<StarSign>,
 }
 
 #[function_component(SoothsayerView)]
@@ -58,7 +58,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                 let sign = props.sign.clone();
                 let navigator = navigator.clone();
                 Callback::from(move |_e: MouseEvent| {
-                    navigator.push(&Route::Question { sign, soothsayer });
+                    navigator.push(&Route::Question { sign: sign.into(), soothsayer });
                 })
             };
 

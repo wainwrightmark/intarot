@@ -1,4 +1,4 @@
-use crate::data::prelude::{Ordering, Soothsayer, StarSign};
+use crate::data::prelude::{Soothsayer, StarSignOption};
 use crate::web::opening_view::OpeningView;
 use crate::web::soothsayer_view::SoothsayerView;
 use yew::prelude::*;
@@ -13,19 +13,19 @@ pub enum Route {
     #[not_found]
     Opening,
     #[at("/:sign")]
-    Soothsayer { sign: StarSign },
+    Soothsayer { sign: StarSignOption },
 
     #[at("/:sign/:soothsayer")]
     Question {
-        sign: StarSign,
+        sign: StarSignOption,
         soothsayer: Soothsayer,
     },
 
-    #[at("/:sign/:soothsayer/:ordering")]
+    #[at("/:sign/:soothsayer/:seed")]
     Card {
-        sign: StarSign,
+        sign: StarSignOption,
         soothsayer: Soothsayer,
-        ordering: Ordering,
+        seed: u32,
     },
 }
 
@@ -48,21 +48,21 @@ fn switch(routes: Route) -> Html {
          },
 
          Route::Question { sign, soothsayer }=> html!{
-            <QuestionView sign={sign} soothsayer={soothsayer} />
+            <QuestionView sign={sign.0} soothsayer={soothsayer} />
          },
 
         Route::Soothsayer { sign } => html! {
 
-            <SoothsayerView sign={sign} />
+            <SoothsayerView sign={sign.0} />
 
         },
         Route::Card {
             sign,
             soothsayer,
-            ordering,
+            seed,
         } => html! {
 
-        <CardsControl sign={sign} soothsayer={soothsayer} ordering={ordering}/>
+        <CardsControl sign={sign.0} soothsayer={soothsayer} seed={seed}/>
 
          },
     }

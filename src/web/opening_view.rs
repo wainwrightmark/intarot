@@ -6,7 +6,7 @@ use web_sys::HtmlSelectElement;
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
 
-use crate::data::prelude::StarSign;
+use crate::data::prelude::{StarSign, StarSignOption};
 use crate::web::prelude::*;
 
 #[function_component(OpeningView)]
@@ -17,21 +17,28 @@ pub fn opening_view() -> Html {
     let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
     let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
 
-    let onchange = Callback::from(move |e: Event| {
-        let input: HtmlSelectElement = e.target_unchecked_into();
-        let s = input.value();
+    // let onchange = Callback::from(move |e: Event| {
+    //     let input: HtmlSelectElement = e.target_unchecked_into();
+    //     let s = input.value();
 
-        if let Ok(sign) = StarSign::from_str(s.as_str()) {
-            navigator.push(&Route::Soothsayer { sign });
+    //     if let Ok(sign) = StarSign::from_str(s.as_str()) {
+    //         navigator.push(&Route::Soothsayer { sign:sign.into() });
+    //     }
+    // });
+
+    let onclick = Callback::from(
+        move |_: MouseEvent|{
+            navigator.push(&Route::Soothsayer { sign:StarSignOption::default() });
         }
-    });
 
-    let options = StarSign::iter()
-    .map(|value| {
-        html!(  <option value={value.repr()} selected={false} disabled={false}> {value.name()}  </option>
-        )
-    })
-    .collect_vec();
+    );
+
+    // let options = StarSign::iter()
+    // .map(|value| {
+    //     html!(  <option value={value.repr()} selected={false} disabled={false}> {value.name()}  </option>
+    //     )
+    // })
+    // .collect_vec();
 
     html! {
         <div class="site"  style="overflow: auto;">
@@ -51,10 +58,11 @@ pub fn opening_view() -> Html {
             {paragraph3}
             </p>
                 </div>
-                <select {onchange} class="" style="margin:auto;">
-                        <option selected={true} disabled={true}> {"Choose Star Sign"}  </option>
-                        {options}
-                    </select>
+                <button {onclick} style="margin: auto; display: block;" class="nice-button">{"Choose your Guide"}</button>
+                // <select {onchange} class="" style="margin:auto;">
+                //         <option selected={true} disabled={true}> {"Choose Star Sign"}  </option>
+                //         {options}
+                //     </select>
             </div>
         </div>
     }

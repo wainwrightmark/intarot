@@ -2,6 +2,12 @@ use std::rc::Rc;
 
 use itertools::Itertools;
 
+use rand::RngCore;
+use rand::rngs::StdRng;
+use rand::rngs::ThreadRng;
+use rand::seq::IteratorRandom;
+use rand::seq::SliceRandom;
+use rand::SeedableRng;
 // use rand::Rng;
 use strum::EnumCount;
 use strum::IntoEnumIterator;
@@ -9,13 +15,13 @@ use yewdux::store::Store;
 
 use crate::data::prelude::Card;
 use crate::data::prelude::ImageMeta;
-use crate::data::prelude::{Ordering, Soothsayer, StarSign};
+use crate::data::prelude::{ Soothsayer, StarSign};
 
 #[derive(PartialEq, Eq, Clone, Copy, serde:: Serialize, serde::Deserialize, Store)]
 pub struct CardPageState {
-    pub star_sign: StarSign,
+    pub star_sign: Option<StarSign>,
     pub soothsayer: Soothsayer,
-    pub ordering: Ordering,
+    pub seed: u32,
     pub cards_drawn: usize,
     pub show_description: bool,
     pub max_drawn: usize,
@@ -25,11 +31,11 @@ pub struct CardPageState {
 
 impl Default for CardPageState {
     fn default() -> Self {
-        let ordering = Ordering::gen(22);
+        let seed = ThreadRng::default().next_u32();
         Self {
             cards_drawn: 1,
             max_drawn: 1,
-            ordering,
+            seed,
             star_sign: Default::default(),
             soothsayer: Default::default(),
             show_description: false,
@@ -40,32 +46,32 @@ impl Default for CardPageState {
 }
 
 impl CardPageState {
-    pub fn get_new_ordering_if_changed(
+    pub fn get_new_seed_if_changed(
         &self,
-        star_sign: StarSign,
+        star_sign: Option<StarSign>,
         soothsayer: Soothsayer,
-    ) -> Ordering {
+    ) -> u32 {
         if self.star_sign == star_sign && self.soothsayer == soothsayer {
-            self.ordering
+            self.seed
         } else {
-            Ordering::gen(22)
+            ThreadRng::default().next_u32()
         }
     }
 
     pub fn on_load(
         self: Rc<Self>,
-        new_sign: StarSign,
+        new_sign: Option<StarSign>,
         new_soothsayer: Soothsayer,
-        new_ordering: Ordering,
+        new_seed: u32,
     ) -> Rc<Self> {
         if new_sign != self.star_sign
             || new_soothsayer != self.soothsayer
-            || new_ordering != self.ordering
+            || new_seed != self.seed
         {
             Self {
                 star_sign: new_sign,
                 soothsayer: new_soothsayer,
-                ordering: new_ordering,
+                seed: new_seed,
                 ..Default::default()
             }
             .into()
@@ -126,12 +132,13 @@ impl CardPageState {
                 };
 
         let mut cards = Card::iter().collect_vec();
-
-        self.ordering.reorder(&mut cards);
+        let mut rng = StdRng::seed_from_u64(self.seed as u64);
+        cards.shuffle(&mut rng);
+        let star_sign = self.star_sign.unwrap_or_else(|| StarSign::iter().choose(&mut rng).unwrap());
 
         cards
             .into_iter()
-            .flat_map(|card| all_metas.get(&(self.star_sign, self.soothsayer, card)))
+            .flat_map(|card| all_metas.get(&(star_sign, self.soothsayer, card)))
             .cloned()
             .collect_vec()
     }

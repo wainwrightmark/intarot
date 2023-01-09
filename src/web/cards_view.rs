@@ -1,3 +1,5 @@
+use rand::RngCore;
+use rand::rngs::ThreadRng;
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 use yew_router::prelude::use_navigator;
@@ -9,9 +11,9 @@ use crate::web::prelude::{ShareComponent, Route};
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct CardControlProps {
-    pub sign: StarSign,
+    pub sign: Option<StarSign>,
     pub soothsayer: Soothsayer,
-    pub ordering: Ordering,
+    pub seed: u32,
 }
 
 #[function_component(CardsControl)]
@@ -22,8 +24,9 @@ pub fn cards_control(props: &CardControlProps) -> Html {
     let (cp, dispatch) = use_store::<CardPageState>();
     let props = props.clone();
     use_effect(move || {
-        dispatch.reduce(|x| x.on_load(props.sign, props.soothsayer, props.ordering))
+        dispatch.reduce(|x| x.on_load(props.sign, props.soothsayer, props.seed))
     });
+
 
     {
         let swipe_state = swipe_state.clone();
@@ -132,11 +135,11 @@ fn final_card_view(props: &FinalCardViewProps) -> Html {
     let soothsayer = card_page_state.soothsayer;
 
     let shuffle = Callback::from(move |_e: MouseEvent| {
-        let ordering = Ordering::gen(22);
+        let seed = ThreadRng::default().next_u32();
         navigator.push(&Route::Card {
-            sign,
+            sign: sign.into(),
             soothsayer,
-            ordering,
+            seed,
         });
     });
 
@@ -155,7 +158,7 @@ fn final_card_view(props: &FinalCardViewProps) -> Html {
                         <br/>
                     </p>
                     <div class="row flex-spaces child-borders" style="margin-top: 13rem; margin-bottom: -3rem; flex-direction: column;">
-                        <button  style="pointer-events:auto;" onclick={shuffle}>{"Shuffle"}</button>
+                        <button class="nice-button"  style="pointer-events:auto;" onclick={shuffle}>{"Shuffle"}</button>
                         <label class="paper-btn margin" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
 
                     </div>
@@ -303,7 +306,7 @@ fn card_view(props: &CardViewProps) -> Html {
                                     </span>
                                 </p>
                                 <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem;">
-                    <label class="paper-btn margin" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
+                    <label class="paper-btn margin nice-button" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
                   </div>
                   <br/>
                   <input class="modal-state" id="modal-2" type="checkbox"/>
