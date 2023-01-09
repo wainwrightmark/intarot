@@ -240,7 +240,8 @@
   }
 
 .card-shake {
-  animation-duration: 10s;
+  animation-duration: 2s;
+  animation-delay: 6s;
   animation-name: shake;
   animation-iteration-count: infinite;
   animation-direction: both;
