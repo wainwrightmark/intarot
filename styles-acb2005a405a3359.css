@@ -9,6 +9,12 @@
   margin: 0 auto;
 }
 
+.restart-image {
+  max-width: 200px;
+  position: relative;
+  margin: 0 auto;
+}
+
 .carousel .carousel-item-hidden {
   display: none;
 }
@@ -218,7 +224,7 @@
 }
 
 .nice-button {
-  border-radius: 10px;
+  border-radius: 10px!important;
 }
 
 .card-arrow {
