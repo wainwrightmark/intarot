@@ -3,17 +3,17 @@ use strum::{EnumCount, IntoEnumIterator};
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 use yew_router::prelude::use_navigator;
-use yewdux::prelude::{ use_store_value};
 
 use super::app::Route;
 use crate::{
     data::prelude::{Soothsayer, StarSign},
-    state::prelude::CardPageState,
 };
 
 #[derive(Properties, PartialEq)]
 pub struct SoothsayerProps {
     pub sign: Option<StarSign>,
+    pub guide: Option<Soothsayer>,
+    pub go_to_question: bool
 }
 
 #[function_component(SoothsayerView)]
@@ -22,7 +22,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
     let navigator = use_navigator().unwrap();
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
-    let state = use_state(|| Soothsayer::EvelynMusgrave);
+    let state = use_state(|| props.guide.unwrap_or_default());
 
     let current_value = *state;
     let current_index = Soothsayer::iter()
@@ -54,11 +54,19 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
             };
 
             let onclick = {
-                let soothsayer = soothsayer.clone();
+                let guide = soothsayer.clone();
                 let sign = props.sign.clone();
                 let navigator = navigator.clone();
+                let go_to_question = props.go_to_question;
                 Callback::from(move |_e: MouseEvent| {
-                    navigator.push(&Route::Question { sign: sign.into(), soothsayer });
+
+                    if go_to_question{
+                        navigator.push(&Route::Question { sign: sign.into(), guide });
+                    }
+                    else{
+                        navigator.push(&Route::Restart { sign: sign.into(), soothsayer });
+                    }
+
                 })
             };
 
@@ -66,9 +74,9 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
             let select_next = select_next.clone();
             html!(
                 <div class={classes}  >
-                    <h5 class="soothsayer-name" style="text-align: center;">{"Choose Soothsayer"}</h5>
+                    <h5 class="soothsayer-name" style="text-align: center;">{"Choose Guide"}</h5>
 
-                    
+
                     <div>
                     <img class="soothsayer-image"
                     onclick={onclick.clone()}
@@ -115,7 +123,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
         <div class="carousel" ref={node}>
             {items}
 
-            
+
         </div>
         </div>
         </div>

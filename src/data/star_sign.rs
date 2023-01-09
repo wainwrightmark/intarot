@@ -82,14 +82,12 @@ pub struct StarSignOption(pub Option<StarSign>);
 impl Display for StarSignOption{
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 
-        if self.0.is_none(){
-            write!(f, "None")
+        if let Some(sign) = self.0{
+            std::fmt::Display::fmt(&sign, f)
         }
         else{
-            self.0.fmt(f)
+            write!(f, "None")
         }
-
-
     }
 }
 

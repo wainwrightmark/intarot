@@ -1,7 +1,6 @@
 use itertools::Itertools;
 use strum::{EnumCount, IntoEnumIterator};
 use yew::prelude::*;
-use yew_hooks::{use_swipe, UseSwipeDirection};
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::use_store_value;
 

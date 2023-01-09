@@ -82,7 +82,7 @@ pub fn cards_control(props: &CardControlProps) -> Html {
             let description = ds[&(image_meta.soothsayer, image_meta.card)].clone();
             let key = image_meta.card.name().clone();
             let should_shake = !cp.has_shown_description && index + 1 == cp.cards_drawn;
-            html!(<CardView index={index} meta={image_meta} show_description={s_d} description={description} total_cards={total_cards} key={key} should_shake={should_shake }  />)
+            html!(<CardView index={index} meta={image_meta} show_description={s_d} description={description} total_cards={total_cards} key={key} should_shake={should_shake } sign={props.sign}  />)
         })
         .chain(final_card)
         .collect::<Html>();
@@ -159,7 +159,7 @@ fn final_card_view(props: &FinalCardViewProps) -> Html {
                     </p>
                     <div class="row flex-spaces child-borders" style="margin-top: 13rem; margin-bottom: -3rem; flex-direction: column;">
                         <button class="nice-button"  style="pointer-events:auto;" onclick={shuffle}>{"Shuffle"}</button>
-                        <label class="paper-btn margin" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
+                        <label class="paper-btn margin nice-button" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
 
                     </div>
                     <br/>
@@ -190,14 +190,25 @@ struct CardViewProps {
     pub index: usize,
     pub description: ImageDescription,
     pub total_cards: usize,
-    pub should_shake: bool
+    pub should_shake: bool,
+    pub sign: Option<StarSign>
 }
 
 #[function_component(CardView)]
 fn card_view(props: &CardViewProps) -> Html {
     let toggle = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
-    // let open_share_dialog = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleShareDialogMessage {});
+    let onclick = {
+        let soothsayer = props.meta.soothsayer.clone();
+        let sign = props.sign.clone();
+        let navigator = use_navigator().unwrap();
+        Callback::from(move |_e: MouseEvent| {
+            navigator.replace(&Route::Restart {
+                sign: sign.into(),
+                soothsayer,
+            });
+        })
+    };
 
     let mut card_classes = classes!("prophecy-card");
     let mut image_classes = classes!("prophecy-image");
@@ -307,6 +318,7 @@ fn card_view(props: &CardViewProps) -> Html {
                                 </p>
                                 <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem;">
                     <label class="paper-btn margin nice-button" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
+                    <button class="margin nice-button" style="pointer-events:auto;" {onclick} >{"Continue"} </button>
                   </div>
                   <br/>
                   <input class="modal-state" id="modal-2" type="checkbox"/>
@@ -335,3 +347,4 @@ fn card_view(props: &CardViewProps) -> Html {
         </div>
     }
 }
+

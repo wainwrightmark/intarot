@@ -6,19 +6,24 @@ use yew_router::prelude::*;
 
 use super::cards_view::CardsControl;
 use crate::web::question_view::QuestionView;
+use crate::web::restart_view::RestartView;
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
     #[at("/")]
     #[not_found]
     Opening,
-    #[at("/:sign")]
-    Soothsayer { sign: StarSignOption },
 
-    #[at("/:sign/:soothsayer")]
+    #[at("/choose")]
+    Choose,
+
+    #[at("/choose/:sign/:guide")]
+    Soothsayer { sign: StarSignOption, guide: Soothsayer },
+
+    #[at("/:sign/:guide")]
     Question {
         sign: StarSignOption,
-        soothsayer: Soothsayer,
+        guide: Soothsayer,
     },
 
     #[at("/:sign/:soothsayer/:seed")]
@@ -27,6 +32,12 @@ pub enum Route {
         soothsayer: Soothsayer,
         seed: u32,
     },
+
+    #[at("/Restart/:sign/:soothsayer/")]
+    Restart{
+        sign: StarSignOption,
+        soothsayer: Soothsayer,
+    }
 }
 
 #[function_component(App)]
@@ -47,13 +58,13 @@ fn switch(routes: Route) -> Html {
 
          },
 
-         Route::Question { sign, soothsayer }=> html!{
+         Route::Question { sign, guide: soothsayer }=> html!{
             <QuestionView sign={sign.0} soothsayer={soothsayer} />
          },
 
-        Route::Soothsayer { sign } => html! {
+        Route::Soothsayer { sign, guide } => html! {
 
-            <SoothsayerView sign={sign.0} />
+            <SoothsayerView sign={sign.0} go_to_question={false} guide={guide} />
 
         },
         Route::Card {
@@ -65,5 +76,13 @@ fn switch(routes: Route) -> Html {
         <CardsControl sign={sign.0} soothsayer={soothsayer} seed={seed}/>
 
          },
+        Route::Restart { sign, soothsayer } => html!{
+            <RestartView sign={sign.0} guide={soothsayer} />
+        },
+        Route::Choose => html! {
+
+            <SoothsayerView sign={None} go_to_question={true} />
+
+        },
     }
 }
