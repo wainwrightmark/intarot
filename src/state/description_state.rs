@@ -6,7 +6,7 @@ use yewdux::prelude::*;
 
 #[derive(PartialEq, Eq, Store, Default)]
 pub struct ImageDescriptionState {
-    pub descriptions: Option<BTreeMap<(Soothsayer, Card), ImageDescription>>,
+    pub descriptions: Option<BTreeMap<(Guide, Card), ImageDescription>>,
 }
 
 impl ImageDescriptionState {
@@ -25,7 +25,7 @@ impl ImageDescriptionState {
             .skip(1) //skip headers
             .filter_map(|x| x.ok())
             .map(move |x| ImageDescription::from_str(x.as_str()).unwrap())
-            .map(|x| ((x.soothsayer, x.card), x))
+            .map(|x| ((x.guide, x.card), x))
             .collect();
 
         Ok(ImageDescriptionState {

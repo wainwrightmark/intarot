@@ -9,7 +9,7 @@ use yewdux::prelude::*;
 
 #[derive(PartialEq, Eq, Store, Default)]
 pub struct ImageMetaState {
-    pub metas: Option<BTreeMap<(StarSign, Soothsayer, Card), ImageMeta>>, //TODO bTreeMap
+    pub metas: Option<BTreeMap<(StarSign, Guide, Card), ImageMeta>>, //TODO bTreeMap
 }
 
 impl ImageMetaState {
@@ -29,7 +29,7 @@ impl ImageMetaState {
             .skip(1) //skip headers
             .filter_map(|x| x.ok())
             .map(move |x| ImageMeta::from_str(x.as_str()).unwrap())
-            .map(|x| ((x.sign, x.soothsayer, x.card), x))
+            .map(|x| ((x.sign, x.guide, x.card), x))
             .collect_vec();
 
         let today = get_today_date();

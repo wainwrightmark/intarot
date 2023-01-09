@@ -106,12 +106,12 @@
   grid-template-columns: 1fr;
 }
 
-.soothsayer-name {
+.guide-name {
   color: var(--muted-text);
   margin: 1em;
 }
 
-.soothsayer-image {
+.guide-image {
   border-radius: 20px;
   border-style: hidden;
   /* border-color: var(--success-dark); */

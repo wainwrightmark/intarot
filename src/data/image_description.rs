@@ -8,7 +8,7 @@ use crate::data::prelude::*;
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct ImageDescription {
-    pub soothsayer: Soothsayer,
+    pub guide: Guide,
     pub card: Card,
     pub representation: AttrValue,
     pub guidance: AttrValue,
@@ -18,7 +18,7 @@ pub struct ImageDescription {
 impl Default for ImageDescription {
     fn default() -> Self {
         Self {
-            soothsayer: Soothsayer::EvelynMusgrave, //whatever
+            guide: Guide::EvelynMusgrave, //whatever
             card: Card::Magician,                   //whatever
             representation: Default::default(),
             guidance: Default::default(),
@@ -44,8 +44,8 @@ impl FromStr for ImageDescription {
         let (ss_str, card_str, representation, guidance, specific_guidance) =
             s.split_terminator('\t').next_tuple().unwrap();
 
-        let Some(soothsayer) = Soothsayer::from_str(ss_str).ok() else{
-            bail!("Could not parse soothsayer: {}", ss_str);
+        let Some(guide) = Guide::from_str(ss_str).ok() else{
+            bail!("Could not parse guide: {}", ss_str);
         };
 
         let Some(card) = Card::from_str(card_str).ok() else{
@@ -53,7 +53,7 @@ impl FromStr for ImageDescription {
         };
 
         Ok(ImageDescription {
-            soothsayer,
+            guide,
             card,
             representation: representation.to_string().into(),
             guidance: guidance.clone().to_string().into(),

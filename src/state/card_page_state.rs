@@ -15,12 +15,12 @@ use yewdux::store::Store;
 
 use crate::data::prelude::Card;
 use crate::data::prelude::ImageMeta;
-use crate::data::prelude::{ Soothsayer, StarSign};
+use crate::data::prelude::{ Guide, StarSign};
 
 #[derive(PartialEq, Eq, Clone, Copy, serde:: Serialize, serde::Deserialize, Store)]
 pub struct CardPageState {
     pub star_sign: Option<StarSign>,
-    pub soothsayer: Soothsayer,
+    pub guide: Guide,
     pub seed: u32,
     pub cards_drawn: usize,
     pub show_description: bool,
@@ -37,7 +37,7 @@ impl Default for CardPageState {
             max_drawn: 1,
             seed,
             star_sign: Default::default(),
-            soothsayer: Default::default(),
+            guide: Default::default(),
             show_description: false,
             has_shown_description: false
             // share_dialog_open: false,
@@ -49,9 +49,9 @@ impl CardPageState {
     pub fn get_new_seed_if_changed(
         &self,
         star_sign: Option<StarSign>,
-        soothsayer: Soothsayer,
+        guide: Guide,
     ) -> u32 {
-        if self.star_sign == star_sign && self.soothsayer == soothsayer {
+        if self.star_sign == star_sign && self.guide == guide {
             self.seed
         } else {
             ThreadRng::default().next_u32()
@@ -61,16 +61,16 @@ impl CardPageState {
     pub fn on_load(
         self: Rc<Self>,
         new_sign: Option<StarSign>,
-        new_soothsayer: Soothsayer,
+        new_soothsayer: Guide,
         new_seed: u32,
     ) -> Rc<Self> {
         if new_sign != self.star_sign
-            || new_soothsayer != self.soothsayer
+            || new_soothsayer != self.guide
             || new_seed != self.seed
         {
             Self {
                 star_sign: new_sign,
-                soothsayer: new_soothsayer,
+                guide: new_soothsayer,
                 seed: new_seed,
                 ..Default::default()
             }
@@ -138,7 +138,7 @@ impl CardPageState {
 
         cards
             .into_iter()
-            .flat_map(|card| all_metas.get(&(star_sign, self.soothsayer, card)))
+            .flat_map(|card| all_metas.get(&(star_sign, self.guide, card)))
             .cloned()
             .collect_vec()
     }

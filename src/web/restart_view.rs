@@ -8,13 +8,13 @@ use yew_router::prelude::use_navigator;
 
 use super::app::Route;
 use crate::{
-    data::prelude::{Soothsayer, StarSign},
+    data::prelude::{Guide, StarSign},
 };
 
 #[derive(Properties, PartialEq)]
 pub struct RestartProps {
     pub sign: Option<StarSign>,
-    pub guide: Soothsayer,
+    pub guide: Guide,
 }
 
 #[function_component(RestartView)]
@@ -63,7 +63,7 @@ pub fn restart_view(props: &RestartProps) -> Html {
         let sign_state = sign_state.clone();
         let guide = props.guide;
         Callback::from(move |_e: MouseEvent| {
-            navigator.push(&Route::Soothsayer { sign: (*sign_state).into(), guide:guide } );
+            navigator.push(&Route::Guide { sign: (*sign_state).into(), guide:guide } );
         })
     };
 
@@ -78,7 +78,7 @@ pub fn restart_view(props: &RestartProps) -> Html {
             </h3>
 
             <div class={"restart-image"}  >
-            <img onclick={on_image_click} class="soothsayer-image"
+            <img onclick={on_image_click} class="guide-image"
             src={format!("https://drive.google.com/uc?export=view&id={}", props.guide.image_id()) }
                  alt={props.guide.name()} />
             </div>

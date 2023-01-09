@@ -20,7 +20,7 @@ use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticSt
     Display,
 )]
 
-pub enum Soothsayer {
+pub enum Guide {
     #[strum(props(
         name = "Evelyn Musgrave",
         description = "A daughter of the wild English countryside, she grew up roaming the forests that ramble up to the ruined walls of her family estate. Inspired by the mythic tales of old England she draws the world through a prism of courtly love and mystical devotion. Her tarot speaks of ancient knowledge, and the possibility of beauty found in madness. ",
@@ -48,7 +48,7 @@ pub enum Soothsayer {
 
 }
 
-impl Soothsayer {
+impl Guide {
     pub fn filter_image(&self, name: &str) -> bool {
         name.to_ascii_lowercase()
             .contains(self.get_str("name").unwrap().to_ascii_lowercase().as_str())
@@ -75,11 +75,11 @@ impl Soothsayer {
     }
 
     pub fn first() -> Self {
-        Soothsayer::EvelynMusgrave
+        Guide::EvelynMusgrave
     }
 
     pub fn previous(&self) -> Option<Self> {
-        use Soothsayer::*;
+        use Guide::*;
         match self {
             EvelynMusgrave => None,
             Madame => Some(EvelynMusgrave),
@@ -88,7 +88,7 @@ impl Soothsayer {
     }
 
     pub fn next(&self) -> Option<Self> {
-        use Soothsayer::*;
+        use Guide::*;
         match self {
             EvelynMusgrave => Some(Madame),
             Madame => Some(Maledictus),

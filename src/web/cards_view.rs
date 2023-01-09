@@ -12,7 +12,7 @@ use crate::web::prelude::{ShareComponent, Route};
 #[derive(Properties, PartialEq, Clone)]
 pub struct CardControlProps {
     pub sign: Option<StarSign>,
-    pub soothsayer: Soothsayer,
+    pub guide: Guide,
     pub seed: u32,
 }
 
@@ -24,7 +24,7 @@ pub fn cards_control(props: &CardControlProps) -> Html {
     let (cp, dispatch) = use_store::<CardPageState>();
     let props = props.clone();
     use_effect(move || {
-        dispatch.reduce(|x| x.on_load(props.sign, props.soothsayer, props.seed))
+        dispatch.reduce(|x| x.on_load(props.sign, props.guide, props.seed))
     });
 
 
@@ -79,7 +79,7 @@ pub fn cards_control(props: &CardControlProps) -> Html {
         .enumerate()
         .map(|(index, image_meta)|
         {
-            let description = ds[&(image_meta.soothsayer, image_meta.card)].clone();
+            let description = ds[&(image_meta.guide, image_meta.card)].clone();
             let key = image_meta.card.name().clone();
             let should_shake = !cp.has_shown_description && index + 1 == cp.cards_drawn;
             html!(<CardView index={index} meta={image_meta} show_description={s_d} description={description} total_cards={total_cards} key={key} should_shake={should_shake } sign={props.sign}  />)
@@ -132,24 +132,24 @@ fn final_card_view(props: &FinalCardViewProps) -> Html {
         format!("transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;",)
     };
     let sign = card_page_state.star_sign;
-    let soothsayer = card_page_state.soothsayer;
+    let guide = card_page_state.guide;
 
     let shuffle = Callback::from(move |_e: MouseEvent| {
         let seed = ThreadRng::default().next_u32();
         navigator.push(&Route::Card {
             sign: sign.into(),
-            soothsayer,
+            guide,
             seed,
         });
     });
 
-    
+
 
     html! {
 
             <div class={card_classes} style = {style} >
                 <div class="prophecy-back"> </div>
-                <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", soothsayer.ad_image_id()) } />
+                <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", guide.ad_image_id()) } />
                 <div class="image-overlay" style="pointer-events:none;">
                     <p class="image-overlay-text">
                         // <span>
@@ -199,13 +199,13 @@ fn card_view(props: &CardViewProps) -> Html {
     let toggle = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
     let onclick = {
-        let soothsayer = props.meta.soothsayer.clone();
+        let guide = props.meta.guide.clone();
         let sign = props.sign.clone();
         let navigator = use_navigator().unwrap();
         Callback::from(move |_e: MouseEvent| {
             navigator.replace(&Route::Restart {
                 sign: sign.into(),
-                soothsayer,
+                guide,
             });
         })
     };

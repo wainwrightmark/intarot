@@ -6,18 +6,18 @@ use yew_router::prelude::use_navigator;
 
 use super::app::Route;
 use crate::{
-    data::prelude::{Soothsayer, StarSign},
+    data::prelude::{Guide, StarSign},
 };
 
 #[derive(Properties, PartialEq)]
-pub struct SoothsayerProps {
+pub struct GuideProps {
     pub sign: Option<StarSign>,
-    pub guide: Option<Soothsayer>,
+    pub guide: Option<Guide>,
     pub go_to_question: bool
 }
 
-#[function_component(SoothsayerView)]
-pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
+#[function_component(GuideView)]
+pub fn soothsayer_view(props: &GuideProps) -> Html {
 
     let navigator = use_navigator().unwrap();
     let node = use_node_ref();
@@ -25,7 +25,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
     let state = use_state(|| props.guide.unwrap_or_default());
 
     let current_value = *state;
-    let current_index = Soothsayer::iter()
+    let current_index = Guide::iter()
         .position(|x| x == current_value)
         .expect("Selected value was not one of the possible values.");
     let previous = current_value.previous().unwrap_or(current_value);
@@ -42,11 +42,11 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
     };
 
     let can_select_previous = current_index != 0;
-    let can_select_next = current_index + 1 < Soothsayer::COUNT;
+    let can_select_next = current_index + 1 < Guide::COUNT;
 
-    let items = Soothsayer::iter()
-        .map(|soothsayer| {
-            let selected = current_value == soothsayer;
+    let items = Guide::iter()
+        .map(|guide| {
+            let selected = current_value == guide;
             let classes = if selected {
                 classes!("carousel-item", "carousel-item-visible")
             } else {
@@ -54,7 +54,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
             };
 
             let onclick = {
-                let guide = soothsayer.clone();
+                let guide = guide.clone();
                 let sign = props.sign.clone();
                 let navigator = navigator.clone();
                 let go_to_question = props.go_to_question;
@@ -64,7 +64,7 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
                         navigator.push(&Route::Question { sign: sign.into(), guide });
                     }
                     else{
-                        navigator.push(&Route::Restart { sign: sign.into(), soothsayer });
+                        navigator.push(&Route::Restart { sign: sign.into(), guide });
                     }
 
                 })
@@ -74,23 +74,23 @@ pub fn soothsayer_view(props: &SoothsayerProps) -> Html {
             let select_next = select_next.clone();
             html!(
                 <div class={classes}  >
-                    <h5 class="soothsayer-name" style="text-align: center;">{"Choose Guide"}</h5>
+                    <h5 class="guide-name" style="text-align: center;">{"Choose Guide"}</h5>
 
 
                     <div>
-                    <img class="soothsayer-image"
+                    <img class="guide-image"
                     onclick={onclick.clone()}
-                    src={format!("https://drive.google.com/uc?export=view&id={}", soothsayer.image_id()) }
-                         alt={soothsayer.name()} />
+                    src={format!("https://drive.google.com/uc?export=view&id={}", guide.image_id()) }
+                         alt={guide.name()} />
                          <div class="carousel-actions" style="pointer-events: none;">
             <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous} style="pointer-events: auto;">{"❰"}</button>
             <button id="carousel-button-next" aria-label="Next" disabled={!can_select_next} onclick={select_next} style="pointer-events: auto;">{"❱"}</button>
 
             </div>
                     </div>
-                    <h4 class="soothsayer-name" style="text-align: center; margin-top: 3vh; margin-bottom: 1vh;">{soothsayer.name()}</h4>
-                        <p class="soothsayer-text" style="margin-top: 0vh;" >
-                        {soothsayer.description()}
+                    <h4 class="guide-name" style="text-align: center; margin-top: 3vh; margin-bottom: 1vh;">{guide.name()}</h4>
+                        <p class="guide-text" style="margin-top: 0vh;" >
+                        {guide.description()}
                         </p>
                         <button onclick={onclick} class="nice-button" style="margin: auto; display: block;">{"Choose"}</button>
                 </div>

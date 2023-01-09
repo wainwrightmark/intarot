@@ -3,7 +3,7 @@ mod button_component;
 mod cards_view;
 mod opening_view;
 pub mod share_component;
-mod soothsayer_view;
+mod guide_view;
 pub mod question_view;
 pub mod restart_view;
 

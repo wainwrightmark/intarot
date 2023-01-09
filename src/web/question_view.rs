@@ -1,19 +1,17 @@
-use itertools::Itertools;
-use strum::{EnumCount, IntoEnumIterator};
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::use_store_value;
 
 use super::app::Route;
 use crate::{
-    data::prelude::{Soothsayer, StarSign},
+    data::prelude::{Guide, StarSign},
     state::prelude::CardPageState,
 };
 
 #[derive(Properties, PartialEq)]
 pub struct QuestionProps {
     pub sign: Option<StarSign>,
-    pub soothsayer: Soothsayer,
+    pub guide: Guide,
 }
 
 #[function_component(QuestionView)]
@@ -22,15 +20,15 @@ pub fn question_view(props: &QuestionProps) -> Html {
     let navigator = use_navigator().unwrap();
 
     let onclick = {
-        let soothsayer = props.soothsayer.clone();
+        let guide = props.guide.clone();
         let sign = props.sign.clone();
         let navigator = navigator.clone();
         let card_page_state = card_page_state.as_ref().clone();
         Callback::from(move |_e: MouseEvent| {
-            let seed = card_page_state.get_new_seed_if_changed(sign, soothsayer);
+            let seed = card_page_state.get_new_seed_if_changed(sign, guide);
             navigator.replace(&Route::Card {
                 sign: sign.into(),
-                soothsayer,
+                guide,
                 seed,
             });
         })

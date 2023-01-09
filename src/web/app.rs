@@ -1,6 +1,6 @@
-use crate::data::prelude::{Soothsayer, StarSignOption};
+use crate::data::prelude::{Guide, StarSignOption};
 use crate::web::opening_view::OpeningView;
-use crate::web::soothsayer_view::SoothsayerView;
+use crate::web::guide_view::GuideView;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -18,25 +18,25 @@ pub enum Route {
     Choose,
 
     #[at("/choose/:sign/:guide")]
-    Soothsayer { sign: StarSignOption, guide: Soothsayer },
+    Guide { sign: StarSignOption, guide: Guide },
 
     #[at("/:sign/:guide")]
     Question {
         sign: StarSignOption,
-        guide: Soothsayer,
+        guide: Guide,
     },
 
-    #[at("/:sign/:soothsayer/:seed")]
+    #[at("/:sign/:guide/:seed")]
     Card {
         sign: StarSignOption,
-        soothsayer: Soothsayer,
+        guide: Guide,
         seed: u32,
     },
 
-    #[at("/Restart/:sign/:soothsayer/")]
+    #[at("/Restart/:sign/:guide/")]
     Restart{
         sign: StarSignOption,
-        soothsayer: Soothsayer,
+        guide: Guide,
     }
 }
 
@@ -58,30 +58,30 @@ fn switch(routes: Route) -> Html {
 
          },
 
-         Route::Question { sign, guide: soothsayer }=> html!{
-            <QuestionView sign={sign.0} soothsayer={soothsayer} />
+         Route::Question { sign, guide: guide }=> html!{
+            <QuestionView sign={sign.0} guide={guide} />
          },
 
-        Route::Soothsayer { sign, guide } => html! {
+        Route::Guide { sign, guide } => html! {
 
-            <SoothsayerView sign={sign.0} go_to_question={false} guide={guide} />
+            <GuideView sign={sign.0} go_to_question={false} guide={guide} />
 
         },
         Route::Card {
             sign,
-            soothsayer,
+            guide,
             seed,
         } => html! {
 
-        <CardsControl sign={sign.0} soothsayer={soothsayer} seed={seed}/>
+        <CardsControl sign={sign.0} guide={guide} seed={seed}/>
 
          },
-        Route::Restart { sign, soothsayer } => html!{
-            <RestartView sign={sign.0} guide={soothsayer} />
+        Route::Restart { sign, guide } => html!{
+            <RestartView sign={sign.0} guide={guide} />
         },
         Route::Choose => html! {
 
-            <SoothsayerView sign={None} go_to_question={true} />
+            <GuideView sign={None} go_to_question={true} />
 
         },
     }
