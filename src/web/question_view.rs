@@ -36,15 +36,12 @@ pub fn question_view(props: &QuestionProps) -> Html {
 
     let skipped_state = use_state(|| false);
 
-
     let background_click = {
         let skipped_state = skipped_state.clone();
         Callback::from(move |_e: MouseEvent| {
             skipped_state.set(true);
         })
     };
-
-
 
     html! {
 

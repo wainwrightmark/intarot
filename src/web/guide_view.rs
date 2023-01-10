@@ -5,20 +5,17 @@ use yew_hooks::{use_swipe, UseSwipeDirection};
 use yew_router::prelude::use_navigator;
 
 use super::app::Route;
-use crate::{
-    data::prelude::{Guide, StarSign},
-};
+use crate::data::prelude::{Guide, StarSign};
 
 #[derive(Properties, PartialEq)]
 pub struct GuideProps {
     pub sign: Option<StarSign>,
     pub guide: Option<Guide>,
-    pub go_to_question: bool
+    pub go_to_question: bool,
 }
 
 #[function_component(GuideView)]
 pub fn soothsayer_view(props: &GuideProps) -> Html {
-
     let navigator = use_navigator().unwrap();
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());

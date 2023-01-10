@@ -1,15 +1,13 @@
 use std::str::FromStr;
 
 use itertools::Itertools;
-use strum::{IntoEnumIterator};
+use strum::IntoEnumIterator;
 use web_sys::HtmlSelectElement;
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
 
 use super::app::Route;
-use crate::{
-    data::prelude::{Guide, StarSign},
-};
+use crate::data::prelude::{Guide, StarSign};
 
 #[derive(Properties, PartialEq)]
 pub struct RestartProps {
@@ -19,11 +17,9 @@ pub struct RestartProps {
 
 #[function_component(RestartView)]
 pub fn restart_view(props: &RestartProps) -> Html {
+    let sign_state = use_state(|| props.sign);
 
-
-    let sign_state  = use_state(||props.sign);
-
-    let on_sign_change ={
+    let on_sign_change = {
         let sign_state = sign_state.clone();
         Callback::from(move |e: Event| {
             let input: HtmlSelectElement = e.target_unchecked_into();
@@ -31,8 +27,7 @@ pub fn restart_view(props: &RestartProps) -> Html {
 
             if let Ok(sign) = StarSign::from_str(s.as_str()) {
                 sign_state.set(Some(sign));
-            }
-            else{
+            } else {
                 sign_state.set(None);
             }
         })
@@ -63,10 +58,12 @@ pub fn restart_view(props: &RestartProps) -> Html {
         let sign_state = sign_state.clone();
         let guide = props.guide;
         Callback::from(move |_e: MouseEvent| {
-            navigator.push(&Route::Guide { sign: (*sign_state).into(), guide:guide } );
+            navigator.push(&Route::Guide {
+                sign: (*sign_state).into(),
+                guide: guide,
+            });
         })
     };
-
 
     html! {
 

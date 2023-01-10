@@ -1,6 +1,6 @@
+use crate::web::prelude::*;
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
-use crate::web::prelude::*;
 
 #[function_component(OpeningView)]
 pub fn opening_view() -> Html {
@@ -10,16 +10,9 @@ pub fn opening_view() -> Html {
     let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
     let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
 
-
-
-    let onclick = Callback::from(
-        move |_: MouseEvent|{
-            navigator.push(&Route::Choose {  });
-        }
-
-    );
-
-
+    let onclick = Callback::from(move |_: MouseEvent| {
+        navigator.push(&Route::Choose {});
+    });
 
     html! {
         <div class="site"  style="overflow: auto;">

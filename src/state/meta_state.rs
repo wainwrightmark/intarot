@@ -9,7 +9,7 @@ use yewdux::prelude::*;
 
 #[derive(PartialEq, Eq, Store, Default)]
 pub struct ImageMetaState {
-    pub metas: Option<BTreeMap<(StarSign, Guide, Card), ImageMeta>>, //TODO bTreeMap
+    pub metas: Option<BTreeMap<(StarSign, Guide, Card), ImageMeta>>,
 }
 
 impl ImageMetaState {
@@ -33,9 +33,7 @@ impl ImageMetaState {
             .collect_vec();
 
         let today = get_today_date();
-        let seed = ((today.year().abs() as u32) * 2000)
-                + (today.month() * 100)
-                + today.day();
+        let seed = ((today.year().abs() as u32) * 2000) + (today.month() * 100) + today.day();
         let mut rng: rand::rngs::StdRng = SeedableRng::seed_from_u64(seed as u64);
 
         metas_vec.shuffle(&mut rng);
@@ -46,7 +44,6 @@ impl ImageMetaState {
         })
     }
 }
-
 
 fn get_today_date() -> chrono::NaiveDate {
     let today = chrono::offset::Utc::now();

@@ -45,7 +45,6 @@ pub enum Guide {
         ad_image_id = "1wbCbeRF07B-93l87knjvTCubJCkJOqoY",
     ))]
     Maledictus,
-
 }
 
 impl Guide {
@@ -58,7 +57,7 @@ impl Guide {
         self.get_str("image_id").unwrap()
     }
 
-    pub fn ad_image_id(&self)-> &'static str {
+    pub fn ad_image_id(&self) -> &'static str {
         self.get_str("ad_image_id").unwrap()
     }
 

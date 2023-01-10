@@ -1,4 +1,7 @@
-use std::{str::FromStr, fmt::{Display, Debug, Pointer}};
+use std::{
+    fmt::{Debug, Display, Pointer},
+    str::FromStr,
+};
 
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr, ParseError};
@@ -64,57 +67,41 @@ impl StarSign {
     }
 }
 
-
-#[derive(
-    Copy,
-    Clone,
-    Ord,
-    PartialOrd,
-    Eq,
-    PartialEq,
-    Debug,
-    Serialize,
-    Deserialize,
-    Default
-)]
+#[derive(Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Debug, Serialize, Deserialize, Default)]
 pub struct StarSignOption(pub Option<StarSign>);
 
-impl Display for StarSignOption{
+impl Display for StarSignOption {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-
-        if let Some(sign) = self.0{
+        if let Some(sign) = self.0 {
             std::fmt::Display::fmt(&sign, f)
-        }
-        else{
+        } else {
             write!(f, "None")
         }
     }
 }
 
-impl From<Option<StarSign>> for StarSignOption{
+impl From<Option<StarSign>> for StarSignOption {
     fn from(value: Option<StarSign>) -> Self {
         Self(value)
     }
 }
 
-impl From<StarSign> for StarSignOption{
+impl From<StarSign> for StarSignOption {
     fn from(value: StarSign) -> Self {
         Self(Some(value))
     }
 }
 
-impl FromStr for StarSignOption{
+impl FromStr for StarSignOption {
     type Err = ParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s.is_empty(){
+        if s.is_empty() {
             Ok(Self::default())
-        }
-        else if s.eq_ignore_ascii_case("none"){
+        } else if s.eq_ignore_ascii_case("none") {
             Ok(Self::default())
-        }
-        else{
-            let r = StarSign::from_str(s).map(|x|Self(Some(x)));
+        } else {
+            let r = StarSign::from_str(s).map(|x| Self(Some(x)));
             r
         }
     }

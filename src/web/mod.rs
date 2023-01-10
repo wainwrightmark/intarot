@@ -1,15 +1,15 @@
 mod app;
-mod button_component;
-mod cards_view;
-mod opening_view;
-pub mod share_component;
+pub mod card_view;
+pub mod final_card_view;
 mod guide_view;
+mod opening_view;
 pub mod question_view;
 pub mod restart_view;
+pub mod share_component;
+mod spread_view;
 
 pub mod prelude {
 
     pub use crate::web::app::*;
-    pub use crate::web::button_component::*;
     pub use crate::web::share_component::*;
 }

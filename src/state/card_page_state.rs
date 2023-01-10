@@ -2,11 +2,11 @@ use std::rc::Rc;
 
 use itertools::Itertools;
 
-use rand::RngCore;
 use rand::rngs::StdRng;
 use rand::rngs::ThreadRng;
 use rand::seq::IteratorRandom;
 use rand::seq::SliceRandom;
+use rand::RngCore;
 use rand::SeedableRng;
 // use rand::Rng;
 use strum::EnumCount;
@@ -15,7 +15,7 @@ use yewdux::store::Store;
 
 use crate::data::prelude::Card;
 use crate::data::prelude::ImageMeta;
-use crate::data::prelude::{ Guide, StarSign};
+use crate::data::prelude::{Guide, StarSign};
 
 #[derive(PartialEq, Eq, Clone, Copy, serde:: Serialize, serde::Deserialize, Store)]
 pub struct CardPageState {
@@ -25,8 +25,7 @@ pub struct CardPageState {
     pub cards_drawn: usize,
     pub show_description: bool,
     pub max_drawn: usize,
-    pub has_shown_description: bool
-    // pub share_dialog_open: bool,
+    pub has_shown_description: bool, // pub share_dialog_open: bool,
 }
 
 impl Default for CardPageState {
@@ -39,18 +38,13 @@ impl Default for CardPageState {
             star_sign: Default::default(),
             guide: Default::default(),
             show_description: false,
-            has_shown_description: false
-            // share_dialog_open: false,
+            has_shown_description: false, // share_dialog_open: false,
         }
     }
 }
 
 impl CardPageState {
-    pub fn get_new_seed_if_changed(
-        &self,
-        star_sign: Option<StarSign>,
-        guide: Guide,
-    ) -> u32 {
+    pub fn get_new_seed_if_changed(&self, star_sign: Option<StarSign>, guide: Guide) -> u32 {
         if self.star_sign == star_sign && self.guide == guide {
             self.seed
         } else {
@@ -64,10 +58,7 @@ impl CardPageState {
         new_soothsayer: Guide,
         new_seed: u32,
     ) -> Rc<Self> {
-        if new_sign != self.star_sign
-            || new_soothsayer != self.guide
-            || new_seed != self.seed
-        {
+        if new_sign != self.star_sign || new_soothsayer != self.guide || new_seed != self.seed {
             Self {
                 star_sign: new_sign,
                 guide: new_soothsayer,
@@ -134,7 +125,9 @@ impl CardPageState {
         let mut cards = Card::iter().collect_vec();
         let mut rng = StdRng::seed_from_u64(self.seed as u64);
         cards.shuffle(&mut rng);
-        let star_sign = self.star_sign.unwrap_or_else(|| StarSign::iter().choose(&mut rng).unwrap());
+        let star_sign = self
+            .star_sign
+            .unwrap_or_else(|| StarSign::iter().choose(&mut rng).unwrap());
 
         cards
             .into_iter()

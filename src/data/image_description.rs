@@ -19,7 +19,7 @@ impl Default for ImageDescription {
     fn default() -> Self {
         Self {
             guide: Guide::EvelynMusgrave, //whatever
-            card: Card::Magician,                   //whatever
+            card: Card::Magician,         //whatever
             representation: Default::default(),
             guidance: Default::default(),
             specific_guidance: Default::default(),
