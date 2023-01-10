@@ -11,11 +11,14 @@ use rand::SeedableRng;
 // use rand::Rng;
 use strum::EnumCount;
 use strum::IntoEnumIterator;
+use yewdux::store::Reducer;
 use yewdux::store::Store;
 
 use crate::data::prelude::Card;
 use crate::data::prelude::ImageMeta;
 use crate::data::prelude::{Guide, StarSign};
+
+use super::messages::*;
 
 #[derive(PartialEq, Eq, Clone, Copy, serde:: Serialize, serde::Deserialize, Store)]
 pub struct CardPageState {
@@ -134,5 +137,23 @@ impl CardPageState {
             .flat_map(|card| all_metas.get(&(star_sign, self.guide, card)))
             .cloned()
             .collect_vec()
+    }
+}
+
+
+impl Reducer<CardPageState> for DrawMessage {
+    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+        Rc::new(state.draw_card())
+    }
+}
+
+impl Reducer<CardPageState> for ReplaceMessage {
+    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+        Rc::new(state.replace_card())
+    }
+}
+impl Reducer<CardPageState> for ToggleDescriptionMessage {
+    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+        Rc::new(state.toggle_description())
     }
 }
