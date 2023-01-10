@@ -1,4 +1,3 @@
-use crate::data::prelude::{Guide, StarSignOption};
 use crate::web::guide_view::GuideView;
 use crate::web::opening_view::OpeningView;
 use yew::prelude::*;
@@ -17,21 +16,17 @@ pub enum Route {
     #[at("/choose")]
     Choose,
 
-    #[at("/choose/:sign/:guide")]
-    Guide { sign: StarSignOption, guide: Guide },
+    #[at("/guide")]
+    Guide {},
 
-    #[at("/:sign/:guide")]
-    Question { sign: StarSignOption, guide: Guide },
+    #[at("/question")]
+    Question {},
 
-    #[at("/:sign/:guide/:seed")]
-    Card {
-        sign: StarSignOption,
-        guide: Guide,
-        seed: u32,
-    },
+    #[at("/spread")]
+    Spread {},
 
-    #[at("/Restart/:sign/:guide/")]
-    Restart { sign: StarSignOption, guide: Guide },
+    #[at("/restart")]
+    Restart {},
 }
 
 #[function_component(App)]
@@ -52,26 +47,26 @@ fn switch(routes: Route) -> Html {
 
          },
 
-        Route::Question { sign, guide } => html! {
-           <QuestionView sign={sign.0} guide={guide} />
+        Route::Question {} => html! {
+           <QuestionView  />
         },
 
-        Route::Guide { sign, guide } => html! {
+        Route::Guide {} => html! {
 
-            <GuideView sign={sign.0} go_to_question={false} guide={guide} />
+            <GuideView  go_to_question={false}  />
 
         },
-        Route::Card { sign, guide, seed } => html! {
+        Route::Spread {} => html! {
 
-        <SpreadView sign={sign.0} guide={guide} seed={seed}/>
+        <SpreadView />
 
          },
-        Route::Restart { sign, guide } => html! {
-            <RestartView sign={sign.0} guide={guide} />
+        Route::Restart {} => html! {
+            <RestartView  />
         },
         Route::Choose => html! {
 
-            <GuideView sign={None} go_to_question={true} />
+            <GuideView go_to_question={true} />
 
         },
     }

@@ -11,8 +11,10 @@ pub struct ImageDescriptionState {
 
 impl ImageDescriptionState {
     pub async fn setup() {
+        // log::info!("Began Descriptions Set Up");
         let result = Self::create().await.unwrap();
         Dispatch::<ImageDescriptionState>::new().set(result);
+        // log::info!("Finished Descriptions Set Up");
     }
 
     pub async fn create() -> Result<Self, anyhow::Error> {

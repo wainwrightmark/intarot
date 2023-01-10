@@ -1,108 +1,81 @@
+use std::collections::BTreeMap;
 use std::rc::Rc;
-
-use itertools::Itertools;
-
-use rand::rngs::StdRng;
-use rand::rngs::ThreadRng;
-use rand::seq::IteratorRandom;
-use rand::seq::SliceRandom;
-use rand::RngCore;
-use rand::SeedableRng;
-// use rand::Rng;
 use strum::EnumCount;
-use strum::IntoEnumIterator;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
 
-use crate::data::prelude::Card;
-use crate::data::prelude::ImageMeta;
-use crate::data::prelude::{Guide, StarSign};
+use crate::data::prelude::*;
 
 use super::messages::*;
 
-#[derive(PartialEq, Eq, Clone, Copy, serde:: Serialize, serde::Deserialize, Store)]
+#[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug)]
+#[store(storage = "local")]
+
 pub struct CardPageState {
-    pub star_sign: Option<StarSign>,
-    pub guide: Guide,
-    pub seed: u32,
-    pub cards_drawn: usize,
+    pub user_data: QuestionData,
+    pub cards: Rc<[Card; Card::COUNT]>,
+    pub top_card_index: usize,
+
+    pub last_hidden_card_index: usize,
     pub show_description: bool,
-    pub max_drawn: usize,
-    pub has_shown_description: bool, // pub share_dialog_open: bool,
+    pub has_shown_description: bool,
 }
 
 impl Default for CardPageState {
     fn default() -> Self {
-        let seed = ThreadRng::default().next_u32();
         Self {
-            cards_drawn: 1,
-            max_drawn: 1,
-            seed,
-            star_sign: Default::default(),
-            guide: Default::default(),
+            top_card_index: 0,
+            last_hidden_card_index: 1,
+            cards: Card::get_random_ordering(),
+            user_data: Default::default(),
             show_description: false,
-            has_shown_description: false, // share_dialog_open: false,
+            has_shown_description: false,
         }
     }
 }
 
 impl CardPageState {
-    pub fn get_new_seed_if_changed(&self, star_sign: Option<StarSign>, guide: Guide) -> u32 {
-        if self.star_sign == star_sign && self.guide == guide {
-            self.seed
-        } else {
-            ThreadRng::default().next_u32()
-        }
-    }
 
-    pub fn on_load(
-        self: Rc<Self>,
-        new_sign: Option<StarSign>,
-        new_soothsayer: Guide,
-        new_seed: u32,
-    ) -> Rc<Self> {
-        if new_sign != self.star_sign || new_soothsayer != self.guide || new_seed != self.seed {
-            Self {
-                star_sign: new_sign,
-                guide: new_soothsayer,
-                seed: new_seed,
-                ..Default::default()
-            }
-            .into()
-        } else {
-            self
-        }
+    pub fn finish_card_index(&self)->usize{
+        self.user_data.spread_type.num_cards()
     }
-
     pub fn draw_card(mut self) -> Self {
-        self.show_description = false;
-        if self.cards_drawn <= Card::COUNT {
-            self.cards_drawn += 1;
-            self.max_drawn = self.max_drawn.max(self.cards_drawn + 1);
 
-            self
-        } else {
-            self
-            // self.shuffle()
+        if self.top_card_index <= self.finish_card_index(){
+            self.top_card_index += 1;
+            self.last_hidden_card_index = (self.top_card_index + 1).min(self.finish_card_index()).max(self.last_hidden_card_index);
+
+            self.show_description = self.top_card_index == self.finish_card_index();
         }
+        self
+    }
+
+    pub fn get_image_meta(&self, index: usize, metas: &BTreeMap<MetaKey, ImageMeta>) -> Option<ImageMeta> {
+        if index >= self.finish_card_index(){
+            return None;
+        }
+
+        let card = self.cards[index];
+        let key = MetaKey {
+            star_sign: self.user_data.star_sign,
+            guide: self.user_data.guide,
+            card,
+        };
+
+        metas.get(&key).map(|x|*x)
+    }
+
+    pub fn is_top_card(&self, index: usize) -> bool {
+        index == self.top_card_index
     }
 
     pub fn replace_card(mut self) -> Self {
-        if self.cards_drawn > 1 {
-            self.cards_drawn -= 1;
+        if self.top_card_index > 0 {
+            self.top_card_index -= 1;
         }
         self.show_description = false;
         self
     }
-
-    // pub fn shuffle(mut self) -> Self {
-    //     let mut rng = rand::thread_rng();
-    //     let ordering = rng.gen_range(Ordering::get_range(&Card::COUNT));
-
-    //     self.cards_drawn = 0;
-    //     self.ordering = ordering.into();
-    //     self
-    // }
 
     pub fn toggle_description(mut self) -> Self {
         self.show_description = !self.show_description;
@@ -110,50 +83,58 @@ impl CardPageState {
         self
     }
 
-    // pub fn toggle_dialog_open(mut self) -> Self {
-    //     self.share_dialog_open = !self.share_dialog_open;
-    //     self
-    // }
+    pub fn can_previous(&self)-> bool{
+        self.top_card_index > 0
+    }
 
-    pub fn get_possible_image_metas(
-        &self,
+    pub fn can_draw(&self)-> bool{
+        self.top_card_index <= self.finish_card_index()
+    }
 
-        meta_state: &super::prelude::ImageMetaState,
-    ) -> Vec<ImageMeta> {
-        let Some(all_metas) = meta_state.metas.as_ref()
-                else{
-                    return Default::default();
-                };
 
-        let mut cards = Card::iter().collect_vec();
-        let mut rng = StdRng::seed_from_u64(self.seed as u64);
-        cards.shuffle(&mut rng);
-        let star_sign = self
-            .star_sign
-            .unwrap_or_else(|| StarSign::iter().choose(&mut rng).unwrap());
-
-        cards
-            .into_iter()
-            .flat_map(|card| all_metas.get(&(star_sign, self.guide, card)))
-            .cloned()
-            .collect_vec()
+    pub fn reset(&mut self) {
+        self.cards = Card::get_random_ordering();
+        self.top_card_index = self.user_data.spread_type.initial_top_card_index();
+        self.show_description = false;
+        self.last_hidden_card_index = self.user_data.spread_type.initial_top_card_index() + 1;
+        self.has_shown_description = false;
     }
 }
 
-
 impl Reducer<CardPageState> for DrawMessage {
     fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
-        Rc::new(state.draw_card())
+        (*state).clone().draw_card().into()
     }
 }
 
 impl Reducer<CardPageState> for ReplaceMessage {
     fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
-        Rc::new(state.replace_card())
+        (*state).clone().replace_card().into()
     }
 }
 impl Reducer<CardPageState> for ToggleDescriptionMessage {
     fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
-        Rc::new(state.toggle_description())
+        (*state).clone().toggle_description().into()
+    }
+}
+
+impl Reducer<CardPageState> for ResetMessage {
+    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+        let mut state = (*state).clone();
+        state.reset();
+        state.into()
+    }
+}
+
+impl Reducer<CardPageState> for MaybeChangeUserDataMessage {
+    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+        if self.0 == state.user_data {
+            state
+        } else {
+            let mut state = (*state).clone();
+            state.user_data = self.0;
+            state.reset();
+            state.into()
+        }
     }
 }

@@ -9,13 +9,15 @@ use yewdux::prelude::*;
 
 #[derive(PartialEq, Eq, Store, Default)]
 pub struct ImageMetaState {
-    pub metas: Option<BTreeMap<(StarSign, Guide, Card), ImageMeta>>,
+    pub metas: Option<BTreeMap<MetaKey, ImageMeta>>,
 }
 
 impl ImageMetaState {
     pub async fn setup() {
+        // log::info!("Began Metas Set Up");
         let result = Self::create().await.unwrap();
         Dispatch::<ImageMetaState>::new().set(result);
+        // log::info!("Finished Metas Set Up");
     }
 
     pub async fn create() -> Result<Self, anyhow::Error> {
@@ -29,7 +31,7 @@ impl ImageMetaState {
             .skip(1) //skip headers
             .filter_map(|x| x.ok())
             .map(move |x| ImageMeta::from_str(x.as_str()).unwrap())
-            .map(|x| ((x.sign, x.guide, x.card), x))
+            .flat_map(|x| [(MetaKey::from(x), x), (MetaKey::from(x).with_no_sign(), x)])
             .collect_vec();
 
         let today = get_today_date();

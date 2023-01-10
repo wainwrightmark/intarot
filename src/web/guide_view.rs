@@ -3,23 +3,23 @@ use strum::{EnumCount, IntoEnumIterator};
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 use yew_router::prelude::use_navigator;
+use yewdux::prelude::use_store_value;
 
 use super::app::Route;
-use crate::data::prelude::{Guide, StarSign};
+use crate::{data::prelude::*, state::prelude::*};
 
 #[derive(Properties, PartialEq)]
 pub struct GuideProps {
-    pub sign: Option<StarSign>,
-    pub guide: Option<Guide>,
     pub go_to_question: bool,
 }
 
 #[function_component(GuideView)]
-pub fn soothsayer_view(props: &GuideProps) -> Html {
-    let navigator = use_navigator().unwrap();
+pub fn guide_view(props: &GuideProps) -> Html {
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
-    let state = use_state(|| props.guide.unwrap_or_default());
+    let card_page_state = use_store_value::<CardPageState>();
+    let state = use_state(|| card_page_state.user_data.guide);
+    let navigator = use_navigator().unwrap();
 
     let current_value = *state;
     let current_index = Guide::iter()
@@ -27,6 +27,26 @@ pub fn soothsayer_view(props: &GuideProps) -> Html {
         .expect("Selected value was not one of the possible values.");
     let previous = current_value.previous().unwrap_or(current_value);
     let next = current_value.next().unwrap_or(current_value);
+
+    // You can depend on direction/swiping etc.
+    {
+        let state = state.clone();
+        let swipe_state = swipe_state;
+        use_effect_with_deps(
+            move |direction| {
+                // Do something based on direction.
+                match **direction {
+                    UseSwipeDirection::Left => state.set(next),
+                    UseSwipeDirection::Right => state.set(previous),
+                    _ => (),
+                }
+                || ()
+            },
+            swipe_state.direction,
+        );
+    }
+
+
 
     let select_previous = {
         let state = state.clone();
@@ -41,6 +61,7 @@ pub fn soothsayer_view(props: &GuideProps) -> Html {
     let can_select_previous = current_index != 0;
     let can_select_next = current_index + 1 < Guide::COUNT;
 
+
     let items = Guide::iter()
         .map(|guide| {
             let selected = current_value == guide;
@@ -51,17 +72,16 @@ pub fn soothsayer_view(props: &GuideProps) -> Html {
             };
 
             let onclick = {
-                let guide = guide;
-                let sign = props.sign;
-                let navigator = navigator.clone();
+
                 let go_to_question = props.go_to_question;
+                let navigator = navigator.clone();
                 Callback::from(move |_e: MouseEvent| {
 
                     if go_to_question{
-                        navigator.push(&Route::Question { sign: sign.into(), guide });
+                        navigator.push(&Route::Question { });
                     }
                     else{
-                        navigator.push(&Route::Restart { sign: sign.into(), guide });
+                        navigator.push(&Route::Restart {  });
                     }
 
                 })
@@ -95,22 +115,7 @@ pub fn soothsayer_view(props: &GuideProps) -> Html {
         })
         .collect_vec();
 
-    // You can depend on direction/swiping etc.
-    {
-        let swipe_state = swipe_state;
-        use_effect_with_deps(
-            move |direction| {
-                // Do something based on direction.
-                match **direction {
-                    UseSwipeDirection::Left => state.set(next),
-                    UseSwipeDirection::Right => state.set(previous),
-                    _ => (),
-                }
-                || ()
-            },
-            swipe_state.direction,
-        );
-    }
+
 
     html! {
         <>

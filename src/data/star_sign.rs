@@ -101,7 +101,6 @@ impl FromStr for StarSignOption {
         } else if s.eq_ignore_ascii_case("none") {
             Ok(Self::default())
         } else {
-            
             StarSign::from_str(s).map(|x| Self(Some(x)))
         }
     }

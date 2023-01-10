@@ -1,6 +1,6 @@
- - [ ] Implement new workflow
+ - [x] Implement new workflow
 
- - [ ] Carousel arrows should both be visible
- - [ ] Carousel arrows should be same height
+ - [x] Carousel arrows should both be visible
+ - [x] Carousel arrows should be same height
  - [ ] More in app prompts
- - [ ] Shaking should start faster and be more vigorous
+ - [x] Shaking should start faster and be more vigorous

@@ -1,51 +1,53 @@
-
-
 use yew::prelude::*;
 
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
-use crate::data::prelude::*;
 use crate::state::prelude::*;
 use crate::web::prelude::{Route, ShareComponent};
 
 #[derive(Properties, PartialEq)]
 pub struct CardViewProps {
-    pub meta: ImageMeta,
-    pub show_description: bool,
     pub index: usize,
-    pub description: ImageDescription,
-    pub total_cards: usize,
-    pub should_shake: bool,
-    pub sign: Option<StarSign>,
 }
-
 
 #[function_component(CardView)]
 pub fn card_view(props: &CardViewProps) -> Html {
+    // log::info!("Card View {}", props.index);
+    let descriptions_state = use_store_value::<ImageDescriptionState>();
+    let metas_state = use_store_value::<ImageMetaState>();
+    let state = use_store_value::<CardPageState>();
+    let navigator = use_navigator().unwrap();
+    let Some(descriptions) = descriptions_state.descriptions.as_ref() else{
+        // log::info!("No descriptions");
+        return html!();
+    };
+
+    let Some(metas) = metas_state.metas.as_ref() else{
+        // log::info!("No Metas");
+        return html!();
+    };
+
+    let top_card = state.is_top_card(props.index);
+    // log::info!("Showing Card View index:{} top:{top_card}", props.index);
+
     let toggle = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
-    let onclick = {
-        let guide = props.meta.guide;
-        let sign = props.sign;
-        let navigator = use_navigator().unwrap();
+    let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
-            navigator.replace(&Route::Restart {
-                sign: sign.into(),
-                guide,
-            });
+            navigator.replace(&Route::Restart {});
         })
     };
 
-    let style = get_style(props.index, props.total_cards);
+    let style = get_style(props.index, state.as_ref());
 
     let mut card_classes = classes!("prophecy-card");
     let mut image_classes = classes!("prophecy-image");
-    let top_card = props.index + 2 == props.total_cards;
+
     let show_description = if top_card {
         card_classes.push("top_card");
 
-        if props.show_description {
+        if state.show_description {
             image_classes.push("image_greyed");
             true
         } else {
@@ -55,39 +57,68 @@ pub fn card_view(props: &CardViewProps) -> Html {
         false
     };
 
-    if props.should_shake {
+    let should_shake = top_card && !state.has_shown_description;
+
+    if should_shake {
         card_classes.push("card-shake");
     }
 
+    let meta = state.get_image_meta(props.index, &metas);
+    let description = meta.and_then(|meta| descriptions.get(&(meta.guide, meta.card)));
 
+    let id =meta.map(|x|x.id).unwrap_or(state.user_data.guide.ad_image_id());
 
     html! {
 
             <div class={card_classes} style = {style} >
             <div class="prophecy-back"> </div>
-                    <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone()) } onclick={toggle.clone()} />
+                    <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}",id) } onclick={toggle.clone()} />
                     {
                         if show_description{
                             html!{
                                 <div class="image-overlay" style="pointer-events:none;">
-                                <p class="image-overlay-text">
+                                {
+                                    if let Some(description) = description{
+                                        html!{
+                                            <p class="image-overlay-text">
                                     <span>
-                                    {props.description.representation.clone()}
+                                    {description.representation.clone()}
                                     </span>
                                     <br/>
                                     <br/>
                                     <span>
-                                    {props.description.guidance.clone()}
+                                    {description.guidance.clone()}
                                     </span>
                                     <br/>
                                     <br/>
                                     <span>
-                                    {props.description.specific_guidance.clone()}
+                                    {description.specific_guidance.clone()}
                                     </span>
                                 </p>
-                                <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem;">
+                                        }
+                                    }else{
+                                        html!{
+                                            <></>
+                                        }
+                                    }
+                                }
+
+
+
+                                <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem; flex-direction: column;">
                     <label class="paper-btn margin nice-button" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
-                    <button class="margin nice-button" style="pointer-events:auto;" {onclick} >{"Continue"} </button>
+                    <br/>
+                    {
+                        if meta.is_none(){
+                            html!{
+                                <button class="margin nice-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Continue"} </button>
+                            }
+                        }else{
+                            html!{
+                                <></>
+                            }
+                        }
+                    }
                   </div>
                   <br/>
                   <input class="modal-state" id="modal-2" type="checkbox"/>
@@ -98,8 +129,8 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                 <ShareComponent
                                 title="intarot"
                                 url={"https://www.intarot.com"}
-                                text={props.description.full_description()}
-                                media={format!("https://drive.google.com/uc?export=view&id={}", props.meta.id.clone())}>
+                                text={description.map(|x|x.full_description()).unwrap_or_else(|| include_str!(r#"../text/opening_p1.txt"#).into())}
+                                media={format!("https://drive.google.com/uc?export=view&id={}", id)}>
                                 </ShareComponent>
 
                     </div>
@@ -117,13 +148,10 @@ pub fn card_view(props: &CardViewProps) -> Html {
     }
 }
 
-
-
-fn get_style(index: usize, total_cards: usize)-> String{
-    let top_card = index + 2 == total_cards;
-    if index + 1 == total_cards {
+fn get_style(index: usize, state: &CardPageState) -> String {
+    if index == state.top_card_index + 1 {
         "transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;".to_string()
-    } else if index + 1 >= total_cards {
+    } else if index > state.top_card_index + 1 {
         let angle = match index % 4 {
             0 => 15 + ((index as isize) * -10),
             1 => -20 + ((index as isize) * 10),
@@ -148,11 +176,9 @@ fn get_style(index: usize, total_cards: usize)-> String{
         format!(
             "transform:  translateX({translate_x}em) translateY({translate_y}em) rotateZ({angle}deg); visibility: hidden; pointer-events: none;",
         )
-    } else if top_card {
+    } else if index == state.top_card_index {
         let angle = 0;
-        format!(
-            "transform: rotateZ({angle}deg); transition-duration: 1s, 3s"
-        )
+        format!("transform: rotateZ({angle}deg); transition-duration: 1s, 3s")
     } else {
         let angle = match index % 4 {
             0 => 15 + -(index as isize),

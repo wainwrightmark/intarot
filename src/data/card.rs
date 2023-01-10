@@ -1,5 +1,8 @@
+use std::rc::Rc;
+
+use rand::{rngs::ThreadRng, seq::SliceRandom};
 use serde::{Deserialize, Serialize};
-use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
+use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoEnumIterator, IntoStaticStr};
 
 #[derive(
     Copy,
@@ -83,5 +86,16 @@ impl Card {
 
     pub fn repr(&self) -> &'static str {
         self.into()
+    }
+
+    pub fn get_random_ordering() -> Rc<[Card; Card::COUNT]> {
+        let mut cards = [Card::Fool; Card::COUNT];
+        for (i, c) in Card::iter().enumerate() {
+            cards[i] = c
+        }
+        let mut rng = ThreadRng::default();
+        cards.shuffle(&mut rng);
+
+        cards.into()
     }
 }

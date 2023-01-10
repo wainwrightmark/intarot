@@ -1,40 +1,28 @@
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
-use yewdux::prelude::use_store_value;
+use yewdux::prelude::{use_store_value, Dispatch};
 
 use super::app::Route;
-use crate::{
-    data::prelude::{Guide, StarSign},
-    state::prelude::CardPageState,
-};
+use crate::state::{messages::*, prelude::CardPageState};
 
 #[derive(Properties, PartialEq)]
-pub struct QuestionProps {
-    pub sign: Option<StarSign>,
-    pub guide: Guide,
-}
+pub struct QuestionProps {}
 
 #[function_component(QuestionView)]
-pub fn question_view(props: &QuestionProps) -> Html {
-    let card_page_state = use_store_value::<CardPageState>();
+pub fn question_view(_props: &QuestionProps) -> Html {
+    let _card_page_state = use_store_value::<CardPageState>();
     let navigator = use_navigator().unwrap();
+    let skipped_state = use_state(|| false);
 
-    let onclick = {
-        let guide = props.guide;
-        let sign = props.sign;
+    let on_begin_click = {
         let navigator = navigator;
-        let card_page_state = *card_page_state.as_ref();
         Callback::from(move |_e: MouseEvent| {
-            let seed = card_page_state.get_new_seed_if_changed(sign, guide);
-            navigator.replace(&Route::Card {
-                sign: sign.into(),
-                guide,
-                seed,
-            });
+            Dispatch::<CardPageState>::new().apply(ResetMessage {});
+            navigator.replace(&Route::Spread {});
         })
     };
 
-    let skipped_state = use_state(|| false);
+
 
     let background_click = {
         let skipped_state = skipped_state.clone();
@@ -63,7 +51,7 @@ pub fn question_view(props: &QuestionProps) -> Html {
                 <p style="margin: auto; animation-delay: -3s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Remember that truth comes from within"}</p>
                 </div>
                 <div class="row align-middle">
-                <button onclick={onclick} style="margin: auto; animation-delay: -1.5s;" class={if *skipped_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
+                <button onclick={on_begin_click} style="margin: auto; animation-delay: -1.5s;" class={if *skipped_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
                 </div>
                 </div>
                 <div class="row">

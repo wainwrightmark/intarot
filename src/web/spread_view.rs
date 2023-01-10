@@ -1,32 +1,25 @@
-
-
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 
 use yewdux::prelude::*;
 
-use crate::data::prelude::*;
 use crate::state::prelude::*;
 
-
-use crate::web::card_view::{CardView};
-use crate::web::final_card_view::{FinalCardView};
+use crate::web::card_view::*;
 
 #[derive(Properties, PartialEq, Clone)]
-pub struct SpreadViewProps {
-    pub sign: Option<StarSign>,
-    pub guide: Guide,
-    pub seed: u32,
-}
+pub struct SpreadViewProps {}
 
 #[function_component(SpreadView)]
 pub fn spread_view(props: &SpreadViewProps) -> Html {
+    // log::info!("Spread View");
+
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
 
-    let (cp, dispatch) = use_store::<CardPageState>();
-    let props = props.clone();
-    use_effect(move || dispatch.reduce(|x| x.on_load(props.sign, props.guide, props.seed)));
+    let cp = use_store_value::<CardPageState>();
+    // log::info!("{:?}", cp);
+    let _props = props.clone();
 
     {
         let swipe_state = swipe_state;
@@ -48,43 +41,20 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
         );
     }
 
-    let can_previous = cp.cards_drawn > 1;
-    let can_next = cp.cards_drawn < 23;
-
     let select_previous =
         Dispatch::<CardPageState>::new().apply_callback(move |_| ReplaceMessage {});
     let select_next = Dispatch::<CardPageState>::new().apply_callback(move |_| DrawMessage {});
 
-    let (metas_state, _) = use_store::<ImageMetaState>();
-    let (descriptions_state, _) = use_store::<ImageDescriptionState>();
+    let _total_cards = (cp.last_hidden_card_index + 1).min(cp.finish_card_index()); //display an extra card to preload the image
+    let _s_d: bool = cp.show_description;
 
-    let Some(ds) = descriptions_state.descriptions.as_ref() else{
-        return html!();
-    };
+    let can_previous = cp.can_previous();
+    let can_next= cp.can_draw();
 
-    let metas = cp.get_possible_image_metas(metas_state.as_ref());
-    let total_cards = cp.cards_drawn + 1; //display an extra card to preload the image
-    let s_d: bool = cp.show_description;
-
-    let final_card = if true {
-        Some(html!(<FinalCardView total_cards={total_cards} key={"final card"} />))
-    } else {
-        None
-    };
-
-    let items = metas
-        .into_iter()
-        //.take(cp.cards_drawn)
-        .take(cp.max_drawn)
-        .enumerate()
-        .map(|(index, image_meta)|
-        {
-            let description = ds[&(image_meta.guide, image_meta.card)].clone();
-            let key = image_meta.card.name().clone();
-            let should_shake = !cp.has_shown_description && index + 1 == cp.cards_drawn;
-            html!(<CardView index={index} meta={image_meta} show_description={s_d} description={description} total_cards={total_cards} key={key} should_shake={should_shake } sign={props.sign}  />)
+    let cards = (0..=_total_cards)
+        .map(|index| {
+            html!(<CardView index={index} key={index} />)
         })
-        .chain(final_card)
         .collect::<Html>();
 
     html!(
@@ -94,7 +64,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
 
         <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
         <div class="cards-grid" key="cards-grid">
-        { items }
+        { cards }
         </div>
         <div class="card-actions" style="pointer-events: none;">
             <button id="card-button-prev" aria-label="Previous" disabled={!can_previous}  onclick={select_previous} style="pointer-events: auto;" class="card-arrow">{"❰"}</button>
