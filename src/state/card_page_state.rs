@@ -41,7 +41,7 @@ impl CardPageState {
     }
     pub fn draw_card(mut self) -> Self {
 
-        if self.top_card_index <= self.finish_card_index(){
+        if self.top_card_index < self.finish_card_index(){
             self.top_card_index += 1;
             self.last_hidden_card_index = (self.top_card_index + 1).min(self.finish_card_index()).max(self.last_hidden_card_index);
 
@@ -88,7 +88,7 @@ impl CardPageState {
     }
 
     pub fn can_draw(&self)-> bool{
-        self.top_card_index <= self.finish_card_index()
+        self.top_card_index < self.finish_card_index()
     }
 
 
@@ -126,7 +126,7 @@ impl Reducer<CardPageState> for ResetMessage {
     }
 }
 
-impl Reducer<CardPageState> for MaybeChangeUserDataMessage {
+impl Reducer<CardPageState> for MaybeChangeDataMessage {
     fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
         if self.0 == state.user_data {
             state

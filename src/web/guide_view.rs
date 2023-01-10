@@ -3,7 +3,7 @@ use strum::{EnumCount, IntoEnumIterator};
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 use yew_router::prelude::use_navigator;
-use yewdux::prelude::use_store_value;
+use yewdux::prelude::{use_store_value, Dispatch};
 
 use super::app::Route;
 use crate::{data::prelude::*, state::prelude::*};
@@ -75,8 +75,13 @@ pub fn guide_view(props: &GuideProps) -> Html {
 
                 let go_to_question = props.go_to_question;
                 let navigator = navigator.clone();
+                let user_data = card_page_state.user_data;
+                let state = state.clone();
                 Callback::from(move |_e: MouseEvent| {
+                    let mut user_data = user_data;
+                    user_data.guide = *state;
 
+                    Dispatch::<CardPageState>::new().apply(MaybeChangeDataMessage(user_data));
                     if go_to_question{
                         navigator.push(&Route::Question { });
                     }
