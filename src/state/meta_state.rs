@@ -33,7 +33,7 @@ impl ImageMetaState {
             .collect_vec();
 
         let today = get_today_date();
-        let seed = ((today.year().abs() as u32) * 2000) + (today.month() * 100) + today.day();
+        let seed = (today.year().unsigned_abs() * 2000) + (today.month() * 100) + today.day();
         let mut rng: rand::rngs::StdRng = SeedableRng::seed_from_u64(seed as u64);
 
         metas_vec.shuffle(&mut rng);

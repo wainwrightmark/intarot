@@ -1,11 +1,11 @@
 use rand::rngs::ThreadRng;
 use rand::RngCore;
 use yew::prelude::*;
-use yew_hooks::{use_swipe, UseSwipeDirection};
+
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
-use crate::data::prelude::*;
+
 use crate::state::prelude::*;
 use crate::web::prelude::{Route, ShareComponent};
 
@@ -26,11 +26,10 @@ pub fn final_card_view(props: &FinalCardViewProps) -> Html {
     let style = if top_card {
         let angle = 0;
         format!(
-            "transform: rotateZ({}deg); transition-duration: 1s, 3s",
-            angle
+            "transform: rotateZ({angle}deg); transition-duration: 1s, 3s"
         )
     } else {
-        format!("transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;",)
+        "transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;".to_string()
     };
     let sign = card_page_state.star_sign;
     let guide = card_page_state.guide;

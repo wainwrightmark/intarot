@@ -1,5 +1,5 @@
 use std::{
-    fmt::{Debug, Display, Pointer},
+    fmt::{Debug, Display},
     str::FromStr,
 };
 
@@ -101,8 +101,8 @@ impl FromStr for StarSignOption {
         } else if s.eq_ignore_ascii_case("none") {
             Ok(Self::default())
         } else {
-            let r = StarSign::from_str(s).map(|x| Self(Some(x)));
-            r
+            
+            StarSign::from_str(s).map(|x| Self(Some(x)))
         }
     }
 }

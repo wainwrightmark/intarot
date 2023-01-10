@@ -1,16 +1,16 @@
-use rand::rngs::ThreadRng;
-use rand::RngCore;
+
+
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
-use yew_router::prelude::use_navigator;
+
 use yewdux::prelude::*;
 
 use crate::data::prelude::*;
 use crate::state::prelude::*;
-use crate::web::prelude::{Route, ShareComponent};
 
-use crate::web::card_view::{self, CardView};
-use crate::web::final_card_view::{self, FinalCardView};
+
+use crate::web::card_view::{CardView};
+use crate::web::final_card_view::{FinalCardView};
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct SpreadViewProps {
@@ -29,7 +29,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
     use_effect(move || dispatch.reduce(|x| x.on_load(props.sign, props.guide, props.seed)));
 
     {
-        let swipe_state = swipe_state.clone();
+        let swipe_state = swipe_state;
         use_effect_with_deps(
             move |direction| {
                 // Do something based on direction.

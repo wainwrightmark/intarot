@@ -1,7 +1,7 @@
-use rand::rngs::ThreadRng;
-use rand::RngCore;
+
+
 use yew::prelude::*;
-use yew_hooks::{use_swipe, UseSwipeDirection};
+
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
@@ -25,8 +25,8 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let toggle = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
     let onclick = {
-        let guide = props.meta.guide.clone();
-        let sign = props.sign.clone();
+        let guide = props.meta.guide;
+        let sign = props.sign;
         let navigator = use_navigator().unwrap();
         Callback::from(move |_e: MouseEvent| {
             navigator.replace(&Route::Restart {
@@ -57,7 +57,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
     }
 
     let style = if props.index + 1 == props.total_cards {
-        format!("transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;",)
+        "transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;".to_string()
     } else if props.index + 1 >= props.total_cards {
         let angle = match props.index % 4 {
             0 => 15 + ((props.index as isize) * -10),
@@ -81,21 +81,19 @@ pub fn card_view(props: &CardViewProps) -> Html {
         };
 
         format!(
-            "transform:  translateX({}em) translateY({}em) rotateZ({}deg); visibility: hidden; pointer-events: none;",
-            translate_x, translate_y, angle,
+            "transform:  translateX({translate_x}em) translateY({translate_y}em) rotateZ({angle}deg); visibility: hidden; pointer-events: none;",
         )
     } else if top_card {
         let angle = 0;
         format!(
-            "transform: rotateZ({}deg); transition-duration: 1s, 3s",
-            angle
+            "transform: rotateZ({angle}deg); transition-duration: 1s, 3s"
         )
     } else {
         let angle = match props.index % 4 {
-            0 => 15 + ((props.index as isize) * -1),
-            1 => -20 + ((props.index as isize) * 1),
-            2 => 20 + ((props.index as isize) * -1),
-            _ => -15 + ((props.index as isize) * 1),
+            0 => 15 + -(props.index as isize),
+            1 => -20 + (props.index as isize),
+            2 => 20 + -(props.index as isize),
+            _ => -15 + (props.index as isize),
         };
 
         let translate_x = match props.index % 4 {
@@ -113,8 +111,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
         };
 
         format!(
-            "transform: translateX({}em) translateY({}em)  rotateZ({}deg);s; pointer-events: none;",
-            translate_x, translate_y, angle
+            "transform: translateX({translate_x}em) translateY({translate_y}em)  rotateZ({angle}deg);s; pointer-events: none;"
         )
     };
 

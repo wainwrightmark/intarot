@@ -42,7 +42,7 @@ pub fn restart_view(props: &RestartProps) -> Html {
     .collect_vec();
 
     let onclick = {
-        let guide = props.guide.clone();
+        let guide = props.guide;
         let navigator = use_navigator().unwrap();
         let sign_state = sign_state.clone();
         Callback::from(move |_e: MouseEvent| {
@@ -60,7 +60,7 @@ pub fn restart_view(props: &RestartProps) -> Html {
         Callback::from(move |_e: MouseEvent| {
             navigator.push(&Route::Guide {
                 sign: (*sign_state).into(),
-                guide: guide,
+                guide,
             });
         })
     };

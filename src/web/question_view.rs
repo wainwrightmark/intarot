@@ -20,10 +20,10 @@ pub fn question_view(props: &QuestionProps) -> Html {
     let navigator = use_navigator().unwrap();
 
     let onclick = {
-        let guide = props.guide.clone();
-        let sign = props.sign.clone();
-        let navigator = navigator.clone();
-        let card_page_state = card_page_state.as_ref().clone();
+        let guide = props.guide;
+        let sign = props.sign;
+        let navigator = navigator;
+        let card_page_state = *card_page_state.as_ref();
         Callback::from(move |_e: MouseEvent| {
             let seed = card_page_state.get_new_seed_if_changed(sign, guide);
             navigator.replace(&Route::Card {

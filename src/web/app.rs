@@ -52,7 +52,7 @@ fn switch(routes: Route) -> Html {
 
          },
 
-        Route::Question { sign, guide: guide } => html! {
+        Route::Question { sign, guide } => html! {
            <QuestionView sign={sign.0} guide={guide} />
         },
 

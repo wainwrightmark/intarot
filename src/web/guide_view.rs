@@ -51,8 +51,8 @@ pub fn soothsayer_view(props: &GuideProps) -> Html {
             };
 
             let onclick = {
-                let guide = guide.clone();
-                let sign = props.sign.clone();
+                let guide = guide;
+                let sign = props.sign;
                 let navigator = navigator.clone();
                 let go_to_question = props.go_to_question;
                 Callback::from(move |_e: MouseEvent| {
@@ -97,7 +97,7 @@ pub fn soothsayer_view(props: &GuideProps) -> Html {
 
     // You can depend on direction/swiping etc.
     {
-        let swipe_state = swipe_state.clone();
+        let swipe_state = swipe_state;
         use_effect_with_deps(
             move |direction| {
                 // Do something based on direction.
