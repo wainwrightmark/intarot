@@ -40,7 +40,7 @@
   justify-content: space-between; /* put space between the navigation buttons */
   position: absolute; /* position navigation buttons on top */
   left: 0;
-  top: 25%; /* center navigation buttons on the slide */
+  top: 25vh; /* center navigation buttons on the slide */
   /*transform: translateY(100%); /* align navigation buttons */
 }
 
@@ -77,9 +77,9 @@
   transform: none;
 }
 
-.card-actions button[disabled] {
+/* .card-actions button[disabled] {
   visibility: hidden;
-}
+} */
 
 .card-actions button#card-button-prev {
   margin-left: 2%; /* prevent previous button from touching the side*/
@@ -89,9 +89,9 @@
   margin-right: 2%; /* prevent next button from touching the side*/
 }
 
-.carousel .carousel-actions button[disabled] {
+/* .carousel .carousel-actions button[disabled] {
   visibility: hidden;
-}
+} */
 
 .carousel .carousel-actions button#carousel-button-prev {
   margin-left: 2%; /* prevent previous button from touching the side*/
@@ -106,12 +106,12 @@
   grid-template-columns: 1fr;
 }
 
-.soothsayer-name {
+.guide-name {
   color: var(--muted-text);
   margin: 1em;
 }
 
-.soothsayer-image {
+.guide-image {
   border-radius: 20px;
   border-style: hidden;
   /* border-color: var(--success-dark); */
@@ -240,7 +240,8 @@
   }
 
 .card-shake {
-  animation-duration: 10s;
+  animation-duration: 2s;
+  animation-delay: 6s;
   animation-name: shake;
   animation-iteration-count: infinite;
   animation-direction: both;
