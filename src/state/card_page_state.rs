@@ -45,7 +45,13 @@ impl CardPageState {
             self.top_card_index += 1;
             self.last_hidden_card_index = (self.top_card_index + 1).min(self.finish_card_index()).max(self.last_hidden_card_index);
 
-            self.show_description = self.top_card_index == self.finish_card_index();
+            if self.top_card_index == self.finish_card_index(){
+                self.show_description = true;
+                self.has_shown_description = true;
+            }
+            else{
+                self.show_description = false;
+            }
         }
         self
     }
