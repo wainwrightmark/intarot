@@ -6,42 +6,65 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes target-densitydpi=device-dpi"
     />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="theme-color" content="#ffea00" />
 
     <title>intarot</title>
 
+    <!-- https://devhints.io/html-meta -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="intarot" />
-    <meta
-      property="og:url"
-      content="https://www.intarot.com"
-    />
+    <meta property="og:url" content="https://www.intarot.com" />
     <meta property="og:site_name" content="intarot" />
     <meta
       property="og:description"
       content="intarot: unique astrological tarot"
     />
+    <meta
+      property="og:description"
+      content="intarot: unique astrological tarot"
+    />
+    <meta
+      name="twitter:description"
+      content="intarot: unique astrological tarot"
+    />
 
     <link data-trunk rel="copy-file" href="icon.png" />
+    <link data-trunk rel="copy-file" href="icon.svg" />
     <link rel="icon" href="icon.png" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <meta name="msapplication-square310x310logo" content="icon.png" />
 
-    <meta property="og:image" content="https://repository-images.githubusercontent.com/548829841/c540fb93-21d9-4285-aefd-2fa7d17e18a2">
+    <meta
+      property="og:image"
+      content="https://repository-images.githubusercontent.com/548829841/c540fb93-21d9-4285-aefd-2fa7d17e18a2"
+    />
 
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="https://unpkg.com/papercss@1.8.3/dist/paper.min.css">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/papercss@1.8.3/dist/paper.min.css"
+    />
 
+    <link data-trunk rel="css" href="styles.css" data-wasm-opt="{z}" />
 
-    <link data-trunk rel="css" href="styles.css" data-wasm-opt={z} />
-    
-    <link 
-  href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css"
-  rel="stylesheet"
->
-    
+    <link
+      href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css"
+      rel="stylesheet"
+    />
+
+    <link data-trunk rel="copy-file" href="manifest.json" />
+    <link rel="manifest" href="/manifest.json">
+
   </head>
 
   <body style="background: var(--main-background)">
