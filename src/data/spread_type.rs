@@ -29,7 +29,8 @@ pub enum SpreadType {
 }
 
 impl SpreadType {
-    pub fn num_cards(&self) -> usize {
+    /// total cards, excluding the finish card
+    pub fn total_cards(&self) -> usize {
         match self {
             SpreadType::One => 1,
             SpreadType::Three => 3,
@@ -37,11 +38,20 @@ impl SpreadType {
         }
     }
 
+
     pub fn initial_top_card_index(&self) -> usize {
         match self {
-            SpreadType::One => 0,
-            SpreadType::Three => 2,
-            SpreadType::Browse => 0,
+            SpreadType::One => 1,
+            SpreadType::Three => 3,
+            SpreadType::Browse =>0,
+        }
+    }
+
+    pub fn is_ad_card_first(&self) -> bool{
+        match self {
+            SpreadType::One => true,
+            SpreadType::Three => true,
+            SpreadType::Browse => false,
         }
     }
 }

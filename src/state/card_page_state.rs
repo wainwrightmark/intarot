@@ -35,30 +35,41 @@ impl Default for CardPageState {
 }
 
 impl CardPageState {
-
-    pub fn finish_card_index(&self)->usize{
-        self.user_data.spread_type.num_cards()
+    pub fn finish_card_index(&self) -> usize {
+        if self.user_data.spread_type.is_ad_card_first() {
+            0
+        } else {
+            self.user_data.spread_type.total_cards()
+        }
     }
     pub fn draw_card(mut self) -> Self {
-
-        if self.top_card_index < self.finish_card_index(){
+        if self.top_card_index < self.user_data.spread_type.total_cards() {
             self.top_card_index += 1;
-            self.last_hidden_card_index = (self.top_card_index + 1).min(self.finish_card_index()).max(self.last_hidden_card_index);
+            self.last_hidden_card_index = (self.top_card_index + 1)
+                .min(self.user_data.spread_type.total_cards())
+                .max(self.last_hidden_card_index);
 
-            if self.top_card_index == self.finish_card_index(){
+            if self.top_card_index == self.finish_card_index() {
                 self.show_description = true;
                 self.has_shown_description = true;
-            }
-            else{
+            } else {
                 self.show_description = false;
             }
         }
         self
     }
 
-    pub fn get_image_meta(&self, index: usize, metas: &BTreeMap<MetaKey, ImageMeta>) -> Option<ImageMeta> {
-        if index >= self.finish_card_index(){
+    pub fn get_image_meta(
+        &self,
+        mut index: usize,
+        metas: &BTreeMap<MetaKey, ImageMeta>,
+    ) -> Option<ImageMeta> {
+        if index == self.finish_card_index() {
             return None;
+        }
+
+        if index > self.finish_card_index(){
+            index = index -1;
         }
 
         let card = self.cards[index];
@@ -68,7 +79,7 @@ impl CardPageState {
             card,
         };
 
-        metas.get(&key).map(|x|*x)
+        metas.get(&key).map(|x| *x)
     }
 
     pub fn is_top_card(&self, index: usize) -> bool {
@@ -79,7 +90,12 @@ impl CardPageState {
         if self.top_card_index > 0 {
             self.top_card_index -= 1;
         }
-        self.show_description = false;
+        if self.top_card_index == self.finish_card_index() {
+            self.show_description = true;
+            self.has_shown_description = true;
+        } else {
+            self.show_description = false;
+        }
         self
     }
 
@@ -89,14 +105,13 @@ impl CardPageState {
         self
     }
 
-    pub fn can_previous(&self)-> bool{
+    pub fn can_previous(&self) -> bool {
         self.top_card_index > 0
     }
 
-    pub fn can_draw(&self)-> bool{
-        self.top_card_index < self.finish_card_index()
+    pub fn can_draw(&self) -> bool {
+        self.top_card_index < self.user_data.spread_type.total_cards()
     }
-
 
     pub fn reset(&mut self) {
         self.cards = Card::get_random_ordering();

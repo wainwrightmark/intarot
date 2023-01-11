@@ -90,7 +90,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
 
             <div>
             <select onchange={on_sign_change} class="nice-button" style="margin:auto; width:200px;">
-            <option selected={user_data.star_sign.is_none()} disabled={true}> {"Star Sign"}  </option>
+            <option selected={user_data.star_sign.is_none()} disabled={false}> {"Star Sign"}  </option>
             {sign_options}
             </select>
         <br/>

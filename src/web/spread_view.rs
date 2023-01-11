@@ -45,7 +45,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
         Dispatch::<CardPageState>::new().apply_callback(move |_| ReplaceMessage {});
     let select_next = Dispatch::<CardPageState>::new().apply_callback(move |_| DrawMessage {});
 
-    let _total_cards = (cp.last_hidden_card_index + 1).min(cp.finish_card_index()); //display an extra card to preload the image
+    let _total_cards = (cp.last_hidden_card_index + 1).min(cp.user_data.spread_type.total_cards()); //display an extra card to preload the image
     let _s_d: bool = cp.show_description;
 
     let can_previous = cp.can_previous();
