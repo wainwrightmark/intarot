@@ -8,9 +8,9 @@
       }
     ],
     "id": "/manifest.json",
-    "start_url": "/#",
+    "start_url": "/#/restart",
     "background_color": "#ffffff",
-    "display": "minimal-ui",
+    "display": "standalone",
     "scope": "/",
     "theme_color": "#ffea00",
     "shortcuts": [
