@@ -3,21 +3,21 @@ use yew_router::prelude::use_navigator;
 use yewdux::prelude::{use_store_value, Dispatch};
 
 use super::app::Route;
-use crate::state::{messages::*, prelude::CardPageState};
+use crate::state::{messages::*, prelude::DataState};
 
 #[derive(Properties, PartialEq)]
 pub struct QuestionProps {}
 
 #[function_component(QuestionView)]
 pub fn question_view(_props: &QuestionProps) -> Html {
-    let _card_page_state = use_store_value::<CardPageState>();
+    let _card_page_state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
     let skipped_state = use_state(|| false);
 
     let on_begin_click = {
         let navigator = navigator;
         Callback::from(move |_e: MouseEvent| {
-            Dispatch::<CardPageState>::new().apply(ResetMessage {});
+            Dispatch::<DataState>::new().apply(ResetMessage {});
             navigator.replace(&Route::Spread {});
         })
     };

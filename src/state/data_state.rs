@@ -11,7 +11,7 @@ use super::messages::*;
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug)]
 #[store(storage = "local")]
 
-pub struct CardPageState {
+pub struct DataState {
     pub user_data: QuestionData,
     pub cards: Rc<[Card; Card::COUNT]>,
     pub top_card_index: usize,
@@ -21,7 +21,7 @@ pub struct CardPageState {
     pub has_shown_description: bool,
 }
 
-impl Default for CardPageState {
+impl Default for DataState {
     fn default() -> Self {
         Self {
             top_card_index: 0,
@@ -34,7 +34,7 @@ impl Default for CardPageState {
     }
 }
 
-impl CardPageState {
+impl DataState {
     pub fn finish_card_index(&self) -> usize {
         if self.user_data.spread_type.is_ad_card_first() {
             0
@@ -122,33 +122,33 @@ impl CardPageState {
     }
 }
 
-impl Reducer<CardPageState> for DrawMessage {
-    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+impl Reducer<DataState> for DrawMessage {
+    fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         (*state).clone().draw_card().into()
     }
 }
 
-impl Reducer<CardPageState> for ReplaceMessage {
-    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+impl Reducer<DataState> for ReplaceMessage {
+    fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         (*state).clone().replace_card().into()
     }
 }
-impl Reducer<CardPageState> for ToggleDescriptionMessage {
-    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+impl Reducer<DataState> for ToggleDescriptionMessage {
+    fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         (*state).clone().toggle_description().into()
     }
 }
 
-impl Reducer<CardPageState> for ResetMessage {
-    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+impl Reducer<DataState> for ResetMessage {
+    fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         let mut state = (*state).clone();
         state.reset();
         state.into()
     }
 }
 
-impl Reducer<CardPageState> for MaybeChangeDataMessage {
-    fn apply(self, state: Rc<CardPageState>) -> Rc<CardPageState> {
+impl Reducer<DataState> for MaybeChangeDataMessage {
+    fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         if self.0 == state.user_data {
             state
         } else {

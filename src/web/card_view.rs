@@ -16,7 +16,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
     // log::info!("Card View {}", props.index);
     let descriptions_state = use_store_value::<ImageDescriptionState>();
     let metas_state = use_store_value::<ImageMetaState>();
-    let state = use_store_value::<CardPageState>();
+    let state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
     let Some(descriptions) = descriptions_state.descriptions.as_ref() else{
         // log::info!("No descriptions");
@@ -31,7 +31,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let top_card = state.is_top_card(props.index);
     // log::info!("Showing Card View index:{} top:{top_card}", props.index);
 
-    let toggle = Dispatch::<CardPageState>::new().apply_callback(|_| ToggleDescriptionMessage {});
+    let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
     let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
@@ -148,7 +148,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
     }
 }
 
-fn get_style(index: usize, state: &CardPageState) -> String {
+fn get_style(index: usize, state: &DataState) -> String {
     if index == state.top_card_index + 1 {
         "transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;".to_string()
     } else if index > state.top_card_index + 1 {

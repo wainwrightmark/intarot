@@ -17,7 +17,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
 
-    let cp = use_store_value::<CardPageState>();
+    let cp = use_store_value::<DataState>();
     // log::info!("{:?}", cp);
     let _props = props.clone();
 
@@ -28,10 +28,10 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                 // Do something based on direction.
                 match **direction {
                     UseSwipeDirection::Left => {
-                        Dispatch::<CardPageState>::new().apply(DrawMessage {})
+                        Dispatch::<DataState>::new().apply(DrawMessage {})
                     }
                     UseSwipeDirection::Right => {
-                        Dispatch::<CardPageState>::new().apply(ReplaceMessage {})
+                        Dispatch::<DataState>::new().apply(ReplaceMessage {})
                     }
                     _ => (),
                 }
@@ -42,8 +42,8 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
     }
 
     let select_previous =
-        Dispatch::<CardPageState>::new().apply_callback(move |_| ReplaceMessage {});
-    let select_next = Dispatch::<CardPageState>::new().apply_callback(move |_| DrawMessage {});
+        Dispatch::<DataState>::new().apply_callback(move |_| ReplaceMessage {});
+    let select_next = Dispatch::<DataState>::new().apply_callback(move |_| DrawMessage {});
 
     let _total_cards = (cp.last_hidden_card_index + 1).min(cp.user_data.spread_type.total_cards()); //display an extra card to preload the image
     let _s_d: bool = cp.show_description;

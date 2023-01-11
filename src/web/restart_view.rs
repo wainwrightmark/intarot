@@ -16,7 +16,7 @@ pub struct RestartProps {}
 #[function_component(RestartView)]
 pub fn restart_view(_props: &RestartProps) -> Html {
     let navigator = use_navigator().unwrap();
-    let state = use_store_value::<CardPageState>();
+    let state = use_store_value::<DataState>();
     let user_data = state.user_data.clone();
     let on_sign_change = {
         Callback::from(move |e: Event| {
@@ -25,7 +25,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
             let star_sign = StarSign::from_str(s.as_str()).ok();
             let mut user_data = state.user_data;
             user_data.star_sign = star_sign;
-            Dispatch::<CardPageState>::new().apply(MaybeChangeDataMessage(user_data))
+            Dispatch::<DataState>::new().apply(MaybeChangeDataMessage(user_data))
         })
     };
 
@@ -36,7 +36,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
             let spread_type = SpreadType::from_str(s.as_str()).unwrap();
             let mut user_data = user_data;
             user_data.spread_type = spread_type;
-            Dispatch::<CardPageState>::new().apply(MaybeChangeDataMessage(user_data))
+            Dispatch::<DataState>::new().apply(MaybeChangeDataMessage(user_data))
         })
     };
 

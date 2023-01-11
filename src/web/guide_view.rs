@@ -17,7 +17,7 @@ pub struct GuideProps {
 pub fn guide_view(props: &GuideProps) -> Html {
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
-    let card_page_state = use_store_value::<CardPageState>();
+    let card_page_state = use_store_value::<DataState>();
     let state = use_state(|| card_page_state.user_data.guide);
     let navigator = use_navigator().unwrap();
 
@@ -81,7 +81,7 @@ pub fn guide_view(props: &GuideProps) -> Html {
                     let mut user_data = user_data;
                     user_data.guide = *state;
 
-                    Dispatch::<CardPageState>::new().apply(MaybeChangeDataMessage(user_data));
+                    Dispatch::<DataState>::new().apply(MaybeChangeDataMessage(user_data));
                     if go_to_question{
                         navigator.push(&Route::Question { });
                     }
