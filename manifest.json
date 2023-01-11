@@ -1,0 +1,21 @@
+{
+    "short_name": "intarot",    
+    "icons": [
+      {
+        "src": "/icon.svg",
+        "type": "image/svg+xml",
+        "sizes": "336x336"
+      }
+    ],
+    "id": "/manifest.json",
+    "start_url": "/#",
+    "background_color": "#ffffff",
+    "display": "minimal-ui",
+    "scope": "/",
+    "theme_color": "#ffea00",
+    "shortcuts": [
+    ],
+    "description": "Unique Astrological Tarot",
+    "screenshots": [
+    ]
+  }

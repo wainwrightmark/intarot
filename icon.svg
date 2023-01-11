@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="88.78643mm"
+   height="88.78643mm"
+   viewBox="0 0 88.78643 88.78643"
+   version="1.1"
+   id="svg5604"
+   inkscape:export-filename="C:\Source\rust\intarot\icon.png"
+   inkscape:export-xdpi="146.47"
+   inkscape:export-ydpi="146.47"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   sodipodi:docname="Icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title4367">Intarot Icon</title>
+  <sodipodi:namedview
+     id="namedview5606"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.5126684"
+     inkscape:cx="224.76837"
+     inkscape:cy="161.96544"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g3293"
+     inkscape:snap-bbox="true" />
+  <defs
+     id="defs5601" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-57.93012,-78.569685)">
+    <g
+       id="g3293"
+       transform="matrix(1.4914561,0,0,1.4914561,208.70185,-16.14012)">
+      <g
+         id="g2236"
+         transform="matrix(1.0890511,0,0,1.0890511,-42.789539,-50.398571)"
+         style="fill:none;stroke:#000000;stroke-width:0.918231;stroke-miterlimit:4;stroke-dasharray:none">
+        <path
+           id="path1665"
+           style="stroke-width:3.47048;stroke-linecap:round;fill:#ffffff"
+           inkscape:transform-center-x="-1.4433655e-06"
+           transform="matrix(0.26458333,0,0,0.26458333,88.364747,129.99371)"
+           d="m -362.51044,77.771125 -48.77792,-17.171464 -21.72128,46.373189 -22.34915,-46.633259 -48.15006,17.431535 17.17146,-48.777927 -46.37319,-21.7212808 46.63326,-22.3491442 -17.43153,-48.150063 48.77793,17.171464 21.72128,-46.373193 22.34914,46.633262 48.15006,-17.431534 -17.17146,48.777927 46.37319,21.7212805 -46.63326,22.3491445 z M -377.7617,7.2719245 a 55.247944,55.247944 0 0 1 -55.24795,55.2479625 55.247944,55.247944 0 0 1 -55.24794,-55.2479625 55.247944,55.247944 0 0 1 55.24794,-55.2479625 55.247944,55.247944 0 0 1 55.24795,55.2479625 z" />
+      </g>
+      <g
+         id="g2236-6"
+         transform="matrix(0.56058019,0.20403452,-0.20403452,0.56058019,-29.720966,24.662308)"
+         style="fill:none;stroke:#000000;stroke-width:1.80636;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none">
+        <path
+           id="path1665-7"
+           style="stroke-width:6.82717;stroke-linecap:round;stroke-linejoin:round;fill:#ffffff"
+           inkscape:transform-center-x="-1.4433655e-06"
+           transform="matrix(0.26458333,0,0,0.26458333,88.364747,129.99371)"
+           d="m -362.45082,85.191545 -48.83754,-24.591884 -26.92616,51.662379 -17.14427,-51.922449 -55.57048,17.491147 24.59188,-48.837539 -51.66237,-26.9261612 51.92244,-17.1442638 -17.49115,-55.570491 48.83755,24.591892 26.92615,-51.662383 17.14427,51.922452 55.57049,-17.491154 -24.59189,48.837547 51.66238,26.926153 -51.92245,17.144272 z M -377.7617,7.2719245 a 55.247944,55.247944 0 0 1 -55.24795,55.2479625 55.247944,55.247944 0 0 1 -55.24794,-55.2479625 55.247944,55.247944 0 0 1 55.24794,-55.2479625 55.247944,55.247944 0 0 1 55.24795,55.2479625 z" />
+      </g>
+    </g>
+  </g>
+  <metadata
+     id="metadata4365">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Intarot Icon</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>
