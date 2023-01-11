@@ -18,7 +18,7 @@ pub fn guide_view(props: &GuideProps) -> Html {
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
     let card_page_state = use_store_value::<DataState>();
-    let state = use_state(|| card_page_state.user_data.guide);
+    let state = use_state(|| card_page_state.question_data.guide);
     let navigator = use_navigator().unwrap();
 
     let current_value = *state;
@@ -75,7 +75,7 @@ pub fn guide_view(props: &GuideProps) -> Html {
 
                 let go_to_question = props.go_to_question;
                 let navigator = navigator.clone();
-                let user_data = card_page_state.user_data;
+                let user_data = card_page_state.question_data;
                 let state = state.clone();
                 Callback::from(move |_e: MouseEvent| {
                     let mut user_data = user_data;

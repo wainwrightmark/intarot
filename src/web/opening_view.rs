@@ -1,10 +1,18 @@
-use crate::web::prelude::*;
+use std::rc::Rc;
+
+use crate::{web::prelude::*, state::prelude::UserState};
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
+use yewdux::prelude::use_store_value;
 
 #[function_component(OpeningView)]
 pub fn opening_view() -> Html {
     let navigator = use_navigator().unwrap();
+
+    let user_data: Rc<UserState> = use_store_value();
+    if user_data.has_used_before{
+        navigator.replace(&Route::Restart {  })
+    }
 
     let paragraph1 = include_str!(r#"../text/opening_p1.txt"#);
     let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);

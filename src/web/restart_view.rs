@@ -17,13 +17,13 @@ pub struct RestartProps {}
 pub fn restart_view(_props: &RestartProps) -> Html {
     let navigator = use_navigator().unwrap();
     let state = use_store_value::<DataState>();
-    let user_data = state.user_data.clone();
+    let user_data = state.question_data.clone();
     let on_sign_change = {
         Callback::from(move |e: Event| {
             let input: HtmlSelectElement = e.target_unchecked_into();
             let s = input.value();
             let star_sign = StarSign::from_str(s.as_str()).ok();
-            let mut user_data = state.user_data;
+            let mut user_data = state.question_data;
             user_data.star_sign = star_sign;
             Dispatch::<DataState>::new().apply(MaybeChangeDataMessage(user_data))
         })

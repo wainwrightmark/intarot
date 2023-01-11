@@ -8,11 +8,12 @@ use crate::data::prelude::*;
 
 use super::messages::*;
 
+
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug)]
 #[store(storage = "local")]
 
 pub struct DataState {
-    pub user_data: QuestionData,
+    pub question_data: QuestionData,
     pub cards: Rc<[Card; Card::COUNT]>,
     pub top_card_index: usize,
 
@@ -27,7 +28,7 @@ impl Default for DataState {
             top_card_index: 0,
             last_hidden_card_index: 1,
             cards: Card::get_random_ordering(),
-            user_data: Default::default(),
+            question_data: Default::default(),
             show_description: false,
             has_shown_description: false,
         }
@@ -36,17 +37,17 @@ impl Default for DataState {
 
 impl DataState {
     pub fn finish_card_index(&self) -> usize {
-        if self.user_data.spread_type.is_ad_card_first() {
+        if self.question_data.spread_type.is_ad_card_first() {
             0
         } else {
-            self.user_data.spread_type.total_cards()
+            self.question_data.spread_type.total_cards()
         }
     }
     pub fn draw_card(mut self) -> Self {
-        if self.top_card_index < self.user_data.spread_type.total_cards() {
+        if self.top_card_index < self.question_data.spread_type.total_cards() {
             self.top_card_index += 1;
             self.last_hidden_card_index = (self.top_card_index + 1)
-                .min(self.user_data.spread_type.total_cards())
+                .min(self.question_data.spread_type.total_cards())
                 .max(self.last_hidden_card_index);
 
             if self.top_card_index == self.finish_card_index() {
@@ -74,8 +75,8 @@ impl DataState {
 
         let card = self.cards[index];
         let key = MetaKey {
-            star_sign: self.user_data.star_sign,
-            guide: self.user_data.guide,
+            star_sign: self.question_data.star_sign,
+            guide: self.question_data.guide,
             card,
         };
 
@@ -110,14 +111,14 @@ impl DataState {
     }
 
     pub fn can_draw(&self) -> bool {
-        self.top_card_index < self.user_data.spread_type.total_cards()
+        self.top_card_index < self.question_data.spread_type.total_cards()
     }
 
     pub fn reset(&mut self) {
         self.cards = Card::get_random_ordering();
-        self.top_card_index = self.user_data.spread_type.initial_top_card_index();
+        self.top_card_index = self.question_data.spread_type.initial_top_card_index();
         self.show_description = false;
-        self.last_hidden_card_index = self.user_data.spread_type.initial_top_card_index() + 1;
+        self.last_hidden_card_index = self.question_data.spread_type.initial_top_card_index() + 1;
         self.has_shown_description = false;
     }
 }
@@ -149,11 +150,11 @@ impl Reducer<DataState> for ResetMessage {
 
 impl Reducer<DataState> for MaybeChangeDataMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
-        if self.0 == state.user_data {
+        if self.0 == state.question_data {
             state
         } else {
             let mut state = (*state).clone();
-            state.user_data = self.0;
+            state.question_data = self.0;
             state.reset();
             state.into()
         }

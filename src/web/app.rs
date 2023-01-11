@@ -41,11 +41,13 @@ pub fn app() -> Html {
 
 fn switch(routes: Route) -> Html {
     match routes {
-        Route::Opening => html! {
-
-        <OpeningView />
-
-         },
+        Route::Opening => {
+            html! {
+               html!{
+                   <OpeningView />
+               }
+            }
+        }
 
         Route::Question {} => html! {
            <QuestionView  />

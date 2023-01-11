@@ -35,6 +35,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
 
     let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
+            Dispatch::<UserState>::new().apply(SetUsedBeforeMessage{});
             navigator.replace(&Route::Restart {});
         })
     };
@@ -66,7 +67,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let meta = state.get_image_meta(props.index, &metas);
     let description = meta.and_then(|meta| descriptions.get(&(meta.guide, meta.card)));
 
-    let id =meta.map(|x|x.id).unwrap_or(state.user_data.guide.ad_image_id());
+    let id =meta.map(|x|x.id).unwrap_or(state.question_data.guide.ad_image_id());
 
     html! {
 
