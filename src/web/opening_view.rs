@@ -25,7 +25,7 @@ pub fn opening_view() -> Html {
     html! {
         <div class="site"  style="overflow: auto;">
             <div class="container" style="overflow: auto;" >
-            <div class="sm-4 col" style="margin: auto;">
+            <div class="sm-4 col" style="margin: auto; text-align: justify;">
 
             <h3 style="color: gold; text-align: center;">
             {"intarot"}
