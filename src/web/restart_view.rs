@@ -8,7 +8,10 @@ use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
 use super::app::Route;
-use crate::{data::prelude::*, state::{prelude::*, prompts_state::PromptsState}};
+use crate::{
+    data::prelude::*,
+    state::{prelude::*, prompts_state::PromptsState},
+};
 
 #[derive(Properties, PartialEq)]
 pub struct RestartProps {}
@@ -76,34 +79,45 @@ pub fn restart_view(_props: &RestartProps) -> Html {
     html! {
 
             <>
-            <div class="site" style="overflow: hidden ">
-                <div class="container" style="height: 100vh;"  >
+            <div class="site" style="">
+                <div class="container" style=""  >
                 <h3 style="color: gold; text-align: center;">
-            {"intarot"}
-            </h3>
+                    {"intarot"}
+                </h3>
 
-            <div class={"restart-image"}  >
-            <img onclick={on_image_click} class="guide-image"
-            src={user_data.guide.image_src() }
-                 alt={user_data.guide.name()} />
-            </div>
+                <div>
+                <div class={"restart-view-item"}  >
+                <img onclick={on_image_click} class="guide-image"
+                src={user_data.guide.image_src() }
+                     alt={user_data.guide.name()} />
+                </div>
+                <br/>
+
+                <div>
+                <select onchange={on_sign_change} class="nice-button restart-view-item" style="text-align: center;">
+                <option selected={user_data.star_sign.is_none()} disabled={false}> {"Star Sign"}  </option>
+                {sign_options}
+                </select>
             <br/>
+                </div>
+                <div>
+                <select onchange={on_spread_type_change} class="nice-button restart-view-item" style="text-align: center;">
+                {spread_type_options}
+                </select>
 
-            <div>
-            <select onchange={on_sign_change} class="nice-button" style="margin:auto; width:200px;">
-            <option selected={user_data.star_sign.is_none()} disabled={false}> {"Star Sign"}  </option>
-            {sign_options}
-            </select>
-        <br/>
-            </div>
-            <div>
-            <select onchange={on_spread_type_change} class="nice-button" style="margin:auto; width:200px;">
-            {spread_type_options}
-            </select>
+                </div>
+                <br/>
+                <div>
+                <p class="restart-view-item" style="text-align: justify;">
+                    {user_data.spread_type.description()}
+                </p>
 
-            </div>
-            <br/>
-            <button onclick={on_begin_click} style="margin: auto; display: block; width:200px;" class="nice-button">{"Begin"}</button>
+                </div>
+                <br/>
+                <button onclick={on_begin_click} style="display: block;" class="nice-button restart-view-item">{"Begin"}</button>
+                </div>
+
+
     </div>
                 </div>
             </>
