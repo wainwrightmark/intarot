@@ -18,7 +18,7 @@ pub struct ImageDescription {
 impl Default for ImageDescription {
     fn default() -> Self {
         Self {
-            guide: Guide::EvelynMusgrave, //whatever
+            guide: Guide::Evelyn, //whatever
             card: Card::Magician,         //whatever
             representation: Default::default(),
             guidance: Default::default(),

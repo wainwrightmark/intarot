@@ -19,14 +19,16 @@ pub struct RestartProps {}
 #[function_component(RestartView)]
 pub fn restart_view(_props: &RestartProps) -> Html {
     let navigator = use_navigator().unwrap();
-    let state = use_store_value::<DataState>();
-    let user_data = state.question_data;
+    let data_state = use_store_value::<DataState>();
+    let knowledge_state = use_store_value::<GuideKnowledgeState>();
+
+    let user_data = data_state.question_data;
     let on_sign_change = {
         Callback::from(move |e: Event| {
             let input: HtmlSelectElement = e.target_unchecked_into();
             let s = input.value();
             let star_sign = StarSign::from_str(s.as_str()).ok();
-            let mut user_data = state.question_data;
+            let mut user_data = data_state.question_data;
             user_data.star_sign = star_sign;
             Dispatch::<DataState>::new().apply(MaybeChangeDataMessage(user_data))
         })
@@ -98,6 +100,13 @@ pub fn restart_view(_props: &RestartProps) -> Html {
                 <option selected={user_data.star_sign.is_none()} disabled={false}> {"Star Sign"}  </option>
                 {sign_options}
                 </select>
+                <div>
+                <p class="restart-view-item" style="text-align: justify;">
+                    {knowledge_state.get_guide_star_sign_text(&user_data)}
+                </p>
+
+                </div>
+                <br/>
             <br/>
                 </div>
                 <div>
@@ -109,7 +118,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
                 <br/>
                 <div>
                 <p class="restart-view-item" style="text-align: justify;">
-                    {user_data.spread_type.description()}
+                    {knowledge_state.get_guide_spread_text(&user_data)}
                 </p>
 
                 </div>

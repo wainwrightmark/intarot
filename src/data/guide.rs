@@ -27,7 +27,7 @@ pub enum Guide {
         ad_image_id = "AdEvelyn",
     ))]
     #[default]
-    EvelynMusgrave,
+    Evelyn,
 
     #[strum(props(
         name = "Madame Sosoteris",
@@ -62,7 +62,7 @@ impl Guide {
 
     pub fn description(&self) -> &'static str {
         match self {
-            Guide::EvelynMusgrave => include_str!("../text/evelyn.txt"),
+            Guide::Evelyn => include_str!("../text/evelyn.txt"),
             Guide::Madame => include_str!("../text/madame.txt"),
             Guide::Maledictus => include_str!("../text/maledictus.txt"),
         }
@@ -77,14 +77,14 @@ impl Guide {
     }
 
     pub fn first() -> Self {
-        Guide::EvelynMusgrave
+        Guide::Evelyn
     }
 
     pub fn previous(&self) -> Option<Self> {
         use Guide::*;
         match self {
-            EvelynMusgrave => None,
-            Madame => Some(EvelynMusgrave),
+            Evelyn => None,
+            Madame => Some(Evelyn),
             Maledictus => Some(Madame),
         }
     }
@@ -92,7 +92,7 @@ impl Guide {
     pub fn next(&self) -> Option<Self> {
         use Guide::*;
         match self {
-            EvelynMusgrave => Some(Madame),
+            Evelyn => Some(Madame),
             Madame => Some(Maledictus),
             Maledictus => None,
         }
