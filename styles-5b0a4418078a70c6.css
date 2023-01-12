@@ -9,11 +9,13 @@
   margin: 0 auto;
 }
 
-.restart-image {
-  max-width: 200px;
+.restart-view-item{
+  width: 15em;
+  max-width: 15em;
   position: relative;
   margin: 0 auto;
 }
+
 
 .carousel .carousel-item-hidden {
   display: none;
