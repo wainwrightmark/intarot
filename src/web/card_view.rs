@@ -18,10 +18,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let metas_state = use_store_value::<ImageMetaState>();
     let state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
-    let Some(descriptions) = descriptions_state.descriptions.as_ref() else{
-        // log::info!("No descriptions");
-        return html!();
-    };
+    let descriptions = &descriptions_state.descriptions;
 
     let Some(metas) = metas_state.metas.as_ref() else{
         // log::info!("No Metas");
