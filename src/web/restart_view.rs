@@ -8,7 +8,7 @@ use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
 use super::app::Route;
-use crate::{data::prelude::*, state::prelude::*};
+use crate::{data::prelude::*, state::{prelude::*, prompts_state::PromptsState}};
 
 #[derive(Properties, PartialEq)]
 pub struct RestartProps {}
@@ -61,6 +61,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
     let on_begin_click = {
         let navigator = navigator.clone();
         Callback::from(move |_e: MouseEvent| {
+            Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
             navigator.push(&Route::Question {});
         })
     };

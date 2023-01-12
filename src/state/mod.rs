@@ -3,6 +3,7 @@ mod description_state;
 mod messages;
 mod meta_state;
 mod user_state;
+pub mod prompts_state;
 
 pub mod prelude {
     pub use crate::state::description_state::*;

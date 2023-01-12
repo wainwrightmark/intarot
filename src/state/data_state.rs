@@ -47,8 +47,9 @@ impl DataState {
         if self.top_card_index < self.question_data.spread_type.total_cards() {
             self.top_card_index += 1;
             self.last_hidden_card_index = (self.top_card_index + 1).clamp(
-                self.question_data.spread_type.total_cards(),
-                self.last_hidden_card_index);
+                self.last_hidden_card_index,
+                self.question_data.spread_type.total_cards()
+                );
 
             if self.top_card_index == self.finish_card_index() {
                 self.show_description = true;

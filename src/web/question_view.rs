@@ -3,7 +3,7 @@ use yew_router::prelude::use_navigator;
 use yewdux::prelude::{use_store_value, Dispatch};
 
 use super::app::Route;
-use crate::state::{prelude::*};
+use crate::state::{prelude::*, prompts_state::PromptsState};
 
 #[derive(Properties, PartialEq)]
 pub struct QuestionProps {}
@@ -31,6 +31,12 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         })
     };
 
+    let prompts_state = use_store_value::<PromptsState>();
+    let prompt0 = format!("Why not ask about {}?", prompts_state.prompts[0]) ;
+    let prompt1 = format!("{}?", prompts_state.prompts[1]);
+    let prompt2 = format!("{}?", prompts_state.prompts[2]);
+
+
     html! {
 
             <>
@@ -48,14 +54,14 @@ pub fn question_view(_props: &QuestionProps) -> Html {
                 </div>
 
                 <div class="row">
-                <p style="margin: auto; animation-delay: 3s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Why not ask about your love life?"}</p>
+                <p style="margin: auto; animation-delay: 3s; pointer-events:none;" class={if *skipped_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt0 }</p>
                 </div>
                 <div class="row">
-                <p style="margin: auto; animation-delay: 3.75s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Your career?"}</p>
+                <p style="margin: auto; animation-delay: 3.75s; pointer-events:none;" class={if *skipped_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt1}</p>
                 </div>
 
                 <div class="row">
-                <p style="margin: auto; animation-delay: 4.5s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Where to go for lunch?"}</p>
+                <p style="margin: auto; animation-delay: 4.5s; pointer-events:none;" class={if *skipped_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt2}</p>
                 </div>
                 <div class="row align-middle">
                 <button onclick={on_begin_click} style="margin: auto; animation-delay: 5.25s;" class={if *skipped_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
