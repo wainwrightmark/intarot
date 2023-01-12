@@ -10,7 +10,7 @@ pub struct QuestionProps {}
 
 #[function_component(QuestionView)]
 pub fn question_view(_props: &QuestionProps) -> Html {
-    let _card_page_state = use_store_value::<DataState>();
+    let card_page_state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
     let skipped_state = use_state(|| false);
 
@@ -32,9 +32,10 @@ pub fn question_view(_props: &QuestionProps) -> Html {
     };
 
     let prompts_state = use_store_value::<PromptsState>();
-    let prompt0 = format!("Why not ask about {}?", prompts_state.prompts[0]) ;
-    let prompt1 = format!("{}?", prompts_state.prompts[1]);
-    let prompt2 = format!("{}?", prompts_state.prompts[2]);
+    let (prompt0, prompt1, prompt2) = prompts_state.get_three_prompts(&card_page_state.question_data.guide);
+    let prompt0 = format!("Why not ask about {prompt0}?") ;
+    let prompt1 = format!("{prompt1}?");
+    let prompt2 = format!("{prompt2}?");
 
 
     html! {
