@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap, io::BufRead, str::FromStr};
+use std::{collections::BTreeMap,str::FromStr};
 
 use crate::data::prelude::*;
 
@@ -7,30 +7,18 @@ use itertools::Itertools;
 use rand::{seq::SliceRandom, SeedableRng};
 use yewdux::prelude::*;
 
-#[derive(PartialEq, Eq, Store, Default)]
+#[derive(PartialEq, Eq, Store)]
 pub struct ImageMetaState {
-    pub metas: Option<BTreeMap<MetaKey, ImageMeta>>,
+    pub metas: BTreeMap<MetaKey, ImageMeta>,
 }
 
-impl ImageMetaState {
-    pub async fn setup() {
-        // log::info!("Began Metas Set Up");
-        let result = Self::create().await.unwrap();
-        Dispatch::<ImageMetaState>::new().set(result);
-        // log::info!("Finished Metas Set Up");
-    }
-
-    pub async fn create() -> Result<Self, anyhow::Error> {
-        let url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdGJ64J-Iivs6MuSlXyuemE56GsYNqDlTGb3hohHtVl3xq6XuzxYtMrU5AL8CCjGDwhW_lEiRoXoFA/pub?gid=0&single=true&output=tsv";
-        let result = reqwest::get(url).await;
-        let data = result?;
-        let bytes = data.bytes().await?;
-        let lines = bytes.lines();
+impl Default for ImageMetaState {
+    fn default() -> Self {
+        let data = include_str!("..\\tsv\\image_names.tsv");
+        let lines = data.lines();
 
         let mut metas_vec = lines
-            .skip(1) //skip headers
-            .filter_map(|x| x.ok())
-            .map(move |x| ImageMeta::from_str(x.as_str()).unwrap())
+            .map(move |x| ImageMeta::from_str(x).unwrap())
             .flat_map(|x| [(MetaKey::from(x), x), (MetaKey::from(x).with_no_sign(), x)])
             .collect_vec();
 
@@ -40,10 +28,8 @@ impl ImageMetaState {
 
         metas_vec.shuffle(&mut rng);
 
-        let result: BTreeMap<_, ImageMeta> = metas_vec.into_iter().collect();
-        Ok(ImageMetaState {
-            metas: result.into(),
-        })
+        let metas: BTreeMap<_, ImageMeta> = metas_vec.into_iter().collect();
+        Self { metas }
     }
 }
 

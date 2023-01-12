@@ -102,7 +102,7 @@ pub fn guide_view(props: &GuideProps) -> Html {
                     <div>
                     <img class="guide-image"
                     onclick={onclick.clone()}
-                    src={format!("https://drive.google.com/uc?export=view&id={}", guide.image_id()) }
+                    src={guide.image_src() }
                          alt={guide.name()} />
                          <div class="carousel-actions" style="pointer-events: none;">
             <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous} style="pointer-events: auto;">{"❰"}</button>

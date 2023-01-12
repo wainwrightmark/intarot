@@ -83,7 +83,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
 
             <div class={"restart-image"}  >
             <img onclick={on_image_click} class="guide-image"
-            src={format!("https://drive.google.com/uc?export=view&id={}", user_data.guide.image_id()) }
+            src={user_data.guide.image_src() }
                  alt={user_data.guide.name()} />
             </div>
             <br/>

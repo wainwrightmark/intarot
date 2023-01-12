@@ -20,19 +20,15 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let navigator = use_navigator().unwrap();
     let descriptions = &descriptions_state.descriptions;
 
-    let Some(metas) = metas_state.metas.as_ref() else{
-        // log::info!("No Metas");
-        return html!();
-    };
+    let metas = &metas_state.metas;
 
     let top_card = state.is_top_card(props.index);
-    // log::info!("Showing Card View index:{} top:{top_card}", props.index);
 
     let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
     let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
-            Dispatch::<UserState>::new().apply(SetUsedBeforeMessage{});
+            Dispatch::<UserState>::new().apply(SetUsedBeforeMessage {});
             navigator.replace(&Route::Restart {});
         })
     };
@@ -64,13 +60,15 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let meta = state.get_image_meta(props.index, &metas);
     let description = meta.and_then(|meta| descriptions.get(&(meta.guide, meta.card)));
 
-    let id =meta.map(|x|x.id).unwrap_or(state.question_data.guide.ad_image_id());
+    let src = meta
+        .map(|x| x.src())
+        .unwrap_or_else(|| state.question_data.guide.ad_image_src());
 
     html! {
 
             <div class={card_classes} style = {style} >
             <div class="prophecy-back"> </div>
-                    <img class={image_classes}  src={format!("https://drive.google.com/uc?export=view&id={}",id) } onclick={toggle.clone()} />
+                    <img class={image_classes}  src={src.clone()} onclick={toggle.clone()} />
                     {
                         if show_description{
                             html!{
@@ -128,7 +126,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                 title="intarot"
                                 url={"https://www.intarot.com"}
                                 text={description.map(|x|x.full_description()).unwrap_or_else(|| include_str!(r#"../text/opening_p1.txt"#).into())}
-                                media={format!("https://drive.google.com/uc?export=view&id={}", id)}>
+                                media={src}>
                                 </ShareComponent>
 
                     </div>
