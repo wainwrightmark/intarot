@@ -56,8 +56,8 @@ impl FromStr for ImageDescription {
             guide,
             card,
             representation: representation.to_string().into(),
-            guidance: guidance.clone().to_string().into(),
-            specific_guidance: specific_guidance.clone().to_string().into(),
+            guidance: guidance.to_string().into(),
+            specific_guidance: specific_guidance.to_string().into(),
         })
     }
 }

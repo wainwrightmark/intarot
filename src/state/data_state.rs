@@ -46,9 +46,9 @@ impl DataState {
     pub fn draw_card(mut self) -> Self {
         if self.top_card_index < self.question_data.spread_type.total_cards() {
             self.top_card_index += 1;
-            self.last_hidden_card_index = (self.top_card_index + 1)
-                .min(self.question_data.spread_type.total_cards())
-                .max(self.last_hidden_card_index);
+            self.last_hidden_card_index = (self.top_card_index + 1).clamp(
+                self.question_data.spread_type.total_cards(),
+                self.last_hidden_card_index);
 
             if self.top_card_index == self.finish_card_index() {
                 self.show_description = true;
@@ -70,7 +70,7 @@ impl DataState {
         }
 
         if index > self.finish_card_index(){
-            index = index -1;
+            index -= 1;
         }
 
         let card = self.cards[index];
@@ -80,7 +80,7 @@ impl DataState {
             card,
         };
 
-        metas.get(&key).map(|x| *x)
+        metas.get(&key).copied()
     }
 
     pub fn is_top_card(&self, index: usize) -> bool {

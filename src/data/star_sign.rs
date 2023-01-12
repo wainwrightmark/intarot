@@ -96,11 +96,10 @@ impl FromStr for StarSignOption {
     type Err = ParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s.is_empty() {
+        if s.is_empty() || s.eq_ignore_ascii_case("none") {
             Ok(Self::default())
-        } else if s.eq_ignore_ascii_case("none") {
-            Ok(Self::default())
-        } else {
+        }
+        else {
             StarSign::from_str(s).map(|x| Self(Some(x)))
         }
     }

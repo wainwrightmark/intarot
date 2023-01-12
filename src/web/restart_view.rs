@@ -17,7 +17,7 @@ pub struct RestartProps {}
 pub fn restart_view(_props: &RestartProps) -> Html {
     let navigator = use_navigator().unwrap();
     let state = use_store_value::<DataState>();
-    let user_data = state.question_data.clone();
+    let user_data = state.question_data;
     let on_sign_change = {
         Callback::from(move |e: Event| {
             let input: HtmlSelectElement = e.target_unchecked_into();
@@ -66,7 +66,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
     };
 
     let on_image_click = {
-        let navigator = navigator.clone();
+        let navigator = navigator;
         Callback::from(move |_e: MouseEvent| {
             navigator.push(&Route::Guide {});
         })

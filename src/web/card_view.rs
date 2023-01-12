@@ -57,7 +57,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
         card_classes.push("card-shake");
     }
 
-    let meta = state.get_image_meta(props.index, &metas);
+    let meta = state.get_image_meta(props.index, metas);
     let description = meta.and_then(|meta| descriptions.get(&(meta.guide, meta.card)));
 
     let src = meta
