@@ -79,5 +79,3 @@ src/test/rustdoc-gui/src/**.lock
 # Before adding new lines, see the comment at the top.
 
 
-# Local Netlify folder
-.netlify
