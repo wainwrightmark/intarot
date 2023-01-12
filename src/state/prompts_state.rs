@@ -1,5 +1,5 @@
-use std::collections::BTreeMap;
 use rand::{rngs::ThreadRng, seq::SliceRandom};
+use std::collections::BTreeMap;
 use yewdux::prelude::*;
 
 use crate::data::prelude::Guide;
@@ -8,11 +8,11 @@ use super::messages::ShufflePromptsMessage;
 
 #[derive(PartialEq, Eq, Store)]
 pub struct PromptsState {
-    pub prompts: BTreeMap<Guide, Vec<&'static str>> ,
+    pub prompts: BTreeMap<Guide, Vec<&'static str>>,
 }
 
-impl PromptsState{
-    pub fn get_three_prompts(&self, guide: &Guide)-> (&'static str, &'static str, &'static str){
+impl PromptsState {
+    pub fn get_three_prompts(&self, guide: &Guide) -> (&'static str, &'static str, &'static str) {
         let vec = &self.prompts[guide];
         (vec[0], vec[1], vec[2])
     }
@@ -26,11 +26,18 @@ impl Default for PromptsState {
         let mut madame = vec![];
         let mut maledictus = vec![];
 
-        for l in data.lines().skip(1){
-            let (eve,mad,mal) = deconstruct_line(l);
-            evelyn.extend(eve);
-            madame.extend(mad);
-            maledictus.extend(mal);
+        for l in data.lines().skip(1) {
+            if let Some((line, eve, mad, mal)) = deconstruct_line(l) {
+                if eve {
+                    evelyn.push(line)
+                }
+                if mad {
+                    madame.push(line)
+                }
+                if mal {
+                    maledictus.push(line)
+                }
+            }
         }
 
         let mut prompts: BTreeMap<Guide, Vec<&str>> = Default::default();
@@ -42,28 +49,31 @@ impl Default for PromptsState {
     }
 }
 
-fn deconstruct_line(line : &'static str)-> (Option<&'static str>, Option<&'static str>, Option<&'static str>){
-    let (a,bc)= line.split_once('\t').unwrap_or_default();
-    let (b,c) = bc.split_once('\t').unwrap_or_default();
+fn deconstruct_line(line: &'static str) -> Option<(&'static str, bool, bool, bool)> {
+    let mut split = line.splitn(4, '\t');
 
-    let a = if a.is_empty() {None} else {Some(a)};
-    let b = if b.is_empty() {None} else {Some(b)};
-    let c = if c.is_empty() {None} else {Some(c)};
+    let Some(line) = split.next() else{
+        return None;
+    };
 
-    (a,b,c)
+    let mut bools = split.map(|x| x.eq_ignore_ascii_case("true"));
+
+    let a = bools.next().unwrap_or_default();
+    let b = bools.next().unwrap_or_default();
+    let c = bools.next().unwrap_or_default();
+
+    Some((line, a, b, c))
 }
 
-
-
-impl Reducer<PromptsState> for ShufflePromptsMessage{
+impl Reducer<PromptsState> for ShufflePromptsMessage {
     fn apply(self, state: std::rc::Rc<PromptsState>) -> std::rc::Rc<PromptsState> {
         let mut rng = ThreadRng::default();
 
         let mut prompts = state.prompts.clone();
 
-        for (_, v) in prompts.iter_mut(){
+        for (_, v) in prompts.iter_mut() {
             v.shuffle(&mut rng);
         }
-        PromptsState{prompts}.into()
+        PromptsState { prompts }.into()
     }
 }
