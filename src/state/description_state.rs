@@ -11,7 +11,7 @@ pub struct ImageDescriptionState {
 
 impl Default for ImageDescriptionState{
     fn default() -> Self {
-        let data = include_str!("..\\tsv\\descriptions.tsv");
+        let data = include_str!("../tsv/descriptions.tsv");
         let lines = data.lines();
         let descriptions: BTreeMap<_, _> = lines
             .skip(1) //skip headers

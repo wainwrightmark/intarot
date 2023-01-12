@@ -14,7 +14,7 @@ pub struct ImageMetaState {
 
 impl Default for ImageMetaState {
     fn default() -> Self {
-        let data = include_str!("..\\tsv\\image_names.tsv");
+        let data = include_str!("../tsv/image_names.tsv");
         let lines = data.lines();
 
         let mut metas_vec = lines

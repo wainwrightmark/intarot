@@ -62,9 +62,9 @@ impl Guide {
 
     pub fn description(&self) -> &'static str {
         match self {
-            Guide::EvelynMusgrave => include_str!("..\\text\\evelyn.txt"),
-            Guide::Madame => include_str!("..\\text\\madame.txt"),
-            Guide::Maledictus => include_str!("..\\text\\maledictus.txt"),
+            Guide::EvelynMusgrave => include_str!("../text/evelyn.txt"),
+            Guide::Madame => include_str!("../text/madame.txt"),
+            Guide::Maledictus => include_str!("../text/maledictus.txt"),
         }
     }
 
