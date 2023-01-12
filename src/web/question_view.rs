@@ -41,17 +41,24 @@ pub fn question_view(_props: &QuestionProps) -> Html {
             </h3>
                 <div class="col">
                 <div class="row">
-                <p style="margin: auto; animation-delay: -6s; pointer-events:none;" class={if *skipped_state{classes!("")} else {classes!{"fade-in"}}}>{"Take a moment to clear your mind"}</p>
+                <p style="margin: auto; animation-delay: 0s; pointer-events:none;" class={if *skipped_state{classes!("")} else {classes!{"fade-in"}}}>{"Take a moment to clear your mind"}</p>
                 </div>
                 <div class="row">
-                <p style="margin: auto; animation-delay: -4.5s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Think of your question"}</p>
+                <p style="margin: auto; animation-delay: 1.5s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Think of your question"}</p>
                 </div>
 
                 <div class="row">
-                <p style="margin: auto; animation-delay: -3s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Remember that truth comes from within"}</p>
+                <p style="margin: auto; animation-delay: 3s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Why not ask about your love life?"}</p>
+                </div>
+                <div class="row">
+                <p style="margin: auto; animation-delay: 3.75s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Your career?"}</p>
+                </div>
+
+                <div class="row">
+                <p style="margin: auto; animation-delay: 4.5s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Where to go for lunch?"}</p>
                 </div>
                 <div class="row align-middle">
-                <button onclick={on_begin_click} style="margin: auto; animation-delay: -1.5s;" class={if *skipped_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
+                <button onclick={on_begin_click} style="margin: auto; animation-delay: 5.25s;" class={if *skipped_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
                 </div>
                 </div>
                 <div class="row">

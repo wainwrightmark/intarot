@@ -180,28 +180,12 @@
 }
 
 .fade-in {
-  animation-duration: 7.5s;
-  animation-name: delayed-fade-in;
+  animation-duration: 1.125s;
+  animation-name: fade-in;
   animation-direction: normal;
   animation-iteration-count: 1;
-}
-
-@keyframes delayed-fade-in {
-  0% {
-    opacity: 0%;
-  }
-
-  80% {
-    opacity: 0%;
-  }
-
-  85% {
-    opacity: 10%;
-  }
-
-  100% {
-    opacity: 100%;
-  }
+  animation-fill-mode: forwards;
+  opacity: 0%;
 }
 
 @keyframes fade-in {
