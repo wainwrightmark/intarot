@@ -17,7 +17,6 @@ impl FromStr for ImageMeta {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let file_name = Box::leak(s.to_string().into_boxed_str());
-        //let (id, file_name) = s2.split_terminator('\t').next_tuple().unwrap();
 
         let guide = Guide::iter()
             .find(|ss| ss.filter_image(file_name))

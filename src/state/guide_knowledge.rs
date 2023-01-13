@@ -1,6 +1,7 @@
 use std::{collections::BTreeMap, str::FromStr};
 
 use crate::data::prelude::*;
+use itertools::Itertools;
 use yewdux::prelude::*;
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -31,8 +32,7 @@ impl Default for GuideKnowledgeState {
             let lines = data.lines();
             lines
                 .skip(1) //skip headers
-                //.filter_map(|x| x.ok())
-                .map(|x| split_into_three(x))
+                .filter_map(|s|  s.splitn(3,'\t').next_tuple())
                 .filter_map(|(guide, spread, text)| {
                     let Ok(guide) = Guide::from_str(guide) else{
                         return None;
@@ -50,8 +50,7 @@ impl Default for GuideKnowledgeState {
             let lines = data.lines();
             lines
                 .skip(1) //skip headers
-                //.filter_map(|x| x.ok())
-                .map(|x| split_into_three(x))
+                .filter_map(|s|  s.splitn(3,'\t').next_tuple())
                 .filter_map(|(guide, sign, text)| {
                     let Ok(guide) = Guide::from_str(guide) else{
                         return None;
@@ -67,11 +66,4 @@ impl Default for GuideKnowledgeState {
             guide_star_signs,
         }
     }
-}
-
-fn split_into_three(s: &'static str) -> (&'static str, &'static str, &'static str) {
-    let (one, rest) = s.split_once('\t').unwrap();
-    let (two, three) = rest.split_once('\t').unwrap();
-
-    (one, two, three)
 }

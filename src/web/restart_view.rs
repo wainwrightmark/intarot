@@ -101,6 +101,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
                 {sign_options}
                 </select>
                 <div>
+                <br/>
                 <p class="restart-view-item" style="text-align: justify;">
                     {knowledge_state.get_guide_star_sign_text(&user_data)}
                 </p>

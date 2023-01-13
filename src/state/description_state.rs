@@ -15,8 +15,7 @@ impl Default for ImageDescriptionState{
         let lines = data.lines();
         let descriptions: BTreeMap<_, _> = lines
             .skip(1) //skip headers
-            //.filter_map(|x| x.ok())
-            .filter_map(move |x| ImageDescription::from_str(x).ok())
+            .filter_map(|x| ImageDescription::from_str(x).ok())
             .map(|x| ((x.guide, x.card), x))
             .collect();
 

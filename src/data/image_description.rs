@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use anyhow::bail;
+use anyhow::{bail, anyhow};
 use itertools::Itertools;
 use yew::AttrValue;
 
@@ -42,7 +42,7 @@ impl FromStr for ImageDescription {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let (ss_str, card_str, representation, guidance, specific_guidance) =
-            s.split_terminator('\t').next_tuple().unwrap();
+            s.split_terminator('\t').next_tuple().ok_or(anyhow!("Description did not have four sections"))?;
 
         let Some(guide) = Guide::from_str(ss_str).ok() else{
             bail!("Could not parse guide: {}", ss_str);
