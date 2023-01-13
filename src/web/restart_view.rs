@@ -10,7 +10,7 @@ use yewdux::prelude::*;
 use super::app::Route;
 use crate::{
     data::prelude::*,
-    state::{prelude::*, prompts_state::PromptsState},
+    state::{prelude::*, prompts_state::PromptsState}, web::logo::Logo,
 };
 
 #[derive(Properties, PartialEq)]
@@ -83,10 +83,9 @@ pub fn restart_view(_props: &RestartProps) -> Html {
             <>
             <div class="site" style="">
                 <div class="container" style=""  >
-                <h3 style="color: gold; text-align: center;">
-                    {"intarot"}
-                </h3>
-
+                <div class="sm-4 col" style="margin: auto; text-align: justify;">
+                <Logo/>
+            <br/>
                 <div>
                 <div class={"restart-view-item"}  >
                 <img onclick={on_image_click} class="guide-image"
@@ -128,7 +127,8 @@ pub fn restart_view(_props: &RestartProps) -> Html {
                 </div>
 
 
-    </div>
+                </div>
+                </div>
                 </div>
             </>
         }

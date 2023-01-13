@@ -1,9 +1,6 @@
-
-
-use crate::{web::prelude::*};
+use crate::web::prelude::*;
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
-
 
 #[function_component(OpeningView)]
 pub fn opening_view() -> Html {
@@ -23,13 +20,11 @@ pub fn opening_view() -> Html {
     });
 
     html! {
-        <div class="site"  style="overflow: auto;">
-            <div class="container" style="overflow: auto;" >
+        <div class="site">
+            <div class="container" >
             <div class="sm-4 col" style="margin: auto; text-align: justify;">
 
-            <h3 style="color: gold; text-align: center;">
-            {"intarot"}
-            </h3>
+            <Logo/>
             <p>
             {paragraph1}
             </p>
