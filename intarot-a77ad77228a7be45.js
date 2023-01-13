@@ -223,14 +223,14 @@ function addBorrowedObject(obj) {
 }
 function __wbg_adapter_34(arg0, arg1, arg2) {
     try {
-        wasm._dyn_core__ops__function__FnMut___A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h195e8a2bff51dbf1(arg0, arg1, addBorrowedObject(arg2));
+        wasm._dyn_core__ops__function__FnMut___A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h04c6a009f677f62c(arg0, arg1, addBorrowedObject(arg2));
     } finally {
         heap[stack_pointer++] = undefined;
     }
 }
 
 function __wbg_adapter_39(arg0, arg1, arg2) {
-    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h3735f6bb4c2db998(arg0, arg1, addHeapObject(arg2));
+    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h4eef15fbb9f4dbae(arg0, arg1, addHeapObject(arg2));
 }
 
 function handleError(f, args) {
@@ -877,15 +877,15 @@ function getImports() {
         const ret = getObject(arg0).sessionStorage;
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
     }, arguments) };
-    imports.wbg.__wbindgen_closure_wrapper394 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper461 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 56, __wbg_adapter_34);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1247 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1261 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 54, __wbg_adapter_34);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper2042 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper2061 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 56, __wbg_adapter_39);
         return addHeapObject(ret);
     };
@@ -925,7 +925,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-6c4549fcd8c6824f_bg.wasm', import.meta.url);
+        input = new URL('intarot-a77ad77228a7be45_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
