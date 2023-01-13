@@ -4,7 +4,17 @@
       {
         "src": "/icon.svg",
         "type": "image/svg+xml",
-        "sizes": "336x336"
+        "sizes": "3118x3118"
+      },
+      {
+        "src": "/icon192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/icon512.png",
+        "type": "image/png",
+        "sizes": "512x512"
       }
     ],
     "id": "/manifest.json",
@@ -12,7 +22,7 @@
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
-    "theme_color": "#ffea00",
+    "theme_color": "#ffffff",
     "shortcuts": [
     ],
     "description": "Unique Astrological Tarot",
