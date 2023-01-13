@@ -59,9 +59,9 @@ impl FromStr for ImageDescription {
         Ok(ImageDescription {
             guide,
             card,
-            representation: representation,
-            guidance: guidance,
-            specific_guidance: specific_guidance,
+            representation,
+            guidance,
+            specific_guidance,
         })
     }
 }

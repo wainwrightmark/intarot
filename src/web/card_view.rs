@@ -71,17 +71,17 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                         html!{
                                             <p class="image-overlay-text">
                                     <span>
-                                    {description.representation.clone()}
+                                    {description.representation}
                                     </span>
                                     <br/>
                                     <br/>
                                     <span>
-                                    {description.guidance.clone()}
+                                    {description.guidance}
                                     </span>
                                     <br/>
                                     <br/>
                                     <span>
-                                    {description.specific_guidance.clone()}
+                                    {description.specific_guidance}
                                     </span>
                                 </p>
                                         }
@@ -152,8 +152,7 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
 
     let meta = state.get_image_meta(props.index, metas);
     let description: Option<ImageDescription> = meta
-        .and_then(|meta| descriptions.get(&(meta.guide, meta.card)))
-        .map(|x| x.clone());
+        .and_then(|meta| descriptions.get(&(meta.guide, meta.card))).copied();
 
     let src_data = meta
         .map(|x| x.src_data())
