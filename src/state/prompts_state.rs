@@ -77,3 +77,23 @@ impl Reducer<PromptsState> for ShufflePromptsMessage {
         PromptsState { prompts }.into()
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::PromptsState;
+
+    #[test]
+    pub fn test_guide_knowledge_spreads() {
+        let state = PromptsState::default();
+
+        for (_, vec) in state.prompts.iter() {
+            assert!(vec.len() >= 3);
+            for t in vec{
+                assert!(!t.is_empty());
+            }
+        }
+
+    }
+
+}

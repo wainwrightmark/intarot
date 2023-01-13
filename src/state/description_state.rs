@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap,str::FromStr};
+use std::{collections::BTreeMap, str::FromStr};
 
 use crate::data::prelude::*;
 
@@ -9,7 +9,7 @@ pub struct ImageDescriptionState {
     pub descriptions: BTreeMap<(Guide, Card), ImageDescription>,
 }
 
-impl Default for ImageDescriptionState{
+impl Default for ImageDescriptionState {
     fn default() -> Self {
         let data = include_str!("../tsv/descriptions.tsv");
         let lines = data.lines();
@@ -20,5 +20,24 @@ impl Default for ImageDescriptionState{
             .collect();
 
         Self { descriptions }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use strum::EnumCount;
+    use crate::data::prelude::*;
+    use super::ImageDescriptionState;
+
+    #[test]
+    pub fn test_descriptions() {
+        let state = ImageDescriptionState::default();
+        assert_eq!(Guide::COUNT * Card::COUNT, state.descriptions.len());
+
+        for (_, desc) in state.descriptions{
+            assert!(!desc.guidance.is_empty());
+            assert!(!desc.specific_guidance.is_empty());
+            assert!(!desc.representation.is_empty());
+        }
     }
 }
