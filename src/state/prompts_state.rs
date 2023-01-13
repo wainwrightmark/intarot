@@ -78,7 +78,6 @@ impl Reducer<PromptsState> for ShufflePromptsMessage {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::PromptsState;
@@ -89,11 +88,9 @@ mod tests {
 
         for (_, vec) in state.prompts.iter() {
             assert!(vec.len() >= 3);
-            for t in vec{
+            for t in vec {
                 assert!(!t.is_empty());
             }
         }
-
     }
-
 }

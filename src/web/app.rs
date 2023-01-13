@@ -1,8 +1,12 @@
+use std::str::FromStr;
+
+use crate::data::prelude::ImageMeta;
 use crate::web::guide_view::GuideView;
 use crate::web::opening_view::OpeningView;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
+use super::prelude::ShareCardView;
 use super::spread_view::SpreadView;
 use crate::web::question_view::QuestionView;
 use crate::web::restart_view::RestartView;
@@ -27,6 +31,9 @@ pub enum Route {
 
     #[at("/restart")]
     Restart {},
+
+    #[at("/share/:encoded_image_name")]
+    Share{encoded_image_name: String}
 }
 
 #[function_component(App)]
@@ -69,6 +76,25 @@ fn switch(routes: Route) -> Html {
         Route::Choose => html! {
 
             <GuideView go_to_question={true} />
+
+        },
+        Route::Share { encoded_image_name } => {
+            let image_meta = base64::Engine::decode(&base64::engine::general_purpose::URL_SAFE, encoded_image_name)
+            .ok()
+            .and_then(|x| String::from_utf8(x).ok())
+            .and_then(|x| ImageMeta::from_str(x.as_str()).ok())
+            ;
+
+            if let Some(image_meta) = image_meta{
+                html!(
+                    <ShareCardView {image_meta} />
+                )
+            }
+            else{
+                html!(
+                    <OpeningView />
+                )
+            }
 
         },
     }

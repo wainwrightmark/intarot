@@ -19,7 +19,7 @@ pub struct ToggleDescriptionMessage {}
 pub struct ToggleShareDialogMessage {}
 
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
-pub struct SetUsedBeforeMessage{}
+pub struct SetUsedBeforeMessage {}
 
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct ShufflePromptsMessage;

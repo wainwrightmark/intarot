@@ -90,7 +90,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
                 <div>
                 <div class={"restart-view-item"}  >
                 <img onclick={on_image_click} class="guide-image"
-                src={user_data.guide.image_src() }
+                src={user_data.guide.image_src().src() }
                      alt={user_data.guide.name()} />
                 </div>
                 <br/>

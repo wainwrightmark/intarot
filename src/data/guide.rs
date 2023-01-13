@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 
+use super::prelude::SrcData;
+
 #[derive(
     Copy,
     Clone,
@@ -50,14 +52,14 @@ impl Guide {
             .contains(self.get_str("name").unwrap().to_ascii_lowercase().as_str())
     }
 
-    pub fn image_src(&self)-> String{
+    pub fn image_src(&self) -> SrcData {
         let id = self.get_str("image_id").unwrap();
-        format!("https://intarot-images.s3.eu-west-2.amazonaws.com/Soothsayers/{id}.jpg")
+        SrcData::Guide(id)
     }
 
-    pub fn ad_image_src(&self) -> String {
+    pub fn ad_image_src(&self) -> SrcData {
         let id = self.get_str("ad_image_id").unwrap();
-        format!("https://intarot-images.s3.eu-west-2.amazonaws.com/AdCards/{id}.jpg")
+        SrcData::Ad(id)
     }
 
     pub fn description(&self) -> &'static str {

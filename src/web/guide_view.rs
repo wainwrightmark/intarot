@@ -46,8 +46,6 @@ pub fn guide_view(props: &GuideProps) -> Html {
         );
     }
 
-
-
     let select_previous = {
         let state = state.clone();
         Callback::from(move |_| state.set(previous))
@@ -60,7 +58,6 @@ pub fn guide_view(props: &GuideProps) -> Html {
 
     let can_select_previous = current_index != 0;
     let can_select_next = current_index + 1 < Guide::COUNT;
-
 
     let items = Guide::iter()
         .map(|guide| {
@@ -102,7 +99,7 @@ pub fn guide_view(props: &GuideProps) -> Html {
                     <div>
                     <img class="guide-image"
                     onclick={onclick.clone()}
-                    src={guide.image_src() }
+                    src={guide.image_src().src() }
                          alt={guide.name()} />
                          <div class="carousel-actions" style="pointer-events: none;">
             <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous} style="pointer-events: auto;">{"❰"}</button>
@@ -119,8 +116,6 @@ pub fn guide_view(props: &GuideProps) -> Html {
             )
         })
         .collect_vec();
-
-
 
     html! {
         <>

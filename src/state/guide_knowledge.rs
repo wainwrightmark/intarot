@@ -99,6 +99,9 @@ mod tests {
             assert!(!desc.text.is_empty());
         }
 
-        assert_eq!(Guide::COUNT * (StarSign::COUNT + 1), state.guide_star_signs.len());
+        assert_eq!(
+            Guide::COUNT * (StarSign::COUNT + 1),
+            state.guide_star_signs.len()
+        );
     }
 }

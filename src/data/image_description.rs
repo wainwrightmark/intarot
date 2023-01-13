@@ -1,25 +1,25 @@
 use std::str::FromStr;
 
-use anyhow::{bail, anyhow};
+use anyhow::{anyhow, bail};
 use itertools::Itertools;
 use yew::AttrValue;
 
 use crate::data::prelude::*;
 
-#[derive(PartialEq, Eq, Clone)]
+#[derive(PartialEq, Eq, Clone, Copy)]
 pub struct ImageDescription {
     pub guide: Guide,
     pub card: Card,
-    pub representation: AttrValue,
-    pub guidance: AttrValue,
-    pub specific_guidance: AttrValue,
+    pub representation: &'static str,
+    pub guidance: &'static str,
+    pub specific_guidance: &'static str,
 }
 
 impl Default for ImageDescription {
     fn default() -> Self {
         Self {
             guide: Guide::Evelyn, //whatever
-            card: Card::Magician,         //whatever
+            card: Card::Magician, //whatever
             representation: Default::default(),
             guidance: Default::default(),
             specific_guidance: Default::default(),
@@ -41,8 +41,12 @@ impl FromStr for ImageDescription {
     type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let (ss_str, card_str, representation, guidance, specific_guidance) =
-            s.split_terminator('\t').next_tuple().ok_or(anyhow!("Description did not have four sections"))?;
+        let s = Box::leak(s.to_string().into_boxed_str());
+
+        let (ss_str, card_str, representation, guidance, specific_guidance) = s
+            .split_terminator('\t')
+            .next_tuple()
+            .ok_or(anyhow!("Description did not have four sections"))?;
 
         let Some(guide) = Guide::from_str(ss_str).ok() else{
             bail!("Could not parse guide: {}", ss_str);
@@ -55,9 +59,9 @@ impl FromStr for ImageDescription {
         Ok(ImageDescription {
             guide,
             card,
-            representation: representation.to_string().into(),
-            guidance: guidance.to_string().into(),
-            specific_guidance: specific_guidance.to_string().into(),
+            representation: representation,
+            guidance: guidance,
+            specific_guidance: specific_guidance,
         })
     }
 }

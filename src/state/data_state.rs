@@ -8,7 +8,6 @@ use crate::data::prelude::*;
 
 use super::messages::*;
 
-
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug)]
 #[store(storage = "local")]
 
@@ -47,8 +46,8 @@ impl DataState {
         if self.top_card_index < self.question_data.spread_type.total_cards() {
             self.top_card_index += 1;
             self.last_hidden_card_index = (self.top_card_index + 1)
-            .max(self.last_hidden_card_index)
-            .min(self.question_data.spread_type.total_cards()); //DO NOT USE CLAMP
+                .max(self.last_hidden_card_index)
+                .min(self.question_data.spread_type.total_cards()); //DO NOT USE CLAMP
 
             if self.top_card_index == self.finish_card_index() {
                 self.show_description = true;
@@ -69,7 +68,7 @@ impl DataState {
             return None;
         }
 
-        if index > self.finish_card_index(){
+        if index > self.finish_card_index() {
             index -= 1;
         }
 

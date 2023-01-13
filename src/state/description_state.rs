@@ -25,16 +25,16 @@ impl Default for ImageDescriptionState {
 
 #[cfg(test)]
 mod tests {
-    use strum::EnumCount;
-    use crate::data::prelude::*;
     use super::ImageDescriptionState;
+    use crate::data::prelude::*;
+    use strum::EnumCount;
 
     #[test]
     pub fn test_descriptions() {
         let state = ImageDescriptionState::default();
         assert_eq!(Guide::COUNT * Card::COUNT, state.descriptions.len());
 
-        for (_, desc) in state.descriptions{
+        for (_, desc) in state.descriptions {
             assert!(!desc.guidance.is_empty());
             assert!(!desc.specific_guidance.is_empty());
             assert!(!desc.representation.is_empty());

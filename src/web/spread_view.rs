@@ -27,9 +27,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
             move |direction| {
                 // Do something based on direction.
                 match **direction {
-                    UseSwipeDirection::Left => {
-                        Dispatch::<DataState>::new().apply(DrawMessage {})
-                    }
+                    UseSwipeDirection::Left => Dispatch::<DataState>::new().apply(DrawMessage {}),
                     UseSwipeDirection::Right => {
                         Dispatch::<DataState>::new().apply(ReplaceMessage {})
                     }
@@ -41,20 +39,18 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
         );
     }
 
-    let select_previous =
-        Dispatch::<DataState>::new().apply_callback(move |_| ReplaceMessage {});
+    let select_previous = Dispatch::<DataState>::new().apply_callback(move |_| ReplaceMessage {});
     let select_next = Dispatch::<DataState>::new().apply_callback(move |_| DrawMessage {});
 
-    let _total_cards = (cp.last_hidden_card_index + 1).min(cp.question_data.spread_type.total_cards()); //display an extra card to preload the image
+    let _total_cards =
+        (cp.last_hidden_card_index + 1).min(cp.question_data.spread_type.total_cards()); //display an extra card to preload the image
     let _s_d: bool = cp.show_description;
 
     let can_previous = cp.can_previous();
-    let can_next= cp.can_draw();
+    let can_next = cp.can_draw();
 
     let cards = (0..=_total_cards)
-        .map(|index| {
-            html!(<CardView index={index} key={index} />)
-        })
+        .map(|index| html!(<IndexedCardView index={index} key={index} />))
         .collect::<Html>();
 
     html!(

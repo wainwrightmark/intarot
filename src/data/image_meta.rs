@@ -39,13 +39,13 @@ impl FromStr for ImageMeta {
     }
 }
 
-impl ImageMeta{
-    pub fn src(&self)-> String{
-        format!("https://intarot-images.s3.eu-west-2.amazonaws.com/Upscaled Images/{}.jpg",self.file_name)
+impl ImageMeta {
+    pub fn src_data(&self) -> SrcData {
+        SrcData::Card(self.file_name)
     }
 }
 
-#[derive(PartialEq, Eq, Clone, Copy, Ord, PartialOrd)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Ord, PartialOrd)]
 pub struct MetaKey {
     pub star_sign: Option<StarSign>,
     pub guide: Guide,
