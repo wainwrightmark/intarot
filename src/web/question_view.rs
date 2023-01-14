@@ -3,7 +3,10 @@ use yew_router::prelude::use_navigator;
 use yewdux::prelude::{use_store_value, Dispatch};
 
 use super::app::Route;
-use crate::state::{prelude::*, prompts_state::PromptsState};
+use crate::{
+    state::{prelude::*, prompts_state::PromptsState},
+    web::logo::Logo,
+};
 
 #[derive(Properties, PartialEq)]
 pub struct QuestionProps {}
@@ -38,38 +41,39 @@ pub fn question_view(_props: &QuestionProps) -> Html {
 
     html! {
 
-            <>
-            <div class="site" style="overflow: hidden ">
-                <div class="container" style="height: 100vh;" onclick={background_click}  >
-                <h3 style="color: gold; text-align: center; pointer-events:none;">
-            {"intarot"}
-            </h3>
-                <div class="col">
-                <div class="row">
-                <p style="margin: auto; animation-delay: 0s; pointer-events:none;" class={if *skipped_state{classes!("")} else {classes!{"fade-in"}}}>{"Take a moment to clear your mind"}</p>
-                </div>
-                <div class="row">
-                <p style="margin: auto; animation-delay: 1.5s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Think of your question"}</p>
-                </div>
+        <>
+        <div class="site" style="overflow: hidden ">
+            <div class="container" style="height: 100vh;" onclick={background_click}  >
 
-                <div class="row">
-                <p style="margin: auto; animation-delay: 3s; pointer-events:none;" class={if *skipped_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt0 }</p>
-                </div>
-                <div class="row">
-                <p style="margin: auto; animation-delay: 3.75s; pointer-events:none;" class={if *skipped_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt1}</p>
-                </div>
-
-                <div class="row">
-                <p style="margin: auto; animation-delay: 4.5s; pointer-events:none;" class={if *skipped_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt2}</p>
-                </div>
-                <div class="row align-middle">
-                <button onclick={on_begin_click} style="margin: auto; animation-delay: 5.25s;" class={if *skipped_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
-                </div>
-                </div>
-                <div class="row">
-    </div>
-                </div>
+            <div class="col">
+            <div class="row">
+            <Logo/>
             </div>
-            </>
-        }
+
+            <div class="row">
+            <p style="margin: auto; animation-delay: 0s; pointer-events:none;" class={if *skipped_state{classes!("")} else {classes!{"fade-in"}}}>{"Take a moment to clear your mind"}</p>
+            </div>
+            <div class="row">
+            <p style="margin: auto; animation-delay: 1.5s; pointer-events:none;" class={if *skipped_state {classes!("")} else {classes!{"fade-in"}}}>{"Think of your question"}</p>
+            </div>
+
+            <div class="row">
+            <p style="margin: auto; animation-delay: 3s; pointer-events:none;" class={if *skipped_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt0 }</p>
+            </div>
+            <div class="row">
+            <p style="margin: auto; animation-delay: 3.75s; pointer-events:none;" class={if *skipped_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt1}</p>
+            </div>
+
+            <div class="row">
+            <p style="margin: auto; animation-delay: 4.5s; pointer-events:none;" class={if *skipped_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt2}</p>
+            </div>
+            <div class="row align-middle">
+            <button onclick={on_begin_click} style="margin: auto; animation-delay: 5.25s;" class={if *skipped_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
+            </div>
+            </div>
+
+            </div>
+        </div>
+        </>
+    }
 }
