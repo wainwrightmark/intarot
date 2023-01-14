@@ -43,7 +43,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
 
         <>
         <div class="site" style="overflow: hidden ">
-            <div class="container" style="height: 100vh;" onclick={background_click}  >
+            <div class="container" style="height: 100vh; white-space: nowrap;" onclick={background_click}  >
 
             <div class="col">
             <div class="row">
