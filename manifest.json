@@ -22,7 +22,7 @@
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
-    "theme_color": "#ffffff",
+    "theme_color": "#000000",
     "shortcuts": [
     ],
     "description": "Unique Astrological Tarot",
