@@ -4,7 +4,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="black">
+    <meta name="theme-color" content="black-translucent">
 
     <title>intarot</title>
 
@@ -17,6 +17,9 @@
     <meta property="og:description" content="intarot: unique astrological tarot">
     <meta name="twitter:description" content="intarot: unique astrological tarot">
 
+
+    <meta property="og:image" content="https://intarot-images.s3.eu-west-2.amazonaws.com/Logo/full+logo+small.jpg">
+
     
     
     
@@ -27,9 +30,6 @@
     
 
     
-
-    
-
 
     <link rel="icon" href="icon192.png">
 
@@ -41,35 +41,27 @@
     <meta name="msapplication-square150x150logo" content="icon150.png">
     <meta name="msapplication-wide310x150logo" content="icon310.png">
 
-    <meta property="og:image" content="full logo medium.png">
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://unpkg.com/papercss@1.8.3/dist/paper.min.css">
+    <link rel="stylesheet" href="/paper_styles-ce4388b95622882b.css">
+    <link rel="stylesheet" href="/styles-501ac145b23f0780.css">
 
-    <link rel="stylesheet" href="/styles-5b0a4418078a70c6.css">
 
     <link href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css" rel="stylesheet">
 
     
     <link rel="manifest" href="/manifest.json">
   
-<link rel="preload" href="/intarot-562e70e4db98092d_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-<link rel="modulepreload" href="/intarot-562e70e4db98092d.js"></head>
+<link rel="preload" href="/intarot-3f61595460ccebba_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/intarot-3f61595460ccebba.js"></head>
 
   <body style="background: var(--main-background)">
-    <script type="module">import init from '/intarot-562e70e4db98092d.js';init('/intarot-562e70e4db98092d_bg.wasm');</script>
+    <script type="module">import init from '/intarot-3f61595460ccebba.js';init('/intarot-3f61595460ccebba_bg.wasm');</script>
   
 
 
-<style>
-  body {
-    touch-action: manipulation;
-    overscroll-behavior-x: none;
-    overscroll-behavior-y: none;
-  }
-</style>
-<!-- <script>
+
+</body></html><!-- <script>
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -77,4 +69,3 @@
     document.body.classList.add("dark");
   }
 </script> -->
-</body></html>

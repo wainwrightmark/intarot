@@ -1,3 +1,10 @@
+body {
+  touch-action: manipulation;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+  font-family: sans-serif;
+}
+
 .container {
   overflow: hidden;
   width: 100%;
@@ -48,12 +55,6 @@
 
 .carousel-actions button {
   border-radius: 12px;
-  /* background-color: transparent;     */
-  /* border-color: black; */
-  /* cursor: pointer; */
-  /* width: 20px;
-    height: 20px; */
-  /* padding: 0%; */
   transform: none;
 }
 
@@ -108,6 +109,10 @@
   grid-template-columns: 1fr;
 }
 
+.guide-text{
+  text-align: justify;
+}
+
 .guide-name {
   color: var(--muted-text);
   margin: 1em;
@@ -149,6 +154,8 @@
 
 .prophecy-image {
   border-radius: 10px;
+  border-style: solid;
+  border-width: 2px;
   width: -webkit-fill-available;
   width: -moz-available;
   aspect-ratio: 1 / 2;
@@ -175,6 +182,7 @@
   margin: 10%;
   color: black;
   pointer-events: none;
+  text-align: justify;
 }
 
 .image_greyed {
