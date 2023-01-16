@@ -3,8 +3,6 @@ use std::str::FromStr;
 use yew::prelude::*;
 
 use yew_hooks::{use_location, use_search_param};
-use yew_router::navigator;
-use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
 use crate::data::prelude::ImageMeta;
