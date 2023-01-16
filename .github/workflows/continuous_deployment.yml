@@ -18,7 +18,8 @@ jobs:
       - uses: jetli/wasm-bindgen-action@v0.1.0
 
       - uses: actions/checkout@v2
-      - run: trunk build --release
+      - run: trunk build --release --public-url "https://intarot.com/"
+      - run: cp -r netlify-stuff dist
       - uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
