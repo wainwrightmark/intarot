@@ -2,23 +2,23 @@
     "short_name": "intarot",    
     "icons": [
       {
-        "src": "/icon.svg",
+        "src": "/logo/icon.svg",
         "type": "image/svg+xml",
         "sizes": "3118x3118"
       },
       {
-        "src": "/icon192.png",
+        "src": "/logo/icon192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "/icon512.png",
+        "src": "/logo/icon512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
     ],
     "id": "/manifest.json",
-    "start_url": "/#/restart",
+    "start_url": "/restart",
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
