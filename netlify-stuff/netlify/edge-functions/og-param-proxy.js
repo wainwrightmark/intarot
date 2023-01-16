@@ -5,17 +5,17 @@ export default async (request, context) => {
     const response = await context.next()
     const page = await response.text()
 
-	const id = url.searchParams.get("id");
+    try{
+        const id = url.searchParams.get("id");
+        const decoded =  atob(decodeURIComponent(id));
+        const search = 'Logo/full+logo+small.jpg'
+        const replace = `Upscaled+Images/${decoded}.jpg`
 
-    if (id == null){
+        return new Response(page .replaceAll(search, replace), response);
+    }
+    catch{
         return response;
     }
 
-    const decoded =  atob(decodeURIComponent());
 
-
-    const search = 'Logo/full+logo+small.jpg'
-    const replace = `Upscaled+Images/${id}.jpg`
-
-    return new Response(page .replaceAll(search, replace), response);
 }
