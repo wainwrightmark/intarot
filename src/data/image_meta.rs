@@ -13,22 +13,22 @@ pub struct ImageMeta {
 }
 
 impl FromStr for ImageMeta {
-    type Err = &'static str;
+    type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let file_name = Box::leak(s.to_string().into_boxed_str());
 
         let guide = Guide::iter()
             .find(|ss| ss.filter_image(file_name))
-            .unwrap_or_else(|| panic!("Could not find guide for {file_name}"));
+            .ok_or_else(|| anyhow::anyhow!("Could not find guide for {file_name}"))?;
 
         let sign = StarSign::iter()
             .find(|ss| ss.filter_image(file_name))
-            .unwrap_or_else(|| panic!("Could not find sign for {file_name}"));
+            .ok_or_else(|| anyhow::anyhow!("Could not find sign for {file_name}"))?;
 
         let card = Card::iter()
             .find(|ss| ss.filter_image(file_name))
-            .unwrap_or_else(|| panic!("Could not find card for {file_name}"));
+            .ok_or_else(|| anyhow::anyhow!("Could not find card for {file_name}"))?;
 
         Ok(ImageMeta {
             file_name,
