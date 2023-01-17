@@ -1,4 +1,3 @@
-use crate::web::guide_view::GuideView;
 use crate::web::opening_view::OpeningView;
 use yew::prelude::*;
 use yew_router::prelude::*;
@@ -13,21 +12,14 @@ pub enum Route {
     #[at("/")]
     #[not_found]
     Opening,
-
-    #[at("/choose")]
-    Choose,
-
-    #[at("/guide")]
-    Guide {},
-
     #[at("/question")]
-    Question {},
+    Question,
 
     #[at("/spread")]
-    Spread {},
+    Spread,
 
     #[at("/restart")]
-    Restart {},
+    Restart,
 
     #[at("/share")]
     Share
@@ -56,12 +48,6 @@ fn switch(routes: Route) -> Html {
         Route::Question {} => html! {
            <QuestionView  />
         },
-
-        Route::Guide {} => html! {
-
-            <GuideView  go_to_question={false}  />
-
-        },
         Route::Spread {} => html! {
 
         <SpreadView />
@@ -69,11 +55,6 @@ fn switch(routes: Route) -> Html {
          },
         Route::Restart {} => html! {
             <RestartView  />
-        },
-        Route::Choose => html! {
-
-            <GuideView go_to_question={true} />
-
         },
         Route::Share  => {
 

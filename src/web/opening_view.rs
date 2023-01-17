@@ -16,7 +16,7 @@ pub fn opening_view() -> Html {
     let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
 
     let onclick = Callback::from(move |_: MouseEvent| {
-        navigator.push(&Route::Choose {});
+        navigator.push(&Route::Question {  } );
     });
 
     html! {
@@ -35,7 +35,7 @@ pub fn opening_view() -> Html {
             {paragraph3}
             </p>
                 </div>
-                <button {onclick} style="margin: auto; display: block;" class="nice-button">{"Choose your Guide"}</button>
+                <button {onclick} style="margin: auto; display: block;" class="nice-button">{"Begin"}</button>
             </div>
         </div>
     }
