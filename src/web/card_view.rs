@@ -81,7 +81,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                     <br/>
                                     <br/>
                                     <span>
-                                    {description.specific_guidance}
+                                    {description.guide_interpretation}
                                     </span>
                                 </p>
                                         }
