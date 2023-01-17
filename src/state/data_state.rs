@@ -42,9 +42,8 @@ impl DataState {
             self.question_data.spread_type.total_cards()
         }
     }
-    pub fn draw_card(mut self) -> Self {
-        if self.top_card_index < self.question_data.spread_type.total_cards() {
-            self.top_card_index += 1;
+    pub fn next_card(mut self) -> Self {
+        self.top_card_index = (self.top_card_index  + 1) % (self.question_data.spread_type.total_cards() + 1);
             self.last_hidden_card_index = (self.top_card_index + 1)
                 .max(self.last_hidden_card_index)
                 .min(self.question_data.spread_type.total_cards()); //DO NOT USE CLAMP
@@ -55,7 +54,6 @@ impl DataState {
             } else {
                 self.show_description = false;
             }
-        }
         self
     }
 
@@ -85,10 +83,8 @@ impl DataState {
         index == self.top_card_index
     }
 
-    pub fn replace_card(mut self) -> Self {
-        if self.top_card_index > 0 {
-            self.top_card_index -= 1;
-        }
+    pub fn previous_card(mut self) -> Self {
+        self.top_card_index = (self.top_card_index  + self.question_data.spread_type.total_cards()) % (self.question_data.spread_type.total_cards() + 1);
         if self.top_card_index == self.finish_card_index() {
             self.show_description = true;
             self.has_shown_description = true;
@@ -105,11 +101,13 @@ impl DataState {
     }
 
     pub fn can_previous(&self) -> bool {
-        self.top_card_index > 0
+        // self.top_card_index > 0
+        true
     }
 
     pub fn can_draw(&self) -> bool {
-        self.top_card_index < self.question_data.spread_type.total_cards()
+        // self.top_card_index < self.question_data.spread_type.total_cards()
+        true
     }
 
     pub fn reset(&mut self) {
@@ -123,13 +121,13 @@ impl DataState {
 
 impl Reducer<DataState> for DrawMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
-        (*state).clone().draw_card().into()
+        (*state).clone().next_card().into()
     }
 }
 
 impl Reducer<DataState> for ReplaceMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
-        (*state).clone().replace_card().into()
+        (*state).clone().previous_card().into()
     }
 }
 impl Reducer<DataState> for ToggleDescriptionMessage {
