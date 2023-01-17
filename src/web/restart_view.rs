@@ -10,7 +10,7 @@ use yewdux::prelude::*;
 use super::app::Route;
 use crate::{
     data::prelude::*,
-    state::{prelude::*, prompts_state::PromptsState}, web::logo::Logo,
+    state::{prelude::*, prompts_state::PromptsState}, web::{logo::Logo, prelude::GuideCarousel},
 };
 
 #[derive(Properties, PartialEq)]
@@ -71,12 +71,6 @@ pub fn restart_view(_props: &RestartProps) -> Html {
         })
     };
 
-    let on_image_click = {
-        let navigator = navigator;
-        Callback::from(move |_e: MouseEvent| {
-            navigator.push(&Route::Guide {});
-        })
-    };
 
     html! {
 
@@ -88,9 +82,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
             <br/>
                 <div>
                 <div class={"restart-view-item"}  >
-                <img onclick={on_image_click} class="guide-image"
-                src={user_data.guide.image_src().src() }
-                     alt={user_data.guide.name()} />
+                <GuideCarousel/>
                 </div>
                 <br/>
 

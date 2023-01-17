@@ -8,6 +8,7 @@ pub mod share_card_view;
 pub mod share_component;
 mod spread_view;
 pub mod logo;
+pub mod guide_carousel;
 
 pub mod prelude {
 
@@ -15,4 +16,5 @@ pub mod prelude {
     pub use crate::web::share_card_view::*;
     pub use crate::web::share_component::*;
     pub use crate::web::logo::*;
+    pub use crate::web::guide_carousel::*;
 }
