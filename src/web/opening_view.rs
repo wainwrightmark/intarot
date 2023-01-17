@@ -1,21 +1,18 @@
-use crate::web::prelude::*;
+use crate::{web::prelude::*, state::{prompts_state::PromptsState, prelude::ShufflePromptsMessage}};
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
+use yewdux::prelude::Dispatch;
 
 #[function_component(OpeningView)]
 pub fn opening_view() -> Html {
     let navigator = use_navigator().unwrap();
-
-    //let _user_data: Rc<UserState> = use_store_value();
-    // if user_data.has_used_before {
-    //     navigator.replace(&Route::Restart {})
-    // }
 
     let paragraph1 = include_str!(r#"../text/opening_p1.txt"#);
     let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
     let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
 
     let onclick = Callback::from(move |_: MouseEvent| {
+        Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
         navigator.push(&Route::Question {  } );
     });
 
