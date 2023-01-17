@@ -20,7 +20,7 @@ pub struct RestartProps {}
 pub fn restart_view(_props: &RestartProps) -> Html {
     let navigator = use_navigator().unwrap();
     let data_state = use_store_value::<DataState>();
-    let knowledge_state = use_store_value::<GuideKnowledgeState>();
+    let description_state = use_store_value::<SpreadDescriptionState>();
 
     let user_data = data_state.question_data;
 
@@ -40,7 +40,8 @@ pub fn restart_view(_props: &RestartProps) -> Html {
     .map(|spread_type|{
 
         let selected = spread_type == user_data.spread_type;
-        html!(  <option value={spread_type.repr()} {selected} disabled={false}> {spread_type.name()}  </option>
+        let name = description_state.descriptions.get(&spread_type).unwrap().dropdown_name;
+        html!(  <option value={spread_type.repr()} {selected} disabled={false}> {name}  </option>
         )
     }
 
@@ -79,7 +80,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
                 <br/>
                 <div>
                 <p class="restart-view-item" style="text-align: justify;">
-                    {knowledge_state.get_guide_spread_text(&user_data)}
+                    {description_state.get_guide_spread_text(&user_data)}
                 </p>
 
                 </div>

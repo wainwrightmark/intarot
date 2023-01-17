@@ -3,6 +3,7 @@ use std::fmt::Debug;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 
+
 #[derive(
     Copy,
     Clone,
@@ -21,10 +22,14 @@ use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticSt
     Default,
     Display,
 )]
+#[strum(ascii_case_insensitive)]
 pub enum SpreadType {
     #[default]
     One,
     Three,
+    Love,
+    Career,
+    Seven,
     All,
 }
 
@@ -34,36 +39,31 @@ impl SpreadType {
         match self {
             SpreadType::One => 1,
             SpreadType::Three => 3,
+            SpreadType::Love => 3,
+            SpreadType::Career => 3,
+            SpreadType::Seven => 7,
             SpreadType::All => 22,
         }
     }
 
     pub fn initial_top_card_index(&self) -> usize {
-        match self {
-            SpreadType::One => 1,
-            SpreadType::Three => 3,
-            SpreadType::All => 0,
+        if self.is_ad_card_first(){
+            self.total_cards()
+        }
+        else{
+            0
         }
     }
 
     pub fn is_ad_card_first(&self) -> bool {
         match self {
-            SpreadType::One => true,
-            SpreadType::Three => true,
             SpreadType::All => false,
+            _=>true
         }
     }
 }
 
 impl SpreadType {
-    pub fn name(&self) -> &'static str {
-        match self {
-            SpreadType::One => "One Card",
-            SpreadType::Three => "Three Cards",
-            SpreadType::All => "All Cards",
-        }
-    }
-
     pub fn repr(&self) -> &'static str {
         self.into()
     }
