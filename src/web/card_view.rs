@@ -19,11 +19,12 @@ pub struct CardViewProps {
     pub src_data: SrcData,
     pub description: Option<ImageDescription>,
     pub show_continue: bool,
+    pub slot: Option<&'static str>
 }
 
 #[function_component(CardView)]
 pub fn card_view(props: &CardViewProps) -> Html {
-    let state = use_store_value::<DataState>();
+    let data_state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
 
     let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
@@ -41,7 +42,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let show_description = if props.top_card {
         card_classes.push("top_card");
 
-        if state.show_description {
+        if data_state.show_description {
             image_classes.push("image_greyed");
             true
         } else {
@@ -51,7 +52,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
         false
     };
 
-    let should_shake = props.top_card && !state.has_shown_description;
+    let should_shake = props.top_card && !data_state.has_shown_description;
 
     if should_shake {
         card_classes.push("card-shake");
@@ -137,6 +138,10 @@ pub fn card_view(props: &CardViewProps) -> Html {
     }
 }
 
+// pub fn slot_view(data: Option<&'static str>)-> Html{
+
+// }
+
 #[function_component(IndexedCardView)]
 pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     let descriptions_state = use_store_value::<ImageDescriptionState>();
@@ -176,7 +181,6 @@ fn get_style(index: usize, state: &DataState) -> CardStyle {
             hidden: true,
             no_pointer_events: true,
         }
-        //"transform:  translateX(15em) translateY(5em) rotateZ(-30deg); visibility: hidden; pointer-events: none;".to_string()
     } else if index > state.top_card_index + 1 {
         let rotate_z = match index % 4 {
             0 => 15 + ((index as i32) * -10),
@@ -208,18 +212,12 @@ fn get_style(index: usize, state: &DataState) -> CardStyle {
             hidden: true,
             no_pointer_events: true,
         }
-
-        // format!(
-        //     "transform:  translateX({translate_x}em) translateY({translate_y}em) rotateZ({angle}deg); visibility: hidden; pointer-events: none;",
-        // )
     } else if index == state.top_card_index {
         CardStyle {
             hidden: false,
             no_pointer_events: false,
             transform: None,
         }
-        // let angle = 0;
-        // format!("transform: rotateZ({angle}deg); transition-duration: 1s, 3s")
     } else {
         let rotate_z = match index % 4 {
             0 => 15 + -(index as i32),
@@ -250,10 +248,6 @@ fn get_style(index: usize, state: &DataState) -> CardStyle {
                 rotate_z,
             }),
         }
-
-        // format!(
-        //     "transform: translateX({translate_x}em) translateY({translate_y}em)  rotateZ({angle}deg);s; pointer-events: none;"
-        // )
     }
 }
 

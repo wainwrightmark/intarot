@@ -4,14 +4,14 @@ use crate::data::prelude::*;
 use itertools::Itertools;
 use yewdux::prelude::*;
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SpreadDescription {
     pub spread: SpreadType,
     pub dropdown_name: &'static str,
     pub evelyn: &'static str,
     pub madame: &'static str,
     pub maledictus: &'static str,
-    pub slots: &'static str
+    pub slots: Vec<&'static str>
 }
 
 impl SpreadDescription {
@@ -52,6 +52,7 @@ impl Default for SpreadDescriptionState {
                     let Ok(spread) = SpreadType::from_str(spread) else{
                         return None;
                     };
+                    let slots = slots.split_terminator(';').collect_vec();
                     Some((spread, SpreadDescription { spread, dropdown_name, evelyn, madame, maledictus, slots }))
                 })
                 .collect()
