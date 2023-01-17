@@ -21,7 +21,7 @@ pub fn opening_view() -> Html {
             <div class="container" >
             <div class="sm-4 col" style="margin: auto; text-align: justify;">
 
-            <Logo/>
+            <Logo clickable={true}/>
             <p>
             {paragraph1}
             </p>

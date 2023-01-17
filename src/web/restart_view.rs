@@ -61,7 +61,7 @@ pub fn restart_view(_props: &RestartProps) -> Html {
             <div class="site" style="">
                 <div class="container" style=""  >
                 <div class="sm-4 col" style="margin: auto; text-align: justify;">
-                <Logo/>
+                <Logo clickable={true}/>
             <br/>
                 <div>
                 <div class={"restart-view-item"}  >

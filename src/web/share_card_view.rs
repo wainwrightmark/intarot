@@ -53,6 +53,6 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         </>
         )
     } else {
-        html!(<> <Logo/> </> )
+        html!(<> <Logo clickable={true}/> </> )
     }
 }
