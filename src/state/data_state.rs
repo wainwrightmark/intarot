@@ -74,7 +74,6 @@ impl DataState {
 
         let card = self.cards[index];
         let key = MetaKey {
-            star_sign: self.question_data.star_sign,
             guide: self.question_data.guide,
             card,
         };

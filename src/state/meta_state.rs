@@ -19,7 +19,7 @@ impl Default for ImageMetaState {
 
         let mut metas_vec = lines
             .map(move |x| ImageMeta::from_str(x).unwrap())
-            .flat_map(|x| [(MetaKey::from(x), x), (MetaKey::from(x).with_no_sign(), x)])
+            .map(|x| (MetaKey::from(x), x))
             .collect_vec();
 
         let today = get_today_date();

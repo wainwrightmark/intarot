@@ -23,16 +23,6 @@ pub fn restart_view(_props: &RestartProps) -> Html {
     let knowledge_state = use_store_value::<GuideKnowledgeState>();
 
     let user_data = data_state.question_data;
-    let on_sign_change = {
-        Callback::from(move |e: Event| {
-            let input: HtmlSelectElement = e.target_unchecked_into();
-            let s = input.value();
-            let star_sign = StarSign::from_str(s.as_str()).ok();
-            let mut user_data = data_state.question_data;
-            user_data.star_sign = star_sign;
-            Dispatch::<DataState>::new().apply(MaybeChangeDataMessage(user_data))
-        })
-    };
 
     let on_spread_type_change = {
         Callback::from(move |e: Event| {
@@ -45,13 +35,6 @@ pub fn restart_view(_props: &RestartProps) -> Html {
         })
     };
 
-    let sign_options = StarSign::iter()
-    .map(|star_sign| {
-        let selected = Some(star_sign) == user_data.star_sign;
-        html!(  <option value={star_sign.repr()} {selected} disabled={false}> {star_sign.name()}  </option>
-        )
-    })
-    .collect_vec();
 
     let spread_type_options = SpreadType::iter()
     .map(|spread_type|{
@@ -85,20 +68,6 @@ pub fn restart_view(_props: &RestartProps) -> Html {
                 <GuideCarousel/>
                 </div>
                 <br/>
-
-                <div>
-                <select onchange={on_sign_change} class="nice-button restart-view-item" style="text-align: center;">
-                <option selected={user_data.star_sign.is_none()} disabled={false}> {"Star Sign"}  </option>
-                {sign_options}
-                </select>
-                <div>
-                <br/>
-                <p class="restart-view-item" style="text-align: justify;">
-                    {knowledge_state.get_guide_star_sign_text(&user_data)}
-                </p>
-
-                </div>
-                <br/>
             <br/>
                 </div>
                 <div>
@@ -119,7 +88,6 @@ pub fn restart_view(_props: &RestartProps) -> Html {
                 </div>
 
 
-                </div>
                 </div>
                 </div>
             </>
