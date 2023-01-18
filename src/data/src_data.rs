@@ -28,7 +28,7 @@ impl SrcData {
                 "https://www.intarot.com/share?id={}",
                 {
                     let encoded = Engine::encode(&base64::engine::general_purpose::URL_SAFE, name);
-                    log::info!("{encoded}");
+                    // log::info!("{encoded}");
                     encoded
                 }
             ),

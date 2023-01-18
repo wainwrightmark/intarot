@@ -17,7 +17,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
 
-    let cp = use_store_value::<DataState>();
+    let data_state = use_store_value::<DataState>();
     // log::info!("{:?}", cp);
     let _props = props.clone();
 
@@ -43,11 +43,11 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
     let select_next = Dispatch::<DataState>::new().apply_callback(move |_| DrawMessage {});
 
     let _total_cards =
-        (cp.last_hidden_card_index + 1).min(cp.question_data.spread_type.total_cards()); //display an extra card to preload the image
-    let _s_d: bool = cp.show_description;
+        (data_state.last_hidden_card_index + 1).min(data_state.question_data.spread_type.total_cards()); //display an extra card to preload the image
+    let _s_d: bool = data_state.show_description;
 
-    let can_previous = cp.can_previous();
-    let can_next = cp.can_draw();
+    let can_previous = data_state.can_previous();
+    let can_next = data_state.can_draw();
 
     let cards = (0..=_total_cards)
         .map(|index| html!(<IndexedCardView index={index} key={index} />))

@@ -7,10 +7,7 @@ use crate::data::prelude::*;
 use crate::state::prelude::*;
 use crate::web::prelude::{Route, ShareComponent};
 
-#[derive(Properties, PartialEq)]
-pub struct IndexedCardViewProps {
-    pub index: usize,
-}
+
 
 #[derive(Properties, PartialEq)]
 pub struct CardViewProps {
@@ -57,6 +54,8 @@ pub fn card_view(props: &CardViewProps) -> Html {
     if should_shake {
         card_classes.push("card-shake");
     }
+
+    // log::info!("Card {:?} {:?} {:?}", props.top_card, props.slot, data_state.top_card_index);
 
     html! {
 
@@ -134,39 +133,75 @@ pub fn card_view(props: &CardViewProps) -> Html {
                             }
                         }
                     }
+                    {
+                        if let Some(slot) = props.slot{
+                            if props.top_card{
+                                html!{
+                                    <SlotView {slot}/>
+                                }
+                            }
+                            else{
+                                html!(<></>)
+                            }
+                        }
+                        else{
+                            html!(<></>)
+                        }
+                    }
+        </div>
+        
+    }
+}
+
+#[derive(Debug, Properties, Clone, PartialEq)]
+pub struct SlotPropeties{
+    pub slot: &'static str
+}
+
+#[function_component(SlotView)]
+pub fn slot_view(props: &SlotPropeties)-> Html{    
+    html!{
+        <div class="slot">
+            {props.slot}
         </div>
     }
 }
 
-// pub fn slot_view(data: Option<&'static str>)-> Html{
+#[derive(Properties, PartialEq)]
+pub struct IndexedCardViewProps {
+    pub index: usize,
+}
 
-// }
 
 #[function_component(IndexedCardView)]
-pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
-    let descriptions_state = use_store_value::<ImageDescriptionState>();
+pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {    
+    let image_descriptions_state = use_store_value::<ImageDescriptionState>();
     let metas_state = use_store_value::<ImageMetaState>();
-    let state = use_store_value::<DataState>();
-    let descriptions = &descriptions_state.descriptions;
+    let data_state = use_store_value::<DataState>();
+    let spread_descriptions_state = use_store_value::<SpreadDescriptionState>();
+    
+    let slot = spread_descriptions_state.try_get_slot(&data_state.question_data, props.index);
+    // log::info!("{slot:?}");
+    let descriptions = &image_descriptions_state.descriptions;
 
     let metas = &metas_state.metas;
 
-    let top_card = state.is_top_card(props.index);
+    let top_card = data_state.is_top_card(props.index);
 
-    let style = get_style(props.index, state.as_ref());
+    let style = get_style(props.index, data_state.as_ref());
 
-    let meta = state.get_image_meta(props.index, metas);
+    let meta = data_state.get_image_meta(props.index, metas);
     let description: Option<ImageDescription> = meta
         .and_then(|meta| descriptions.get(&(meta.guide, meta.card))).copied();
 
     let src_data = meta
         .map(|x| x.src_data())
-        .unwrap_or_else(|| state.question_data.guide.ad_image_src());
+        .unwrap_or_else(|| data_state.question_data.guide.ad_image_src());
 
     let show_continue = meta.is_none();
 
     html! {
-        <CardView {top_card} {src_data} {style} {description} {show_continue} />
+        <CardView {top_card} {src_data} {style} {description} {show_continue} {slot} />
     }
 }
 

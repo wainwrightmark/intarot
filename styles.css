@@ -272,3 +272,12 @@ body {
 .capitalize_first_letter::first-letter{
   text-transform: capitalize
 }
+
+.slot{
+  background-color: antiquewhite;
+  border: solid 10px black;
+  text-align: center;
+  font-weight: bolder;
+  font-size: x-large;
+  z-index: 15;
+}

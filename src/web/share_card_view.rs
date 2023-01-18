@@ -19,13 +19,13 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
 
     let location = use_location();
     let id = use_search_param("id".to_string()).unwrap_or_default();
-    log::info!(
-        "id: '{id}'. search: '{}', href: '{}', origin: '{}', pathname: '{}'",
-        location.search,
-        location.href,
-        location.origin,
-        location.pathname
-    );
+    // log::info!(
+    //     "id: '{id}'. search: '{}', href: '{}', origin: '{}', pathname: '{}'",
+    //     location.search,
+    //     location.href,
+    //     location.origin,
+    //     location.pathname
+    // );
 
     let image_meta = base64::Engine::decode(&base64::engine::general_purpose::URL_SAFE, id)
         .ok()
