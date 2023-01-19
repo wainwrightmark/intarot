@@ -44,7 +44,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
 
     let prompts_state = use_store_value::<PromptsState>();
     let (prompt0, prompt1, prompt2) =
-        prompts_state.get_three_prompts(&card_page_state.question_data.guide);
+        prompts_state.get_three_prompts(&card_page_state.question_data.guide, &card_page_state.question_data.spread_type);
     let prompt0 = format!("Why not ask about {prompt0}?");
     let prompt1 = format!("{prompt1}?");
     let prompt2 = format!("{prompt2}?");

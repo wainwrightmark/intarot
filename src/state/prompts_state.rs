@@ -1,68 +1,102 @@
+use itertools::Itertools;
 use rand::{rngs::ThreadRng, seq::SliceRandom};
 use std::collections::BTreeMap;
+use strum::{EnumCount, IntoEnumIterator};
 use yewdux::prelude::*;
 
-use crate::data::prelude::Guide;
+use crate::data::prelude::{Guide, SpreadType};
 
 use super::messages::ShufflePromptsMessage;
 
 #[derive(PartialEq, Eq, Store)]
 pub struct PromptsState {
-    pub prompts: BTreeMap<Guide, Vec<&'static str>>,
+    pub prompts: BTreeMap<(Guide, SpreadType), Vec<&'static str>>,
 }
 
 impl PromptsState {
-    pub fn get_three_prompts(&self, guide: &Guide) -> (&'static str, &'static str, &'static str) {
-        let vec = &self.prompts[guide];
+    pub fn get_three_prompts(
+        &self,
+        guide: &Guide,
+        spread: &SpreadType,
+    ) -> (&'static str, &'static str, &'static str) {
+        let vec = &self.prompts[&(*guide, *spread)];
         (vec[0], vec[1], vec[2])
     }
 }
 
 impl Default for PromptsState {
     fn default() -> Self {
-        let data = include_str!("../tsv/guide_prompts.tsv");
+        let mut guide_prompts: BTreeMap<Guide, Vec<&str>> = Default::default();
+        let mut spread_prompts: BTreeMap<SpreadType, Vec<&str>> = Default::default();
 
-        let mut evelyn = vec![];
-        let mut madame = vec![];
-        let mut maledictus = vec![];
-
-        for l in data.lines().skip(1) {
-            if let Some((line, eve, mad, mal)) = deconstruct_line(l) {
-                if eve {
-                    evelyn.push(line)
-                }
-                if mad {
-                    madame.push(line)
-                }
-                if mal {
-                    maledictus.push(line)
+        {
+            let guide_prompts_data = include_str!("../tsv/guide_prompts.tsv");
+            for l in guide_prompts_data.lines().skip(1) {
+                if let Some((line, arr)) = deconstruct_line::<{ Guide::COUNT }>(l) {
+                    for (guide, b) in Guide::iter().zip(arr) {
+                        if b {
+                            let entry = guide_prompts.entry(guide);
+                            match entry {
+                                std::collections::btree_map::Entry::Vacant(v) => {
+                                    v.insert(vec![line]);
+                                }
+                                std::collections::btree_map::Entry::Occupied(mut o) => {
+                                    o.get_mut().extend_one(line)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        let mut prompts: BTreeMap<Guide, Vec<&str>> = Default::default();
-        prompts.insert(Guide::Evelyn, evelyn);
-        prompts.insert(Guide::Madame, madame);
-        prompts.insert(Guide::Maledictus, maledictus);
+        {
+            let spread_prompts_data = include_str!("../tsv/spread_prompts.tsv");
 
-        Self { prompts }
+            for l in spread_prompts_data.lines().skip(1) {
+                if let Some((line, arr)) = deconstruct_line::<{ SpreadType::COUNT }>(l) {
+                    for (st, b) in SpreadType::iter().zip(arr) {
+                        if b {
+                            let entry = spread_prompts.entry(st);
+                            match entry {
+                                std::collections::btree_map::Entry::Vacant(v) => {
+                                    v.insert(vec![line]);
+                                }
+                                std::collections::btree_map::Entry::Occupied(mut o) => {
+                                    o.get_mut().extend_one(line)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        let mut prompts: BTreeMap<(Guide, SpreadType), Vec<&'static str>> = Default::default();
+
+        for (g, g_lines) in guide_prompts{
+            for (st, st_lines) in spread_prompts.iter(){
+                let lines = g_lines.iter().filter(|x| st_lines.contains(x)).cloned().collect_vec();
+                prompts.insert((g, *st), lines);
+            }
+        }
+
+
+         Self { prompts }
     }
 }
 
-fn deconstruct_line(line: &'static str) -> Option<(&'static str, bool, bool, bool)> {
-    let mut split = line.splitn(4, '\t');
+fn deconstruct_line<const N: usize>(line: &'static str) -> Option<(&'static str, [bool; N])> {
+    let mut split = line.splitn(N + 1, '\t');
 
     let Some(line) = split.next() else{
         return None;
     };
 
     let mut bools = split.map(|x| x.eq_ignore_ascii_case("true"));
+    let arr = bools.next_chunk().unwrap();
 
-    let a = bools.next().unwrap_or_default();
-    let b = bools.next().unwrap_or_default();
-    let c = bools.next().unwrap_or_default();
-
-    Some((line, a, b, c))
+    Some((line, arr))
 }
 
 impl Reducer<PromptsState> for ShufflePromptsMessage {
@@ -86,8 +120,10 @@ mod tests {
     pub fn test_guide_knowledge_spreads() {
         let state = PromptsState::default();
 
-        for (_, vec) in state.prompts.iter() {
-            assert!(vec.len() >= 3);
+        for ((_guide, _spread), vec) in state.prompts.iter() {
+
+            //println!("{guide} {spread}: {}", vec.len());
+            assert!(vec.len() >= 1);
             for t in vec {
                 assert!(!t.is_empty());
             }

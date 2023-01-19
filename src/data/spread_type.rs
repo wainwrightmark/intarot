@@ -25,10 +25,13 @@ use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticSt
 pub enum SpreadType {
     #[default]
     One,
-    Three,
     Love,
     Career,
-    Seven,
+    DayAhead,
+    Personal,
+    Problem,
+    Three,
+    Five,
     All,
 }
 
@@ -39,9 +42,12 @@ impl SpreadType {
             SpreadType::One => 1,
             SpreadType::Three => 3,
             SpreadType::Love => 3,
-            SpreadType::Career => 3,
-            SpreadType::Seven => 7,
+            SpreadType::Career => 5,
             SpreadType::All => 22,
+            SpreadType::DayAhead => 3,
+            SpreadType::Personal => 3,
+            SpreadType::Problem => 3,
+            SpreadType::Five => 5,
         }
     }
 
