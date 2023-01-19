@@ -93,6 +93,10 @@ impl DataState {
         } else {
             self.show_description = false;
         }
+
+        self.last_hidden_card_index = (self.top_card_index + 1)
+            .max(self.last_hidden_card_index)
+            .min(self.question_data.spread_type.total_cards()); //DO NOT USE CLAMP
         self
     }
 
