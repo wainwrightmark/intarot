@@ -278,11 +278,14 @@ body {
   text-transform: capitalize
 }
 
+
+
 .slot{
-  background-color: antiquewhite;
-  border: solid 10px black;
+  border: solid 4px black;
+  border-radius: 10px;
   text-align: center;
   font-weight: bolder;
   font-size: x-large;
   z-index: 15;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
