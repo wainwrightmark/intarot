@@ -2,7 +2,6 @@ body {
   touch-action: manipulation;
   overscroll-behavior-x: none;
   overscroll-behavior-y: none;
-  font-family: sans-serif;
 }
 
 .container {
