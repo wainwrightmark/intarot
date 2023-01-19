@@ -5,7 +5,7 @@ use yew_router::prelude::*;
 use super::prelude::ShareCardView;
 use super::spread_view::SpreadView;
 use crate::web::question_view::QuestionView;
-use crate::web::restart_view::RestartView;
+use crate::web::advanced_view::AdvancedView;
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
@@ -18,8 +18,8 @@ pub enum Route {
     #[at("/spread")]
     Spread,
 
-    #[at("/restart")]
-    Restart,
+    #[at("/advanced")]
+    Advanced,
 
     #[at("/share")]
     Share,
@@ -53,8 +53,8 @@ fn switch(routes: Route) -> Html {
         <SpreadView />
 
          },
-        Route::Restart {} => html! {
-            <RestartView  />
+        Route::Advanced {} => html! {
+            <AdvancedView  />
         },
         Route::Share => {
             html!(

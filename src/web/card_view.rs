@@ -27,7 +27,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
             Dispatch::<UserState>::new().apply(SetUsedBeforeMessage {});
-            navigator.replace(&Route::Restart {});
+            navigator.replace(&Route::Advanced {});
         })
     };
 

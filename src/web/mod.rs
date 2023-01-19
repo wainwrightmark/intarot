@@ -4,7 +4,7 @@ pub mod guide_carousel;
 pub mod logo;
 mod opening_view;
 pub mod question_view;
-pub mod restart_view;
+pub mod advanced_view;
 pub mod share_card_view;
 pub mod share_component;
 mod spread_view;

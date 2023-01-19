@@ -5,5 +5,5 @@
  - [ ] More in app prompts
  - [x] Shaking should start faster and be more vigorous
 
- - [ ] Use carousels in restart page
- - [ ] Share links
+ - [x] Use carousels in restart page
+ - [x] Share links

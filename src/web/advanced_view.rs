@@ -15,10 +15,10 @@ use crate::{
 };
 
 #[derive(Properties, PartialEq)]
-pub struct RestartProps {}
+pub struct AdvancedProps {}
 
-#[function_component(RestartView)]
-pub fn restart_view(_props: &RestartProps) -> Html {
+#[function_component(AdvancedView)]
+pub fn advanced_view(_props: &AdvancedProps) -> Html {
     let navigator = use_navigator().unwrap();
     let data_state = use_store_value::<DataState>();
     let description_state = use_store_value::<SpreadDescriptionState>();
@@ -64,27 +64,27 @@ pub fn restart_view(_props: &RestartProps) -> Html {
             <Logo clickable={true}/>
         <br/>
             <div>
-            <div class={"restart-view-item"}  >
+            <div class={"advanced-view-item"}  >
             <GuideCarousel/>
             </div>
             <br/>
         <br/>
             </div>
             <div>
-            <select onchange={on_spread_type_change} class="nice-button restart-view-item" style="text-align: center;">
+            <select onchange={on_spread_type_change} class="nice-button advanced-view-item" style="text-align: center;">
             {spread_type_options}
             </select>
 
             </div>
             <br/>
             <div>
-            <p class="restart-view-item" style="text-align: justify;">
+            <p class="advanced-view-item" style="text-align: justify;">
                 {description_state.get_guide_spread_text(&user_data)}
             </p>
 
             </div>
             <br/>
-            <button onclick={on_begin_click} style="display: block;" class="nice-button restart-view-item">{"Begin"}</button>
+            <button onclick={on_begin_click} style="display: block;" class="nice-button advanced-view-item">{"Begin"}</button>
             </div>
 
 
