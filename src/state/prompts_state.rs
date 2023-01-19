@@ -20,7 +20,7 @@ impl PromptsState {
 
 impl Default for PromptsState {
     fn default() -> Self {
-        let data = include_str!("../tsv/prompts.tsv");
+        let data = include_str!("../tsv/guide_prompts.tsv");
 
         let mut evelyn = vec![];
         let mut madame = vec![];
