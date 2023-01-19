@@ -184,7 +184,7 @@ body {
   margin: 10%;
   color: black;
   pointer-events: none;
-  text-align: justify;
+  /* text-align: justify; */
 }
 
 .image_greyed {
