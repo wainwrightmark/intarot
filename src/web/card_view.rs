@@ -22,6 +22,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let data_state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
 
+    let guide = data_state.question_data.guide;
     let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
     let on_continue_click = {
@@ -143,7 +144,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
                         if let Some(slot) = props.slot{
                             if props.top_card{
                                 html!{
-                                    <SlotView {slot}/>
+                                    <SlotView {slot} {guide}/>
                                 }
                             }
                             else{
@@ -162,12 +163,15 @@ pub fn card_view(props: &CardViewProps) -> Html {
 #[derive(Debug, Properties, Clone, PartialEq)]
 pub struct SlotProperties {
     pub slot: &'static str,
+    pub guide: Guide
 }
 
 #[function_component(SlotView)]
 pub fn slot_view(props: &SlotProperties) -> Html {
+
+
     html! {
-        <div class="slot">
+        <div class="slot" style={format!("background-image: linear-gradient({}, {});", props.guide.primary_color(), props.guide.secondary_color())}>
             {props.slot}
         </div>
     }

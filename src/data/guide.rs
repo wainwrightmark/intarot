@@ -27,6 +27,8 @@ pub enum Guide {
         name = "Evelyn Musgrave",
         image_id = "EvelynMusgrave",
         ad_image_id = "AdEvelyn",
+        primary_color = "#ffd5d5",
+        secondary_color = "#ffe5d5",
     ))]
     #[default]
     Evelyn,
@@ -35,6 +37,8 @@ pub enum Guide {
         name = "Madame Sosoteris",
         image_id = "MadameSostertis",
         ad_image_id = "AdSosoteris",
+        primary_color = "#d7e3f4",
+        secondary_color = "#dbdee3",
     ))]
     Madame,
 
@@ -42,6 +46,8 @@ pub enum Guide {
         name = "Maledictus Andronichus",
         image_id = "MaledictusAndronichus",
         ad_image_id = "AdMaledictus",
+        primary_color = "#f6d5ff",
+        secondary_color = "#ffffff",
     ))]
     Maledictus,
 }
@@ -72,6 +78,14 @@ impl Guide {
 
     pub fn name(&self) -> &'static str {
         self.get_str("name").unwrap()
+    }
+
+    pub fn primary_color(&self) -> &'static str {
+        self.get_str("primary_color").unwrap()
+    }
+
+    pub fn secondary_color(&self) -> &'static str {
+        self.get_str("secondary_color").unwrap()
     }
 
     pub fn repr(&self) -> &'static str {
