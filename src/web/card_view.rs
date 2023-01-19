@@ -58,7 +58,15 @@ pub fn card_view(props: &CardViewProps) -> Html {
     html! {
 
             <div class={card_classes} style = {props.style.get_style()} >
-            <div class="prophecy-back"> </div>
+            {
+                if props.top_card{
+                    html!(<div class="prophecy-back"/>)
+                }
+                else{
+                    html!(<></>)
+                }
+            }
+
                     <img class={image_classes}  src={props.src_data.src()} onclick={toggle.clone()} />
                     {
                         if show_description{
