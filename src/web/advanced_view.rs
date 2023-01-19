@@ -61,7 +61,11 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
         <div class="site" style="">
             <div class="container" style=""  >
             <div class="sm-4 col" style="margin: auto; text-align: justify;">
+            <div>
+            <div class={"advanced-view-item"}  >
             <Logo clickable={true}/>
+            </div>
+            </div>
         <br/>
             <div>
             <div class={"advanced-view-item"}  >
