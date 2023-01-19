@@ -16,16 +16,7 @@ pub struct ShareCardViewProps {}
 #[function_component(ShareCardView)]
 pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
     let descriptions_state = use_store_value::<ImageDescriptionState>();
-
-    let location = use_location();
     let id = use_search_param("id".to_string()).unwrap_or_default();
-    // log::info!(
-    //     "id: '{id}'. search: '{}', href: '{}', origin: '{}', pathname: '{}'",
-    //     location.search,
-    //     location.href,
-    //     location.origin,
-    //     location.pathname
-    // );
 
     let image_meta = base64::Engine::decode(&base64::engine::general_purpose::URL_SAFE, id)
         .ok()

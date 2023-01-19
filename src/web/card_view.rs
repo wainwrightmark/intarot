@@ -149,17 +149,17 @@ pub fn card_view(props: &CardViewProps) -> Html {
                         }
                     }
         </div>
-        
+
     }
 }
 
 #[derive(Debug, Properties, Clone, PartialEq)]
-pub struct SlotPropeties{
+pub struct SlotProperties{
     pub slot: &'static str
 }
 
 #[function_component(SlotView)]
-pub fn slot_view(props: &SlotPropeties)-> Html{    
+pub fn slot_view(props: &SlotProperties)-> Html{
     html!{
         <div class="slot">
             {props.slot}
@@ -174,12 +174,12 @@ pub struct IndexedCardViewProps {
 
 
 #[function_component(IndexedCardView)]
-pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {    
+pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     let image_descriptions_state = use_store_value::<ImageDescriptionState>();
     let metas_state = use_store_value::<ImageMetaState>();
     let data_state = use_store_value::<DataState>();
     let spread_descriptions_state = use_store_value::<SpreadDescriptionState>();
-    
+
     let slot = spread_descriptions_state.try_get_slot(&data_state.question_data, props.index);
     // log::info!("{slot:?}");
     let descriptions = &image_descriptions_state.descriptions;
