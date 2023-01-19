@@ -3,7 +3,7 @@
 /**
   Global PaperCSS Config
 */
-@import url("https://fonts.googleapis.com/css?family=Playfair|Fira+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Fira Mono|Finlandica&display=swap");
 html {
   --primary: #41403e;
   --secondary: #0b74d5;
@@ -963,7 +963,7 @@ pre code {
 html {
   color: #41403e;
   color: var(--primary);
-  font-family: "Playfair", sans-serif;
+  font-family: "Finlandica", sans-serif;
   font-size: 20px;
 }
 
@@ -981,7 +981,7 @@ input,
 textarea,
 select,
 option {
-  font-family: "Playfair", sans-serif;
+  font-family: "Finlandica", sans-serif;
 }
 
 h1,
