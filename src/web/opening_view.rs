@@ -1,4 +1,7 @@
-use crate::{web::prelude::*, state::{prompts_state::PromptsState, prelude::ShufflePromptsMessage}};
+use crate::{
+    state::{prelude::ShufflePromptsMessage, prompts_state::PromptsState},
+    web::prelude::*,
+};
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::Dispatch;
@@ -13,7 +16,7 @@ pub fn opening_view() -> Html {
 
     let onclick = Callback::from(move |_: MouseEvent| {
         Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
-        navigator.push(&Route::Question {  } );
+        navigator.push(&Route::Question {});
     });
 
     html! {

@@ -33,7 +33,15 @@ impl FromStr for ImageDescription {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let s = Box::leak(s.to_string().into_boxed_str());
 
-        let (ss_str, card_str, representation, guidance, user_representation, agent_representation, guide_interpretation) = s
+        let (
+            ss_str,
+            card_str,
+            representation,
+            guidance,
+            user_representation,
+            agent_representation,
+            guide_interpretation,
+        ) = s
             .split_terminator('\t')
             .next_tuple()
             .ok_or(anyhow!("Description did not have four sections"))?;
@@ -53,7 +61,7 @@ impl FromStr for ImageDescription {
             guidance,
             user_representation,
             agent_representation,
-            guide_interpretation
+            guide_interpretation,
         })
     }
 }

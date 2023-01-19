@@ -3,7 +3,6 @@ use std::fmt::Debug;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 
-
 #[derive(
     Copy,
     Clone,
@@ -47,19 +46,15 @@ impl SpreadType {
     }
 
     pub fn initial_top_card_index(&self) -> usize {
-        if self.is_ad_card_first(){
+        if self.is_ad_card_first() {
             self.total_cards()
-        }
-        else{
+        } else {
             0
         }
     }
 
     pub fn is_ad_card_first(&self) -> bool {
-        match self {
-            SpreadType::All => false,
-            _=>true
-        }
+        !matches!(self, SpreadType::All)
     }
 }
 

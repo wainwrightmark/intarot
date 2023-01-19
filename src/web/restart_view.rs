@@ -10,7 +10,8 @@ use yewdux::prelude::*;
 use super::app::Route;
 use crate::{
     data::prelude::*,
-    state::{prelude::*, prompts_state::PromptsState}, web::{logo::Logo, prelude::GuideCarousel},
+    state::{prelude::*, prompts_state::PromptsState},
+    web::{logo::Logo, prelude::GuideCarousel},
 };
 
 #[derive(Properties, PartialEq)]
@@ -35,7 +36,6 @@ pub fn restart_view(_props: &RestartProps) -> Html {
         })
     };
 
-
     let spread_type_options = SpreadType::iter()
     .map(|spread_type|{
 
@@ -48,49 +48,48 @@ pub fn restart_view(_props: &RestartProps) -> Html {
     ).collect_vec();
 
     let on_begin_click = {
-        let navigator = navigator.clone();
+        let navigator = navigator;
         Callback::from(move |_e: MouseEvent| {
             Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
             navigator.push(&Route::Question {});
         })
     };
 
-
     html! {
 
-            <>
-            <div class="site" style="">
-                <div class="container" style=""  >
-                <div class="sm-4 col" style="margin: auto; text-align: justify;">
-                <Logo clickable={true}/>
+        <>
+        <div class="site" style="">
+            <div class="container" style=""  >
+            <div class="sm-4 col" style="margin: auto; text-align: justify;">
+            <Logo clickable={true}/>
+        <br/>
+            <div>
+            <div class={"restart-view-item"}  >
+            <GuideCarousel/>
+            </div>
             <br/>
-                <div>
-                <div class={"restart-view-item"}  >
-                <GuideCarousel/>
-                </div>
-                <br/>
+        <br/>
+            </div>
+            <div>
+            <select onchange={on_spread_type_change} class="nice-button restart-view-item" style="text-align: center;">
+            {spread_type_options}
+            </select>
+
+            </div>
             <br/>
-                </div>
-                <div>
-                <select onchange={on_spread_type_change} class="nice-button restart-view-item" style="text-align: center;">
-                {spread_type_options}
-                </select>
+            <div>
+            <p class="restart-view-item" style="text-align: justify;">
+                {description_state.get_guide_spread_text(&user_data)}
+            </p>
 
-                </div>
-                <br/>
-                <div>
-                <p class="restart-view-item" style="text-align: justify;">
-                    {description_state.get_guide_spread_text(&user_data)}
-                </p>
-
-                </div>
-                <br/>
-                <button onclick={on_begin_click} style="display: block;" class="nice-button restart-view-item">{"Begin"}</button>
-                </div>
+            </div>
+            <br/>
+            <button onclick={on_begin_click} style="display: block;" class="nice-button restart-view-item">{"Begin"}</button>
+            </div>
 
 
-                </div>
-                </div>
-            </>
-        }
+            </div>
+            </div>
+        </>
+    }
 }

@@ -20,20 +20,18 @@ pub fn question_view(_props: &QuestionProps) -> Html {
 
     {
         let is_clickable_state = is_clickable_state.clone();
-        let millis = if *is_clickable_state {0} else{5250};
-        use_interval(move ||{is_clickable_state.set(true)}, millis );
+        let millis = if *is_clickable_state { 0 } else { 5250 };
+        use_interval(move || is_clickable_state.set(true), millis);
     };
-
 
     let on_begin_click = {
         let navigator = navigator;
         let is_clickable_state = is_clickable_state.clone();
         Callback::from(move |_e: MouseEvent| {
-            if *is_clickable_state{
+            if *is_clickable_state {
                 Dispatch::<DataState>::new().apply(ResetMessage {});
                 navigator.replace(&Route::Spread {});
             }
-
         })
     };
 
@@ -51,7 +49,11 @@ pub fn question_view(_props: &QuestionProps) -> Html {
     let prompt1 = format!("{prompt1}?");
     let prompt2 = format!("{prompt2}?");
 
-    let button_style = if *is_clickable_state {"margin: auto; animation-delay: 5.25s;"} else{"margin: auto; animation-delay: 5.25s; pointer-events:none;"} ;
+    let button_style = if *is_clickable_state {
+        "margin: auto; animation-delay: 5.25s;"
+    } else {
+        "margin: auto; animation-delay: 5.25s; pointer-events:none;"
+    };
 
     html! {
 

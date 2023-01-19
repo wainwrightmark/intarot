@@ -43,17 +43,18 @@ impl DataState {
         }
     }
     pub fn next_card(mut self) -> Self {
-        self.top_card_index = (self.top_card_index  + 1) % (self.question_data.spread_type.total_cards() + 1);
-            self.last_hidden_card_index = (self.top_card_index + 1)
-                .max(self.last_hidden_card_index)
-                .min(self.question_data.spread_type.total_cards()); //DO NOT USE CLAMP
+        self.top_card_index =
+            (self.top_card_index + 1) % (self.question_data.spread_type.total_cards() + 1);
+        self.last_hidden_card_index = (self.top_card_index + 1)
+            .max(self.last_hidden_card_index)
+            .min(self.question_data.spread_type.total_cards()); //DO NOT USE CLAMP
 
-            if self.top_card_index == self.finish_card_index() {
-                self.show_description = true;
-                self.has_shown_description = true;
-            } else {
-                self.show_description = false;
-            }
+        if self.top_card_index == self.finish_card_index() {
+            self.show_description = true;
+            self.has_shown_description = true;
+        } else {
+            self.show_description = false;
+        }
         self
     }
 
@@ -84,7 +85,8 @@ impl DataState {
     }
 
     pub fn previous_card(mut self) -> Self {
-        self.top_card_index = (self.top_card_index  + self.question_data.spread_type.total_cards()) % (self.question_data.spread_type.total_cards() + 1);
+        self.top_card_index = (self.top_card_index + self.question_data.spread_type.total_cards())
+            % (self.question_data.spread_type.total_cards() + 1);
         if self.top_card_index == self.finish_card_index() {
             self.show_description = true;
             self.has_shown_description = true;

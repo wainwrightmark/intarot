@@ -11,7 +11,6 @@ pub struct ShareProps {
 
 #[function_component(ShareComponent)]
 pub fn share_component(props: &ShareProps) -> Html {
-
     let clipboard = use_clipboard();
     let title = url_escape::encode_fragment(&props.title);
     let text = url_escape::encode_fragment(&props.text);
@@ -41,7 +40,7 @@ pub fn share_component(props: &ShareProps) -> Html {
     // let url_string = url.to_string();
     //Clipboard
     let on_clipboard_click = {
-        let clipboard = clipboard.clone();
+        let clipboard = clipboard;
         let str = props.url.to_string();
         Callback::from(move |_e: MouseEvent| {
             //log::info!("Writing to Clipboard {}", str.clone());

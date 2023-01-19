@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 use yew::prelude::*;
 
-use yew_hooks::{use_location, use_search_param};
+use yew_hooks::use_search_param;
 use yewdux::prelude::*;
 
 use crate::data::prelude::ImageMeta;

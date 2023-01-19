@@ -45,7 +45,6 @@ pub struct MetaKey {
     pub card: Card,
 }
 
-
 impl From<ImageMeta> for MetaKey {
     fn from(value: ImageMeta) -> Self {
         Self {

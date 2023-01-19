@@ -11,19 +11,17 @@ pub struct SpreadDescription {
     pub evelyn: &'static str,
     pub madame: &'static str,
     pub maledictus: &'static str,
-    pub slots: Vec<&'static str>
+    pub slots: Vec<&'static str>,
 }
 
 impl SpreadDescription {
-
-    pub fn guide_text(&self, guide: &Guide)-> &'static str{
+    pub fn guide_text(&self, guide: &Guide) -> &'static str {
         match guide {
             Guide::Evelyn => self.evelyn,
             Guide::Madame => self.madame,
             Guide::Maledictus => self.maledictus,
         }
     }
-
 }
 
 #[derive(PartialEq, Eq, Store)]
@@ -39,18 +37,16 @@ impl SpreadDescriptionState {
             .unwrap_or_default()
     }
 
-    pub fn try_get_slot(&self, data: &QuestionData, index: usize)-> Option<&'static str>{
+    pub fn try_get_slot(&self, data: &QuestionData, index: usize) -> Option<&'static str> {
         let index = if data.spread_type.is_ad_card_first() {
-            if let Some(i) = index.checked_sub(1){
-                i
-            }else{
-                return None;
-            }
-        } else {index};
+            index.checked_sub(1)?
+        } else {
+            index
+        };
         self.descriptions
             .get(&(data.spread_type))
             .and_then(|x| x.slots.get(index).cloned())
-            .and_then(|x|if x.is_empty() {None} else{Some(x)})
+            .and_then(|x| if x.is_empty() { None } else { Some(x) })
     }
 }
 
@@ -62,19 +58,29 @@ impl Default for SpreadDescriptionState {
             lines
                 .skip(1) //skip headers
                 .filter_map(|s| s.splitn(6, '\t').next_tuple())
-                .filter_map(|(spread, dropdown_name, evelyn, madame, maledictus, slots)| {
-                    let Ok(spread) = SpreadType::from_str(spread) else{
+                .filter_map(
+                    |(spread, dropdown_name, evelyn, madame, maledictus, slots)| {
+                        let Ok(spread) = SpreadType::from_str(spread) else{
                         return None;
                     };
-                    let slots = slots.split_terminator(';').collect_vec();
-                    Some((spread, SpreadDescription { spread, dropdown_name, evelyn, madame, maledictus, slots }))
-                })
+                        let slots = slots.split_terminator(';').collect_vec();
+                        Some((
+                            spread,
+                            SpreadDescription {
+                                spread,
+                                dropdown_name,
+                                evelyn,
+                                madame,
+                                maledictus,
+                                slots,
+                            },
+                        ))
+                    },
+                )
                 .collect()
         };
 
-        Self {
-            descriptions,
-        }
+        Self { descriptions }
     }
 }
 

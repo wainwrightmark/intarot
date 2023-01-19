@@ -7,8 +7,6 @@ use crate::data::prelude::*;
 use crate::state::prelude::*;
 use crate::web::prelude::{Route, ShareComponent};
 
-
-
 #[derive(Properties, PartialEq)]
 pub struct CardViewProps {
     pub top_card: bool,
@@ -16,7 +14,7 @@ pub struct CardViewProps {
     pub src_data: SrcData,
     pub description: Option<ImageDescription>,
     pub show_continue: bool,
-    pub slot: Option<&'static str>
+    pub slot: Option<&'static str>,
 }
 
 #[function_component(CardView)]
@@ -154,13 +152,13 @@ pub fn card_view(props: &CardViewProps) -> Html {
 }
 
 #[derive(Debug, Properties, Clone, PartialEq)]
-pub struct SlotProperties{
-    pub slot: &'static str
+pub struct SlotProperties {
+    pub slot: &'static str,
 }
 
 #[function_component(SlotView)]
-pub fn slot_view(props: &SlotProperties)-> Html{
-    html!{
+pub fn slot_view(props: &SlotProperties) -> Html {
+    html! {
         <div class="slot">
             {props.slot}
         </div>
@@ -171,7 +169,6 @@ pub fn slot_view(props: &SlotProperties)-> Html{
 pub struct IndexedCardViewProps {
     pub index: usize,
 }
-
 
 #[function_component(IndexedCardView)]
 pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
@@ -192,7 +189,8 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
 
     let meta = data_state.get_image_meta(props.index, metas);
     let description: Option<ImageDescription> = meta
-        .and_then(|meta| descriptions.get(&(meta.guide, meta.card))).copied();
+        .and_then(|meta| descriptions.get(&(meta.guide, meta.card)))
+        .copied();
 
     let src_data = meta
         .map(|x| x.src_data())

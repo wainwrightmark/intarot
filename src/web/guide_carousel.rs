@@ -50,7 +50,7 @@ pub fn guide_carousel() -> Html {
     let select_previous = {
         let dispatch = dispatch.clone();
         Callback::from(move |_e: MouseEvent| {
-            let mut question_data = question_data.clone();
+            let mut question_data = question_data;
             question_data.guide = previous;
 
             dispatch.apply(MaybeChangeDataMessage(question_data));
@@ -58,9 +58,9 @@ pub fn guide_carousel() -> Html {
     };
 
     let select_next = {
-        let dispatch = dispatch.clone();
+        let dispatch = dispatch;
         Callback::from(move |_e: MouseEvent| {
-            let mut question_data = question_data.clone();
+            let mut question_data = question_data;
             question_data.guide = next;
 
             dispatch.apply(MaybeChangeDataMessage(question_data));

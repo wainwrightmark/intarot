@@ -22,7 +22,7 @@ pub enum Route {
     Restart,
 
     #[at("/share")]
-    Share
+    Share,
 }
 
 #[function_component(App)]
@@ -56,12 +56,10 @@ fn switch(routes: Route) -> Html {
         Route::Restart {} => html! {
             <RestartView  />
         },
-        Route::Share  => {
-
+        Route::Share => {
             html!(
                 <ShareCardView />
             )
-
-        },
+        }
     }
 }
