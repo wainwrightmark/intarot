@@ -2,7 +2,7 @@ mod app;
 pub mod card_view;
 pub mod guide_carousel;
 pub mod logo;
-mod opening_view;
+mod landing_view;
 pub mod question_view;
 pub mod advanced_view;
 pub mod share_card_view;

@@ -6,8 +6,8 @@ use yew::prelude::*;
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::Dispatch;
 
-#[function_component(OpeningView)]
-pub fn opening_view() -> Html {
+#[function_component(LandingView)]
+pub fn landing_view() -> Html {
     let navigator = use_navigator().unwrap();
 
     let paragraph1 = include_str!(r#"../text/opening_p1.txt"#);

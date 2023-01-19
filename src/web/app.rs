@@ -1,4 +1,4 @@
-use crate::web::opening_view::OpeningView;
+use crate::web::landing_view::LandingView;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -11,7 +11,7 @@ use crate::web::advanced_view::AdvancedView;
 pub enum Route {
     #[at("/")]
     #[not_found]
-    Opening,
+    Landing,
     #[at("/question")]
     Question,
 
@@ -37,10 +37,10 @@ pub fn app() -> Html {
 
 fn switch(routes: Route) -> Html {
     match routes {
-        Route::Opening => {
+        Route::Landing => {
             html! {
                html!{
-                   <OpeningView />
+                   <LandingView />
                }
             }
         }

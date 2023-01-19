@@ -23,7 +23,7 @@ pub fn logo(props: &LogoProps) -> Html {
         let props = *props;
         Callback::from(move |_: MouseEvent| {
             if props.clickable {
-                navigator.push(&Route::Opening {});
+                navigator.push(&Route::Landing {});
             }
         })
     };
