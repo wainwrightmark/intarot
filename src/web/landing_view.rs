@@ -14,10 +14,20 @@ pub fn landing_view() -> Html {
     let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
     let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
 
-    let onclick = Callback::from(move |_: MouseEvent| {
-        Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
-        navigator.push(&Route::Question {});
-    });
+    let on_begin_click = {
+        let navigator = navigator.clone();
+        Callback::from(move |_: MouseEvent| {
+            Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
+            navigator.push(&Route::Question {});
+        })
+    };
+
+    let on_advanced_click = {
+        let navigator = navigator.clone();
+        Callback::from(move |_: MouseEvent| {
+            navigator.push(&Route::Advanced {});
+        })
+    };
 
     html! {
         <div class="site">
@@ -35,7 +45,9 @@ pub fn landing_view() -> Html {
             {paragraph3}
             </p>
                 </div>
-                <button {onclick} style="margin: auto; display: block;" class="nice-button">{"Begin"}</button>
+                <button onclick={on_begin_click} style="margin: auto; display: block;" class="nice-button">{"Begin"}</button>
+                <br/>
+                <button onclick={on_advanced_click} style="margin: auto; display: block;" class="nice-button">{"Advanced"}</button>
             </div>
         </div>
     }
