@@ -9,7 +9,7 @@ export default async (request, context) => {
         const id = url.searchParams.get("id");
         const decoded =  atob(decodeURIComponent(id));
         const search = 'Logo/full+logo+small.jpg'
-        const replace = `Upscaled+Images/${decoded}.jpg`
+        const replace = `Thumbnails/${decoded}.jpg`
 
         return new Response(page .replaceAll(search, replace), response);
     }
