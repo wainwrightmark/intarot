@@ -33,8 +33,8 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
 
         html!(
             <>
-        <div class="site" style="overflow: hidden ">
-            <div class="container" >
+        <div class="site" >
+            <div class="container" style="overflow: auto;" >
 
         <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh; ">
         <Logo clickable={true}/>
