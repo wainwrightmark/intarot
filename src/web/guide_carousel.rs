@@ -10,7 +10,6 @@ pub fn guide_carousel() -> Html {
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
     let (data_state, dispatch) = use_store::<DataState>();
-    let question_data = data_state.question_data;
 
     let current_value = data_state.question_data.guide;
     let current_index = Guide::iter()
@@ -28,16 +27,10 @@ pub fn guide_carousel() -> Html {
                 // Do something based on direction.
                 match **direction {
                     UseSwipeDirection::Left => {
-                        let mut question_data = question_data;
-                        question_data.guide = next;
-
-                        dispatch.apply(MaybeChangeDataMessage(question_data));
+                        dispatch.apply(ChangeGuideMessage(next));
                     }
                     UseSwipeDirection::Right => {
-                        let mut question_data = question_data;
-                        question_data.guide = previous;
-
-                        dispatch.apply(MaybeChangeDataMessage(question_data));
+                        dispatch.apply(ChangeGuideMessage(previous));
                     }
                     _ => (),
                 }
@@ -50,20 +43,14 @@ pub fn guide_carousel() -> Html {
     let select_previous = {
         let dispatch = dispatch.clone();
         Callback::from(move |_e: MouseEvent| {
-            let mut question_data = question_data;
-            question_data.guide = previous;
-
-            dispatch.apply(MaybeChangeDataMessage(question_data));
+            dispatch.apply(ChangeGuideMessage(previous));
         })
     };
 
     let select_next = {
         let dispatch = dispatch;
         Callback::from(move |_e: MouseEvent| {
-            let mut question_data = question_data;
-            question_data.guide = next;
-
-            dispatch.apply(MaybeChangeDataMessage(question_data));
+            dispatch.apply(ChangeGuideMessage(next));
         })
     };
 

@@ -150,15 +150,20 @@ impl Reducer<DataState> for ResetMessage {
     }
 }
 
-impl Reducer<DataState> for MaybeChangeDataMessage {
+impl Reducer<DataState> for ChangeSpreadTypeMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
-        if self.0 == state.question_data {
-            state
-        } else {
-            let mut state = (*state).clone();
-            state.question_data = self.0;
+        let mut state = (*state).clone();
+            state.question_data.spread_type = self.0;
             state.reset();
             state.into()
-        }
+    }
+}
+
+impl Reducer<DataState> for ChangeGuideMessage {
+    fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
+        let mut state = (*state).clone();
+            state.question_data.guide = self.0;
+            state.reset();
+            state.into()
     }
 }

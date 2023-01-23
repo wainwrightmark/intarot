@@ -7,7 +7,10 @@ pub struct DrawMessage {}
 pub struct ReplaceMessage {}
 
 #[derive(Copy, Clone, PartialEq, Eq)]
-pub struct MaybeChangeDataMessage(pub QuestionData);
+pub struct ChangeGuideMessage(pub Guide);
+
+#[derive(Copy, Clone, PartialEq, Eq)]
+pub struct ChangeSpreadTypeMessage(pub SpreadType);
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct ResetMessage;
