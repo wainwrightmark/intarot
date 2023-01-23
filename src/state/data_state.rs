@@ -1,5 +1,7 @@
-use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::rc::Rc;
+use rand::Rng;
+use rand::thread_rng;
 use strum::EnumCount;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
@@ -10,10 +12,10 @@ use super::messages::*;
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug)]
 #[store(storage = "local")]
-
 pub struct DataState {
     pub question_data: QuestionData,
     pub cards: Rc<[Card; Card::COUNT]>,
+    pub variant_seed: u32,
     pub top_card_index: usize,
 
     pub last_hidden_card_index: usize,
@@ -23,6 +25,8 @@ pub struct DataState {
 
 impl Default for DataState {
     fn default() -> Self {
+        let mut rng = thread_rng();
+        let seed =  rng.gen();
         Self {
             top_card_index: 0,
             last_hidden_card_index: 1,
@@ -30,6 +34,7 @@ impl Default for DataState {
             question_data: Default::default(),
             show_description: false,
             has_shown_description: false,
+            variant_seed: seed
         }
     }
 }
@@ -58,11 +63,11 @@ impl DataState {
         self
     }
 
-    pub fn get_image_meta(
+    pub fn get_image_meta<'a>(
         &self,
         mut index: usize,
-        metas: &BTreeMap<MetaKey, ImageMeta>,
-    ) -> Option<ImageMeta> {
+        metas: &'a HashMap<MetaKey, Vec<ImageMeta>>,
+    ) -> Option<&'a ImageMeta> {
         if index == self.finish_card_index() {
             return None;
         }
@@ -76,8 +81,21 @@ impl DataState {
             guide: self.question_data.guide,
             card,
         };
+        let vec = metas.get(&key)?;
 
-        metas.get(&key).copied()
+        if vec.len() == 0{
+            None
+        }
+        else if vec.len() == 1{
+            vec.get(0)
+        }
+        else{
+            let variant_index = self.variant_seed >> index;
+            let variant_index = variant_index % (vec.len() as u32);
+            vec.get(variant_index as usize)
+
+        }
+
     }
 
     pub fn is_top_card(&self, index: usize) -> bool {
@@ -118,6 +136,7 @@ impl DataState {
 
     pub fn reset(&mut self) {
         self.cards = Card::get_random_ordering();
+        self.variant_seed = thread_rng().gen();
         self.top_card_index = self.question_data.spread_type.initial_top_card_index();
         self.show_description = false;
         self.last_hidden_card_index = self.question_data.spread_type.initial_top_card_index() + 1;

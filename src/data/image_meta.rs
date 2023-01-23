@@ -39,7 +39,7 @@ impl ImageMeta {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Ord, PartialOrd)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Ord, PartialOrd, Hash)]
 pub struct MetaKey {
     pub guide: Guide,
     pub card: Card,
