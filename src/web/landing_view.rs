@@ -50,6 +50,8 @@ pub fn landing_view() -> Html {
                 <button onclick={on_begin_click} style="margin: auto; display: block;" class="nice-button">{"Begin"}</button>
                 <br/>
                 <button onclick={on_advanced_click} style="margin: auto; display: block;" class="nice-button">{"Advanced"}</button>
+                <br/>
+                <br/>
             </div>
         </div>
     }

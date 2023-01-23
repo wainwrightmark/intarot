@@ -63,7 +63,7 @@ impl Default for SpreadDescriptionState {
                         let Ok(spread) = SpreadType::from_str(spread) else{
                         return None;
                     };
-                        let slots = slots.split_terminator(';').map(|x|x.trim()).collect_vec();
+                        let slots = slots.split_terminator(';').map(|x|x.trim()).rev().collect_vec();
                         Some((
                             spread,
                             SpreadDescription {

@@ -2,7 +2,6 @@ use std::str::FromStr;
 
 use anyhow::{anyhow, bail};
 use itertools::Itertools;
-use yew::AttrValue;
 
 use crate::data::prelude::*;
 
@@ -18,12 +17,21 @@ pub struct ImageDescription {
 }
 
 impl ImageDescription {
-    pub fn full_description(&self) -> AttrValue {
-        format!(
-            "{}\n{}\n{}",
-            self.representation, self.guidance, self.guide_interpretation
-        )
-        .into()
+    // pub fn full_description(&self) -> AttrValue {
+    //     format!(
+    //         "{}\n{}\n{}",
+    //         self.representation, self.guidance, self.guide_interpretation
+    //     )
+    //     .into()
+    // }
+
+    pub fn description_sections(&self)-> impl Iterator<Item = &'static str>{
+        [self.representation,
+        self.guidance,
+
+        self.user_representation,
+        self.agent_representation,
+        self.guide_interpretation].into_iter()
     }
 }
 

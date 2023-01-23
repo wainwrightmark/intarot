@@ -54,8 +54,6 @@ pub fn card_view(props: &CardViewProps) -> Html {
         card_classes.push("card-shake");
     }
 
-    // log::info!("Card {:?} {:?} {:?}", props.top_card, props.slot, data_state.top_card_index);
-
     html! {
 
             <div class={card_classes} style = {props.style.get_style()} >
@@ -75,21 +73,19 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                 <div class="image-overlay" style="pointer-events:none;">
                                 {
                                     if let Some(description) = props.description{
+
+                                        let sections = description.description_sections().map(|x| html!(
+                                           <>
+                                           <span>
+                                           {x}
+                                           </span>
+                                           <br/>
+                                           <br/>
+                                           </>
+                                        )).collect::<Html>();
                                         html!{
                                             <p class="image-overlay-text">
-                                    <span>
-                                    {description.representation}
-                                    </span>
-                                    <br/>
-                                    <br/>
-                                    <span>
-                                    {description.guidance}
-                                    </span>
-                                    <br/>
-                                    <br/>
-                                    <span>
-                                    {description.guide_interpretation}
-                                    </span>
+                                    {sections}
                                 </p>
                                         }
                                     }else{
@@ -102,7 +98,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
 
 
                                 <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem; flex-direction: column;">
-                    <label class="paper-btn margin nice-button" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
+                    <label class="paper-btn margin nice-button stick-to-bottom" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
                     <br/>
                     {
                         if props.show_continue{
@@ -125,7 +121,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                 <ShareComponent
                                 title="intarot"
                                 url={props.src_data.share_url()}
-                                text={props.description.map(|x|x.full_description()).unwrap_or_else(|| include_str!(r#"../text/opening_p1.txt"#).into())}
+                                text={props.description.iter().filter_map(|x|x.description_sections().next()).next().unwrap_or_else(|| include_str!(r#"../text/opening_p1.txt"#).into())}
                                 media={props.src_data.src()}>
                                 </ShareComponent>
 
@@ -163,13 +159,11 @@ pub fn card_view(props: &CardViewProps) -> Html {
 #[derive(Debug, Properties, Clone, PartialEq)]
 pub struct SlotProperties {
     pub slot: &'static str,
-    pub guide: Guide
+    pub guide: Guide,
 }
 
 #[function_component(SlotView)]
 pub fn slot_view(props: &SlotProperties) -> Html {
-
-
     html! {
         <div class="slot" style={format!("background-image: linear-gradient({}, {});", props.guide.primary_color(), props.guide.secondary_color())}>
             {props.slot}

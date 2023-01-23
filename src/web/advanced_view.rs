@@ -86,6 +86,8 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             </div>
             <br/>
             <button onclick={on_begin_click} style="display: block;" class="nice-button advanced-view-item">{"Begin"}</button>
+            <br/>
+            <br/>
             </div>
 
 
