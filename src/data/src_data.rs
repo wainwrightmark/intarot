@@ -24,11 +24,11 @@ impl SrcData {
 
     pub fn share_url(&self) -> String {
         match self {
-            SrcData::Card(name) => format!("https://intarot.com/share?id={}", {
+            SrcData::Card(name) => format!("https://intarot.app/share?id={}", {
                 // log::info!("{encoded}");
                 Engine::encode(&base64::engine::general_purpose::URL_SAFE, name)
             }),
-            _ => "https://intarot.com".to_string(),
+            _ => "https://intarot.app".to_string(),
         }
     }
 }
