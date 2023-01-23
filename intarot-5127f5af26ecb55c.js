@@ -223,18 +223,18 @@ function addBorrowedObject(obj) {
 }
 function __wbg_adapter_34(arg0, arg1, arg2) {
     try {
-        wasm._dyn_core__ops__function__FnMut___A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__hbe8298ac98d1d3ad(arg0, arg1, addBorrowedObject(arg2));
+        wasm._dyn_core__ops__function__FnMut___A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h4f2b769fa26d720d(arg0, arg1, addBorrowedObject(arg2));
     } finally {
         heap[stack_pointer++] = undefined;
     }
 }
 
 function __wbg_adapter_37(arg0, arg1) {
-    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h4bb40199e5b23cce(arg0, arg1);
+    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__hc6e5174c3cbe83bf(arg0, arg1);
 }
 
-function __wbg_adapter_40(arg0, arg1, arg2) {
-    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__hb84717ef59e379f2(arg0, arg1, addHeapObject(arg2));
+function __wbg_adapter_42(arg0, arg1, arg2) {
+    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h9adf4114a6837888(arg0, arg1, addHeapObject(arg2));
 }
 
 function handleError(f, args) {
@@ -306,17 +306,6 @@ function getImports() {
     imports.wbg = {};
     imports.wbg.__wbg_sethash_d35570df091aa47e = function(arg0, arg1, arg2) {
         getObject(arg0).hash = getStringFromWasm0(arg1, arg2);
-    };
-    imports.wbg.__wbg_new0_a57059d72c5b7aee = function() {
-        const ret = new Date();
-        return addHeapObject(ret);
-    };
-    imports.wbg.__wbg_getTime_cb82adb2556ed13e = function(arg0) {
-        const ret = getObject(arg0).getTime();
-        return ret;
-    };
-    imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
-        takeObject(arg0);
     };
     imports.wbg.__wbg_navigator_ebb1e95154601b23 = function(arg0) {
         const ret = getObject(arg0).navigator;
@@ -398,6 +387,9 @@ function getImports() {
         } finally {
             wasm.__wbindgen_free(arg0, arg1);
         }
+    };
+    imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
+        takeObject(arg0);
     };
     imports.wbg.__wbindgen_is_object = function(arg0) {
         const val = getObject(arg0);
@@ -1004,16 +996,20 @@ function getImports() {
         const ret = getObject(arg0).sessionStorage;
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
     }, arguments) };
-    imports.wbg.__wbindgen_closure_wrapper662 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 58, __wbg_adapter_34);
+    imports.wbg.__wbindgen_closure_wrapper619 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 65, __wbg_adapter_34);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper846 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 64, __wbg_adapter_37);
+    imports.wbg.__wbindgen_closure_wrapper833 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 63, __wbg_adapter_37);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper2219 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 58, __wbg_adapter_40);
+    imports.wbg.__wbindgen_closure_wrapper1412 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 63, __wbg_adapter_34);
+        return addHeapObject(ret);
+    };
+    imports.wbg.__wbindgen_closure_wrapper2216 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 65, __wbg_adapter_42);
         return addHeapObject(ret);
     };
 
@@ -1052,7 +1048,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-4bb3594c40f1b96b_bg.wasm', import.meta.url);
+        input = new URL('intarot-5127f5af26ecb55c_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
