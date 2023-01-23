@@ -5,6 +5,7 @@ use yew::prelude::*;
 use yew_hooks::use_search_param;
 use yewdux::prelude::*;
 
+use crate::data::description_layout::DescriptionLayout;
 use crate::data::prelude::ImageMeta;
 use crate::state::prelude::*;
 use crate::web::card_view::*;
@@ -16,6 +17,7 @@ pub struct ShareCardViewProps {}
 #[function_component(ShareCardView)]
 pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
     let descriptions_state = use_store_value::<ImageDescriptionState>();
+    let description_layout: DescriptionLayout = Default::default();
     let id = use_search_param("id".to_string()).unwrap_or_default();
 
     let image_meta = base64::Engine::decode(&base64::engine::general_purpose::URL_SAFE, id)
@@ -37,7 +39,7 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh; ">
         <Logo clickable={true}/>
         <div class="cards-grid" key="cards-grid">
-        <CardView top_card={true} src_data={image_meta.src_data()} show_continue={false} {description} style={CardStyle::default()} />
+        <CardView top_card={true} src_data={image_meta.src_data()} show_continue={false} {description} style={CardStyle::default()} {description_layout} />
         </div>
         </div>
         </div>

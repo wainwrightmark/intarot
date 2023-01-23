@@ -15,6 +15,7 @@ pub struct CardViewProps {
     pub description: Option<ImageDescription>,
     pub show_continue: bool,
     pub slot: Option<&'static str>,
+    pub description_layout: DescriptionLayout
 }
 
 #[function_component(CardView)]
@@ -24,6 +25,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
 
     let guide = data_state.question_data.guide;
     let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
+    let description_layout = props.description_layout;
 
     let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
@@ -54,6 +56,12 @@ pub fn card_view(props: &CardViewProps) -> Html {
         card_classes.push("card-shake");
     }
 
+    let share_text =
+    match props.description{
+        Some(d)=>{d.description_sections(&description_layout).first().unwrap()},
+        None=>include_str!(r#"../text/opening_p1.txt"#)
+    };
+
     html! {
 
             <div class={card_classes} style = {props.style.get_style()} >
@@ -74,7 +82,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                 {
                                     if let Some(description) = props.description{
 
-                                        let sections = description.description_sections().map(|x| html!(
+                                        let sections = description.description_sections(&description_layout).iter().map(|x| html!(
                                            <>
                                            <span>
                                            {x}
@@ -121,7 +129,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                 <ShareComponent
                                 title="intarot"
                                 url={props.src_data.share_url()}
-                                text={props.description.iter().filter_map(|x|x.description_sections().next()).next().unwrap_or_else(|| include_str!(r#"../text/opening_p1.txt"#).into())}
+                                text={share_text}
                                 media={props.src_data.src()}>
                                 </ShareComponent>
 
@@ -184,7 +192,7 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     let spread_descriptions_state = use_store_value::<SpreadDescriptionState>();
 
     let slot = spread_descriptions_state.try_get_slot(&data_state.question_data, props.index);
-    // log::info!("{slot:?}");
+    let description_layout = spread_descriptions_state.try_get_layout(&data_state.question_data, props.index).unwrap_or_default();
     let descriptions = &image_descriptions_state.descriptions;
 
     let metas = &metas_state.metas;
@@ -205,7 +213,7 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     let show_continue = meta.is_none();
 
     html! {
-        <CardView {top_card} {src_data} {style} {description} {show_continue} {slot} />
+        <CardView {top_card} {src_data} {style} {description} {show_continue} {slot} {description_layout} />
     }
 }
 

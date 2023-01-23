@@ -5,6 +5,8 @@ use itertools::Itertools;
 
 use crate::data::prelude::*;
 
+use super::description_layout::DescriptionLayout;
+
 #[derive(PartialEq, Eq, Clone, Copy)]
 pub struct ImageDescription {
     pub guide: Guide,
@@ -17,21 +19,39 @@ pub struct ImageDescription {
 }
 
 impl ImageDescription {
-    // pub fn full_description(&self) -> AttrValue {
-    //     format!(
-    //         "{}\n{}\n{}",
-    //         self.representation, self.guidance, self.guide_interpretation
-    //     )
-    //     .into()
-    // }
-
-    pub fn description_sections(&self)-> impl Iterator<Item = &'static str>{
-        [self.representation,
-        self.guidance,
-
-        self.user_representation,
-        self.agent_representation,
-        self.guide_interpretation].into_iter()
+    pub fn description_sections<'a>(
+        &'a self,
+        layout: &'a DescriptionLayout,
+    ) -> Vec<&'static str> {
+        match layout {
+            DescriptionLayout::UA => vec![
+                self.representation,
+                self.user_representation,
+                self.agent_representation,
+                self.guide_interpretation,
+            ],
+            DescriptionLayout::G => vec![
+                self.representation,
+                self.guidance,
+                self.guide_interpretation,
+            ],
+            DescriptionLayout::U => vec![
+                self.representation,
+                self.user_representation,
+                self.guide_interpretation,
+            ],
+            DescriptionLayout::GA => vec![
+                self.representation,
+                self.guidance,
+                self.agent_representation,
+                self.guide_interpretation,
+            ],
+            DescriptionLayout::A => vec![
+                self.representation,
+                self.agent_representation,
+                self.guide_interpretation,
+            ]
+        }
     }
 }
 

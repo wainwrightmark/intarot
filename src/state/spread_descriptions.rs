@@ -1,8 +1,9 @@
-use std::{collections::BTreeMap, str::FromStr};
+use std::{str::FromStr, collections::BTreeMap};
 
-use crate::data::prelude::*;
+use crate::data::{prelude::*, description_layout::DescriptionLayout};
 use itertools::Itertools;
 use yewdux::prelude::*;
+
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SpreadDescription {
@@ -12,6 +13,7 @@ pub struct SpreadDescription {
     pub madame: &'static str,
     pub maledictus: &'static str,
     pub slots: Vec<&'static str>,
+    pub layout: Vec<DescriptionLayout>,
 }
 
 impl SpreadDescription {
@@ -48,6 +50,17 @@ impl SpreadDescriptionState {
             .and_then(|x| x.slots.get(index).cloned())
             .and_then(|x| if x.is_empty() { None } else { Some(x) })
     }
+
+    pub fn try_get_layout(&self, data: &QuestionData, index: usize) -> Option<DescriptionLayout> {
+        let index = if data.spread_type.is_ad_card_first() {
+            index.checked_sub(1)?
+        } else {
+            index
+        };
+        self.descriptions
+            .get(&(data.spread_type))
+            .and_then(|x| x.layout.get(index).cloned())
+    }
 }
 
 impl Default for SpreadDescriptionState {
@@ -57,13 +70,28 @@ impl Default for SpreadDescriptionState {
             let lines = data.lines();
             lines
                 .skip(1) //skip headers
-                .filter_map(|s| s.splitn(6, '\t').next_tuple())
+                .filter_map(|s| s.splitn(7, '\t').next_tuple())
                 .filter_map(
-                    |(spread, dropdown_name, evelyn, madame, maledictus, slots)| {
+                    |(spread, dropdown_name, evelyn, madame, maledictus, slots, layout)| {
                         let Ok(spread) = SpreadType::from_str(spread) else{
                         return None;
                     };
-                        let slots = slots.split_terminator(';').map(|x|x.trim()).rev().collect_vec();
+                        let slots = slots
+                            .split_terminator(';')
+                            .map(|x| x.trim())
+                            .rev()
+                            .collect_vec();
+
+                        let layout =layout.split_terminator(';')
+                            .map(|s|s.trim())
+                            .filter(|x|!x.is_empty())
+                            .map(|s|{
+                                return DescriptionLayout::from_str(s).unwrap();
+                            })
+                            .rev()
+                            .collect_vec()
+                        ;
+
                         Some((
                             spread,
                             SpreadDescription {
@@ -73,6 +101,7 @@ impl Default for SpreadDescriptionState {
                                 madame,
                                 maledictus,
                                 slots,
+                                layout
                             },
                         ))
                     },
