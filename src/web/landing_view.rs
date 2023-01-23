@@ -35,13 +35,13 @@ pub fn landing_view() -> Html {
             <div class="sm-4 col" style="margin: auto; text-align: justify;">
 
             <Logo clickable={true}/>
-            <p>
+            <p class="landing-paragraph">
             {paragraph1}
             </p>
-            <p>
+            <p class="landing-paragraph">
             {paragraph2}
             </p>
-            <p>
+            <p class="landing-paragraph">
             {paragraph3}
             </p>
                 </div>

@@ -34,9 +34,10 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         <div class="site" style="overflow: hidden ">
             <div class="container" >
 
-        <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh;">
+        <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh; ">
+        <Logo clickable={true}/>
         <div class="cards-grid" key="cards-grid">
-        <CardView top_card={true} src_data={image_meta.src_data()} show_continue={true} {description} style={CardStyle::default()} />
+        <CardView top_card={true} src_data={image_meta.src_data()} show_continue={false} {description} style={CardStyle::default()} />
         </div>
         </div>
         </div>

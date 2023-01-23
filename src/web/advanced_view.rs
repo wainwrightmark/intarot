@@ -66,7 +66,6 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             <Logo clickable={true}/>
             </div>
             </div>
-        <br/>
             <div>
             <div class={"advanced-view-item"}  >
             <GuideCarousel/>
