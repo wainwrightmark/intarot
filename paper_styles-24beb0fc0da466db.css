@@ -1964,9 +1964,9 @@ textarea:focus {
   border-style: solid;
   border-width: 2px;
 }
-select {
+/* select {
   height: 2.35rem;
-}
+} */
 
 .disabled, input.disabled, input[disabled],
 select.disabled,
