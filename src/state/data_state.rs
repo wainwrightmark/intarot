@@ -125,13 +125,11 @@ impl DataState {
     }
 
     pub fn can_previous(&self) -> bool {
-        // self.top_card_index > 0
-        true
+        self.top_card_index > 0
     }
 
     pub fn can_draw(&self) -> bool {
-        // self.top_card_index < self.question_data.spread_type.total_cards()
-        true
+        self.top_card_index < self.question_data.spread_type.total_cards()
     }
 
     pub fn reset(&mut self) {

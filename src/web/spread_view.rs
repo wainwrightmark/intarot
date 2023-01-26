@@ -1,3 +1,4 @@
+use web_sys::Element;
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 
@@ -6,6 +7,44 @@ use yewdux::prelude::*;
 use crate::state::prelude::*;
 
 use crate::web::card_view::*;
+
+#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function angry_animate_top_card_right() {
+
+    document.querySelector(".top_card").animate(
+    [
+        { transform: 'translateX(0) rotate(0deg)' },
+        { transform: 'translateX(100px) rotate(-10deg)' },
+        { transform: 'translateX(50px) rotate(10deg)' },
+        { transform: 'translateX(70px) rotate(-15deg)' },
+        { transform: 'translateX(50px) rotate(5deg)' },
+        { transform: 'translateX(0) rotate(0deg)' },
+    ], {
+      duration: 500,
+      iterations: 1
+    }
+  ) }"##)]
+extern "C" {
+    fn angry_animate_top_card_right();
+}
+
+#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function angry_animate_top_card_left() {
+
+    document.querySelector(".top_card").animate(
+    [
+      { transform: 'translateX(0) rotate(0deg)' },
+      { transform: 'translateX(-100px) rotate(10deg)' },
+      { transform: 'translateX(-50px) rotate(-10deg)' },
+      { transform: 'translateX(-70px) rotate(15deg)' },
+      { transform: 'translateX(-50px) rotate(-5deg)' },
+      { transform: 'translateX(0) rotate(0deg)' },
+    ], {
+      duration: 500,
+      iterations: 1
+    }
+  ) }"##)]
+extern "C" {
+    fn angry_animate_top_card_left();
+}
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct SpreadViewProps {}
@@ -23,13 +62,28 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
 
     {
         let swipe_state = swipe_state;
+        let data_state =data_state.clone();
         use_effect_with_deps(
             move |direction| {
                 // Do something based on direction.
                 match **direction {
-                    UseSwipeDirection::Left => Dispatch::<DataState>::new().apply(DrawMessage {}),
+                    UseSwipeDirection::Left =>{
+                        if data_state.can_draw(){
+                            Dispatch::<DataState>::new().apply(DrawMessage {})
+                        }
+                        else{
+                            angry_animate_top_card_left();
+                        }
+
+                    },
                     UseSwipeDirection::Right => {
-                        Dispatch::<DataState>::new().apply(ReplaceMessage {})
+                        if data_state.can_previous(){
+                            Dispatch::<DataState>::new().apply(ReplaceMessage {})
+                        }
+                        else{
+                            angry_animate_top_card_right();
+                        }
+
                     }
                     _ => (),
                 }
