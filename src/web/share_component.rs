@@ -1,3 +1,4 @@
+
 use yew::prelude::*;
 use yew_hooks::use_clipboard;
 
@@ -16,8 +17,14 @@ pub fn share_component(props: &ShareProps) -> Html {
     let text = url_escape::encode_fragment(&props.text);
     let url = url_escape::encode_www_form_urlencoded(&props.url);
     let media = url_escape::encode_www_form_urlencoded(&props.media);
+    let fb_app_id: i64 = 1606026743178281;
 
-    let facebook_href = format!("https://www.facebook.com/sharer/sharer.php?u={url}");
+    //let facebook_href = format!("https://www.facebook.com/sharer/sharer.php?u={url}");
+    let facebook_href = format!("
+        https://www.facebook.com/dialog/share?app_id={fb_app_id}&display=page&href={url}&redirect_uri={url}&hashtag=#intarot"
+
+
+    );
     let pinterest_href = format!(
         "https://pinterest.com/pin/create/button/?url={url}&description={text}&media={media}"
     );
