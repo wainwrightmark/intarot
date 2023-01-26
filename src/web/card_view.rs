@@ -5,7 +5,8 @@ use yewdux::prelude::*;
 
 use crate::data::prelude::*;
 use crate::state::prelude::*;
-use crate::web::prelude::{Route, ShareComponent};
+use crate::web::prelude::Route;
+use crate::web::share_button::ShareButton;
 
 #[derive(Properties, PartialEq)]
 pub struct CardViewProps {
@@ -13,9 +14,9 @@ pub struct CardViewProps {
     pub style: CardStyle,
     pub src_data: SrcData,
     pub description: Option<ImageDescription>,
-    pub show_continue: bool,
+    pub show_extra_buttons: bool,
     pub slot: Option<&'static str>,
-    pub description_layout: DescriptionLayout
+    pub description_layout: DescriptionLayout,
 }
 
 #[function_component(CardView)]
@@ -37,6 +38,10 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let mut card_classes = classes!("prophecy-card");
     let mut image_classes = classes!("prophecy-image");
 
+    // if props.show_extra_buttons{
+    //     image_classes.push("buttons-grid");
+    // }
+
     let show_description = if props.top_card {
         card_classes.push("top_card");
 
@@ -56,10 +61,9 @@ pub fn card_view(props: &CardViewProps) -> Html {
         card_classes.push("card-shake");
     }
 
-    let share_text =
-    match props.description{
-        Some(d)=>{d.description_sections(&description_layout).first().unwrap()},
-        None=>include_str!(r#"../text/opening_p1.txt"#)
+    let share_text = match props.description {
+        Some(d) => d.description_sections(&description_layout).first().unwrap(),
+        None => include_str!(r#"../text/opening_p1.txt"#),
     };
 
     html! {
@@ -105,36 +109,26 @@ pub fn card_view(props: &CardViewProps) -> Html {
 
 
 
-                                <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem; flex-direction: column;">
-                    <label class="paper-btn margin nice-button stick-to-bottom" for="modal-2"  style="pointer-events:auto;">{"Share"}</label>
-                    <br/>
-                    {
-                        if props.show_continue{
-                            html!{
-                                <button class="margin nice-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Continue"} </button>
-                            }
-                        }else{
-                            html!{
-                                <></>
-                            }
+                {
+                    if props.show_extra_buttons{
+                        html!{
+                            <div class =" buttons-grid" style="margin-top:3em;">
+                            <div class="row flex-spaces child-borders" style="flex-direction: column; margin-bottom:0">
+                            <ShareButton label="Readings can be mysterious, why not share and discuss yours?" src_data={props.src_data} share_text={share_text}/>
+                            </div>
+                            <button class="margin nice-button extra-button" style="pointer-events:auto;" href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}  >{"Want to help improve intarot? Please fill out our 2 minute survey"} </button>
+                            <button class="margin nice-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
+                            </div>
+
+                        }
+                    }else{
+                        html!{
+                            <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem; flex-direction: column;">
+                                <ShareButton label="Share" src_data={props.src_data} share_text={share_text}/>
+                            </div>
                         }
                     }
-                  </div>
-                  <br/>
-                  <input class="modal-state" id="modal-2" type="checkbox"/>
-                  <div class="modal" style="pointer-events:auto;">
-                    <label class="modal-bg" for="modal-2"></label>
-                    <div class="modal-body">
-                      <h4 class="modal-title">{"Share"}</h4>
-                                <ShareComponent
-                                title="intarot"
-                                url={props.src_data.share_url()}
-                                text={share_text}
-                                media={props.src_data.src()}>
-                                </ShareComponent>
-
-                    </div>
-                  </div>
+                }
                                 </div>
                             }
                         }
@@ -192,7 +186,9 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     let spread_descriptions_state = use_store_value::<SpreadDescriptionState>();
 
     let slot = spread_descriptions_state.try_get_slot(&data_state.question_data, props.index);
-    let description_layout = spread_descriptions_state.try_get_layout(&data_state.question_data, props.index).unwrap_or_default();
+    let description_layout = spread_descriptions_state
+        .try_get_layout(&data_state.question_data, props.index)
+        .unwrap_or_default();
     let descriptions = &image_descriptions_state.descriptions;
 
     let metas = &metas_state.metas;
@@ -210,10 +206,10 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
         .map(|x| x.src_data())
         .unwrap_or_else(|| data_state.question_data.guide.ad_image_src());
 
-    let show_continue = meta.is_none();
+    let show_extra_buttons = meta.is_none();
 
     html! {
-        <CardView {top_card} {src_data} {style} {description} {show_continue} {slot} {description_layout} />
+        <CardView {top_card} {src_data} {style} {description} {show_extra_buttons} {slot} {description_layout} />
     }
 }
 

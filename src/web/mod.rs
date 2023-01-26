@@ -8,6 +8,7 @@ pub mod advanced_view;
 pub mod share_card_view;
 pub mod share_component;
 mod spread_view;
+pub mod share_button;
 
 pub mod prelude {
 
