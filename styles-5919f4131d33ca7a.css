@@ -233,6 +233,7 @@ body {
 
 .nice-button {
   border-radius: 10px!important;
+  background-color: #ffffff88;
 }
 
 
@@ -297,6 +298,15 @@ body {
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
+.extra-button{
+}
+
 .stick-to-bottom{
   /* bottom:5px; position:absolute; transform: translateY(-50%); */
+}
+
+.buttons-grid{
+  display: inline-grid;
+  grid-template-rows: max-content;
+  align-items: center;
 }
