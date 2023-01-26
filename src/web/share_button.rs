@@ -11,7 +11,7 @@ pub struct ShareButtonProps {
 #[function_component(ShareButton)]
 pub fn share_button(props: &ShareButtonProps) -> Html {
     if let Some(label) = &props.label{
-        html!(<label class="paper-btn margin nice-button" for={props.for_id.clone()}  style="pointer-events:auto;">{label.clone()}</label>)
+        html!(<label class="paper-btn margin nice-button card-button" for={props.for_id.clone()}  style="pointer-events:auto;">{label.clone()}</label>)
     }
     else{
         html!(<label class="" for={props.for_id.clone()}  style="pointer-events:auto; border:none; background: transparent;"><ShareIcon /></label>)

@@ -90,8 +90,8 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                             <div class="row flex-spaces child-borders" style="flex-direction: column; margin-bottom:0">
                                             <ShareButton label="Readings can be mysterious, why not share and discuss yours?" for_id="share_modal"/>
                                             </div>
-                                            <button class="margin nice-button extra-button" style="pointer-events:auto;" href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}  >{"Want to help improve intarot? Please fill out our 2 minute survey"} </button>
-                                            <button class="margin nice-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
+                                            <button class="margin nice-button card-button" style="pointer-events:auto;" href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}  >{"Want to help improve intarot? Please fill out our 2 minute survey"} </button>
+                                            <button class="margin nice-button card-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
                                             </div>
 
                                         }
