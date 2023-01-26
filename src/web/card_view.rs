@@ -6,7 +6,7 @@ use yewdux::prelude::*;
 use crate::data::prelude::*;
 use crate::state::prelude::*;
 use crate::web::prelude::Route;
-use crate::web::share_button::ShareButton;
+use crate::web::share_button::*;
 
 #[derive(Properties, PartialEq)]
 pub struct CardViewProps {
@@ -84,6 +84,28 @@ pub fn card_view(props: &CardViewProps) -> Html {
                             html!{
                                 <div class="image-overlay" style="pointer-events:none;">
                                 {
+                                    if props.show_extra_buttons{
+                                        html!{
+                                            <div class =" buttons-grid" style="margin-top:3em;">
+                                            <div class="row flex-spaces child-borders" style="flex-direction: column; margin-bottom:0">
+                                            <ShareButton label="Readings can be mysterious, why not share and discuss yours?" for_id="share_modal"/>
+                                            </div>
+                                            <button class="margin nice-button extra-button" style="pointer-events:auto;" href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}  >{"Want to help improve intarot? Please fill out our 2 minute survey"} </button>
+                                            <button class="margin nice-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
+                                            </div>
+
+                                        }
+                                    }else{
+                                        html!{
+                                            <div style="position:absolute; top: 90%; left:50%; transform: translateX(-50%);" >
+                                                <ShareButton for_id="share_modal" />
+                                            </div>
+                                        }
+                                    }
+
+                                }
+                                <ShareModal src_data={props.src_data} share_text={share_text} id="share_modal"/>
+                                {
                                     if let Some(description) = props.description{
 
                                         let sections = description.description_sections(&description_layout).iter().map(|x| html!(
@@ -109,26 +131,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
 
 
 
-                {
-                    if props.show_extra_buttons{
-                        html!{
-                            <div class =" buttons-grid" style="margin-top:3em;">
-                            <div class="row flex-spaces child-borders" style="flex-direction: column; margin-bottom:0">
-                            <ShareButton label="Readings can be mysterious, why not share and discuss yours?" src_data={props.src_data} share_text={share_text}/>
-                            </div>
-                            <button class="margin nice-button extra-button" style="pointer-events:auto;" href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}  >{"Want to help improve intarot? Please fill out our 2 minute survey"} </button>
-                            <button class="margin nice-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
-                            </div>
 
-                        }
-                    }else{
-                        html!{
-                            <div class="row flex-spaces child-borders" style="margin-top: 3rem; margin-bottom: -3rem; flex-direction: column;">
-                                <ShareButton label="Share" src_data={props.src_data} share_text={share_text}/>
-                            </div>
-                        }
-                    }
-                }
                                 </div>
                             }
                         }
@@ -139,14 +142,9 @@ pub fn card_view(props: &CardViewProps) -> Html {
                         }
                     }
                     {
-                        if let Some(slot) = props.slot{
-                            if props.top_card{
-                                html!{
-                                    <SlotView {slot} {guide}/>
-                                }
-                            }
-                            else{
-                                html!(<></>)
+                        if let Some(slot) = props.slot.filter(|_|props.top_card){
+                            html!{
+                                <SlotView {slot} {guide}/>
                             }
                         }
                         else{
