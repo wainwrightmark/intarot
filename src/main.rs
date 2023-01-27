@@ -2,8 +2,6 @@
 #![feature(extend_one)]
 use crate::web::prelude::*;
 
-
-
 extern crate wee_alloc;
 
 // Use `wee_alloc` as the global allocator.

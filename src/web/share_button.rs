@@ -5,15 +5,14 @@ use yew::prelude::*;
 #[derive(Properties, PartialEq)]
 pub struct ShareButtonProps {
     pub label: Option<AttrValue>,
-    pub for_id: AttrValue
+    pub for_id: AttrValue,
 }
 
 #[function_component(ShareButton)]
 pub fn share_button(props: &ShareButtonProps) -> Html {
-    if let Some(label) = &props.label{
+    if let Some(label) = &props.label {
         html!(<label class="paper-btn margin nice-button card-button" for={props.for_id.clone()}  style="pointer-events:auto;">{label.clone()}</label>)
-    }
-    else{
+    } else {
         html!(<label class="" for={props.for_id.clone()}  style="pointer-events:auto; border:none; background: transparent;"><ShareIcon /></label>)
     }
 }
@@ -23,11 +22,10 @@ pub struct ShareModalProps {
     pub id: AttrValue,
     pub share_text: AttrValue,
     pub src_data: SrcData,
-
 }
 
 #[function_component(ShareModal)]
-pub fn share_modal(props: &ShareModalProps) -> Html{
+pub fn share_modal(props: &ShareModalProps) -> Html {
     html!(
         <>
         <input class="modal-state" id={props.id.clone()} type="checkbox"/>

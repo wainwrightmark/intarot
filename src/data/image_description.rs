@@ -19,10 +19,7 @@ pub struct ImageDescription {
 }
 
 impl ImageDescription {
-    pub fn description_sections<'a>(
-        &'a self,
-        layout: &'a DescriptionLayout,
-    ) -> Vec<&'static str> {
+    pub fn description_sections<'a>(&'a self, layout: &'a DescriptionLayout) -> Vec<&'static str> {
         match layout {
             DescriptionLayout::UA => vec![
                 self.representation,
@@ -50,7 +47,7 @@ impl ImageDescription {
                 self.representation,
                 self.agent_representation,
                 self.guide_interpretation,
-            ]
+            ],
         }
     }
 }

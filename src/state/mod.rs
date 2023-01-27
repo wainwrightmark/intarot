@@ -1,5 +1,6 @@
 mod data_state;
 mod description_state;
+pub mod logging;
 mod messages;
 mod meta_state;
 pub mod prompts_state;

@@ -74,15 +74,18 @@ impl Default for PromptsState {
 
         let mut prompts: BTreeMap<(Guide, SpreadType), Vec<&'static str>> = Default::default();
 
-        for (g, g_lines) in guide_prompts{
-            for (st, st_lines) in spread_prompts.iter(){
-                let lines = g_lines.iter().filter(|x| st_lines.contains(x)).cloned().collect_vec();
+        for (g, g_lines) in guide_prompts {
+            for (st, st_lines) in spread_prompts.iter() {
+                let lines = g_lines
+                    .iter()
+                    .filter(|x| st_lines.contains(x))
+                    .cloned()
+                    .collect_vec();
                 prompts.insert((g, *st), lines);
             }
         }
 
-
-         Self { prompts }
+        Self { prompts }
     }
 }
 
@@ -121,7 +124,6 @@ mod tests {
         let state = PromptsState::default();
 
         for ((_guide, _spread), vec) in state.prompts.iter() {
-
             //println!("{guide} {spread}: {}", vec.len());
             assert!(vec.len() >= 1);
             for t in vec {

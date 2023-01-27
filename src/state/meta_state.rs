@@ -1,7 +1,4 @@
-use std::{
-    collections::{ HashMap},
-    str::FromStr,
-};
+use std::{collections::HashMap, str::FromStr};
 
 use crate::data::prelude::*;
 use itertools::Itertools;

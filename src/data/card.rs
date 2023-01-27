@@ -19,7 +19,7 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoEnumIterator, Int
     EnumIter,
     EnumCount,
     IntoStaticStr,
-    Hash
+    Hash,
 )]
 pub enum Card {
     #[strum(props(image_filter = "beggar", name = "The Fool"))]

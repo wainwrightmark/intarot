@@ -20,7 +20,7 @@ use super::prelude::SrcData;
     IntoStaticStr,
     Default,
     Display,
-    Hash
+    Hash,
 )]
 
 pub enum Guide {

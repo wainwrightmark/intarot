@@ -1,9 +1,8 @@
-use std::{str::FromStr, collections::BTreeMap};
+use std::{collections::BTreeMap, str::FromStr};
 
-use crate::data::{prelude::*, description_layout::DescriptionLayout};
+use crate::data::{description_layout::DescriptionLayout, prelude::*};
 use itertools::Itertools;
 use yewdux::prelude::*;
-
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SpreadDescription {
@@ -82,15 +81,15 @@ impl Default for SpreadDescriptionState {
                             .rev()
                             .collect_vec();
 
-                        let layout =layout.split_terminator(';')
-                            .map(|s|s.trim())
-                            .filter(|x|!x.is_empty())
-                            .map(|s|{
+                        let layout = layout
+                            .split_terminator(';')
+                            .map(|s| s.trim())
+                            .filter(|x| !x.is_empty())
+                            .map(|s| {
                                 return DescriptionLayout::from_str(s).unwrap();
                             })
                             .rev()
-                            .collect_vec()
-                        ;
+                            .collect_vec();
 
                         Some((
                             spread,
@@ -101,7 +100,7 @@ impl Default for SpreadDescriptionState {
                                 madame,
                                 maledictus,
                                 slots,
-                                layout
+                                layout,
                             },
                         ))
                     },

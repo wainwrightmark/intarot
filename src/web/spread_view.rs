@@ -8,7 +8,8 @@ use crate::state::prelude::*;
 
 use crate::web::card_view::*;
 
-#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function angry_animate_top_card_right() {
+#[wasm_bindgen::prelude::wasm_bindgen(
+    inline_js = r##"export function angry_animate_top_card_right() {
 
     document.querySelector(".top_card").animate(
     [
@@ -22,12 +23,14 @@ use crate::web::card_view::*;
       duration: 500,
       iterations: 1
     }
-  ) }"##)]
+  ) }"##
+)]
 extern "C" {
     fn angry_animate_top_card_right();
 }
 
-#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function angry_animate_top_card_left() {
+#[wasm_bindgen::prelude::wasm_bindgen(
+    inline_js = r##"export function angry_animate_top_card_left() {
 
     document.querySelector(".top_card").animate(
     [
@@ -41,7 +44,8 @@ extern "C" {
       duration: 500,
       iterations: 1
     }
-  ) }"##)]
+  ) }"##
+)]
 extern "C" {
     fn angry_animate_top_card_left();
 }
@@ -62,28 +66,24 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
 
     {
         let swipe_state = swipe_state;
-        let data_state =data_state.clone();
+        let data_state = data_state.clone();
         use_effect_with_deps(
             move |direction| {
                 // Do something based on direction.
                 match **direction {
-                    UseSwipeDirection::Left =>{
-                        if data_state.can_draw(){
+                    UseSwipeDirection::Left => {
+                        if data_state.can_draw() {
                             Dispatch::<DataState>::new().apply(DrawMessage {})
-                        }
-                        else{
+                        } else {
                             angry_animate_top_card_left();
                         }
-
-                    },
+                    }
                     UseSwipeDirection::Right => {
-                        if data_state.can_previous(){
+                        if data_state.can_previous() {
                             Dispatch::<DataState>::new().apply(ReplaceMessage {})
-                        }
-                        else{
+                        } else {
                             angry_animate_top_card_right();
                         }
-
                     }
                     _ => (),
                 }

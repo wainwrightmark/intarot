@@ -1,5 +1,8 @@
 use crate::{
-    state::{prelude::{ShufflePromptsMessage, ChangeSpreadTypeMessage, DataState}, prompts_state::PromptsState},
+    state::{
+        prelude::{ChangeSpreadTypeMessage, DataState, ShufflePromptsMessage},
+        prompts_state::PromptsState,
+    },
     web::prelude::*,
 };
 use yew::prelude::*;
@@ -19,7 +22,9 @@ pub fn landing_view() -> Html {
         Callback::from(move |_: MouseEvent| {
             Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
 
-            Dispatch::<DataState>::new().apply(ChangeSpreadTypeMessage(crate::data::prelude::SpreadType::One ));
+            Dispatch::<DataState>::new().apply(ChangeSpreadTypeMessage(
+                crate::data::prelude::SpreadType::One,
+            ));
             navigator.push(&Route::Question {});
         })
     };

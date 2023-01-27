@@ -5,7 +5,11 @@ use yewdux::prelude::{use_store_value, Dispatch};
 
 use super::app::Route;
 use crate::{
-    state::{prelude::*, prompts_state::PromptsState},
+    state::{
+        logging::{Loggable, RequestLog},
+        prelude::*,
+        prompts_state::PromptsState,
+    },
     web::logo::Logo,
 };
 
@@ -30,6 +34,16 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         Callback::from(move |_e: MouseEvent| {
             if *is_clickable_state {
                 Dispatch::<DataState>::new().apply(ResetMessage {});
+
+                let data = Dispatch::<DataState>::new().get();
+                let user = Dispatch::<UserState>::new().get();
+                if let Some(user_id) = user.user_id {
+                    let log = RequestLog::new(data.as_ref(), user_id);
+                    log.send_log();
+                } else {
+                    log::error!("User Id not set");
+                }
+
                 navigator.replace(&Route::Spread {});
             }
         })
@@ -43,8 +57,10 @@ pub fn question_view(_props: &QuestionProps) -> Html {
     };
 
     let prompts_state = use_store_value::<PromptsState>();
-    let (prompt0, prompt1, prompt2) =
-        prompts_state.get_three_prompts(&card_page_state.question_data.guide, &card_page_state.question_data.spread_type);
+    let (prompt0, prompt1, prompt2) = prompts_state.get_three_prompts(
+        &card_page_state.question_data.guide,
+        &card_page_state.question_data.spread_type,
+    );
     let prompt0 = format!("Why not ask about {prompt0}?");
     let prompt1 = format!("{prompt1}?");
     let prompt2 = format!("{prompt2}?");
