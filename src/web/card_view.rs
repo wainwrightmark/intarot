@@ -8,6 +8,17 @@ use crate::state::prelude::*;
 use crate::web::prelude::Route;
 use crate::web::share_button::*;
 
+
+#[wasm_bindgen::prelude::wasm_bindgen(
+    inline_js = r##"export function open_link_in_new_tab(url) {
+        window.open(url, '_blank').focus();
+  }"##
+)]
+extern "C" {
+    fn open_link_in_new_tab(url: String);
+}
+
+
 #[derive(Properties, PartialEq)]
 pub struct CardViewProps {
     pub top_card: bool,
@@ -31,6 +42,16 @@ pub fn card_view(props: &CardViewProps) -> Html {
     let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
             navigator.replace(&Route::Advanced {});
+        })
+    };
+
+    let on_survey_click ={
+        Callback::from(move |_e: MouseEvent| {
+            open_link_in_new_tab("https://form.jotform.com/230255122565045".to_string());
+        })
+    };let on_discord_click ={
+        Callback::from(move |_e: MouseEvent| {
+            open_link_in_new_tab("https://discord.gg/eRm5YdMNAw".to_string());
         })
     };
 
@@ -85,12 +106,13 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                 {
                                     if props.show_extra_buttons{
                                         html!{
-                                            <div class =" buttons-grid" style="margin-top:3em;">
+                                            <div class =" buttons-grid" style="margin-top:1em;">
                                             <div class="row flex-spaces child-borders" style="flex-direction: column; margin-bottom:0">
                                             <ShareButton label="Readings can be mysterious, why not share and discuss yours?" for_id="share_modal"/>
                                             </div>
-                                            <button class="margin nice-button card-button" style="pointer-events:auto;" href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}  >{"Want to help improve intarot? Please fill out our 2 minute survey"} </button>
+                                            <button class="margin nice-button card-button" style="pointer-events:auto;" onclick={on_survey_click}  >{"Want to help improve intarot? Please fill out our 2 minute survey"} </button>
                                             <button class="margin nice-button card-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
+                                            <button class="margin nice-button card-button" style="pointer-events:auto;" onclick={on_discord_click}  >{"Discuss on Discord"} </button>
                                             </div>
 
                                         }
