@@ -1,4 +1,4 @@
-use crate::state::prelude::{UserState, CreateUserIfNewMessage};
+use crate::state::prelude::{CreateUserIfNewMessage, UserState};
 use crate::web::landing_view::LandingView;
 use yew::prelude::*;
 use yew_hooks::use_search_param;
@@ -33,7 +33,7 @@ pub fn app() -> Html {
     let referrer = use_search_param("ref".to_string());
 
     let dispatch = Dispatch::<UserState>::new();
-    dispatch.apply(CreateUserIfNewMessage{referrer});
+    dispatch.apply(CreateUserIfNewMessage { referrer });
     html! {
 
 

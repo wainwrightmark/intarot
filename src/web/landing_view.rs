@@ -30,7 +30,7 @@ pub fn landing_view() -> Html {
     };
 
     let on_advanced_click = {
-        let navigator = navigator.clone();
+        let navigator = navigator;
         Callback::from(move |_: MouseEvent| {
             navigator.push(&Route::Advanced {});
         })

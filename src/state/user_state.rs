@@ -21,7 +21,7 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
 
             let message = NewUserLog {
                 user_id,
-                referrer: self.referrer.clone(),
+                referrer: self.referrer,
             };
             message.send_log();
 

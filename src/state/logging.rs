@@ -7,7 +7,7 @@ use crate::data::{prelude::Card, question_data::QuestionData};
 use super::data_state::DataState;
 
 /// This token can only be used to ingest data into our bucket
-const API_TOKEN: &'static str = "xaat-ba30896b-604b-4837-8924-ec8097e55eee";
+const API_TOKEN: &str = "xaat-ba30896b-604b-4837-8924-ec8097e55eee";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RequestLog {
@@ -40,7 +40,7 @@ impl Loggable for RequestLog {}
 impl Loggable for NewUserLog {}
 
 pub trait Loggable: Sized + Serialize + 'static {
-    fn send_log(self) -> () {
+    fn send_log(self) {
         wasm_bindgen_futures::spawn_local(log(self));
     }
 }
@@ -59,7 +59,7 @@ async fn try_log<T: Serialize>(data: T) -> Result<(), reqwest::Error> {
     res.error_for_status().map(|_| ())
 }
 
-async fn log<T: Serialize>(data: T) -> () {
+async fn log<T: Serialize>(data: T) {
     let r = try_log(data).await;
     if let Err(err) = r {
         log::error!("Logging Error {}", err);

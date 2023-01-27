@@ -83,7 +83,7 @@ impl DataState {
         };
         let vec = metas.get(&key)?;
 
-        if vec.len() == 0 {
+        if vec.is_empty() {
             None
         } else if vec.len() == 1 {
             vec.get(0)

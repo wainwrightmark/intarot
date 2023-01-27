@@ -85,9 +85,7 @@ impl Default for SpreadDescriptionState {
                             .split_terminator(';')
                             .map(|s| s.trim())
                             .filter(|x| !x.is_empty())
-                            .map(|s| {
-                                return DescriptionLayout::from_str(s).unwrap();
-                            })
+                            .map(|s| DescriptionLayout::from_str(s).unwrap())
                             .rev()
                             .collect_vec();
 

@@ -125,7 +125,7 @@ mod tests {
 
         for ((_guide, _spread), vec) in state.prompts.iter() {
             //println!("{guide} {spread}: {}", vec.len());
-            assert!(vec.len() >= 1);
+            assert!(!vec.is_empty());
             for t in vec {
                 assert!(!t.is_empty());
             }
