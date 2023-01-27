@@ -28,7 +28,24 @@ impl SrcData {
                 // log::info!("{encoded}");
                 Engine::encode(&base64::engine::general_purpose::URL_SAFE, name)
             }),
-            _ => "https://intarot.app".to_string(),
+            SrcData::Ad(_) | SrcData::Guide(_) => "https://intarot.app".to_string(),
         }
+    }
+
+    pub fn url_has_search(&self) -> bool {
+        match self {
+            SrcData::Card(_) => true,
+            SrcData::Ad(_) | SrcData::Guide(_) => false,
+        }
+    }
+
+    pub fn raw_url_with_ref(&self, referrer: &'static str) -> String {
+        let url = self.share_url();
+        let separator = if self.url_has_search() { "&" } else { "?" };
+        format!("{url}{separator}ref={referrer}")
+    }
+
+    pub fn encoded_url_with_ref(&self, referrer: &'static str) -> String {
+        url_escape::encode_www_form_urlencoded(self.raw_url_with_ref(referrer).as_str()).to_string()
     }
 }

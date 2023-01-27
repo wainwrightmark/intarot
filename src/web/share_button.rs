@@ -35,7 +35,7 @@ pub fn share_modal(props: &ShareModalProps) -> Html {
             <h4 class="modal-title">{"Share" }</h4>
                       <ShareComponent
                       title="intarot"
-                      url={props.src_data.share_url()}
+                      src_data={props.src_data}
                       text={props.share_text.clone()}
                       media={props.src_data.src()}>
                       </ShareComponent>
