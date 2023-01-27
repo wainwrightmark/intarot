@@ -1,4 +1,3 @@
-use web_sys::Element;
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 
