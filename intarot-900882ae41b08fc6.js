@@ -1,6 +1,7 @@
 import { open_link_in_new_tab } from './snippets/intarot-31e5e252b2c79c8d/inline0.js';
-import * as __wbg_star0 from './snippets/intarot-31e5e252b2c79c8d/inline1.js';
-import * as __wbg_star1 from './snippets/intarot-31e5e252b2c79c8d/inline2.js';
+import { open_link_in_same_tab } from './snippets/intarot-31e5e252b2c79c8d/inline1.js';
+import * as __wbg_star0 from './snippets/intarot-31e5e252b2c79c8d/inline2.js';
+import * as __wbg_star1 from './snippets/intarot-31e5e252b2c79c8d/inline3.js';
 
 let wasm;
 
@@ -226,18 +227,18 @@ function addBorrowedObject(obj) {
 }
 function __wbg_adapter_34(arg0, arg1, arg2) {
     try {
-        wasm._dyn_core__ops__function__FnMut___A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__hd6e43880a7939e63(arg0, arg1, addBorrowedObject(arg2));
+        wasm._dyn_core__ops__function__FnMut___A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__hca86ed07c11588fd(arg0, arg1, addBorrowedObject(arg2));
     } finally {
         heap[stack_pointer++] = undefined;
     }
 }
 
 function __wbg_adapter_37(arg0, arg1) {
-    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h3d29ae4ebf13ad93(arg0, arg1);
+    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h66d707dbbafd9fea(arg0, arg1);
 }
 
 function __wbg_adapter_40(arg0, arg1, arg2) {
-    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__hf2fd0db4ad95ce69(arg0, arg1, addHeapObject(arg2));
+    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h0ff18b2e3cf18ad3(arg0, arg1, addHeapObject(arg2));
 }
 
 function handleError(f, args) {
@@ -477,6 +478,13 @@ function getImports() {
     imports.wbg.__wbg_openlinkinnewtab_8940cd7b292009fe = function(arg0, arg1) {
         try {
             open_link_in_new_tab(getStringFromWasm0(arg0, arg1));
+        } finally {
+            wasm.__wbindgen_free(arg0, arg1);
+        }
+    };
+    imports.wbg.__wbg_openlinkinsametab_523d6377d91bfde1 = function(arg0, arg1) {
+        try {
+            open_link_in_same_tab(getStringFromWasm0(arg0, arg1));
         } finally {
             wasm.__wbindgen_free(arg0, arg1);
         }
@@ -774,6 +782,9 @@ function getImports() {
         const ret = result;
         return ret;
     };
+    imports.wbg.__wbg_addEventListener_cbe4c6f619b032f3 = function() { return handleError(function (arg0, arg1, arg2, arg3) {
+        getObject(arg0).addEventListener(getStringFromWasm0(arg1, arg2), getObject(arg3));
+    }, arguments) };
     imports.wbg.__wbg_addEventListener_1fc744729ac6dc27 = function() { return handleError(function (arg0, arg1, arg2, arg3, arg4) {
         getObject(arg0).addEventListener(getStringFromWasm0(arg1, arg2), getObject(arg3), getObject(arg4));
     }, arguments) };
@@ -1082,20 +1093,20 @@ function getImports() {
         const ret = getObject(arg0).sessionStorage;
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
     }, arguments) };
-    imports.wbg.__wbindgen_closure_wrapper550 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper584 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 64, __wbg_adapter_34);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper905 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper910 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 68, __wbg_adapter_37);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1344 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1426 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 64, __wbg_adapter_40);
         return addHeapObject(ret);
     };
-    imports['./snippets/intarot-31e5e252b2c79c8d/inline1.js'] = __wbg_star0;
-    imports['./snippets/intarot-31e5e252b2c79c8d/inline2.js'] = __wbg_star1;
+    imports['./snippets/intarot-31e5e252b2c79c8d/inline2.js'] = __wbg_star0;
+    imports['./snippets/intarot-31e5e252b2c79c8d/inline3.js'] = __wbg_star1;
 
     return imports;
 }
@@ -1132,7 +1143,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-80bb44d5242679e9_bg.wasm', import.meta.url);
+        input = new URL('intarot-900882ae41b08fc6_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
