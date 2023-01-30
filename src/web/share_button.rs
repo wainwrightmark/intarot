@@ -1,19 +1,35 @@
 use crate::data::prelude::*;
+use crate::state::prelude::*;
 use crate::web::share_component::ShareComponent;
 use yew::prelude::*;
+use yewdux::prelude::Dispatch;
 
 #[derive(Properties, PartialEq)]
 pub struct ShareButtonProps {
     pub label: Option<AttrValue>,
     pub for_id: AttrValue,
+    pub src_data: SrcData,
 }
 
 #[function_component(ShareButton)]
 pub fn share_button(props: &ShareButtonProps) -> Html {
+
+    let src_data: SrcData  = props.src_data.clone();
+
+    let on_click = move|_: MouseEvent| {
+        let user = Dispatch::<UserState>::new().get();
+        if let Some(user_id) = user.user_id {
+            let log = EventLog::new_share(user_id, src_data);
+            log.send_log();
+        } else {
+            log::error!("User Id not set");
+        };
+    };
+
     if let Some(label) = &props.label {
-        html!(<label class="paper-btn margin nice-button card-button" for={props.for_id.clone()}  style="pointer-events:auto;">{label.clone()}</label>)
+        html!(<label class="paper-btn margin nice-button card-button" for={props.for_id.clone()} onclick={on_click} style="pointer-events:auto;">{label.clone()}</label>)
     } else {
-        html!(<label class="" for={props.for_id.clone()}  style="pointer-events:auto; border:none; background: transparent;"><ShareIcon /></label>)
+        html!(<label class="" for={props.for_id.clone()}  onclick={on_click} style="pointer-events:auto; border:none; background: transparent;"><ShareIcon /></label>)
     }
 }
 
@@ -26,6 +42,7 @@ pub struct ShareModalProps {
 
 #[function_component(ShareModal)]
 pub fn share_modal(props: &ShareModalProps) -> Html {
+
     html!(
         <>
         <input class="modal-state" id={props.id.clone()} type="checkbox"/>

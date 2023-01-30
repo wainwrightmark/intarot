@@ -2,8 +2,8 @@ use std::rc::Rc;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
 
+use super::logging::EventLog;
 use super::logging::Loggable;
-use super::logging::NewUserLog;
 use super::messages::*;
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug, Default)]
@@ -19,10 +19,7 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
         } else {
             let user_id = uuid::Uuid::new_v4();
 
-            let message = NewUserLog {
-                user_id,
-                referrer: self.referrer,
-            };
+            let message = EventLog::new_user(user_id, self.referrer);
             message.send_log();
 
             Rc::new(UserState {

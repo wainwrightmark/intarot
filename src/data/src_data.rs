@@ -1,6 +1,7 @@
 use base64::Engine;
+use serde::Serialize;
 
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Serialize)]
 pub enum SrcData {
     Card(&'static str),
     Ad(&'static str),

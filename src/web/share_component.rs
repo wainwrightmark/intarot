@@ -1,7 +1,8 @@
 use yew::prelude::*;
 use yew_hooks::use_clipboard;
+use yewdux::prelude::Dispatch;
 
-use crate::data::prelude::SrcData;
+use crate::{data::prelude::*, state::prelude::*};
 
 #[derive(Properties, PartialEq)]
 pub struct ShareProps {
@@ -15,6 +16,8 @@ pub struct ShareProps {
 
 #[function_component(ShareComponent)]
 pub fn share_component(props: &ShareProps) -> Html {
+
+
     let clipboard = use_clipboard();
     let title = url_escape::encode_fragment(&props.title);
     let text = url_escape::encode_fragment(&props.text);

@@ -6,7 +6,7 @@ use yewdux::prelude::{use_store_value, Dispatch};
 use super::app::Route;
 use crate::{
     state::{
-        logging::{Loggable, RequestLog},
+        logging::*,
         prelude::*,
         prompts_state::PromptsState,
     },
@@ -38,7 +38,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
                 let data = Dispatch::<DataState>::new().get();
                 let user = Dispatch::<UserState>::new().get();
                 if let Some(user_id) = user.user_id {
-                    let log = RequestLog::new(data.as_ref(), user_id);
+                    let log = EventLog::new_spread(user_id, data.as_ref());
                     log.send_log();
                 } else {
                     log::error!("User Id not set");

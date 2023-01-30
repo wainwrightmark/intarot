@@ -108,7 +108,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                         html!{
                                             <div class =" buttons-grid" style="margin-top:1em;">
                                             <div class="row flex-spaces child-borders" style="flex-direction: column; margin-bottom:0">
-                                            <ShareButton label="Readings can be mysterious, why not share and discuss yours?" for_id="share_modal"/>
+                                            <ShareButton label="Readings can be mysterious, why not share and discuss yours?" for_id="share_modal" src_data={props.src_data}/>
                                             </div>
                                             <button class="margin nice-button card-button" style="pointer-events:auto;" onclick={on_survey_click}  >{"Want to help improve intarot? Please fill out our 2 minute survey"} </button>
                                             <button class="margin nice-button card-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
@@ -119,7 +119,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                     }else{
                                         html!{
                                             <div style="position:absolute; top: 90%; left:50%; transform: translateX(-50%);" >
-                                                <ShareButton for_id="share_modal" />
+                                                <ShareButton for_id="share_modal" src_data={props.src_data} />
                                             </div>
                                         }
                                     }
@@ -149,9 +149,6 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                         }
                                     }
                                 }
-
-
-
 
                                 </div>
                             }
