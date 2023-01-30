@@ -38,10 +38,10 @@ impl Default for PromptsState {
                             let entry = guide_prompts.entry(guide);
                             match entry {
                                 std::collections::btree_map::Entry::Vacant(v) => {
-                                    v.insert(vec![line]);
+                                    v.insert(vec![line.trim()]);
                                 }
                                 std::collections::btree_map::Entry::Occupied(mut o) => {
-                                    o.get_mut().extend_one(line)
+                                    o.get_mut().extend_one(line.trim())
                                 }
                             }
                         }
