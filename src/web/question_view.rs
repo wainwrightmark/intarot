@@ -1,5 +1,5 @@
 use yew::prelude::*;
-use yew_hooks::{use_interval, use_effect_once};
+use yew_hooks::{use_effect_once, use_interval};
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::{use_store_value, Dispatch};
 

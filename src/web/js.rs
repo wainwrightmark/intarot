@@ -60,5 +60,3 @@ extern "C" {
 extern "C" {
     pub fn angry_animate_top_card_left();
 }
-
-

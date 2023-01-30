@@ -6,8 +6,7 @@ use yewdux::prelude::*;
 use crate::state::prelude::*;
 
 use crate::web::card_view::*;
-
-
+use crate::web::prelude::*;
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct SpreadViewProps {}
