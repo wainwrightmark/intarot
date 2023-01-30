@@ -20,10 +20,7 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
     let description_layout: DescriptionLayout = Default::default();
     let id = use_search_param("id".to_string()).unwrap_or_default();
 
-    let image_meta = base64::Engine::decode(&base64::engine::general_purpose::URL_SAFE, id)
-        .ok()
-        .and_then(|x| String::from_utf8(x).ok())
-        .and_then(|x| ImageMeta::from_str(x.as_str()).ok());
+    let image_meta = ImageMeta::from_str(id.as_str()).ok();
 
     if let Some(image_meta) = image_meta {
         let description = descriptions_state
