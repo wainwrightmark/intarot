@@ -1,6 +1,19 @@
 use serde::{Deserialize, Serialize};
 use strum::{EnumCount, EnumIter};
-#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash, EnumCount, EnumIter, PartialOrd, Ord)]
+#[derive(
+    Debug,
+    Copy,
+    Clone,
+    Serialize,
+    Deserialize,
+    PartialEq,
+    Eq,
+    Hash,
+    EnumCount,
+    EnumIter,
+    PartialOrd,
+    Ord,
+)]
 pub enum Achievement {
     LandingClickBegin,
     LandingClickAdvanced,

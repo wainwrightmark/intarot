@@ -1,5 +1,7 @@
 use crate::data::prelude::*;
 
+use super::prelude::LoggableEvent;
+
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct DrawMessage {}
 
@@ -21,9 +23,6 @@ pub struct ToggleDescriptionMessage {}
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct ToggleShareDialogMessage {}
 
-// #[derive(Default, Copy, Clone, PartialEq, Eq)]
-// pub struct SetUsedBeforeMessage {}
-
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct ShufflePromptsMessage;
 
@@ -34,3 +33,9 @@ pub struct CreateUserIfNewMessage {
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct AchievementEarnedMessage(pub Achievement);
+
+#[derive(Clone, PartialEq, Eq)]
+pub struct LogFailedMessage(pub LoggableEvent);
+
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
+pub struct ResentFailedLogsMessage;

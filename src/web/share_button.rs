@@ -13,16 +13,16 @@ pub struct ShareButtonProps {
 
 #[function_component(ShareButton)]
 pub fn share_button(props: &ShareButtonProps) -> Html {
+    let src_data: SrcData = props.src_data.clone();
 
-    let src_data: SrcData  = props.src_data.clone();
-
-    let on_click = move|_: MouseEvent| {
+    let on_click = move |_: MouseEvent| {
         let user = Dispatch::<UserState>::new().get();
         if let Some(user_id) = user.user_id {
-            let log = EventLog::new_share(user_id, src_data);
+            let log = EventLog::new(user_id, src_data.into());
             log.send_log();
         } else {
             log::error!("User Id not set");
+            Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(src_data.into()));
         };
     };
 
@@ -42,7 +42,6 @@ pub struct ShareModalProps {
 
 #[function_component(ShareModal)]
 pub fn share_modal(props: &ShareModalProps) -> Html {
-
     html!(
         <>
         <input class="modal-state" id={props.id.clone()} type="checkbox"/>

@@ -5,11 +5,7 @@ use yewdux::prelude::{use_store_value, Dispatch};
 
 use super::app::Route;
 use crate::{
-    state::{
-        logging::*,
-        prelude::*,
-        prompts_state::PromptsState,
-    },
+    state::{logging::*, prelude::*, prompts_state::PromptsState},
     web::logo::Logo,
 };
 
@@ -37,11 +33,13 @@ pub fn question_view(_props: &QuestionProps) -> Html {
 
                 let data = Dispatch::<DataState>::new().get();
                 let user = Dispatch::<UserState>::new().get();
+                let event = LoggableEvent::new_spread(data.as_ref());
                 if let Some(user_id) = user.user_id {
-                    let log = EventLog::new_spread(user_id, data.as_ref());
+                    let log = EventLog::new(user_id, event);
                     log.send_log();
                 } else {
                     log::error!("User Id not set");
+                    Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(event));
                 }
 
                 navigator.replace(&Route::Spread {});

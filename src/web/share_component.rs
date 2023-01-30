@@ -16,8 +16,6 @@ pub struct ShareProps {
 
 #[function_component(ShareComponent)]
 pub fn share_component(props: &ShareProps) -> Html {
-
-
     let clipboard = use_clipboard();
     let title = url_escape::encode_fragment(&props.title);
     let text = url_escape::encode_fragment(&props.text);

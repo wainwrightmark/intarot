@@ -1,3 +1,4 @@
+pub mod achievement;
 mod card;
 pub mod description_layout;
 mod guide;
@@ -6,9 +7,9 @@ mod image_meta;
 pub mod question_data;
 pub mod spread_type;
 pub mod src_data;
-pub mod achievement;
 
 pub mod prelude {
+    pub use crate::data::achievement::*;
     pub use crate::data::card::*;
     pub use crate::data::description_layout::*;
     pub use crate::data::guide::*;
@@ -17,5 +18,4 @@ pub mod prelude {
     pub use crate::data::question_data::*;
     pub use crate::data::spread_type::*;
     pub use crate::data::src_data::*;
-    pub use crate::data::achievement::*;
 }

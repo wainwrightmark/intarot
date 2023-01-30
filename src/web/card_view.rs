@@ -8,25 +8,19 @@ use crate::state::prelude::*;
 use crate::web::prelude::Route;
 use crate::web::share_button::*;
 
-
-#[wasm_bindgen::prelude::wasm_bindgen(
-    inline_js = r##"export function open_link_in_new_tab(url) {
+#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function open_link_in_new_tab(url) {
         window.open(url, '_blank').focus();
-  }"##
-)]
+  }"##)]
 extern "C" {
     fn open_link_in_new_tab(url: String);
 }
 
-#[wasm_bindgen::prelude::wasm_bindgen(
-    inline_js = r##"export function open_link_in_same_tab(url) {
+#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function open_link_in_same_tab(url) {
         window.open(url).focus();
-  }"##
-)]
+  }"##)]
 extern "C" {
     fn open_link_in_same_tab(url: String);
 }
-
 
 #[derive(Properties, PartialEq)]
 pub struct CardViewProps {
@@ -50,19 +44,23 @@ pub fn card_view(props: &CardViewProps) -> Html {
 
     let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
-            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::ClickAnotherReading));
+            Dispatch::<AchievementsState>::new()
+                .apply(AchievementEarnedMessage(Achievement::ClickAnotherReading));
             navigator.replace(&Route::Advanced {});
         })
     };
 
-    let on_survey_click ={
+    let on_survey_click = {
         Callback::from(move |_e: MouseEvent| {
-            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::ClickSurvey));
+            Dispatch::<AchievementsState>::new()
+                .apply(AchievementEarnedMessage(Achievement::ClickSurvey));
             open_link_in_new_tab("https://docs.google.com/forms/d/e/1FAIpQLSep7npbKOtYcA_ruRFK8ByHz0Zjl_7-gp6YQ3XPhJ_QHLgw4w/viewform".to_string());
         })
-    };let on_discord_click ={
+    };
+    let on_discord_click = {
         Callback::from(move |_e: MouseEvent| {
-            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::ClickDiscord));
+            Dispatch::<AchievementsState>::new()
+                .apply(AchievementEarnedMessage(Achievement::ClickDiscord));
             open_link_in_same_tab("https://discord.gg/eRm5YdMNAw".to_string());
         })
     };

@@ -1,11 +1,28 @@
 use base64::Engine;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Serialize)]
 pub enum SrcData {
     Card(&'static str),
     Ad(&'static str),
     Guide(&'static str),
+}
+
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
+pub enum SrcData2 {
+    Card(String),
+    Ad(String),
+    Guide(String),
+}
+
+impl From<SrcData> for SrcData2 {
+    fn from(value: SrcData) -> Self {
+        match value {
+            SrcData::Card(s) => Self::Card(s.to_string()),
+            SrcData::Ad(s) => Self::Ad(s.to_string()),
+            SrcData::Guide(s) => Self::Guide(s.to_string()),
+        }
+    }
 }
 
 impl SrcData {
@@ -26,7 +43,6 @@ impl SrcData {
     pub fn share_url(&self) -> String {
         match self {
             SrcData::Card(name) => format!("https://intarot.app/share?id={}", {
-                // log::info!("{encoded}");
                 Engine::encode(&base64::engine::general_purpose::URL_SAFE, name)
             }),
             SrcData::Ad(_) | SrcData::Guide(_) => "https://intarot.app".to_string(),

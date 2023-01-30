@@ -1,9 +1,4 @@
-use crate::{
-    state::{
-        prelude::*,
-    },
-    web::prelude::*, data::achievement::Achievement,
-};
+use crate::{data::achievement::Achievement, state::prelude::*, web::prelude::*};
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::Dispatch;
@@ -19,7 +14,8 @@ pub fn landing_view() -> Html {
     let on_begin_click = {
         let navigator = navigator.clone();
         Callback::from(move |_: MouseEvent| {
-            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::LandingClickBegin));
+            Dispatch::<AchievementsState>::new()
+                .apply(AchievementEarnedMessage(Achievement::LandingClickBegin));
             Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
 
             Dispatch::<DataState>::new().apply(ChangeSpreadTypeMessage(
@@ -33,7 +29,8 @@ pub fn landing_view() -> Html {
         let navigator = navigator;
 
         Callback::from(move |_: MouseEvent| {
-            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::LandingClickAdvanced));
+            Dispatch::<AchievementsState>::new()
+                .apply(AchievementEarnedMessage(Achievement::LandingClickAdvanced));
             navigator.push(&Route::Advanced {});
         })
     };

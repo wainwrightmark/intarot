@@ -1,4 +1,5 @@
-use crate::state::prelude::{CreateUserIfNewMessage, UserState};
+use crate::state::failed_logs_state::FailedLogsState;
+use crate::state::prelude::{CreateUserIfNewMessage, ResentFailedLogsMessage, UserState};
 use crate::web::landing_view::LandingView;
 use yew::prelude::*;
 use yew_hooks::use_search_param;
@@ -32,12 +33,10 @@ pub enum Route {
 pub fn app() -> Html {
     let referrer = use_search_param("ref".to_string());
 
-    let dispatch = Dispatch::<UserState>::new();
-    dispatch.apply(CreateUserIfNewMessage { referrer });
+    Dispatch::<UserState>::new().apply(CreateUserIfNewMessage { referrer });
+    Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
+
     html! {
-
-
-
         <BrowserRouter>
             <Switch<Route> render={switch} /> // <- must be child of <BrowserRouter>
         </BrowserRouter>

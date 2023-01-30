@@ -4,12 +4,11 @@ use yewdux::prelude::Dispatch;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
 
-use crate::data::achievement::Achievement;
-
 use super::logging::EventLog;
-use super::logging::Loggable;
 use super::messages::*;
 use super::user_state::UserState;
+use crate::data::prelude::*;
+use crate::state::prelude::*;
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug, Default)]
 #[store(storage = "local", storage_tab_sync)]
@@ -28,9 +27,10 @@ impl Reducer<AchievementsState> for AchievementEarnedMessage {
 
         let user = Dispatch::<UserState>::new().get();
         if let Some(user_id) = user.user_id {
-            let message = EventLog::new_achievement(user_id, self.0);
+            let message = EventLog::new(user_id, self.0.into());
             message.send_log();
         } else {
+            Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(self.0.into()));
             log::error!("User Id not set");
         }
 
