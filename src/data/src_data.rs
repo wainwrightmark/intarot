@@ -1,4 +1,3 @@
-use base64::Engine;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Serialize)]
@@ -42,9 +41,7 @@ impl SrcData {
 
     pub fn share_url(&self) -> String {
         match self {
-            SrcData::Card(name) => format!("https://intarot.app/share?id={}", {
-                Engine::encode(&base64::engine::general_purpose::URL_SAFE, name)
-            }),
+            SrcData::Card(name) => format!("https://intarot.app/share?id={}", { name }),
             SrcData::Ad(_) | SrcData::Guide(_) => "https://intarot.app".to_string(),
         }
     }

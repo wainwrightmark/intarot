@@ -54,8 +54,7 @@ pub enum Guide {
 }
 
 impl Guide {
-
-    pub fn short_name(&self)-> &'static str{
+    pub fn short_name(&self) -> &'static str {
         match self {
             Guide::Evelyn => "E",
             Guide::Madame => "S",
