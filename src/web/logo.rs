@@ -14,9 +14,9 @@ pub fn logo(props: &LogoProps) -> Html {
     let navigator = use_navigator().unwrap();
 
     let style = if props.clickable {
-        "margin:auto; display: block; cursor:pointer;  margin-bottom: 6vh;"
+        "margin:auto; display: block; cursor:pointer;  margin-bottom: 6vh; margin-top: 6vh;"
     } else {
-        "margin:auto; display: block; pointer-events: none; margin-bottom: 6vh;"
+        "margin:auto; display: block; pointer-events: none; margin-bottom: 6vh; margin-top: 6vh;"
     };
 
     let onclick = {

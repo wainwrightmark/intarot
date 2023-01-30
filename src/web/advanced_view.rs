@@ -58,7 +58,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
         <>
         <div class="site" style="">
             <div class="container" style=""  >
-            <div class="sm-4 col" style="margin: auto; text-align: justify;">
+            <div class="sm-4 col" style="margin: auto;">
             <div>
             <div class={"advanced-view-item"}  >
             <Logo clickable={true}/>
@@ -72,7 +72,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
         <br/>
             </div>
             <div>
-            <select onchange={on_spread_type_change} class="nice-button advanced-view-item" style="text-align: center;">
+            <select onchange={on_spread_type_change} class="nice-button advanced-view-item advanced-view-button" style="text-align: center;">
             {spread_type_options}
             </select>
 
@@ -85,7 +85,8 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
 
             </div>
             <br/>
-            <button onclick={on_begin_click} style="display: block;" class="nice-button advanced-view-item">{"Begin"}</button>
+            <br/>
+            <button onclick={on_begin_click} style="display: block;" class="nice-button advanced-view-item advanced-view-button">{"Begin"}</button>
             <br/>
             <br/>
             </div>

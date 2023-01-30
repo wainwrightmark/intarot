@@ -15,18 +15,26 @@ body {
 }
 
 .advanced-view-item {
+  /* width: 15em;
+  max-width: 15em; */
+  position: relative;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+.advanced-view-button {
   width: 15em;
   max-width: 15em;
   position: relative;
   margin: 0 auto;
+  text-align: center;
 }
 
 .landing-paragraph {
-  width: 15em;
-  max-width: 15em;
   position: relative;
   margin-left: auto;
   margin-right: auto;
+
 }
 
 .carousel .carousel-item-hidden {
@@ -115,9 +123,6 @@ body {
   grid-template-columns: 1fr;
 }
 
-.guide-text {
-  text-align: justify;
-}
 
 .guide-name {
   color: var(--muted-text);
@@ -191,7 +196,6 @@ body {
   margin: 10%;
   color: black;
   pointer-events: none;
-  /* text-align: justify; */
 }
 
 .image_greyed {
