@@ -47,7 +47,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
 
     let on_survey_click ={
         Callback::from(move |_e: MouseEvent| {
-            open_link_in_new_tab("https://form.jotform.com/230255122565045".to_string());
+            open_link_in_new_tab("https://docs.google.com/forms/d/e/1FAIpQLSep7npbKOtYcA_ruRFK8ByHz0Zjl_7-gp6YQ3XPhJ_QHLgw4w/viewform".to_string());
         })
     };let on_discord_click ={
         Callback::from(move |_e: MouseEvent| {
