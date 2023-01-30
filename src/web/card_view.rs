@@ -6,21 +6,7 @@ use yewdux::prelude::*;
 use crate::data::prelude::*;
 use crate::state::prelude::*;
 use crate::web::prelude::Route;
-use crate::web::share_button::*;
-
-#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function open_link_in_new_tab(url) {
-        window.open(url, '_blank').focus();
-  }"##)]
-extern "C" {
-    fn open_link_in_new_tab(url: String);
-}
-
-#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function open_link_in_same_tab(url) {
-        window.open(url).focus();
-  }"##)]
-extern "C" {
-    fn open_link_in_same_tab(url: String);
-}
+use crate::web::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct CardViewProps {

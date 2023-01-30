@@ -1,12 +1,12 @@
 use yew::prelude::*;
-use yew_hooks::use_interval;
+use yew_hooks::{use_interval, use_effect_once};
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::{use_store_value, Dispatch};
 
 use super::app::Route;
 use crate::{
     state::{prelude::*, prompts_state::PromptsState},
-    web::logo::Logo,
+    web::{logo::Logo, prelude::scroll_to_top},
 };
 
 #[derive(Properties, PartialEq)]
@@ -14,6 +14,7 @@ pub struct QuestionProps {}
 
 #[function_component(QuestionView)]
 pub fn question_view(_props: &QuestionProps) -> Html {
+    use_effect_once(|| || scroll_to_top());
     let card_page_state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
     let is_clickable_state = use_state(|| false);

@@ -9,6 +9,7 @@ pub mod share_button;
 pub mod share_card_view;
 pub mod share_component;
 mod spread_view;
+pub mod js;
 
 pub mod prelude {
 
@@ -17,4 +18,6 @@ pub mod prelude {
     pub use crate::web::logo::*;
     pub use crate::web::share_card_view::*;
     pub use crate::web::share_component::*;
+    pub use crate::web::js::*;
+    pub use crate::web::share_button::*;
 }
