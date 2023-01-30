@@ -2,6 +2,7 @@ body {
   touch-action: manipulation;
   overscroll-behavior-x: none;
   overscroll-behavior-y: none;
+  background-color: #f4f1ec;
 }
 
 .container {
@@ -14,16 +15,37 @@ body {
   margin: 0 auto;
 }
 
+.logo {
+  margin: auto;
+  display: block;
+  margin-bottom: 6vh;
+  margin-top: 6vh;
+}
+
 .advanced-view-item {
+  /* width: 15em;
+  max-width: 15em; */
+  position: relative;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+.advanced-view-button {
   width: 15em;
   max-width: 15em;
   position: relative;
   margin: 0 auto;
+  text-align: center;
+}
+
+.advanced-view-header {
+  text-align: center;
+  background-color: transparent;
+  font-weight: bold;
+  font-family: "Finlandica", sans-serif;
 }
 
 .landing-paragraph {
-  width: 15em;
-  max-width: 15em;
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -115,10 +137,6 @@ body {
   grid-template-columns: 1fr;
 }
 
-.guide-text {
-  text-align: justify;
-}
-
 .guide-name {
   color: var(--muted-text);
   margin: 1em;
@@ -191,7 +209,6 @@ body {
   margin: 10%;
   color: black;
   pointer-events: none;
-  /* text-align: justify; */
 }
 
 .image_greyed {

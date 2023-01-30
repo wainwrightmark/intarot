@@ -2,6 +2,7 @@ import { open_link_in_new_tab } from './snippets/intarot-31e5e252b2c79c8d/inline
 import { open_link_in_same_tab } from './snippets/intarot-31e5e252b2c79c8d/inline1.js';
 import * as __wbg_star0 from './snippets/intarot-31e5e252b2c79c8d/inline2.js';
 import * as __wbg_star1 from './snippets/intarot-31e5e252b2c79c8d/inline3.js';
+import * as __wbg_star2 from './snippets/intarot-31e5e252b2c79c8d/inline4.js';
 
 let wasm;
 
@@ -1093,20 +1094,21 @@ function getImports() {
         const ret = getObject(arg0).sessionStorage;
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
     }, arguments) };
-    imports.wbg.__wbindgen_closure_wrapper585 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper667 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 64, __wbg_adapter_34);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper925 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper923 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 68, __wbg_adapter_37);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1477 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1472 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 64, __wbg_adapter_40);
         return addHeapObject(ret);
     };
     imports['./snippets/intarot-31e5e252b2c79c8d/inline2.js'] = __wbg_star0;
     imports['./snippets/intarot-31e5e252b2c79c8d/inline3.js'] = __wbg_star1;
+    imports['./snippets/intarot-31e5e252b2c79c8d/inline4.js'] = __wbg_star2;
 
     return imports;
 }
@@ -1143,7 +1145,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-8236993d8b3ffac4_bg.wasm', import.meta.url);
+        input = new URL('intarot-306ea88975bea326_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
