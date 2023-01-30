@@ -1,8 +1,7 @@
 use yew::prelude::*;
 use yew_hooks::use_clipboard;
-use yewdux::prelude::Dispatch;
 
-use crate::{data::prelude::*, state::prelude::*};
+use crate::data::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct ShareProps {

@@ -13,7 +13,7 @@ pub struct ShareButtonProps {
 
 #[function_component(ShareButton)]
 pub fn share_button(props: &ShareButtonProps) -> Html {
-    let src_data: SrcData = props.src_data.clone();
+    let src_data: SrcData = props.src_data;
 
     let on_click = move |_: MouseEvent| {
         let user = Dispatch::<UserState>::new().get();

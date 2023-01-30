@@ -5,7 +5,7 @@ use yewdux::prelude::{use_store_value, Dispatch};
 
 use super::app::Route;
 use crate::{
-    state::{logging::*, prelude::*, prompts_state::PromptsState},
+    state::{prelude::*, prompts_state::PromptsState},
     web::logo::Logo,
 };
 
