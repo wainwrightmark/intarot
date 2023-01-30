@@ -7,47 +7,7 @@ use crate::state::prelude::*;
 
 use crate::web::card_view::*;
 
-#[wasm_bindgen::prelude::wasm_bindgen(
-    inline_js = r##"export function angry_animate_top_card_right() {
 
-    document.querySelector(".top_card").animate(
-    [
-        { transform: 'translateX(0) rotate(0deg)' },
-        { transform: 'translateX(100px) rotate(-10deg)' },
-        { transform: 'translateX(50px) rotate(10deg)' },
-        { transform: 'translateX(70px) rotate(-15deg)' },
-        { transform: 'translateX(50px) rotate(5deg)' },
-        { transform: 'translateX(0) rotate(0deg)' },
-    ], {
-      duration: 500,
-      iterations: 1
-    }
-  ) }"##
-)]
-extern "C" {
-    fn angry_animate_top_card_right();
-}
-
-#[wasm_bindgen::prelude::wasm_bindgen(
-    inline_js = r##"export function angry_animate_top_card_left() {
-
-    document.querySelector(".top_card").animate(
-    [
-      { transform: 'translateX(0) rotate(0deg)' },
-      { transform: 'translateX(-100px) rotate(10deg)' },
-      { transform: 'translateX(-50px) rotate(-10deg)' },
-      { transform: 'translateX(-70px) rotate(15deg)' },
-      { transform: 'translateX(-50px) rotate(-5deg)' },
-      { transform: 'translateX(0) rotate(0deg)' },
-    ], {
-      duration: 500,
-      iterations: 1
-    }
-  ) }"##
-)]
-extern "C" {
-    fn angry_animate_top_card_left();
-}
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct SpreadViewProps {}
