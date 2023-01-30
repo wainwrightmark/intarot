@@ -1,5 +1,6 @@
 use rand::thread_rng;
 use rand::Rng;
+use yewdux::prelude::Dispatch;
 use std::collections::HashMap;
 use std::rc::Rc;
 use strum::EnumCount;
@@ -8,6 +9,7 @@ use yewdux::store::Store;
 
 use crate::data::prelude::*;
 
+use super::achievements_state::AchievementsState;
 use super::messages::*;
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug)]
@@ -140,17 +142,20 @@ impl DataState {
 
 impl Reducer<DataState> for DrawMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
+        Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::SwipeCard));
         (*state).clone().next_card().into()
     }
 }
 
 impl Reducer<DataState> for ReplaceMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
+        Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::SwipeCard));
         (*state).clone().previous_card().into()
     }
 }
 impl Reducer<DataState> for ToggleDescriptionMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
+        Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::ViewDescription));
         (*state).clone().toggle_description().into()
     }
 }
@@ -165,6 +170,7 @@ impl Reducer<DataState> for ResetMessage {
 
 impl Reducer<DataState> for ChangeSpreadTypeMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
+        Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::ChangeSpreadType));
         let mut state = (*state).clone();
         state.question_data.spread_type = self.0;
         state.reset();
@@ -174,9 +180,13 @@ impl Reducer<DataState> for ChangeSpreadTypeMessage {
 
 impl Reducer<DataState> for ChangeGuideMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
+        Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::ChangeGuide));
+
         let mut state = (*state).clone();
         state.question_data.guide = self.0;
         state.reset();
         state.into()
+
+
     }
 }

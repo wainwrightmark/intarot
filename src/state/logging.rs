@@ -1,10 +1,10 @@
 use itertools::Itertools;
 use serde::{Deserialize, Serialize};
+use strum::{EnumCount, EnumIter};
 use uuid::Uuid;
 
 use crate::data::{
-    prelude::{Card, SrcData},
-    question_data::QuestionData,
+    prelude::*,
 };
 
 use super::data_state::DataState;
@@ -36,18 +36,7 @@ pub enum LoggableEvent {
     },
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum Achievement {
-    SpreadFromBegin,
-    SpreadFromAdvanced,
-    ChangeGuide,
-    SwipeCard,
-    ViewDescription,
-    ClickSurvey,
-    ClickDiscord,
-    ClickAnotherReading,
-    ClickShare,
-}
+
 
 // #[derive(Debug, Clone, Serialize, Deserialize)]
 // pub struct RequestLog {

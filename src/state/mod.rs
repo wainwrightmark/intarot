@@ -6,6 +6,7 @@ mod meta_state;
 pub mod prompts_state;
 pub mod spread_descriptions;
 mod user_state;
+pub mod achievements_state;
 
 pub mod prelude {
     pub use crate::state::description_state::*;
@@ -15,5 +16,7 @@ pub mod prelude {
     pub use crate::state::data_state::*;
     pub use crate::state::messages::*;
     pub use crate::state::user_state::*;
+    pub use crate::state::achievements_state::*;
     pub use crate::state::logging::*;
+    pub use crate::state::prompts_state::*;
 }

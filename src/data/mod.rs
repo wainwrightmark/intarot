@@ -6,7 +6,7 @@ mod image_meta;
 pub mod question_data;
 pub mod spread_type;
 pub mod src_data;
-mod star_sign;
+pub mod achievement;
 
 pub mod prelude {
     pub use crate::data::card::*;
@@ -17,5 +17,5 @@ pub mod prelude {
     pub use crate::data::question_data::*;
     pub use crate::data::spread_type::*;
     pub use crate::data::src_data::*;
-    pub use crate::data::star_sign::*;
+    pub use crate::data::achievement::*;
 }

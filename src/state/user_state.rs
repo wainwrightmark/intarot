@@ -7,7 +7,7 @@ use super::logging::Loggable;
 use super::messages::*;
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug, Default)]
-#[store(storage = "local")]
+#[store(storage = "local", storage_tab_sync)]
 pub struct UserState {
     pub user_id: Option<uuid::Uuid>,
 }

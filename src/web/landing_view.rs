@@ -1,9 +1,8 @@
 use crate::{
     state::{
-        prelude::{ChangeSpreadTypeMessage, DataState, ShufflePromptsMessage},
-        prompts_state::PromptsState,
+        prelude::*,
     },
-    web::prelude::*,
+    web::prelude::*, data::achievement::Achievement,
 };
 use yew::prelude::*;
 use yew_router::prelude::use_navigator;
@@ -20,6 +19,7 @@ pub fn landing_view() -> Html {
     let on_begin_click = {
         let navigator = navigator.clone();
         Callback::from(move |_: MouseEvent| {
+            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::LandingClickBegin));
             Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
 
             Dispatch::<DataState>::new().apply(ChangeSpreadTypeMessage(
@@ -31,7 +31,9 @@ pub fn landing_view() -> Html {
 
     let on_advanced_click = {
         let navigator = navigator;
+
         Callback::from(move |_: MouseEvent| {
+            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::LandingClickAdvanced));
             navigator.push(&Route::Advanced {});
         })
     };

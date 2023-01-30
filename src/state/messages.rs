@@ -31,3 +31,6 @@ pub struct ShufflePromptsMessage;
 pub struct CreateUserIfNewMessage {
     pub referrer: Option<String>,
 }
+
+#[derive(Clone, PartialEq, Eq)]
+pub struct AchievementEarnedMessage(pub Achievement);

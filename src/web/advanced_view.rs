@@ -30,7 +30,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             let input: HtmlSelectElement = e.target_unchecked_into();
             let s = input.value();
             let spread_type = SpreadType::from_str(s.as_str()).unwrap();
-            Dispatch::<DataState>::new().apply(ChangeSpreadTypeMessage(spread_type))
+            Dispatch::<DataState>::new().apply(ChangeSpreadTypeMessage(spread_type));
         })
     };
 
