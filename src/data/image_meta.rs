@@ -1,8 +1,9 @@
 use std::str::FromStr;
 
 use strum::IntoEnumIterator;
+use num_traits::cast::FromPrimitive;
 
-use crate::data::prelude::*;
+use crate::{data::prelude::*};
 
 #[derive(PartialEq, Eq, Clone, Copy)]
 pub struct ImageMeta {
@@ -18,12 +19,12 @@ impl FromStr for ImageMeta {
         let file_name = Box::leak(s.to_string().into_boxed_str());
 
         let guide = Guide::iter()
-            .find(|ss| ss.filter_image(file_name))
+            .find(|g| file_name.starts_with(g.short_name()))
             .ok_or_else(|| anyhow::anyhow!("Could not find guide for {file_name}"))?;
 
-        let card = Card::iter()
-            .find(|ss| ss.filter_image(file_name))
-            .ok_or_else(|| anyhow::anyhow!("Could not find card for {file_name}"))?;
+        let char_c = file_name.chars().skip(1).next().ok_or_else(|| anyhow::anyhow!("Could not find card for {file_name}"))? as u8;
+        let char_c = char_c - b'a';
+        let card = Card::from_u8(char_c).ok_or_else(|| anyhow::anyhow!("Could not find card for {file_name}"))?;
 
         Ok(ImageMeta {
             file_name,

@@ -2,6 +2,7 @@ body {
   touch-action: manipulation;
   overscroll-behavior-x: none;
   overscroll-behavior-y: none;
+  background-color: #f4f1ec;
 }
 
 .container {

@@ -1,7 +1,6 @@
 use std::rc::Rc;
 
-use num_derive::{FromPrimitive, ToPrimitive};
-use rand::{rngs::ThreadRng, seq::SliceRandom};
+
 use serde::{Deserialize, Serialize};
 use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoEnumIterator, IntoStaticStr};
 
@@ -20,14 +19,11 @@ use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoEnumIterator, Int
     EnumIter,
     EnumCount,
     IntoStaticStr,
-    FromPrimitive,
-    ToPrimitive,
     Hash,
 )]
-#[repr(u8)]
 pub enum Card {
     #[strum(props(image_filter = "beggar", name = "The Fool"))]
-    Fool = 0,
+    Fool,
     #[strum(props(image_filter = "sorceror", name = "The Magician"))]
     Magician,
     #[strum(props(image_filter = "priestess", name = "The High Priestess"))]
@@ -91,16 +87,5 @@ impl Card {
 
     pub fn repr(&self) -> &'static str {
         self.into()
-    }
-
-    pub fn get_random_ordering() -> Rc<[Card; Card::COUNT]> {
-        let mut cards = [Card::Fool; Card::COUNT];
-        for (i, c) in Card::iter().enumerate() {
-            cards[i] = c
-        }
-        let mut rng = ThreadRng::default();
-        cards.shuffle(&mut rng);
-
-        cards.into()
     }
 }

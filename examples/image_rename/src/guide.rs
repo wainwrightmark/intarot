@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 
-use super::prelude::SrcData;
 
 #[derive(
     Copy,
@@ -36,7 +35,7 @@ pub enum Guide {
 
     #[strum(props(
         name = "Madame Sosoteris",
-        image_id = "MadameSosoteris",
+        image_id = "MadameSostertis",
         ad_image_id = "AdSosoteris",
         primary_color = "#d7e3f4",
         secondary_color = "#dbdee3",
@@ -63,28 +62,11 @@ impl Guide {
         }
     }
 
-    // pub fn filter_image(&self, name: &str) -> bool {
-    //     name.to_ascii_lowercase()
-    //         .contains(self.get_str("name").unwrap().to_ascii_lowercase().as_str())
-    // }
-
-    pub fn image_src(&self) -> SrcData {
-        let id = self.get_str("image_id").unwrap();
-        SrcData::Guide(id)
+    pub fn filter_image(&self, name: &str) -> bool {
+        name.to_ascii_lowercase()
+            .contains(self.get_str("name").unwrap().to_ascii_lowercase().as_str())
     }
 
-    pub fn ad_image_src(&self) -> SrcData {
-        let id = self.get_str("ad_image_id").unwrap();
-        SrcData::Ad(id)
-    }
-
-    pub fn description(&self) -> &'static str {
-        match self {
-            Guide::Evelyn => include_str!("../text/evelyn.txt"),
-            Guide::Madame => include_str!("../text/madame.txt"),
-            Guide::Maledictus => include_str!("../text/maledictus.txt"),
-        }
-    }
 
     pub fn name(&self) -> &'static str {
         self.get_str("name").unwrap()
