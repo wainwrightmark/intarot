@@ -62,7 +62,7 @@ pub fn card_view(props: &CardViewProps) -> Html {
         })
     };let on_discord_click ={
         Callback::from(move |_e: MouseEvent| {
-            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::ClickShare));
+            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::ClickDiscord));
             open_link_in_same_tab("https://discord.gg/eRm5YdMNAw".to_string());
         })
     };
