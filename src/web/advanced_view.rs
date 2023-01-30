@@ -66,12 +66,13 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             </div>
             <div>
             <div class={"advanced-view-item"}  >
+            <h5 class="advanced-view-header">{"Choose Your Guide"}</h5>
             <GuideCarousel/>
             </div>
             <br/>
-        <br/>
             </div>
             <div>
+            <h5 class="advanced-view-header">{"Choose Your Reading"}</h5>
             <select onchange={on_spread_type_change} class="nice-button advanced-view-item advanced-view-button" style="text-align: center;">
             {spread_type_options}
             </select>

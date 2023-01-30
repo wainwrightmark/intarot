@@ -64,9 +64,9 @@ pub fn question_view(_props: &QuestionProps) -> Html {
     let prompt2 = format!("{prompt2}?");
 
     let button_style = if *is_clickable_state {
-        "margin: auto; animation-delay: 5.25s;"
+        "margin: auto; animation-delay: 5.25s; margin-top: 6vh;"
     } else {
-        "margin: auto; animation-delay: 5.25s; pointer-events:none;"
+        "margin: auto; animation-delay: 5.25s; pointer-events:none; margin-top: 6vh;"
     };
 
     html! {
