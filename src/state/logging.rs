@@ -56,6 +56,11 @@ pub enum LoggableEvent {
     Achievement {
         achievement: Achievement,
     },
+    ReceivedShare{
+        referrer: Option<String>,
+        spread_id: Option<String>,
+        img_id: Option<String>
+    }
 }
 
 impl LoggableEvent {
@@ -68,6 +73,12 @@ impl LoggableEvent {
             spread_id,
         }
     }
+
+    pub fn new_share(referrer: Option<String>,
+        spread_id: Option<String>,
+        img_id: Option<String>)-> Self{
+            Self::ReceivedShare { referrer, spread_id, img_id }
+        }
 }
 
 impl From<Achievement> for LoggableEvent {

@@ -22,18 +22,37 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
     let navigator = use_navigator();
     let descriptions_state = use_store_value::<ImageDescriptionState>();
     let description_layout: DescriptionLayout = Default::default();
-    let id = use_search_param("id".to_string()).unwrap_or_default();
+    let id = use_search_param("id".to_string());
 
-    let spread = use_search_param("spread".to_string())
-    .and_then(|x| SpreadId::try_decode(x).ok())
-    .and_then(|x|x.try_deconstruct().ok());
+    let spread = use_search_param("spread".to_string());
+    let spread_data = spread
+        .clone()
+        .and_then(|x| SpreadId::try_decode(x).ok())
+        .and_then(|x| x.try_deconstruct().ok());
 
-    if let Some((qd, perm)) = spread{
-        Dispatch::<DataState>::new().apply(LoadSpreadMessage(qd, perm));
-        navigator.unwrap().push(&crate::web::app::Route::Spread );
+    let referrer = use_search_param("ref".to_string());
+
+    let user = Dispatch::<UserState>::new().get();
+    let event = LoggableEvent::new_share(referrer, spread, id.clone());
+    if let Some(user_id) = user.user_id {
+        let log = EventLog::new(user_id, event);
+        log.send_log();
+    } else {
+        log::error!("User Id not set");
+        Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(event));
     }
 
-    let image_meta = ImageMeta::from_str(id.as_str()).ok();
+    if let Some((qd, perm)) = spread_data {
+        Dispatch::<DataState>::new().apply(LoadSpreadMessage(qd, perm));
+        navigator
+            .clone()
+            .unwrap()
+            .push(&crate::web::app::Route::Spread);
+    } else if id.is_none() {
+        navigator.unwrap().push(&crate::web::app::Route::Landing);
+    }
+
+    let image_meta = ImageMeta::from_str(id.unwrap_or_default().as_str()).ok();
 
     if let Some(image_meta) = image_meta {
         let description = descriptions_state
