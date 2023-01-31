@@ -7,6 +7,7 @@ mod image_meta;
 pub mod question_data;
 pub mod spread_type;
 pub mod src_data;
+pub mod spread_id;
 
 pub mod prelude {
     pub use crate::data::achievement::*;

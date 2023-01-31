@@ -24,18 +24,43 @@ use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticSt
 #[strum(ascii_case_insensitive)]
 pub enum SpreadType {
     #[default]
+    #[strum(serialize = "One", serialize = "1")]
     One,
+    #[strum(serialize = "Love", serialize = "l")]
     Love,
+    #[strum(serialize = "Career", serialize = "c")]
     Career,
+    #[strum(serialize = "DayAhead", serialize = "d")]
     DayAhead,
+    #[strum(serialize = "Personal", serialize = "p")]
     Personal,
+    #[strum(serialize = "Problem", serialize = "q")]
     Problem,
+    #[strum(serialize = "Three", serialize = "3")]
     Three,
+    #[strum(serialize = "Five", serialize = "5")]
     Five,
+    #[strum(serialize = "All", serialize = "0")]
     All,
 }
 
 impl SpreadType {
+
+
+    pub fn short_name(&self) -> &'static str {
+        match self {
+            SpreadType::One => "1",
+            SpreadType::Love => "l",
+            SpreadType::Career => "c",
+            SpreadType::DayAhead => "d",
+            SpreadType::Personal => "p",
+            SpreadType::Problem => "q",
+            SpreadType::Three => "3",
+            SpreadType::Five => "5",
+            SpreadType::All => "0",
+        }
+    }
+
     /// total cards, excluding the finish card
     pub fn total_cards(&self) -> usize {
         match self {

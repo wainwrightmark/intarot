@@ -31,6 +31,8 @@ pub enum Guide {
         secondary_color = "#ffe5d5",
     ))]
     #[default]
+    #[strum(serialize = "Evelyn", serialize = "E")]
+
     Evelyn,
 
     #[strum(props(
@@ -40,6 +42,7 @@ pub enum Guide {
         primary_color = "#d7e3f4",
         secondary_color = "#dbdee3",
     ))]
+    #[strum(serialize = "Madame", serialize = "S")]
     Madame,
 
     #[strum(props(
@@ -49,6 +52,7 @@ pub enum Guide {
         primary_color = "#f6d5ff",
         secondary_color = "#ffffff",
     ))]
+    #[strum(serialize = "Maledictus", serialize = "M")]
     Maledictus,
 }
 
@@ -60,6 +64,10 @@ impl Guide {
             Guide::Madame => "S",
             Guide::Maledictus => "M",
         }
+    }
+
+    pub fn try_from_short_name(s: &str)-> Self{
+
     }
 
     pub fn filter_image(&self, name: &str) -> bool {
