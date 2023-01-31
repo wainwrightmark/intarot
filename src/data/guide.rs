@@ -72,7 +72,6 @@ impl Guide {
 
     pub fn ad_image_src(&self) -> &'static str {
         self.get_str("ad_image_id").unwrap()
-
     }
 
     pub fn description(&self) -> &'static str {

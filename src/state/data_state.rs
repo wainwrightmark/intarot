@@ -97,9 +97,8 @@ impl DataState {
         let mut arr = [0u8; 8];
         arr.clone_from_slice(&be_bytes[8..]);
         //log::info!("{arr:?}");
-        let u = u64::from_be_bytes(arr);
 
-        u
+        u64::from_be_bytes(arr)
     }
 
     pub fn is_top_card(&self, index: usize) -> bool {
@@ -136,9 +135,16 @@ impl DataState {
         self.top_card_index < self.question_data.spread_type.total_cards()
     }
 
-    pub fn spread_src(&self, metas: &HashMap<MetaKey, Vec<ImageMeta>>,)-> SrcData{
-        let card_name = self.get_image_meta(0, metas).map(|x|x.file_name) .unwrap_or_default();
-        SrcData::Spread { card_name, question_data: self.question_data, perm: self.cards_permutation }
+    pub fn spread_src(&self, metas: &HashMap<MetaKey, Vec<ImageMeta>>) -> SrcData {
+        let card_name = self
+            .get_image_meta(0, metas)
+            .map(|x| x.file_name)
+            .unwrap_or_default();
+        SrcData::Spread {
+            card_name,
+            question_data: self.question_data,
+            perm: self.cards_permutation,
+        }
     }
 
     pub fn reset(&mut self) {

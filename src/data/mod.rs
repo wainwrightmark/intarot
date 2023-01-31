@@ -5,9 +5,9 @@ mod guide;
 pub mod image_description;
 mod image_meta;
 pub mod question_data;
+pub mod spread_id;
 pub mod spread_type;
 pub mod src_data;
-pub mod spread_id;
 
 pub mod prelude {
     pub use crate::data::achievement::*;
@@ -21,5 +21,5 @@ pub mod prelude {
     pub use crate::data::src_data::*;
 
     use importunate::Permutation;
-    pub type Perm= Permutation::<u128, 22>;
+    pub type Perm = Permutation<u128, 22>;
 }

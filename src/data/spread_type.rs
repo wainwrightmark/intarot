@@ -45,8 +45,6 @@ pub enum SpreadType {
 }
 
 impl SpreadType {
-
-
     pub fn short_name(&self) -> &'static str {
         match self {
             SpreadType::One => "1",

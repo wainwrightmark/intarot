@@ -20,7 +20,7 @@ pub struct AdvancedProps {}
 
 #[function_component(AdvancedView)]
 pub fn advanced_view(_props: &AdvancedProps) -> Html {
-    use_effect_once(|| || scroll_to_top());
+    use_effect_once(|| scroll_to_top);
 
     let navigator = use_navigator().unwrap();
     let data_state = use_store_value::<DataState>();

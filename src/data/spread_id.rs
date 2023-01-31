@@ -36,7 +36,7 @@ impl SpreadId {
         Perm::from_le_byte_array(&arr)
     }
 
-    pub fn try_deconstruct(&self)-> Result<(QuestionData, Perm),anyhow::Error>{
+    pub fn try_deconstruct(&self) -> Result<(QuestionData, Perm), anyhow::Error> {
         let qd = self.question_data()?;
 
         Ok((qd, self.perm()))
@@ -51,7 +51,6 @@ impl SpreadId {
 
         let mut arr = [0u8; 11];
         arr.copy_from_slice(vec.as_slice());
-
 
         Ok(Self(arr))
     }

@@ -3,7 +3,7 @@ use std::str::FromStr;
 use yew::prelude::*;
 
 use yew_hooks::use_search_param;
-use yew_router::navigator;
+
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
@@ -44,10 +44,7 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
 
     if let Some((qd, perm)) = spread_data {
         Dispatch::<DataState>::new().apply(LoadSpreadMessage(qd, perm));
-        navigator
-            .clone()
-            .unwrap()
-            .push(&crate::web::app::Route::Spread);
+        navigator.unwrap().push(&crate::web::app::Route::Spread);
     } else if id.is_none() {
         navigator.unwrap().push(&crate::web::app::Route::Landing);
     }

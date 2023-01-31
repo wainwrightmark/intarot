@@ -11,7 +11,6 @@ mod user_state;
 
 pub mod prelude {
 
-
     pub use crate::state::description_state::*;
     pub use crate::state::meta_state::*;
     pub use crate::state::spread_descriptions::*;
@@ -23,6 +22,4 @@ pub mod prelude {
     pub use crate::state::messages::*;
     pub use crate::state::prompts_state::*;
     pub use crate::state::user_state::*;
-
-
 }

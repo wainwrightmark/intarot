@@ -37,7 +37,6 @@ pub struct CreateUserIfNewMessage {
 #[derive(Clone, PartialEq, Eq)]
 pub struct AchievementEarnedMessage(pub Achievement);
 
-
 #[derive(Clone, PartialEq, Eq)]
 pub struct LogFailedMessage(pub LoggableEvent);
 

@@ -24,8 +24,7 @@ impl FromStr for ImageMeta {
 
         let char_c = file_name
             .chars()
-            .skip(1)
-            .next()
+            .nth(1)
             .ok_or_else(|| anyhow::anyhow!("Could not find card for {file_name}"))?
             as u8;
         let char_c = char_c - b'a';

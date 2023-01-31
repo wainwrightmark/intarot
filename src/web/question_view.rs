@@ -14,7 +14,7 @@ pub struct QuestionProps {}
 
 #[function_component(QuestionView)]
 pub fn question_view(_props: &QuestionProps) -> Html {
-    use_effect_once(|| || scroll_to_top());
+    use_effect_once(|| scroll_to_top);
     let card_page_state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
     let is_clickable_state = use_state(|| false);

@@ -7,7 +7,7 @@ use yewdux::prelude::Dispatch;
 #[function_component(LandingView)]
 pub fn landing_view() -> Html {
     let navigator = use_navigator().unwrap();
-    use_effect_once(|| || scroll_to_top());
+    use_effect_once(|| scroll_to_top);
 
     let paragraph1 = include_str!(r#"../text/opening_p1.txt"#);
     let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);

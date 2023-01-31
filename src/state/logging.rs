@@ -48,7 +48,7 @@ pub enum LoggableEvent {
     },
     NewSpread {
         question_data: QuestionData,
-        spread_id: String
+        spread_id: String,
     },
     Share {
         src_data: SrcData2,
@@ -56,11 +56,11 @@ pub enum LoggableEvent {
     Achievement {
         achievement: Achievement,
     },
-    ReceivedShare{
+    ReceivedShare {
         referrer: Option<String>,
         spread_id: Option<String>,
-        img_id: Option<String>
-    }
+        img_id: Option<String>,
+    },
 }
 
 impl LoggableEvent {
@@ -74,19 +74,32 @@ impl LoggableEvent {
         }
     }
 
-    pub fn new_share(referrer: Option<String>,
+    pub fn new_share(
+        referrer: Option<String>,
         spread_id: Option<String>,
-        img_id: Option<String>)-> Self{
-            Self::ReceivedShare { referrer, spread_id, img_id }
+        img_id: Option<String>,
+    ) -> Self {
+        Self::ReceivedShare {
+            referrer,
+            spread_id,
+            img_id,
         }
+    }
 
-    pub fn type_name(&self)-> &'static str{
-        match self{
-            LoggableEvent::NewUser { referrer } => "New User",
-            LoggableEvent::NewSpread { question_data, spread_id } => "New Spread",
-            LoggableEvent::Share { src_data } => "Share",
-            LoggableEvent::Achievement { achievement } => "Achievement",
-            LoggableEvent::ReceivedShare { referrer, spread_id, img_id } => "Received Share",
+    pub fn type_name(&self) -> &'static str {
+        match self {
+            LoggableEvent::NewUser { referrer: _ } => "New User",
+            LoggableEvent::NewSpread {
+                question_data: _,
+                spread_id: _,
+            } => "New Spread",
+            LoggableEvent::Share { src_data: _ } => "Share",
+            LoggableEvent::Achievement { achievement: _ } => "Achievement",
+            LoggableEvent::ReceivedShare {
+                referrer: _,
+                spread_id: _,
+                img_id: _,
+            } => "Received Share",
         }
     }
 }
@@ -130,13 +143,7 @@ impl EventLog {
             log::error!("Logging Error {}", err);
             Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(data.event));
         } else {
-            log::debug!("Log {} sent successfully",data.event.type_name() );
+            log::debug!("Log {} sent successfully", data.event.type_name());
         }
     }
 }
-
-// // impl Loggable for EventLog {}
-
-// pub trait Loggable: Sized + Serialize + 'static {
-
-// }

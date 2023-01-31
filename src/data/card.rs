@@ -1,8 +1,8 @@
-use num_derive::{FromPrimitive, ToPrimitive};
-use rand::{rngs::ThreadRng,  Rng};
-use serde::{Deserialize, Serialize};
-use strum::{EnumCount, EnumIter, EnumProperty, EnumString,  IntoStaticStr};
 use crate::data::prelude::*;
+use num_derive::{FromPrimitive, ToPrimitive};
+use rand::{rngs::ThreadRng, Rng};
+use serde::{Deserialize, Serialize};
+use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 
 #[derive(
     Copy,
