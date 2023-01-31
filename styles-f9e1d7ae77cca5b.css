@@ -22,6 +22,13 @@ body {
   margin-top: 6vh;
 }
 
+img {
+  border-color: #41403e;
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
 .advanced-view-item {
   /* width: 15em;
   max-width: 15em; */
@@ -369,4 +376,7 @@ body {
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+.margin {
+  margin: 1rem;
 }
