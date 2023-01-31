@@ -1,97 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes target-densitydpi=device-dpi"
-    />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="#555555"
-      af
-    />
-    <meta name="theme-color" content="#555555" />
-
-    <title>intarot</title>
-
-    <!-- https://devhints.io/html-meta -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="intarot: unique personalized tarot" />
-    <meta name="twitter:title" content="intarot: unique personalized tarot" />
-    <!-- <meta property="og:url" content="https://intarot.app" /> -->
-    <meta property="og:site_name" content="intarot" />
-    <meta
-      property="og:description"
-      content="The tarot app that combines AI-generated insight with self-reflection. Find your answers."
-    />
-    <meta
-      name="description"
-      content="The tarot app that combines AI-generated insight with self-reflection. Find your answers."
-    />
-    <meta
-      name="twitter:description"
-      content="The tarot app that combines AI-generated insight with self-reflection. Find your answers."
-    />
-    <meta property="fb:app_id" content="1606026743178281" />
-
-    <meta
-      property="og:image"
-      itemprop="image"
-      content="https://intarot-images.s3.eu-west-2.amazonaws.com/Logo/full+logo+small.jpg"
-    />
-    <meta
-    property="og:image:secure_url"
-    content="https://intarot-images.s3.eu-west-2.amazonaws.com/Logo/full+logo+small.jpg"
-  />
-
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="256" />
-    <meta property="og:image:height" content="256" />
-    <meta property="og:locale" content="en_GB" />
-
-    <meta name="twitter:card" content="summary_large_image">
-
-    <link data-trunk rel="copy-dir" href="logo" />
-    <link data-trunk rel="copy-dir" href="social" />
-    <link data-trunk rel="copy-dir" href="netlify" />
-    <link data-trunk rel="copy-file" href="netlify.toml" />
-
-    <link rel="icon" href="logo/icon192.png" />
-
-    <link rel="apple-touch-icon" sizes="76x76" href="logo/icon76.png" />
-    <link rel="apple-touch-icon" sizes="120x120" href="logo/icon120.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="logo/icon152.png" />
-
-    <meta name="msapplication-square70x70logo" content="logo/icon70.png" />
-    <meta name="msapplication-square150x150logo" content="logo/icon150.png" />
-    <meta name="msapplication-wide310x150logo" content="logo/icon310.png" />
-
-    <link data-trunk rel="css" href="paper_styles.min.css" data-wasm-opt="{z}" />
-    <link data-trunk rel="css" href="styles.css" data-wasm-opt="{z}" />
-    <link data-trunk rel="css" href="shareon.min.css" data-wasm-opt="{z}" />
+   <head>
+      <meta charset="utf-8" />
+      <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes"
+         />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta
+         name="apple-mobile-web-app-status-bar-style"
+         content="#555555"
+         af
+         />
+      <meta name="theme-color" content="#555555" />
+      <title>intarot</title>
+      <!-- https://devhints.io/html-meta -->
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="intarot: unique personalized tarot" />
+      <meta name="twitter:title" content="intarot: unique personalized tarot" />
+      <!-- <meta property="og:url" content="https://intarot.app" /> -->
+      <meta property="og:site_name" content="intarot" />
+      <meta
+         property="og:description"
+         content="The tarot app that combines AI-generated insight with self-reflection. Find your answers."
+         />
+      <meta
+         name="description"
+         content="The tarot app that combines AI-generated insight with self-reflection. Find your answers."
+         />
+      <meta
+         name="twitter:description"
+         content="The tarot app that combines AI-generated insight with self-reflection. Find your answers."
+         />
+      <meta property="fb:app_id" content="1606026743178281" />
+      <meta
+         property="og:image"
+         itemprop="image"
+         content="https://intarot-images.s3.eu-west-2.amazonaws.com/Logo/full+logo+small.jpg"
+         />
+      <meta
+         property="og:image:secure_url"
+         content="https://intarot-images.s3.eu-west-2.amazonaws.com/Logo/full+logo+small.jpg"
+         />
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:width" content="256" />
+      <meta property="og:image:height" content="256" />
+      <meta property="og:locale" content="en_GB" />
+      <meta name="twitter:card" content="summary_large_image">
+      <link data-trunk rel="copy-dir" href="logo" />
+      <link data-trunk rel="copy-dir" href="social" />
+      <link data-trunk rel="copy-dir" href="netlify" />
+      <link data-trunk rel="copy-file" href="netlify.toml" />
+      <link rel="icon" href="logo/icon192.png" />
+      <link rel="apple-touch-icon" sizes="76x76" href="logo/icon76.png" />
+      <link rel="apple-touch-icon" sizes="120x120" href="logo/icon120.png" />
+      <link rel="apple-touch-icon" sizes="152x152" href="logo/icon152.png" />
+      <meta name="msapplication-square70x70logo" content="logo/icon70.png" />
+      <meta name="msapplication-square150x150logo" content="logo/icon150.png" />
+      <meta name="msapplication-wide310x150logo" content="logo/icon310.png" />
+      <link data-trunk rel="css" href="paper_styles.min.css" data-wasm-opt="{z}" />
+      <link data-trunk rel="css" href="styles.css" data-wasm-opt="{z}" />
+      <link data-trunk rel="css" href="shareon.min.css" data-wasm-opt="{z}" />
+      <link data-trunk rel="copy-file" href="robots.txt" />
+      <link data-trunk rel="copy-file" href="sitemap.txt" />
+      <link data-trunk rel="copy-file" href="manifest.json" />
+      <link rel="manifest" href="/manifest.json" />
+   </head>
+   <body style="background: var(--main-background)">
 
 
-    <link data-trunk rel="copy-file" href="robots.txt" />
-    <link data-trunk rel="copy-file" href="sitemap.txt" />
+
+    <div class="site"><div class="container"><div style="margin: auto;" class="sm-4 col"><img width="200" style="cursor:pointer;" src="logo/full logo small.svg" class="logo"><p class="landing-paragraph">This is tarot for the 21st Century. Our lives are overwhelmed by decisions about where to go, what to buy and how to feel. intarot can help lift this thick fog of decision fatigue. Simply ask a question and get an answer - then see how you really feel.</p><p class="landing-paragraph">Channelling the ambient noise of the random universe, each of our AI guides has created a deck of thousands of unique cards, designed to give you a truly personalised experience. </p><p class="landing-paragraph">The ancient art of tarot invites you to look for answers on the surface of the card itself; as a way of balancing the analytical response with the emotional. Having different versions of each card invigorates this process, meaning you will always find something new to prompt reflection. </p></div><br><br><br><div class="advanced-view-item"><div class="social-row"><a href="https://www.facebook.com/profile.php?id=100089979217774" target="_blank" class="social-icon si-facebook tooltip"><img src="social/facebook.svg" width="40" height="40" alt="facebook"><span class="tooltiptext">Follow us on Facebook</span></a><a href="https://twitter.com/intarotapp" target="_blank" class="social-icon si-twitter tooltip"><img src="social/twitter.svg" width="40" height="40" alt="twitter"><span class="tooltiptext">Follow us on Twitter</span></a><a href="https://discord.gg/eRm5YdMNAw" target="_blank" class="social-icon si-discord tooltip"><img src="social/discord.svg" width="40" height="40" alt="discord"><span class="tooltiptext">Join our Discord</span></a><a href="https://www.instagram.com/intarotapp/" target="_blank" class="social-icon si-instagram tooltip"><img src="social/instagram.svg" width="40" height="40" alt="instagram"><span class="tooltiptext">Follow us on Instagram</span></a></div><br><br></div></div></div>
 
 
-    <link data-trunk rel="copy-file" href="manifest.json" />
-    <link rel="manifest" href="/manifest.json" />
-  </head>
 
-  <body style="background: var(--main-background)">
-    <link rel="rust" data-trunk href="Cargo.toml" data-bin="intarot" />
-  </body>
+      <link rel="rust" data-trunk href="Cargo.toml" data-bin="intarot" />
+   </body>
 </html>
-
 <!-- <script>
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    document.body.classList.add("dark");
-  }
+   if (
+     window.matchMedia &&
+     window.matchMedia("(prefers-color-scheme: dark)").matches
+   ) {
+     document.body.classList.add("dark");
+   }
 </script>
