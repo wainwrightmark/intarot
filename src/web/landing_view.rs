@@ -60,7 +60,7 @@ pub fn landing_view() -> Html {
                 <br/>
                 <br/>
                 <div class={"advanced-view-item"}  >
-                <SocialIcons/>
+                <SocialIcons />
                 <br/>
                 <br/>
             </div>

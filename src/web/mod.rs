@@ -11,6 +11,7 @@ pub mod share_card_view;
 pub mod share_component;
 mod social;
 mod spread_view;
+pub mod mailchimp;
 
 pub mod prelude {
 

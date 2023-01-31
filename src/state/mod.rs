@@ -8,6 +8,7 @@ mod meta_state;
 pub mod prompts_state;
 pub mod spread_descriptions;
 mod user_state;
+pub mod mailchimp_state;
 
 pub mod prelude {
 

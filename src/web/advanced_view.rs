@@ -11,8 +11,8 @@ use yewdux::prelude::*;
 use super::app::Route;
 use crate::{
     data::prelude::*,
-    state::{prelude::*, prompts_state::PromptsState},
-    web::prelude::*,
+    state::{prelude::*, prompts_state::PromptsState, mailchimp_state::MailchimpState},
+    web::{prelude::*},
 };
 
 #[derive(Properties, PartialEq)]
@@ -22,8 +22,20 @@ pub struct AdvancedProps {}
 pub fn advanced_view(_props: &AdvancedProps) -> Html {
     use_effect_once(|| scroll_to_top);
 
+
     let navigator = use_navigator().unwrap();
     let data_state = use_store_value::<DataState>();
+    let mailchimp_state = use_store_value::<MailchimpState>();
+
+    if !mailchimp_state.has_been_bugged{
+        Dispatch::<MailchimpState>::new().reduce(|_|{
+            MailchimpState{
+                show: true,
+                has_been_bugged: true
+            }.into()
+        })
+    }
+
     let description_state = use_store_value::<SpreadDescriptionState>();
 
     let user_data = data_state.question_data;
@@ -59,12 +71,16 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
     html! {
 
         <>
+
         <div class="site" style="">
+
             <div class="container" style=""  >
             <div class="sm-4 col" style="margin: auto;">
+
             <div>
             <div class={"advanced-view-item"}  >
             <Logo clickable={true}/>
+
             </div>
             </div>
             <div>
@@ -95,7 +111,8 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             <br/>
             <br/>
             <div class={"advanced-view-item"}  >
-                <SocialIcons/>
+                <SocialIcons />
+
             </div>
             </div>
 
