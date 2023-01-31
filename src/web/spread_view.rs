@@ -29,18 +29,18 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
             move |direction| {
                 // Do something based on direction.
                 match **direction {
-                    UseSwipeDirection::Left => {
+                    UseSwipeDirection::Right => {
                         if data_state.can_draw() {
                             Dispatch::<DataState>::new().apply(DrawMessage {})
                         } else {
-                            angry_animate_top_card_left();
+                            angry_animate_top_card_right();
                         }
                     }
-                    UseSwipeDirection::Right => {
-                        if data_state.can_previous() {
+                    UseSwipeDirection::Left => {
+                        if data_state.can_replace() {
                             Dispatch::<DataState>::new().apply(ReplaceMessage {})
                         } else {
-                            angry_animate_top_card_right();
+                            angry_animate_top_card_left();
                         }
                     }
                     _ => (),
@@ -51,15 +51,15 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
         );
     }
 
-    let select_previous = Dispatch::<DataState>::new().apply_callback(move |_| ReplaceMessage {});
-    let select_next = Dispatch::<DataState>::new().apply_callback(move |_| DrawMessage {});
+    let select_next = Dispatch::<DataState>::new().apply_callback(move |_| ReplaceMessage {});
+    let  select_previous= Dispatch::<DataState>::new().apply_callback(move |_| DrawMessage {});
 
     let _total_cards = (data_state.last_hidden_card_index + 1)
         .min(data_state.question_data.spread_type.total_cards()); //display an extra card to preload the image
     let _s_d: bool = data_state.show_description;
 
-    let can_previous = data_state.can_previous();
-    let can_next = data_state.can_draw();
+    let can_previous = data_state.can_draw();
+    let can_next = data_state.can_replace();
 
     let cards = (0..=_total_cards)
         .map(|index| html!(<IndexedCardView index={index} key={index} />))

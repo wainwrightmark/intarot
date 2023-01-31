@@ -127,7 +127,7 @@ impl DataState {
         self
     }
 
-    pub fn can_previous(&self) -> bool {
+    pub fn can_replace(&self) -> bool {
         self.top_card_index > 0
     }
 
