@@ -1,9 +1,8 @@
-use std::rc::Rc;
-
 use num_derive::{FromPrimitive, ToPrimitive};
-use rand::{rngs::ThreadRng, seq::SliceRandom};
+use rand::{rngs::ThreadRng,  Rng};
 use serde::{Deserialize, Serialize};
-use strum::{EnumCount, EnumIter, EnumProperty, EnumString, IntoEnumIterator, IntoStaticStr};
+use strum::{EnumCount, EnumIter, EnumProperty, EnumString,  IntoStaticStr};
+use crate::data::prelude::*;
 
 #[derive(
     Copy,
@@ -93,14 +92,10 @@ impl Card {
         self.into()
     }
 
-    pub fn get_random_ordering() -> Rc<[Card; Card::COUNT]> {
-        let mut cards = [Card::Fool; Card::COUNT];
-        for (i, c) in Card::iter().enumerate() {
-            cards[i] = c
-        }
+    pub fn get_random_ordering() -> Perm {
         let mut rng = ThreadRng::default();
-        cards.shuffle(&mut rng);
-
-        cards.into()
+        let max = Perm::get_max().0;
+        let inner = rng.gen_range(0..(max));
+        inner.into()
     }
 }

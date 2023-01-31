@@ -2,21 +2,23 @@ use rand::thread_rng;
 use rand::Rng;
 use std::collections::HashMap;
 use std::rc::Rc;
-use strum::EnumCount;
 use yewdux::prelude::Dispatch;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
+use num_traits::cast::FromPrimitive;
 
 use crate::data::prelude::*;
 
 use super::achievements_state::AchievementsState;
 use super::messages::*;
 
+
+
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug)]
 #[store(storage = "local")]
 pub struct DataState {
     pub question_data: QuestionData,
-    pub cards: Rc<[Card; Card::COUNT]>,
+    pub cards_permutation: Perm,
     pub variant_seed: u32,
     pub top_card_index: usize,
 
@@ -32,7 +34,7 @@ impl Default for DataState {
         Self {
             top_card_index: 0,
             last_hidden_card_index: 1,
-            cards: Card::get_random_ordering(),
+            cards_permutation: Card::get_random_ordering(),
             question_data: Default::default(),
             show_description: false,
             has_shown_description: false,
@@ -78,7 +80,7 @@ impl DataState {
             index -= 1;
         }
 
-        let card = self.cards[index];
+        let card = self.cards_permutation.element_at_index(index, |x|Card::from_u8(x as u8).expect("Could not make card from u8"));
         let key = MetaKey {
             guide: self.question_data.guide,
             card,
@@ -131,7 +133,7 @@ impl DataState {
     }
 
     pub fn reset(&mut self) {
-        self.cards = Card::get_random_ordering();
+        self.cards_permutation = Card::get_random_ordering();
         self.variant_seed = thread_rng().gen();
         self.top_card_index = self.question_data.spread_type.initial_top_card_index();
         self.show_description = false;

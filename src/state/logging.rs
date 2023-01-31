@@ -1,11 +1,10 @@
-use itertools::Itertools;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 use yewdux::prelude::Dispatch;
 
 use crate::{
     data::prelude::*,
-    state::{failed_logs_state::FailedLogsState, messages::*},
+    state::prelude::*,
 };
 
 use super::data_state::DataState;
@@ -50,7 +49,7 @@ pub enum LoggableEvent {
     NewSpread {
         question_data: QuestionData,
         variant_seed: u32,
-        cards: Vec<Card>,
+        cards: Perm,
     },
     Share {
         src_data: SrcData2,
@@ -65,7 +64,7 @@ impl LoggableEvent {
         let cards_to_take = data.question_data.spread_type.total_cards().min(7);
         let question_data = data.question_data;
         let variant_seed = data.variant_seed;
-        let cards = data.cards.iter().take(cards_to_take).cloned().collect_vec();
+        let cards = data.cards_permutation;
 
         Self::NewSpread {
             question_data,

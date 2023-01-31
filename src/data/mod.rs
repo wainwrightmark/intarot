@@ -18,4 +18,7 @@ pub mod prelude {
     pub use crate::data::question_data::*;
     pub use crate::data::spread_type::*;
     pub use crate::data::src_data::*;
+
+    use importunate::Permutation;
+    pub type Perm= Permutation::<u128, 22>;
 }
