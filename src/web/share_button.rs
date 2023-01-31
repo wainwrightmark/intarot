@@ -2,7 +2,6 @@ use crate::data::prelude::*;
 use crate::state::prelude::*;
 use crate::web::share_component::ShareComponent;
 use yew::prelude::*;
-use yewdux::prelude::Dispatch;
 
 #[derive(Properties, PartialEq)]
 pub struct ShareButtonProps {
@@ -16,14 +15,7 @@ pub fn share_button(props: &ShareButtonProps) -> Html {
     let src_data: SrcData = props.src_data;
 
     let on_click = move |_: MouseEvent| {
-        let user = Dispatch::<UserState>::new().get();
-        if let Some(user_id) = user.user_id {
-            let log = EventLog::new(user_id, src_data.into());
-            log.send_log();
-        } else {
-            log::error!("User Id not set");
-            Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(src_data.into()));
-        };
+        LoggableEvent::try_log(src_data);
     };
 
     if let Some(label) = &props.label {

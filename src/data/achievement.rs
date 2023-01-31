@@ -26,3 +26,24 @@ pub enum Achievement {
     ClickAnotherReading,
     ClickShare,
 }
+
+#[derive(
+    Debug,
+    Copy,
+    Clone,
+    Serialize,
+    Deserialize,
+    PartialEq,
+    Eq,
+    Hash,
+    EnumCount,
+    EnumIter,
+    PartialOrd,
+    Ord,
+)]
+pub enum SocialPlatform {
+    Facebook,
+    Twitter,
+    Discord,
+    Instagram,
+}

@@ -360,8 +360,10 @@ body {
 
   position: absolute;
   z-index: 1;
-  top: -5px;
-  left: 105%;
+  width: 120px;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */

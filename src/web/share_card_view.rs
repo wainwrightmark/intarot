@@ -32,15 +32,8 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
 
     let referrer = use_search_param("ref".to_string());
 
-    let user = Dispatch::<UserState>::new().get();
     let event = LoggableEvent::new_share(referrer, spread, id.clone());
-    if let Some(user_id) = user.user_id {
-        let log = EventLog::new(user_id, event);
-        log.send_log();
-    } else {
-        log::error!("User Id not set");
-        Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(event));
-    }
+    LoggableEvent::try_log(event);
 
     if let Some((qd, perm)) = spread_data {
         Dispatch::<DataState>::new().apply(LoadSpreadMessage(qd, perm));

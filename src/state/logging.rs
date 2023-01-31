@@ -25,13 +25,6 @@ fn is_false(b: &bool) -> bool {
 }
 
 impl EventLog {
-    pub fn new(user_id: Uuid, event: LoggableEvent) -> Self {
-        Self {
-            user_id,
-            resent: false,
-            event,
-        }
-    }
     pub fn new_resent(user_id: Uuid, event: LoggableEvent) -> Self {
         Self {
             user_id,
@@ -53,6 +46,10 @@ pub enum LoggableEvent {
     Share {
         src_data: SrcData2,
     },
+    Social {
+        platform: SocialPlatform,
+    },
+
     Achievement {
         achievement: Achievement,
     },
@@ -64,6 +61,21 @@ pub enum LoggableEvent {
 }
 
 impl LoggableEvent {
+    pub fn try_log(data: impl Into<Self>) {
+        let user = Dispatch::<UserState>::new().get();
+        if let Some(user_id) = user.user_id {
+            let message = EventLog {
+                event: data.into(),
+                user_id,
+                resent: false,
+            };
+            message.send_log();
+        } else {
+            Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(data.into()));
+            log::error!("User Id not set");
+        }
+    }
+
     pub fn new_spread(data: &DataState) -> Self {
         let question_data = data.question_data;
         let spread_id = SpreadId::new(&question_data, &data.cards_permutation).encode();
@@ -100,6 +112,7 @@ impl LoggableEvent {
                 spread_id: _,
                 img_id: _,
             } => "Received Share",
+            LoggableEvent::Social { platform: _ } => "Social",
         }
     }
 }
@@ -107,6 +120,12 @@ impl LoggableEvent {
 impl From<Achievement> for LoggableEvent {
     fn from(achievement: Achievement) -> Self {
         Self::Achievement { achievement }
+    }
+}
+
+impl From<SocialPlatform> for LoggableEvent {
+    fn from(platform: SocialPlatform) -> Self {
+        Self::Social { platform }
     }
 }
 

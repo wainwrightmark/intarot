@@ -9,8 +9,8 @@ pub mod question_view;
 pub mod share_button;
 pub mod share_card_view;
 pub mod share_component;
-mod spread_view;
 mod social;
+mod spread_view;
 
 pub mod prelude {
 

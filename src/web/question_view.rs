@@ -33,15 +33,8 @@ pub fn question_view(_props: &QuestionProps) -> Html {
                 Dispatch::<DataState>::new().apply(ResetMessage {});
 
                 let data = Dispatch::<DataState>::new().get();
-                let user = Dispatch::<UserState>::new().get();
-                let event = LoggableEvent::new_spread(data.as_ref());
-                if let Some(user_id) = user.user_id {
-                    let log = EventLog::new(user_id, event);
-                    log.send_log();
-                } else {
-                    log::error!("User Id not set");
-                    Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(event));
-                }
+
+                let _event = LoggableEvent::new_spread(data.as_ref());
 
                 navigator.replace(&Route::Spread {});
             }
