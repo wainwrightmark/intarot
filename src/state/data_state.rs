@@ -137,9 +137,10 @@ impl DataState {
 
     pub fn spread_src(&self, metas: &HashMap<MetaKey, Vec<ImageMeta>>) -> SrcData {
         let card_name = self
-            .get_image_meta(0, metas)
+            .get_image_meta(self.question_data.spread_type.initial_top_card_index(), metas)
             .map(|x| x.file_name)
             .unwrap_or_default();
+
         SrcData::Spread {
             card_name,
             question_data: self.question_data,
