@@ -1150,7 +1150,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-c06d93a061a425d5_bg.wasm', import.meta.url);
+        input = new URL('intarot-a349969b4ca855eb_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
