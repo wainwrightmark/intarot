@@ -1,6 +1,4 @@
 use num_traits::cast::FromPrimitive;
-use rand::thread_rng;
-use rand::Rng;
 use std::collections::HashMap;
 use std::rc::Rc;
 use yewdux::prelude::Dispatch;
@@ -94,9 +92,9 @@ impl DataState {
         }
     }
 
-    fn variant_index(&self)-> u64{
+    fn variant_index(&self) -> u64 {
         let be_bytes = self.cards_permutation.0.to_be_bytes();
-        let mut arr = [0u8;8];
+        let mut arr = [0u8; 8];
         arr.clone_from_slice(&be_bytes[8..]);
         log::info!("{arr:?}");
         let u = u64::from_be_bytes(arr);
@@ -138,8 +136,17 @@ impl DataState {
         self.top_card_index < self.question_data.spread_type.total_cards()
     }
 
+    pub fn spread_src(&self, metas: &HashMap<MetaKey, Vec<ImageMeta>>,)-> SrcData{
+        let card_name = self.get_image_meta(0, metas).map(|x|x.file_name) .unwrap_or_default();
+        SrcData::Spread { card_name, question_data: self.question_data, perm: self.cards_permutation }
+    }
+
     pub fn reset(&mut self) {
         self.cards_permutation = Card::get_random_ordering();
+        self.back_to_top();
+    }
+
+    pub fn back_to_top(&mut self) {
         self.top_card_index = self.question_data.spread_type.initial_top_card_index();
         self.show_description = false;
         self.last_hidden_card_index = self.question_data.spread_type.initial_top_card_index() + 1;
@@ -174,6 +181,18 @@ impl Reducer<DataState> for ResetMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         let mut state = (*state).clone();
         state.reset();
+        state.into()
+    }
+}
+
+impl Reducer<DataState> for LoadSpreadMessage {
+    fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
+        let mut state = (*state).clone();
+        state.question_data = self.0;
+        state.cards_permutation = self.1;
+
+        state.back_to_top();
+
         state.into()
     }
 }

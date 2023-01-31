@@ -212,7 +212,8 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
 
     let src_data = meta
         .map(|x| x.src_data())
-        .unwrap_or_else(|| data_state.question_data.guide.ad_image_src());
+        .unwrap_or_else(||
+             data_state.spread_src(metas));
 
     let show_extra_buttons = meta.is_none();
 

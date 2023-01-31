@@ -3,7 +3,7 @@ use uuid::Uuid;
 use yewdux::prelude::Dispatch;
 
 use crate::{
-    data::prelude::*,
+    data::{prelude::*, spread_id::SpreadId},
     state::prelude::*,
 };
 
@@ -48,7 +48,7 @@ pub enum LoggableEvent {
     },
     NewSpread {
         question_data: QuestionData,
-        cards: Perm,
+        spread_id: String
     },
     Share {
         src_data: SrcData2,
@@ -60,13 +60,12 @@ pub enum LoggableEvent {
 
 impl LoggableEvent {
     pub fn new_spread(data: &DataState) -> Self {
-        let cards_to_take = data.question_data.spread_type.total_cards().min(7);
         let question_data = data.question_data;
-        let cards = data.cards_permutation;
+        let spread_id = SpreadId::new(&question_data, &data.cards_permutation).encode();
 
         Self::NewSpread {
             question_data,
-            cards,
+            spread_id,
         }
     }
 }

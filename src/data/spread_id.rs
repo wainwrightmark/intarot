@@ -8,7 +8,7 @@ use base64::{DecodeError, Engine};
 pub struct SpreadId([u8; 11]);
 
 impl SpreadId {
-    pub fn new(data: QuestionData, perm: Perm) -> Self {
+    pub fn new(data: &QuestionData, perm: &Perm) -> Self {
         let mut arr = [0; 11];
 
         let guide_byte = data.guide.short_name().chars().next().unwrap() as u8;
@@ -36,6 +36,12 @@ impl SpreadId {
         Perm::from_le_byte_array(&arr)
     }
 
+    pub fn try_deconstruct(&self)-> Result<(QuestionData, Perm),anyhow::Error>{
+        let qd = self.question_data()?;
+
+        Ok((qd, self.perm()))
+    }
+
     pub fn encode(&self) -> String {
         Engine::encode(&base64::prelude::BASE64_URL_SAFE_NO_PAD, self.0)
     }
@@ -45,6 +51,7 @@ impl SpreadId {
 
         let mut arr = [0u8; 11];
         arr.copy_from_slice(vec.as_slice());
+
 
         Ok(Self(arr))
     }
@@ -64,7 +71,7 @@ mod tests {
         for guide in Guide::iter() {
             for spread_type in SpreadType::iter() {
                 let qd = QuestionData { guide, spread_type };
-                let id = SpreadId::new(qd, perm);
+                let id = SpreadId::new(&qd, &perm);
                 let qd2 = id.question_data().unwrap();
 
                 assert_eq!(qd, qd2);

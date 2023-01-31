@@ -15,6 +15,9 @@ pub struct ChangeGuideMessage(pub Guide);
 pub struct ChangeSpreadTypeMessage(pub SpreadType);
 
 #[derive(Copy, Clone, PartialEq, Eq)]
+pub struct LoadSpreadMessage(pub QuestionData, pub Perm);
+
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct ResetMessage;
 
 #[derive(Default, Copy, Clone, PartialEq, Eq)]

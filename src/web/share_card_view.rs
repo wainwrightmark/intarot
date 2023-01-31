@@ -3,10 +3,13 @@ use std::str::FromStr;
 use yew::prelude::*;
 
 use yew_hooks::use_search_param;
+use yew_router::navigator;
+use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
 use crate::data::description_layout::DescriptionLayout;
 use crate::data::prelude::ImageMeta;
+use crate::data::spread_id::SpreadId;
 use crate::state::prelude::*;
 use crate::web::card_view::*;
 use crate::web::logo::Logo;
@@ -16,9 +19,19 @@ pub struct ShareCardViewProps {}
 
 #[function_component(ShareCardView)]
 pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
+    let navigator = use_navigator();
     let descriptions_state = use_store_value::<ImageDescriptionState>();
     let description_layout: DescriptionLayout = Default::default();
     let id = use_search_param("id".to_string()).unwrap_or_default();
+
+    let spread = use_search_param("spread".to_string())
+    .and_then(|x| SpreadId::try_decode(x).ok())
+    .and_then(|x|x.try_deconstruct().ok());
+
+    if let Some((qd, perm)) = spread{
+        Dispatch::<DataState>::new().apply(LoadSpreadMessage(qd, perm));
+        navigator.unwrap().push(&crate::web::app::Route::Spread );
+    }
 
     let image_meta = ImageMeta::from_str(id.as_str()).ok();
 
