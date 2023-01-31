@@ -48,7 +48,6 @@ pub enum LoggableEvent {
     },
     NewSpread {
         question_data: QuestionData,
-        variant_seed: u32,
         cards: Perm,
     },
     Share {
@@ -63,12 +62,10 @@ impl LoggableEvent {
     pub fn new_spread(data: &DataState) -> Self {
         let cards_to_take = data.question_data.spread_type.total_cards().min(7);
         let question_data = data.question_data;
-        let variant_seed = data.variant_seed;
         let cards = data.cards_permutation;
 
         Self::NewSpread {
             question_data,
-            variant_seed,
             cards,
         }
     }

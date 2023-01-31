@@ -1,3 +1,4 @@
+use num_traits::cast::FromPrimitive;
 use rand::thread_rng;
 use rand::Rng;
 use std::collections::HashMap;
@@ -5,21 +6,17 @@ use std::rc::Rc;
 use yewdux::prelude::Dispatch;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
-use num_traits::cast::FromPrimitive;
 
 use crate::data::prelude::*;
 
 use super::achievements_state::AchievementsState;
 use super::messages::*;
 
-
-
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug)]
 #[store(storage = "local")]
 pub struct DataState {
     pub question_data: QuestionData,
     pub cards_permutation: Perm,
-    pub variant_seed: u32,
     pub top_card_index: usize,
 
     pub last_hidden_card_index: usize,
@@ -29,8 +26,6 @@ pub struct DataState {
 
 impl Default for DataState {
     fn default() -> Self {
-        let mut rng = thread_rng();
-        let seed = rng.gen();
         Self {
             top_card_index: 0,
             last_hidden_card_index: 1,
@@ -38,7 +33,6 @@ impl Default for DataState {
             question_data: Default::default(),
             show_description: false,
             has_shown_description: false,
-            variant_seed: seed,
         }
     }
 }
@@ -80,7 +74,9 @@ impl DataState {
             index -= 1;
         }
 
-        let card = self.cards_permutation.element_at_index(index, |x|Card::from_u8(x as u8).expect("Could not make card from u8"));
+        let card = self.cards_permutation.element_at_index(index, |x| {
+            Card::from_u8(x as u8).expect("Could not make card from u8")
+        });
         let key = MetaKey {
             guide: self.question_data.guide,
             card,
@@ -92,10 +88,20 @@ impl DataState {
         } else if vec.len() == 1 {
             vec.get(0)
         } else {
-            let variant_index = self.variant_seed >> index;
-            let variant_index = variant_index % (vec.len() as u32);
+            let variant_index = self.variant_index();
+            let variant_index = variant_index % (vec.len() as u64);
             vec.get(variant_index as usize)
         }
+    }
+
+    fn variant_index(&self)-> u64{
+        let be_bytes = self.cards_permutation.0.to_be_bytes();
+        let mut arr = [0u8;8];
+        arr.clone_from_slice(&be_bytes[8..]);
+        log::info!("{arr:?}");
+        let u = u64::from_be_bytes(arr);
+
+        u
     }
 
     pub fn is_top_card(&self, index: usize) -> bool {
@@ -134,7 +140,6 @@ impl DataState {
 
     pub fn reset(&mut self) {
         self.cards_permutation = Card::get_random_ordering();
-        self.variant_seed = thread_rng().gen();
         self.top_card_index = self.question_data.spread_type.initial_top_card_index();
         self.show_description = false;
         self.last_hidden_card_index = self.question_data.spread_type.initial_top_card_index() + 1;
