@@ -14,7 +14,7 @@ pub struct FailedLogsState {
 
 impl Reducer<FailedLogsState> for ResentFailedLogsMessage {
     fn apply(self, state: Rc<FailedLogsState>) -> Rc<FailedLogsState> {
-        log::info!("Checking for failed logs");
+        //log::info!("Checking for failed logs");
         if state.logs.is_empty() {
             return state;
         }

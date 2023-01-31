@@ -79,6 +79,16 @@ impl LoggableEvent {
         img_id: Option<String>)-> Self{
             Self::ReceivedShare { referrer, spread_id, img_id }
         }
+
+    pub fn type_name(&self)-> &'static str{
+        match self{
+            LoggableEvent::NewUser { referrer } => "New User",
+            LoggableEvent::NewSpread { question_data, spread_id } => "New Spread",
+            LoggableEvent::Share { src_data } => "Share",
+            LoggableEvent::Achievement { achievement } => "Achievement",
+            LoggableEvent::ReceivedShare { referrer, spread_id, img_id } => "Received Share",
+        }
+    }
 }
 
 impl From<Achievement> for LoggableEvent {
@@ -120,7 +130,7 @@ impl EventLog {
             log::error!("Logging Error {}", err);
             Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(data.event));
         } else {
-            log::debug!("Log sent successfully");
+            log::debug!("Log {} sent successfully",data.event.type_name() );
         }
     }
 }

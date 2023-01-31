@@ -96,7 +96,7 @@ impl DataState {
         let be_bytes = self.cards_permutation.0.to_be_bytes();
         let mut arr = [0u8; 8];
         arr.clone_from_slice(&be_bytes[8..]);
-        log::info!("{arr:?}");
+        //log::info!("{arr:?}");
         let u = u64::from_be_bytes(arr);
 
         u
