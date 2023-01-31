@@ -29,6 +29,6 @@ pub fn logo(props: &LogoProps) -> Html {
     };
 
     html!(
-        <img  width="200" {style} class="logo" {onclick} src="logo/full logo small.svg"/>
+        <img  width="200" height="133" {style} class="logo" alt="intarot logo" {onclick} src="logo/full logo small.svg"/>
         )
 }
