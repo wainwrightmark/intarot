@@ -336,7 +336,7 @@ img {
 .social-row{
   display: flex;
   margin:auto;
-  width: 240px;
+  width: 300px;
   pointer-events: none;
 }
 
