@@ -2,15 +2,14 @@ use yew::prelude::*;
 use yewdux::prelude::Dispatch;
 
 use crate::state::mailchimp_state::{MailchimpState, ShowMailchimpMessage};
-use crate::{data::achievement::SocialPlatform, state::prelude::*};
 use crate::web::mailchimp::*;
+use crate::{data::achievement::SocialPlatform, state::prelude::*};
 
 #[derive(Properties, PartialEq)]
-pub struct SocialButtonProps {
-}
+pub struct SocialButtonProps {}
 
 #[function_component(SocialIcons)]
-pub fn social_icons(props: &SocialButtonProps) -> Html {
+pub fn social_icons(_props: &SocialButtonProps) -> Html {
     //icons from https://www.iconfinder.com/iconsets/popular-services-brands-vol-2
 
     let on_discord_click = {

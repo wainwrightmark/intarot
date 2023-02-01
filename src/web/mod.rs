@@ -5,13 +5,13 @@ pub mod guide_carousel;
 pub mod js;
 mod landing_view;
 pub mod logo;
+pub mod mailchimp;
 pub mod question_view;
 pub mod share_button;
 pub mod share_card_view;
 pub mod share_component;
 mod social;
 mod spread_view;
-pub mod mailchimp;
 
 pub mod prelude {
 

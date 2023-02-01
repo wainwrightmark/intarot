@@ -11,8 +11,12 @@ use yewdux::prelude::*;
 use super::app::Route;
 use crate::{
     data::prelude::*,
-    state::{prelude::*, prompts_state::PromptsState, mailchimp_state::{MailchimpState, AVViewMessage}},
-    web::{prelude::*},
+    state::{
+        mailchimp_state::{AVViewMessage, MailchimpState},
+        prelude::*,
+        prompts_state::PromptsState,
+    },
+    web::prelude::*,
 };
 
 #[derive(Properties, PartialEq)]
@@ -25,12 +29,9 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
         scroll_to_top
     });
 
-
     let navigator = use_navigator().unwrap();
     let data_state = use_store_value::<DataState>();
-    let mailchimp_state = use_store_value::<MailchimpState>();
-
-    
+    let _mailchimp_state = use_store_value::<MailchimpState>();
 
     let description_state = use_store_value::<SpreadDescriptionState>();
 

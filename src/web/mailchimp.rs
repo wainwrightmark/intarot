@@ -1,7 +1,7 @@
-use yew::{function_component, html, Html, Properties, use_state};
-use yewdux::prelude::{use_selector, use_store};
+use yew::{function_component, html, Html, Properties};
+use yewdux::prelude::{use_store};
 
-use crate::state::mailchimp_state::{MailchimpState, HideMailchimpMessage};
+use crate::state::mailchimp_state::{HideMailchimpMessage, MailchimpState};
 
 #[derive(Properties, Debug, PartialEq, Clone, Copy)]
 pub struct MailchimpProps {}
@@ -11,7 +11,7 @@ pub fn mailchimp(_props: &MailchimpProps) -> Html {
     let (state, dispatch) = use_store::<MailchimpState>();
     let show = state.show;
 
-    let onchange = dispatch.apply_callback(|_|HideMailchimpMessage);
+    let onchange = dispatch.apply_callback(|_| HideMailchimpMessage);
 
     html!(
     <>

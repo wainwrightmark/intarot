@@ -3,12 +3,12 @@ mod data_state;
 mod description_state;
 pub mod failed_logs_state;
 pub mod logging;
+pub mod mailchimp_state;
 mod messages;
 mod meta_state;
 pub mod prompts_state;
 pub mod spread_descriptions;
 mod user_state;
-pub mod mailchimp_state;
 
 pub mod prelude {
 

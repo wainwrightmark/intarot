@@ -30,16 +30,17 @@ impl SpreadId {
         Ok(QuestionData { guide, spread_type })
     }
 
-    pub fn perm(&self) -> Perm {
+    pub fn perm(&self) -> Result<Perm, anyhow::Error> {
         let mut arr = [0u8; 9];
         arr.copy_from_slice(&self.0[2..]);
-        Perm::from_le_byte_array(&arr)
+        Perm::try_from_le_byte_array(&arr).ok_or_else(|| anyhow::anyhow!("Out of range"))
     }
 
     pub fn try_deconstruct(&self) -> Result<(QuestionData, Perm), anyhow::Error> {
         let qd = self.question_data()?;
+        let perm = self.perm()?;
 
-        Ok((qd, self.perm()))
+        Ok((qd, perm))
     }
 
     pub fn encode(&self) -> String {
@@ -75,7 +76,7 @@ mod tests {
 
                 assert_eq!(qd, qd2);
 
-                let perm2 = id.perm();
+                let perm2 = id.perm().unwrap();
 
                 assert_eq!(perm, perm2);
 
