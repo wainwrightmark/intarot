@@ -34,7 +34,8 @@ pub fn question_view(_props: &QuestionProps) -> Html {
 
                 let data = Dispatch::<DataState>::new().get();
 
-                let _event = LoggableEvent::new_spread(data.as_ref());
+                let event = LoggableEvent::new_spread(data.as_ref());
+                LoggableEvent::try_log(event);
 
                 navigator.replace(&Route::Spread {});
             }
