@@ -4,12 +4,16 @@ use yewdux::store::Store;
 
 use super::logging::EventLog;
 use super::logging::LoggableEvent;
-use super::messages::*;
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug, Default)]
 #[store(storage = "local", storage_tab_sync)]
 pub struct UserState {
     pub user_id: Option<uuid::Uuid>,
+}
+
+#[derive(Default, Clone, PartialEq, Eq)]
+pub struct CreateUserIfNewMessage {
+    pub referrer: String,
 }
 
 impl Reducer<UserState> for CreateUserIfNewMessage {

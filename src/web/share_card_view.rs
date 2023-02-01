@@ -30,7 +30,7 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         .and_then(|x| SpreadId::try_decode(x).ok())
         .and_then(|x| x.try_deconstruct().ok());
 
-    let referrer = use_search_param("ref".to_string());
+    let referrer = use_search_param("ref".to_string()).unwrap_or_default();
 
     let event = LoggableEvent::new_share(referrer, spread, id.clone());
     LoggableEvent::try_log(event);

@@ -29,11 +29,6 @@ pub struct ToggleShareDialogMessage {}
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct ShufflePromptsMessage;
 
-#[derive(Default, Clone, PartialEq, Eq)]
-pub struct CreateUserIfNewMessage {
-    pub referrer: Option<String>,
-}
-
 #[derive(Clone, PartialEq, Eq)]
 pub struct AchievementEarnedMessage(pub Achievement);
 

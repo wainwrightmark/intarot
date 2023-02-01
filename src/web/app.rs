@@ -1,5 +1,5 @@
 use crate::state::failed_logs_state::FailedLogsState;
-use crate::state::prelude::{CreateUserIfNewMessage, ResentFailedLogsMessage, UserState};
+use crate::state::prelude::*;
 use crate::web::landing_view::LandingView;
 use yew::prelude::*;
 use yew_hooks::use_search_param;
@@ -31,7 +31,7 @@ pub enum Route {
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let referrer = use_search_param("ref".to_string());
+    let referrer = use_search_param("ref".to_string()).unwrap_or_default();
 
     Dispatch::<UserState>::new().apply(CreateUserIfNewMessage { referrer });
     Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);

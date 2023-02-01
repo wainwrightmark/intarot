@@ -1,5 +1,5 @@
 use yew::{function_component, html, Html, Properties};
-use yewdux::prelude::{use_store};
+use yewdux::prelude::use_store;
 
 use crate::state::mailchimp_state::{HideMailchimpMessage, MailchimpState};
 

@@ -37,7 +37,7 @@ impl EventLog {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum LoggableEvent {
     NewUser {
-        referrer: Option<String>,
+        referrer: String,
     },
     NewSpread {
         question_data: QuestionData,
@@ -54,7 +54,7 @@ pub enum LoggableEvent {
         achievement: Achievement,
     },
     ReceivedShare {
-        referrer: Option<String>,
+        referrer: String,
         spread_id: Option<String>,
         img_id: Option<String>,
     },
@@ -86,11 +86,7 @@ impl LoggableEvent {
         }
     }
 
-    pub fn new_share(
-        referrer: Option<String>,
-        spread_id: Option<String>,
-        img_id: Option<String>,
-    ) -> Self {
+    pub fn new_share(referrer: String, spread_id: Option<String>, img_id: Option<String>) -> Self {
         Self::ReceivedShare {
             referrer,
             spread_id,

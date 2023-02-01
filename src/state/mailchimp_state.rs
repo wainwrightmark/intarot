@@ -2,10 +2,6 @@ use std::rc::Rc;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
 
-
-
-
-
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug, Default)]
 #[store(storage = "local", storage_tab_sync)]
 pub struct MailchimpState {
