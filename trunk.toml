@@ -3,5 +3,5 @@ target = "index.html"
 dist = "dist"
 
 [serve]
-address = "192.168.68.130"
+# address = "192.168.68.130"
 port = 8080

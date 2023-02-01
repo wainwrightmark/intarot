@@ -1,7 +1,7 @@
 use yew::prelude::*;
 use yewdux::prelude::Dispatch;
 
-use crate::state::mailchimp_state::MailchimpState;
+use crate::state::mailchimp_state::{MailchimpState, ShowMailchimpMessage};
 use crate::{data::achievement::SocialPlatform, state::prelude::*};
 use crate::web::mailchimp::*;
 
@@ -36,7 +36,7 @@ pub fn social_icons(props: &SocialButtonProps) -> Html {
 
     let on_mailchimp_click = {
         Callback::from(move |_e: MouseEvent| {
-            Dispatch::<MailchimpState>::new().reduce(|x| MailchimpState{has_been_bugged: true, show: true}.into());
+            Dispatch::<MailchimpState>::new().apply(ShowMailchimpMessage);
         })
     };
 

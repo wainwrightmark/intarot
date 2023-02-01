@@ -1,7 +1,7 @@
 use yew::{function_component, html, Html, Properties, use_state};
 use yewdux::prelude::{use_selector, use_store};
 
-use crate::state::mailchimp_state::MailchimpState;
+use crate::state::mailchimp_state::{MailchimpState, HideMailchimpMessage};
 
 #[derive(Properties, Debug, PartialEq, Clone, Copy)]
 pub struct MailchimpProps {}
@@ -11,20 +11,15 @@ pub fn mailchimp(_props: &MailchimpProps) -> Html {
     let (state, dispatch) = use_store::<MailchimpState>();
     let show = state.show;
 
-    let onchange = dispatch.reduce_callback(|_|{
-        MailchimpState{
-            show: false,
-            has_been_bugged: true
-        }.into()
-    });
+    let onchange = dispatch.apply_callback(|_|HideMailchimpMessage);
 
     html!(
     <>
     <input class="modal-state" id="modal-mailchimp" type="checkbox" checked={show} {onchange}/>
     <div class="modal">
       <label class="modal-bg" for="modal-mailchimp"></label>
-      <div class="modal-body">
-      <iframe src="mailchimp.html" title="Mailchimp Signup" style="height: 200px"></iframe>
+      <div class="modal-body" style="padding: 0;">
+      <iframe src="mailchimp.html" title="Mailchimp Signup" style="height: 220px; width: 100%;"></iframe>
       </div>
     </div>
     </>
