@@ -3,6 +3,8 @@ body {
   overscroll-behavior-x: none;
   overscroll-behavior-y: none;
   background-color: #f4f1ec;
+  -webkit-tap-highlight-color: transparent;
+
 }
 
 .container {
@@ -113,6 +115,7 @@ img {
     padding: 0%; */
   box-shadow: none;
   transform: none;
+  user-select: none;
 }
 
 /* .card-actions button[disabled] {
@@ -183,6 +186,7 @@ img {
   transition-property: visibility, all;
   transition-duration: 1s, 1s;
   font-size: large;
+  user-select: none;
 }
 
 .prophecy-image {
@@ -215,7 +219,14 @@ img {
   top: 10%;
   margin: 10%;
   color: black;
+  pointer-events:none ;
+  user-select: contain;
+}
+
+.image-overlay-text > span{
   pointer-events:all ;
+  user-select:text;
+
 }
 
 .image_greyed {
