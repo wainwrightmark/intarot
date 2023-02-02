@@ -1,8 +1,10 @@
-import { open_link_in_new_tab } from './snippets/intarot-31e5e252b2c79c8d/inline0.js';
-import { open_link_in_same_tab } from './snippets/intarot-31e5e252b2c79c8d/inline1.js';
-import * as __wbg_star0 from './snippets/intarot-31e5e252b2c79c8d/inline2.js';
-import * as __wbg_star1 from './snippets/intarot-31e5e252b2c79c8d/inline3.js';
-import * as __wbg_star2 from './snippets/intarot-31e5e252b2c79c8d/inline4.js';
+import { get_user_agent } from './snippets/intarot-31e5e252b2c79c8d/inline0.js';
+import { get_referrer } from './snippets/intarot-31e5e252b2c79c8d/inline1.js';
+import { open_link_in_new_tab } from './snippets/intarot-31e5e252b2c79c8d/inline2.js';
+import { open_link_in_same_tab } from './snippets/intarot-31e5e252b2c79c8d/inline3.js';
+import * as __wbg_star0 from './snippets/intarot-31e5e252b2c79c8d/inline4.js';
+import * as __wbg_star1 from './snippets/intarot-31e5e252b2c79c8d/inline5.js';
+import * as __wbg_star2 from './snippets/intarot-31e5e252b2c79c8d/inline6.js';
 
 let wasm;
 
@@ -493,6 +495,20 @@ function getImports() {
         } finally {
             wasm.__wbindgen_free(arg0, arg1);
         }
+    };
+    imports.wbg.__wbg_getuseragent_d89818a3ca0f1dad = function(arg0) {
+        const ret = get_user_agent();
+        const ptr0 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        getInt32Memory0()[arg0 / 4 + 1] = len0;
+        getInt32Memory0()[arg0 / 4 + 0] = ptr0;
+    };
+    imports.wbg.__wbg_getreferrer_034991d866cece51 = function(arg0) {
+        const ret = get_referrer();
+        const ptr0 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        getInt32Memory0()[arg0 / 4 + 1] = len0;
+        getInt32Memory0()[arg0 / 4 + 0] = ptr0;
     };
     imports.wbg.__wbg_new_abda76e883ba8a5f = function() {
         const ret = new Error();
@@ -1099,25 +1115,25 @@ function getImports() {
         const ret = getObject(arg0).sessionStorage;
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
     }, arguments) };
-    imports.wbg.__wbindgen_closure_wrapper583 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper585 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 69, __wbg_adapter_38);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper992 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper997 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 67, __wbg_adapter_41);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1463 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1468 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 67, __wbg_adapter_38);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1582 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1588 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 69, __wbg_adapter_46);
         return addHeapObject(ret);
     };
-    imports['./snippets/intarot-31e5e252b2c79c8d/inline2.js'] = __wbg_star0;
-    imports['./snippets/intarot-31e5e252b2c79c8d/inline3.js'] = __wbg_star1;
-    imports['./snippets/intarot-31e5e252b2c79c8d/inline4.js'] = __wbg_star2;
+    imports['./snippets/intarot-31e5e252b2c79c8d/inline4.js'] = __wbg_star0;
+    imports['./snippets/intarot-31e5e252b2c79c8d/inline5.js'] = __wbg_star1;
+    imports['./snippets/intarot-31e5e252b2c79c8d/inline6.js'] = __wbg_star2;
 
     return imports;
 }
@@ -1154,7 +1170,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-28d0ad63ba47cd00_bg.wasm', import.meta.url);
+        input = new URL('intarot-7cf353e96b0684b3_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
