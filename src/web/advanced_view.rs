@@ -30,6 +30,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
     });
 
     let navigator = use_navigator().unwrap();
+
     let data_state = use_store_value::<DataState>();
     let _mailchimp_state = use_store_value::<MailchimpState>();
 

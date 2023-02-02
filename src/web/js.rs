@@ -1,3 +1,18 @@
+#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function get_user_agent() {
+  return window.navigator.userAgent;
+}"##)]
+extern "C"{
+  pub fn get_user_agent()-> String;
+}
+
+// #[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function get_referrer() {
+//   return document.referrer;
+// }"##)]
+// extern "C"{
+//   pub fn get_referrer()-> String;
+// }
+
+
 #[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function open_link_in_new_tab(url) {
     window.open(url, '_blank').focus();
 }"##)]
