@@ -21,7 +21,7 @@ pub fn landing_view() -> Html {
             Dispatch::<PromptsState>::new().apply(ShufflePromptsMessage);
 
             Dispatch::<DataState>::new().apply(ChangeSpreadTypeMessage(
-                crate::data::prelude::SpreadType::One,
+                crate::data::prelude::SpreadType::Three,
             ));
             navigator.push(&Route::Question {});
         })
