@@ -27,11 +27,7 @@ impl Reducer<FailedLogsState> for ResentFailedLogsMessage {
         log::info!("{} failed logs found", state.logs.len());
 
         for event in state.logs.iter() {
-            let log = EventLog {
-                user_id,
-                resent: true,
-                event: event.clone(),
-            };
+            let log = EventLog::new_resent(user_id, event.clone());
             log.send_log();
         }
 

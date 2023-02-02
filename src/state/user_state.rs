@@ -2,6 +2,8 @@ use std::rc::Rc;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
 
+use crate::web::js::get_user_agent;
+
 use super::logging::EventLog;
 use super::logging::LoggableEvent;
 
@@ -22,9 +24,12 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
             state
         } else {
             let user_id = uuid::Uuid::new_v4();
+            let user_agent = get_user_agent();
+
 
             let message = EventLog {
                 user_id,
+                user_agent,
                 event: LoggableEvent::NewUser {
                     referrer: self.referrer,
                 },
