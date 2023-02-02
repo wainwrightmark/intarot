@@ -1119,11 +1119,11 @@ function getImports() {
         const ret = makeMutClosure(arg0, arg1, 75, __wbg_adapter_38);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1034 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1035 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 73, __wbg_adapter_41);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1526 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1527 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 73, __wbg_adapter_38);
         return addHeapObject(ret);
     };
@@ -1170,7 +1170,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-d7e44ac8c2277c6e_bg.wasm', import.meta.url);
+        input = new URL('intarot-3086762e5d889713_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
