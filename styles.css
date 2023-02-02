@@ -215,7 +215,7 @@ img {
   top: 10%;
   margin: 10%;
   color: black;
-  pointer-events: none;
+  pointer-events:all ;
 }
 
 .image_greyed {
