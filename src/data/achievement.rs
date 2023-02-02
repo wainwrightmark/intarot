@@ -20,6 +20,7 @@ pub enum Achievement {
     ChangeGuide,
     ChangeSpreadType,
     SwipeCard,
+    SwipeWrongWay,
     ViewDescription,
     ClickSurvey,
     ClickDiscord,

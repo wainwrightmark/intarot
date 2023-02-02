@@ -3,6 +3,7 @@ use yew_hooks::{use_swipe, UseSwipeDirection};
 
 use yewdux::prelude::*;
 
+use crate::data::achievement::Achievement;
 use crate::state::prelude::*;
 
 use crate::web::card_view::*;
@@ -33,6 +34,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         if data_state.can_draw() {
                             Dispatch::<DataState>::new().apply(DrawMessage {})
                         } else {
+                            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
                             angry_animate_top_card_right();
                         }
                     }
@@ -40,6 +42,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         if data_state.can_replace() {
                             Dispatch::<DataState>::new().apply(ReplaceMessage {})
                         } else {
+                            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
                             angry_animate_top_card_left();
                         }
                     }
