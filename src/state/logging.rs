@@ -16,7 +16,6 @@ const API_TOKEN: &str = "xaat-ba30896b-604b-4837-8924-ec8097e55eee";
 #[derive(Debug, Clone, Serialize)]
 pub struct EventLog {
     pub user_id: Uuid,
-    pub user_agent: String,
     #[serde(skip_serializing_if = "is_false")]
     pub resent: bool,
     pub event: LoggableEvent,
@@ -31,7 +30,6 @@ impl EventLog {
         let user_agent = get_user_agent();
         Self {
             user_id,
-            user_agent,
             resent: true,
             event,
         }
@@ -43,6 +41,7 @@ pub enum LoggableEvent {
     NewUser {
         ref_param: String,
         referrer: String,
+        user_agent: String,
     },
     NewSpread {
         question_data: QuestionData,
@@ -69,10 +68,8 @@ pub enum LoggableEvent {
 impl LoggableEvent {
     pub fn try_log(data: impl Into<Self>) {
         let user = Dispatch::<UserState>::new().get();
-        let user_agent = get_user_agent();
         if let Some(user_id) = user.user_id {
             let message = EventLog {
-                user_agent: user_agent,
                 event: data.into(),
                 user_id,
                 resent: false,

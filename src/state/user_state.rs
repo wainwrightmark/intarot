@@ -28,13 +28,13 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
             let user_agent = get_user_agent();
             let referrer = get_referrer();
 
-
             let message = EventLog {
                 user_id,
-                user_agent,
+
                 event: LoggableEvent::NewUser {
+                    user_agent,
                     ref_param: self.ref_param,
-                    referrer
+                    referrer,
                 },
                 resent: false,
             };
