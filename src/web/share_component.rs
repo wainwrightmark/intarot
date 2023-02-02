@@ -1,7 +1,7 @@
 use yew::prelude::*;
 use yew_hooks::use_clipboard;
 
-use crate::data::prelude::*;
+use crate::{data::prelude::*, state::logging::LoggableEvent};
 
 #[derive(Properties, PartialEq)]
 pub struct ShareProps {
@@ -62,20 +62,28 @@ pub fn share_component(props: &ShareProps) -> Html {
         let clipboard = clipboard;
         let str = props.src_data.raw_url_with_ref("share");
         Callback::from(move |_e: MouseEvent| {
-            //log::info!("Writing to Clipboard {}", str.clone());
+            LoggableEvent::try_log(SharePlatform::Clipboard);
             clipboard.write_text(str.clone());
         })
     };
 
+    let fb_click = |_| LoggableEvent::try_log(SharePlatform::Facebook);
+    let pintrest_click = |_| LoggableEvent::try_log(SharePlatform::Pintrest);
+    let twitter_click = |_| LoggableEvent::try_log(SharePlatform::Twitter);
+    let whatsapp_click = |_| LoggableEvent::try_log(SharePlatform::Whatsapp);
+    let reddit_click = |_| LoggableEvent::try_log(SharePlatform::Reddit);
+    let telegram_click = |_| LoggableEvent::try_log(SharePlatform::Telegram);
+    let mastodon_click = |_| LoggableEvent::try_log(SharePlatform::Mastodon);
+
     html!(
         <div class="shareon" style="display: grid; grid-template-columns: auto auto auto auto;">
-            <a class="share-icon facebook" href={facebook_href} target="_blank"></a>
-            <a class="share-icon pinterest" href={pinterest_href} target="_blank"></a>
-            <a class="share-icon twitter" href={twitter_href} target="_blank"></a>
-            <a class="share-icon whatsapp" href={whatsapp_href} target="_blank"></a>
-            <a class="share-icon reddit" href={reddit_href} target="_blank"></a>
-            <a class="share-icon telegram" href={telegram_href} target="_blank"></a>
-            <a class="share-icon mastodon" href={mastodon_href} target="_blank"></a>
+            <a class="share-icon facebook" href={facebook_href} onclick={fb_click} target="_blank"></a>
+            <a class="share-icon pinterest" href={pinterest_href} onclick={pintrest_click} target="_blank"></a>
+            <a class="share-icon twitter" href={twitter_href} onclick={twitter_click} target="_blank"></a>
+            <a class="share-icon whatsapp" href={whatsapp_href} onclick={whatsapp_click} target="_blank"></a>
+            <a class="share-icon reddit" href={reddit_href} onclick={reddit_click} target="_blank"></a>
+            <a class="share-icon telegram" href={telegram_href} onclick={telegram_click} target="_blank"></a>
+            <a class="share-icon mastodon" href={mastodon_href} onclick={mastodon_click} target="_blank"></a>
             <a class="share-icon clipboard" onclick={on_clipboard_click}  ></a>
         </div>
     )

@@ -27,7 +27,7 @@ fn is_false(b: &bool) -> bool {
 
 impl EventLog {
     pub fn new_resent(user_id: Uuid, event: LoggableEvent) -> Self {
-        let user_agent = get_user_agent();
+        //let user_agent = get_user_agent();
         Self {
             user_id,
             resent: true,
@@ -47,9 +47,13 @@ pub enum LoggableEvent {
         question_data: QuestionData,
         spread_id: String,
     },
-    Share {
+    ClickShare {
         src_data: SrcData2,
     },
+    ShareOn {
+        platform: SharePlatform,
+    },
+
     Social {
         platform: SocialPlatform,
     },
@@ -109,7 +113,8 @@ impl LoggableEvent {
         match self {
             LoggableEvent::NewUser { .. } => "New User",
             LoggableEvent::NewSpread { .. } => "New Spread",
-            LoggableEvent::Share { .. } => "Share",
+            LoggableEvent::ClickShare { .. } => "Click Share",
+            LoggableEvent::ShareOn { .. } => "Share On",
             LoggableEvent::Achievement { .. } => "Achievement",
             LoggableEvent::ReceivedShare { .. } => "Received Share",
             LoggableEvent::Social { .. } => "Social",
@@ -130,9 +135,15 @@ impl From<SocialPlatform> for LoggableEvent {
     }
 }
 
+impl From<SharePlatform> for LoggableEvent {
+    fn from(platform: SharePlatform) -> Self {
+        Self::ShareOn { platform }
+    }
+}
+
 impl From<SrcData> for LoggableEvent {
     fn from(src_data: SrcData) -> Self {
-        Self::Share {
+        Self::ClickShare {
             src_data: src_data.into(),
         }
     }
