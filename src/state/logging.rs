@@ -63,6 +63,10 @@ pub enum LoggableEvent {
         spread_id: Option<String>,
         img_id: Option<String>,
     },
+
+    Cheat {
+        cards: String,
+    },
 }
 
 impl LoggableEvent {
@@ -109,6 +113,7 @@ impl LoggableEvent {
             LoggableEvent::Achievement { .. } => "Achievement",
             LoggableEvent::ReceivedShare { .. } => "Received Share",
             LoggableEvent::Social { .. } => "Social",
+            LoggableEvent::Cheat { .. } => "Cheat",
         }
     }
 }

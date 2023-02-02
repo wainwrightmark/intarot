@@ -1,12 +1,13 @@
 use crate::state::failed_logs_state::FailedLogsState;
 use crate::state::prelude::*;
 use crate::web::landing_view::LandingView;
+
 use yew::prelude::*;
 use yew_hooks::use_search_param;
 use yew_router::prelude::*;
 use yewdux::prelude::Dispatch;
 
-use super::prelude::ShareCardView;
+use super::prelude::{CheatView, ShareCardView};
 use super::spread_view::SpreadView;
 use crate::web::advanced_view::AdvancedView;
 use crate::web::question_view::QuestionView;
@@ -27,6 +28,9 @@ pub enum Route {
 
     #[at("/share")]
     Share,
+
+    #[at("/cheat/:cards")]
+    Cheat { cards: String },
 }
 
 #[function_component(App)]
@@ -69,6 +73,9 @@ fn switch(routes: Route) -> Html {
             html!(
                 <ShareCardView />
             )
+        }
+        Route::Cheat { cards } => {
+            html!(<CheatView {cards} />)
         }
     }
 }

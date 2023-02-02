@@ -233,3 +233,17 @@ impl Reducer<DataState> for ChangeGuideMessage {
         state.into()
     }
 }
+
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
+pub struct SetPermutationMessage {
+    pub permutation: Perm,
+}
+
+impl Reducer<DataState> for SetPermutationMessage {
+    fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
+        let mut state = (*state).clone();
+        state.cards_permutation = self.permutation;
+        state.back_to_top();
+        state.into()
+    }
+}
