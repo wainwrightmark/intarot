@@ -2,6 +2,7 @@ use std::rc::Rc;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
 
+use crate::web::js::get_referrer;
 use crate::web::js::get_user_agent;
 
 use super::logging::EventLog;
@@ -15,7 +16,7 @@ pub struct UserState {
 
 #[derive(Default, Clone, PartialEq, Eq)]
 pub struct CreateUserIfNewMessage {
-    pub referrer: String,
+    pub ref_param: String,
 }
 
 impl Reducer<UserState> for CreateUserIfNewMessage {
@@ -25,13 +26,15 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
         } else {
             let user_id = uuid::Uuid::new_v4();
             let user_agent = get_user_agent();
+            let referrer = get_referrer();
 
 
             let message = EventLog {
                 user_id,
                 user_agent,
                 event: LoggableEvent::NewUser {
-                    referrer: self.referrer,
+                    ref_param: self.ref_param,
+                    referrer
                 },
                 resent: false,
             };

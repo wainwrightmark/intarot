@@ -4,7 +4,8 @@ use yewdux::prelude::Dispatch;
 
 use crate::{
     data::{prelude::*, spread_id::SpreadId},
-    state::prelude::*, web::js::get_user_agent,
+    state::prelude::*,
+    web::js::{get_referrer, get_user_agent},
 };
 
 use super::data_state::DataState;
@@ -40,6 +41,7 @@ impl EventLog {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum LoggableEvent {
     NewUser {
+        ref_param: String,
         referrer: String,
     },
     NewSpread {
@@ -57,6 +59,7 @@ pub enum LoggableEvent {
         achievement: Achievement,
     },
     ReceivedShare {
+        ref_param: String,
         referrer: String,
         spread_id: Option<String>,
         img_id: Option<String>,
@@ -91,9 +94,11 @@ impl LoggableEvent {
         }
     }
 
-    pub fn new_share(referrer: String, spread_id: Option<String>, img_id: Option<String>) -> Self {
+    pub fn new_share(ref_param: String, spread_id: Option<String>, img_id: Option<String>) -> Self {
+        let referrer = get_referrer();
         Self::ReceivedShare {
             referrer,
+            ref_param,
             spread_id,
             img_id,
         }
@@ -101,19 +106,12 @@ impl LoggableEvent {
 
     pub fn type_name(&self) -> &'static str {
         match self {
-            LoggableEvent::NewUser { referrer: _ } => "New User",
-            LoggableEvent::NewSpread {
-                question_data: _,
-                spread_id: _,
-            } => "New Spread",
-            LoggableEvent::Share { src_data: _ } => "Share",
-            LoggableEvent::Achievement { achievement: _ } => "Achievement",
-            LoggableEvent::ReceivedShare {
-                referrer: _,
-                spread_id: _,
-                img_id: _,
-            } => "Received Share",
-            LoggableEvent::Social { platform: _ } => "Social",
+            LoggableEvent::NewUser { .. } => "New User",
+            LoggableEvent::NewSpread { .. } => "New Spread",
+            LoggableEvent::Share { .. } => "Share",
+            LoggableEvent::Achievement { .. } => "Achievement",
+            LoggableEvent::ReceivedShare { .. } => "Received Share",
+            LoggableEvent::Social { .. } => "Social",
         }
     }
 }

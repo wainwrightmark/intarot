@@ -31,9 +31,9 @@ pub enum Route {
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let referrer = use_search_param("ref".to_string()).unwrap_or_default();
+    let ref_param = use_search_param("ref".to_string()).unwrap_or_default();
 
-    Dispatch::<UserState>::new().apply(CreateUserIfNewMessage { referrer });
+    Dispatch::<UserState>::new().apply(CreateUserIfNewMessage { ref_param });
     Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
 
     html! {
