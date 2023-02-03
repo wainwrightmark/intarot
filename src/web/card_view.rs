@@ -183,7 +183,7 @@ pub fn slot_view(props: &SlotProperties) -> Html {
 
 #[derive(Properties, PartialEq)]
 pub struct IndexedCardViewProps {
-    pub index: usize,
+    pub index: u8,
 }
 
 #[function_component(IndexedCardView)]
@@ -221,7 +221,7 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     }
 }
 
-fn get_style(index: usize, state: &DataState) -> CardStyle {
+fn get_style(index: u8, state: &DataState) -> CardStyle {
     if index == state.top_card_index + 1 {
         CardStyle {
             transform: Some(TransformStyle {

@@ -67,7 +67,7 @@ mod tests {
 
     #[test]
     pub fn test_spread_ids() {
-        let perm = Perm::get_max();
+        let perm = Perm::get_last();
         for guide in Guide::iter() {
             for spread_type in SpreadType::iter() {
                 let qd = QuestionData { guide, spread_type };

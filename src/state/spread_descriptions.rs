@@ -38,7 +38,7 @@ impl SpreadDescriptionState {
             .unwrap_or_default()
     }
 
-    pub fn try_get_slot(&self, data: &QuestionData, index: usize) -> Option<&'static str> {
+    pub fn try_get_slot(&self, data: &QuestionData, index: u8) -> Option<&'static str> {
         let index = if data.spread_type.is_ad_card_first() {
             index.checked_sub(1)?
         } else {
@@ -46,11 +46,11 @@ impl SpreadDescriptionState {
         };
         self.descriptions
             .get(&(data.spread_type))
-            .and_then(|x| x.slots.get(index).cloned())
-            .and_then(|x| if x.is_empty() { None } else { Some(x) })
+            .and_then(|x| x.slots.get(index as usize).cloned())
+            .and_then(|x: &'static str| if x.is_empty() { None } else { Some(x) })
     }
 
-    pub fn try_get_layout(&self, data: &QuestionData, index: usize) -> Option<DescriptionLayout> {
+    pub fn try_get_layout(&self, data: &QuestionData, index: u8) -> Option<DescriptionLayout> {
         let index = if data.spread_type.is_ad_card_first() {
             index.checked_sub(1)?
         } else {
@@ -58,7 +58,7 @@ impl SpreadDescriptionState {
         };
         self.descriptions
             .get(&(data.spread_type))
-            .and_then(|x| x.layout.get(index).cloned())
+            .and_then(|x| x.layout.get(index as usize).cloned())
     }
 }
 

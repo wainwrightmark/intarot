@@ -60,7 +60,7 @@ impl SpreadType {
     }
 
     /// total cards, excluding the finish card
-    pub fn total_cards(&self) -> usize {
+    pub fn total_cards(&self) -> u8 {
         match self {
             SpreadType::One => 1,
             SpreadType::Three => 3,
@@ -74,7 +74,7 @@ impl SpreadType {
         }
     }
 
-    pub fn initial_top_card_index(&self) -> usize {
+    pub fn initial_top_card_index(&self) -> u8 {
         if self.is_ad_card_first() {
             self.total_cards()
         } else {

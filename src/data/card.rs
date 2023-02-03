@@ -94,7 +94,7 @@ impl Card {
 
     pub fn get_random_ordering() -> Perm {
         let mut rng = ThreadRng::default();
-        let max = Perm::get_max().0;
+        let max = Perm::get_last().inner();
         let inner = rng.gen_range(0..(max));
         inner.into()
     }

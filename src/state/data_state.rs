@@ -15,9 +15,9 @@ use super::messages::*;
 pub struct DataState {
     pub question_data: QuestionData,
     pub cards_permutation: Perm,
-    pub top_card_index: usize,
+    pub top_card_index: u8,
 
-    pub last_hidden_card_index: usize,
+    pub last_hidden_card_index: u8,
     pub show_description: bool,
     pub has_shown_description: bool,
 }
@@ -36,7 +36,7 @@ impl Default for DataState {
 }
 
 impl DataState {
-    pub fn finish_card_index(&self) -> usize {
+    pub fn finish_card_index(&self) -> u8 {
         if self.question_data.spread_type.is_ad_card_first() {
             0
         } else {
@@ -61,7 +61,7 @@ impl DataState {
 
     pub fn get_image_meta<'a>(
         &self,
-        mut index: usize,
+        mut index: u8,
         metas: &'a HashMap<MetaKey, Vec<ImageMeta>>,
     ) -> Option<&'a ImageMeta> {
         if index == self.finish_card_index() {
@@ -73,7 +73,7 @@ impl DataState {
         }
 
         let card = self.cards_permutation.element_at_index(index, |x| {
-            Card::from_u8(x as u8).expect("Could not make card from u8")
+            Card::from_u8(x).expect("Could not make card from u8")
         });
         let key = MetaKey {
             guide: self.question_data.guide,
@@ -93,7 +93,7 @@ impl DataState {
     }
 
     fn variant_index(&self) -> u64 {
-        let be_bytes = self.cards_permutation.0.to_be_bytes();
+        let be_bytes = self.cards_permutation.inner().to_be_bytes();
         let mut arr = [0u8; 8];
         arr.clone_from_slice(&be_bytes[8..]);
         //log::info!("{arr:?}");
@@ -101,7 +101,7 @@ impl DataState {
         u64::from_be_bytes(arr)
     }
 
-    pub fn is_top_card(&self, index: usize) -> bool {
+    pub fn is_top_card(&self, index: u8) -> bool {
         index == self.top_card_index
     }
 
