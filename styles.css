@@ -347,7 +347,7 @@ img {
 .social-row{
   display: flex;
   margin:auto;
-  width: 300px;
+  width: 15em;
   pointer-events: none;
 }
 

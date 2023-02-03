@@ -27,9 +27,16 @@ pub fn social_icons(_props: &SocialButtonProps) -> Html {
             LoggableEvent::try_log(SocialPlatform::Twitter);
         })
     };
+
     let on_instagram_click = {
         Callback::from(move |_e: MouseEvent| {
             LoggableEvent::try_log(SocialPlatform::Instagram);
+        })
+    };
+
+    let on_tiktok_click = {
+        Callback::from(move |_e: MouseEvent| {
+            LoggableEvent::try_log(SocialPlatform::Tiktok);
         })
     };
 
@@ -38,6 +45,7 @@ pub fn social_icons(_props: &SocialButtonProps) -> Html {
             Dispatch::<MailchimpState>::new().apply(ShowMailchimpMessage);
         })
     };
+
 
     html! {
         <>
@@ -59,6 +67,11 @@ pub fn social_icons(_props: &SocialButtonProps) -> Html {
         <a href="https://www.instagram.com/intarotapp/" class="social-icon si-instagram tooltip" target="_blank" onclick={on_instagram_click}>
             <img src="social/instagram.svg" width="40" height="40" alt="instagram"/>
             <span class="tooltiptext">{"Follow us on Instagram"}</span>
+        </a>
+
+        <a href="https://www.tiktok.com/@intarot?_t=8ZZXQSKNQIv&_r=1" class="social-icon si-tiktok tooltip" target="_blank" onclick={on_tiktok_click}>
+            <img src="social/tiktok.svg" width="40" height="40" alt="tiktok"/>
+            <span class="tooltiptext">{"Follow us on the clock app"}</span>
         </a>
 
         <a class="social-icon si-mailchimp tooltip"  onclick={on_mailchimp_click}>
