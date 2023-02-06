@@ -11,6 +11,7 @@ pub enum SrcData {
         perm: Perm,
     },
     Guide(&'static str),
+    Custom(&'static str)
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
@@ -22,6 +23,7 @@ pub enum SrcData2 {
         perm: Perm,
     },
     Guide(String),
+    Custom(String),
 }
 
 impl From<SrcData> for SrcData2 {
@@ -38,6 +40,7 @@ impl From<SrcData> for SrcData2 {
                 question_data,
                 perm,
             },
+            SrcData::Custom(s) => Self::Custom(s.to_string()),
         }
     }
 }
@@ -56,6 +59,9 @@ impl SrcData {
                 "https://intarot-images.s3.eu-west-2.amazonaws.com/AdCards/{}.jpg",
                 question_data.guide.ad_image_src()
             ),
+            SrcData::Custom(name) => format!(
+                "https://intarot-images.s3.eu-west-2.amazonaws.com/Custom/{name}.jpg"
+            ),
         }
     }
 
@@ -63,6 +69,7 @@ impl SrcData {
         match self {
             SrcData::Card(name) => format!("https://intarot.app/share?id={name}"),
             SrcData::Guide(_) => "https://intarot.app".to_string(),
+            SrcData::Custom(_) => "https://intarot.app".to_string(),
             SrcData::Spread {
                 card_name,
                 question_data,
@@ -80,6 +87,7 @@ impl SrcData {
             SrcData::Card(_) => true,
             SrcData::Spread { .. } => true,
             SrcData::Guide(_) => false,
+            SrcData::Custom(_) => false,
         }
     }
 
