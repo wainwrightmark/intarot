@@ -175,7 +175,7 @@ pub struct SlotProperties {
 #[function_component(SlotView)]
 pub fn slot_view(props: &SlotProperties) -> Html {
     html! {
-        <div class="slot" style={format!("background-image: linear-gradient({}, {});", props.guide.primary_color(), props.guide.secondary_color())}>
+        <div class="slot fade-in" style={format!("background-image: linear-gradient({}, {});", props.guide.primary_color(), props.guide.secondary_color())}>
             {props.slot}
         </div>
     }
