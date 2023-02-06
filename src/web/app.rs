@@ -1,8 +1,10 @@
 use crate::state::failed_logs_state::FailedLogsState;
 use crate::state::prelude::*;
 use crate::web::landing_view::LandingView;
+use crate::web::particles::*;
 
 use yew::prelude::*;
+
 use yew_hooks::use_search_param;
 use yew_router::prelude::*;
 use yewdux::prelude::Dispatch;
@@ -41,9 +43,12 @@ pub fn app() -> Html {
     Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
 
     html! {
+
+        <>
         <BrowserRouter>
             <Switch<Route> render={switch} /> // <- must be child of <BrowserRouter>
         </BrowserRouter>
+        </>
 
     }
 }
@@ -62,8 +67,10 @@ fn switch(routes: Route) -> Html {
            <QuestionView  />
         },
         Route::Spread {} => html! {
-
+            <>
+            <ParticlesCanvas />
         <SpreadView />
+        </>
 
          },
         Route::Advanced {} => html! {

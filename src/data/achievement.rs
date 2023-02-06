@@ -47,7 +47,7 @@ pub enum SocialPlatform {
     Twitter,
     Discord,
     Instagram,
-    Tiktok
+    Tiktok,
 }
 
 #[derive(

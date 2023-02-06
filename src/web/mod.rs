@@ -7,6 +7,7 @@ pub mod js;
 mod landing_view;
 pub mod logo;
 pub mod mailchimp;
+pub mod particles;
 pub mod question_view;
 pub mod share_button;
 pub mod share_card_view;

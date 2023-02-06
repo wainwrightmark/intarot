@@ -46,7 +46,6 @@ pub fn social_icons(_props: &SocialButtonProps) -> Html {
         })
     };
 
-
     html! {
         <>
         <Mailchimp />

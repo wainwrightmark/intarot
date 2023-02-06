@@ -5,7 +5,7 @@ use yewdux::prelude::Dispatch;
 use crate::{
     data::{prelude::*, spread_id::SpreadId},
     state::prelude::*,
-    web::js::{get_referrer},
+    web::js::get_referrer,
 };
 
 use super::data_state::DataState;
