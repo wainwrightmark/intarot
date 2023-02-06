@@ -41,8 +41,6 @@ impl Component for ParticlesCanvas {
                 <canvas
                     id="canvas"
                     style="
-            width: 100%;
-            height: 100%;
             position: fixed;
         "
                     ref={self.canvas.clone()}>
@@ -56,26 +54,32 @@ impl ParticlesCanvas {
     fn render(&mut self) {
         let canvas: HtmlCanvasElement = self.canvas.cast().unwrap();
 
-        //log::info!("Render {} particles", self.particles.len());
+        let window = window().unwrap();
+        let width = window.inner_width().unwrap().as_f64().unwrap().floor() as u32;
+        let height = window.inner_height().unwrap().as_f64().unwrap().floor() as u32;
+
+        canvas.set_width(width);
+        canvas.set_height(height);
+
+        let width = width as f64;
+        let height = height as f64;
+
         let mut ctx: CanvasRenderingContext2d =
             canvas.get_context("2d").unwrap().unwrap().unchecked_into();
 
-        let width = canvas.width() as f64;
-        let height = canvas.height() as f64;
-        let width_ratio = width / height;
-        let height_ratio = height / width;
+        log::info!(
+            "Render {} particles. width: {width:.3} height: {height:.3}",
+            self.particles.len()
+        );
 
         ctx.clear_rect(0.0, 0.0, width, height);
 
-        //ctx.set_global_alpha(0.05);
-
         for particle in self.particles.iter_mut() {
             particle.update(width, height);
-            particle.draw(width_ratio, height_ratio, &mut ctx);
+            particle.draw(&mut ctx);
         }
 
-        window()
-            .unwrap()
+        window
             .request_animation_frame(self.callback.as_ref().unchecked_ref())
             .unwrap();
     }
@@ -124,7 +128,7 @@ impl Property {
     }
 }
 
-const SIZE_RANGE: Range<f64> = 2.0..10.0;
+const SIZE_RANGE: Range<f64> = 3.0..15.0;
 const HUE_RANGE: Range<f64> = 60.0..120.0;
 const SATURATION_RANGE: Range<f64> = 0.0..60.0;
 const LIGHTNESS_RANGE: Range<f64> = 0.0..50.0;
@@ -140,8 +144,8 @@ impl Particle {
     }
 
     pub fn new<R: Rng>(rng: &mut R, width: f64, height: f64) -> Self {
-        let x = Property::new_in_range(rng, 0.0..width, -0.3..0.3);
-        let y = Property::new_in_range(rng, 0.0..height, -0.3..0.3);
+        let x = Property::new_in_range(rng, 0.0..width, -0.5..0.5);
+        let y = Property::new_in_range(rng, 0.0..height, -0.5..0.5);
         let size = Property::new_in_range(rng, SIZE_RANGE, 0.0..0.01);
         let hue = Property::new_in_range(rng, HUE_RANGE, 0.0..0.01);
         let saturation = Property::new_in_range(rng, SATURATION_RANGE, 0.0..0.01);
@@ -169,7 +173,7 @@ impl Particle {
         self.alpha.update_in_range(ALPHA_RANGE);
     }
 
-    pub fn draw(&self, width_ratio: f64, height_ratio: f64, ctx: &mut CanvasRenderingContext2d) {
+    pub fn draw(&self, ctx: &mut CanvasRenderingContext2d) {
         let hue = self.hue.value;
         let saturation = self.saturation.value;
         let lightness = self.lightness.value;
@@ -182,8 +186,8 @@ impl Particle {
         ctx.ellipse(
             self.x.value,
             self.y.value,
-            self.size.value * width_ratio,
-            self.size.value * height_ratio,
+            self.size.value,
+            self.size.value,
             0.0,
             0.0,
             consts::TAU,
