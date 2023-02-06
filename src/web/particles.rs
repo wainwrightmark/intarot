@@ -67,10 +67,10 @@ impl ParticlesCanvas {
         let mut ctx: CanvasRenderingContext2d =
             canvas.get_context("2d").unwrap().unwrap().unchecked_into();
 
-        log::info!(
-            "Render {} particles. width: {width:.3} height: {height:.3}",
-            self.particles.len()
-        );
+        // log::info!(
+        //     "Render {} particles. width: {width:.3} height: {height:.3}",
+        //     self.particles.len()
+        // );
 
         ctx.clear_rect(0.0, 0.0, width, height);
 
