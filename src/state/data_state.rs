@@ -169,20 +169,21 @@ impl DataState {
     }
 
     pub fn spread_src(&self, metas: &HashMap<MetaKey, Vec<ImageMeta>>) -> SrcData {
-        let share_img = self
+        let spread_option = self
             .get_image_meta(
                 self.question_data.spread_type.initial_top_card_index(),
                 metas,
             )
-            .map(|x| x.image_data)
-            .unwrap();
-
-        SrcData {
-            spread_option: Some(SpreadShare {
+            .map(|image_meta| image_meta.image_data)
+            .map(|share_img| SpreadShare{
                 question_data: self.question_data,
                 perm: self.perm,
                 share_img,
-            }),
+            })
+            ;
+
+        SrcData {
+            spread_option,
             image: ImageData {
                 id: self.question_data.guide.ad_image_data().to_string().into(),
                 image_type: ImageType::Final,

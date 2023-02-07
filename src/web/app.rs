@@ -9,6 +9,7 @@ use yew_hooks::use_search_param;
 use yew_router::prelude::*;
 use yewdux::prelude::Dispatch;
 
+use super::custom_view::CustomView;
 use super::prelude::{CheatView, ShareCardView};
 use super::spread_view::SpreadView;
 use crate::web::advanced_view::AdvancedView;
@@ -30,6 +31,9 @@ pub enum Route {
 
     #[at("/share")]
     Share,
+
+    #[at("/custom/:cards")]
+    Custom { cards: String },
 
     #[at("/cheat/:cards")]
     Cheat { cards: String },
@@ -83,6 +87,9 @@ fn switch(routes: Route) -> Html {
         }
         Route::Cheat { cards } => {
             html!(<CheatView {cards} />)
+        }
+        Route::Custom { cards } => {
+            html!(<CustomView {cards} />)
         }
     }
 }
