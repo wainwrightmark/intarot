@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumProperty, EnumString, IntoStaticStr};
 
-use super::prelude::SrcData;
+use super::image_data::{ImageData, ImageType};
 
 #[derive(
     Copy,
@@ -65,12 +65,15 @@ impl Guide {
         }
     }
 
-    pub fn image_src(&self) -> SrcData {
-        let id = self.get_str("image_id").unwrap();
-        SrcData::Guide(id)
+    pub fn image_data(&self) -> ImageData {
+        let id = self.get_str("image_id").unwrap().to_string().into();
+        ImageData {
+            id,
+            image_type: ImageType::Guide,
+        }
     }
 
-    pub fn ad_image_src(&self) -> &'static str {
+    pub fn ad_image_data(&self) -> &'static str {
         self.get_str("ad_image_id").unwrap()
     }
 

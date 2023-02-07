@@ -48,7 +48,7 @@ pub enum LoggableEvent {
         spread_id: String,
     },
     ClickShare {
-        src_data: SrcData2,
+        src_data: SrcData,
     },
     ShareOn {
         platform: SharePlatform,
@@ -91,7 +91,7 @@ impl LoggableEvent {
 
     pub fn new_spread(data: &DataState) -> Self {
         let question_data = data.question_data;
-        let spread_id = SpreadId::new(&question_data, &data.cards_permutation).encode();
+        let spread_id = SpreadId::new(&question_data, &data.perm).encode();
 
         Self::NewSpread {
             question_data,

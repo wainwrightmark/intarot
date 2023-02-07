@@ -74,7 +74,7 @@ pub fn guide_carousel() -> Html {
                 <div class={classes}  >
             <div style="position: relative;">
                     <img class={image_classes}
-                    src={guide.image_src().src() }
+                    src={guide.image_data().src()}
                          alt={guide.name()} />
                          <div class="carousel-actions">
                             <button id="carousel-button-prev" aria-label="Previous" disabled={!can_select_previous} onclick={select_previous} style="pointer-events: auto;">{"❰"}</button>

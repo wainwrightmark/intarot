@@ -667,7 +667,6 @@ dependencies = [
  "web-sys",
  "wee_alloc",
  "yew",
- "yew-canvas",
  "yew-hooks",
  "yew-router",
  "yewdux",
@@ -1745,17 +1744,6 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "yew-macro",
-]
-
-[[package]]
-name = "yew-canvas"
-version = "0.3.0"
-source = "git+https://github.com/1216892614/yew-canvas.rs#863175c89ad22af5c1c7af4a3c6e500aba2b752d"
-dependencies = [
- "gloo",
- "wasm-bindgen",
- "web-sys",
- "yew",
 ]
 
 [[package]]

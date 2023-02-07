@@ -12,10 +12,10 @@ pub struct ShareButtonProps {
 
 #[function_component(ShareButton)]
 pub fn share_button(props: &ShareButtonProps) -> Html {
-    let src_data: SrcData = props.src_data;
+    let src_data: SrcData = props.src_data.clone();
 
     let on_click = move |_: MouseEvent| {
-        LoggableEvent::try_log(src_data);
+        LoggableEvent::try_log(src_data.clone());
     };
 
     if let Some(label) = &props.label {
@@ -34,6 +34,7 @@ pub struct ShareModalProps {
 
 #[function_component(ShareModal)]
 pub fn share_modal(props: &ShareModalProps) -> Html {
+    let src_data = props.src_data.clone();
     html!(
         <>
         <input class="modal-state" id={props.id.clone()} type="checkbox"/>
@@ -43,9 +44,9 @@ pub fn share_modal(props: &ShareModalProps) -> Html {
             <h4 class="modal-title">{"Share" }</h4>
                       <ShareComponent
                       title="intarot"
-                      src_data={props.src_data}
+                      {src_data}
                       text={props.share_text.clone()}
-                      media={props.src_data.src()}>
+                      media={props.src_data.image.src()}>
                       </ShareComponent>
 
               </div>

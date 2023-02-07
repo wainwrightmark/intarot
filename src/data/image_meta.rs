@@ -5,9 +5,11 @@ use strum::IntoEnumIterator;
 
 use crate::data::prelude::*;
 
-#[derive(PartialEq, Eq, Clone, Copy)]
+use super::image_data::ImageData;
+
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct ImageMeta {
-    pub file_name: &'static str,
+    pub image_data: ImageData,
     pub guide: Guide,
     pub card: Card,
 }
@@ -16,32 +18,28 @@ impl FromStr for ImageMeta {
     type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let file_name = Box::leak(s.to_string().into_boxed_str());
+        let id = s; // Box::leak(s.to_string().into_boxed_str());
 
         let guide = Guide::iter()
-            .find(|g| file_name.starts_with(g.short_name()))
-            .ok_or_else(|| anyhow::anyhow!("Could not find guide for {file_name}"))?;
+            .find(|g| id.starts_with(g.short_name()))
+            .ok_or_else(|| anyhow::anyhow!("Could not find guide for {id}"))?;
 
-        let char_c = file_name
-            .chars()
-            .nth(1)
-            .ok_or_else(|| anyhow::anyhow!("Could not find card for {file_name}"))?
-            as u8;
+        let char_c =
+            id.chars()
+                .nth(1)
+                .ok_or_else(|| anyhow::anyhow!("Could not find card for {id}"))? as u8;
         let char_c = char_c - b'a';
-        let card = Card::from_u8(char_c)
-            .ok_or_else(|| anyhow::anyhow!("Could not find card for {file_name}"))?;
+        let card =
+            Card::from_u8(char_c).ok_or_else(|| anyhow::anyhow!("Could not find card for {id}"))?;
 
         Ok(ImageMeta {
-            file_name,
+            image_data: ImageData {
+                id: id.to_string().into(),
+                image_type: super::image_data::ImageType::Card,
+            },
             guide,
             card,
         })
-    }
-}
-
-impl ImageMeta {
-    pub fn src_data(&self) -> SrcData {
-        SrcData::Card(self.file_name)
     }
 }
 

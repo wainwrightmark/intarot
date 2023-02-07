@@ -8,7 +8,7 @@ use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
 use crate::data::description_layout::DescriptionLayout;
-use crate::data::prelude::ImageMeta;
+use crate::data::prelude::{ImageMeta, SrcData};
 use crate::data::spread_id::SpreadId;
 use crate::state::prelude::*;
 use crate::web::card_view::*;
@@ -50,6 +50,11 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
             .get(&(image_meta.guide, image_meta.card))
             .copied();
 
+        let src_data = SrcData {
+            image: image_meta.image_data,
+            spread_option: None,
+        };
+
         html!(
             <>
         <div class="site" >
@@ -58,7 +63,7 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh; ">
         <Logo clickable={true}/>
         <div class="cards-grid" key="cards-grid">
-        <CardView top_card={true} src_data={image_meta.src_data()} show_extra_buttons={false} {description} style={CardStyle::default()} {description_layout} />
+        <CardView top_card={true} {src_data} show_extra_buttons={false} {description} style={CardStyle::default()} {description_layout} />
         </div>
         </div>
         </div>

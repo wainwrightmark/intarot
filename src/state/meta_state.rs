@@ -15,8 +15,8 @@ impl Default for ImageMetaState {
         let lines = data.lines();
 
         let metas = lines
-            .map(move |x| ImageMeta::from_str(x).unwrap())
-            .into_group_map_by(|&x| MetaKey::from(x));
+            .map(move |str| ImageMeta::from_str(str).unwrap())
+            .into_group_map_by(|image_meta| MetaKey::from(image_meta.clone()));
         Self { metas }
     }
 }

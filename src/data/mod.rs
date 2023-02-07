@@ -2,6 +2,7 @@ pub mod achievement;
 mod card;
 pub mod description_layout;
 mod guide;
+pub mod image_data;
 pub mod image_description;
 mod image_meta;
 pub mod question_data;
