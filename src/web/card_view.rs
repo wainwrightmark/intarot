@@ -155,8 +155,9 @@ pub fn card_view(props: &CardViewProps) -> Html {
                     }
                     {
                         if let Some(slot) = props.slot.filter(|_|props.top_card){
+                            let hide = data_state.show_description;
                             html!{
-                                <SlotView {slot} {guide}/>
+                                <SlotView {slot} {guide} {hide}/>
                             }
                         }
                         else{
@@ -172,12 +173,16 @@ pub fn card_view(props: &CardViewProps) -> Html {
 pub struct SlotProperties {
     pub slot: &'static str,
     pub guide: Guide,
+    pub hide : bool
 }
 
 #[function_component(SlotView)]
 pub fn slot_view(props: &SlotProperties) -> Html {
+    let visibility = if props.hide {"hidden"}else{"initial"};
+    let primary = props.guide.primary_color();
+    let secondary = props.guide.secondary_color();
     html! {
-        <div class="slot fade-in" style={format!("background-image: linear-gradient({}, {});", props.guide.primary_color(), props.guide.secondary_color())}>
+        <div class="slot fade-in" style={format!("visibility: {visibility}; background-image: linear-gradient({primary}, {secondary});")}>
             {props.slot}
         </div>
     }

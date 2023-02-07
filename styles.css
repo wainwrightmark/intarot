@@ -338,6 +338,8 @@ img {
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   width: 80%;
   transform: translateX(12.5%) translateY(-200%);
+  pointer-events: none;
+  opacity: 0;
 }
 
 .buttons-grid {
