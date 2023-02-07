@@ -39,11 +39,11 @@ pub fn cheat_view(props: &CheatProps) -> Html {
     html!(<Logo clickable={true}/>)
 }
 
-pub fn get_cheat_perm(s: &String) -> Result<Perm, anyhow::Error> {
+pub fn get_cheat_perm(s: &str) -> Result<Perm, anyhow::Error> {
     let cards = s
-        .split_terminator(".")
+        .split_terminator('.')
         .map(|x| {
-            u8::from_str_radix(x, 10)
+            x.parse::<u8>()
                 .map_err(|x| x.into())
                 .and_then(|x| Card::from_u8(x).ok_or(anyhow!("Out of range")))
         })

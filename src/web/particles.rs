@@ -137,10 +137,10 @@ const ALPHA_RANGE: Range<f64> = 0.08..0.12;
 impl Particle {
     pub fn new_vec(count: usize) -> Vec<Self> {
         let mut rng = ThreadRng::default();
-        let particles = (0..count)
+
+        (0..count)
             .map(|_| Particle::new(&mut rng, 375., 667.))
-            .collect_vec();
-        particles
+            .collect_vec()
     }
 
     pub fn new<R: Rng>(rng: &mut R, width: f64, height: f64) -> Self {

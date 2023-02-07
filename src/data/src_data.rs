@@ -29,7 +29,7 @@ impl SrcData {
                     perm,
                     share_img,
                 }) => {
-                    let spread_id = SpreadId::new(&question_data, &perm);
+                    let spread_id = SpreadId::new(question_data, perm);
                     let spread_id_encoded = spread_id.encode();
                     let id = share_img.id.clone();
                     format!("https://intarot.app/share?id={id}&spread={spread_id_encoded}")
@@ -41,10 +41,7 @@ impl SrcData {
     }
 
     pub fn url_has_search(&self) -> bool {
-        match self.image.image_type {
-            ImageType::Card => true,
-            _ => false,
-        }
+        matches!(self.image.image_type, ImageType::Card)
     }
 
     pub fn raw_url_with_ref(&self, referrer: &'static str) -> String {

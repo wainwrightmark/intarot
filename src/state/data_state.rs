@@ -77,10 +77,10 @@ impl DataState {
         self
     }
 
-    pub fn get_image_meta<'a>(
+    pub fn get_image_meta(
         &self,
         mut index: u8,
-        metas: &'a HashMap<MetaKey, Vec<ImageMeta>>,
+        metas: &HashMap<MetaKey, Vec<ImageMeta>>,
     ) -> Option<ImageMeta> {
         if index == self.finish_card_index() {
             return None;
@@ -115,11 +115,11 @@ impl DataState {
         if vec.is_empty() {
             None
         } else if vec.len() == 1 {
-            vec.get(0).map(|x| x.clone())
+            vec.get(0).cloned()
         } else {
             let variant_index = Self::variant_index(self.perm);
             let variant_index = variant_index % (vec.len() as u64);
-            vec.get(variant_index as usize).map(|x| x.clone())
+            vec.get(variant_index as usize).cloned()
         }
     }
 

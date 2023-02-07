@@ -147,9 +147,7 @@ impl From<SharePlatform> for LoggableEvent {
 
 impl From<SrcData> for LoggableEvent {
     fn from(src_data: SrcData) -> Self {
-        Self::ClickShare {
-            src_data: src_data.into(),
-        }
+        Self::ClickShare { src_data }
     }
 }
 

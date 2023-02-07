@@ -37,7 +37,7 @@ pub fn custom_view(props: &CustomViewProps) -> Html {
 
 fn get_custom_spread(str: &str) -> CustomSpread {
     let cards = str
-        .split_terminator(",")
+        .split_terminator(',')
         .map(|id| match ImageMeta::from_str(id) {
             Ok(im) => im.image_data,
             Err(_) => ImageData {
