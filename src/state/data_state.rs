@@ -15,7 +15,7 @@ use super::messages::*;
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Debug)]
 pub struct CustomSpread {
-    pub cards: Vec<Arc<String>>,
+    pub cards: Vec<ImageData>,
 }
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug)]
@@ -100,14 +100,11 @@ impl DataState {
             if index >= custom.cards.len() as u8 {
                 return None;
             } else {
-                let id = custom.cards[index as usize].clone();
+                let image_data = custom.cards[index as usize].clone();
                 return Some(ImageMeta {
                     guide,
                     card,
-                    image_data: ImageData {
-                        id,
-                        image_type: ImageType::Custom,
-                    },
+                    image_data,
                 });
             }
         }

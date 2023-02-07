@@ -1,3 +1,7 @@
+use std::str::FromStr;
+
+use crate::data::image_data::{ImageData, ImageType};
+use crate::data::prelude::ImageMeta;
 use crate::state::prelude::*;
 use crate::web::logo::Logo;
 use itertools::Itertools;
@@ -34,7 +38,13 @@ pub fn custom_view(props: &CustomViewProps) -> Html {
 fn get_custom_spread(str: &str) -> CustomSpread {
     let cards = str
         .split_terminator(",")
-        .map(|x| std::sync::Arc::new(x.to_string()))
+        .map(|id| match ImageMeta::from_str(id) {
+            Ok(im) => im.image_data,
+            Err(_) => ImageData {
+                id: id.to_string().into(),
+                image_type: ImageType::Custom,
+            },
+        })
         .collect_vec();
     CustomSpread { cards }
 }
