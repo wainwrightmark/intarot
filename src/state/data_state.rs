@@ -170,17 +170,13 @@ impl DataState {
 
     pub fn spread_src(&self, metas: &HashMap<MetaKey, Vec<ImageMeta>>) -> SrcData {
         let spread_option = self
-            .get_image_meta(
-                self.question_data.spread_type.initial_top_card_index(),
-                metas,
-            )
+            .get_image_meta(self.initial_top_card_index(), metas)
             .map(|image_meta| image_meta.image_data)
-            .map(|share_img| SpreadShare{
+            .map(|share_img| SpreadShare {
                 question_data: self.question_data,
                 perm: self.perm,
                 share_img,
-            })
-            ;
+            });
 
         SrcData {
             spread_option,
@@ -197,13 +193,23 @@ impl DataState {
         self.back_to_top();
     }
 
+    fn initial_top_card_index(&self) -> u8 {
+        match &self.custom_spread {
+            Some(custom_spread) => custom_spread.cards.len() as u8,
+            None => self.question_data.spread_type.initial_top_card_index(),
+        }
+    }
+
     pub fn back_to_top(&mut self) {
-        self.top_card_index = self.question_data.spread_type.initial_top_card_index();
+        self.top_card_index = self.initial_top_card_index();
         self.show_description = false;
-        self.last_hidden_card_index = self.question_data.spread_type.initial_top_card_index() + 1;
+        self.last_hidden_card_index = self.initial_top_card_index() + 1;
         self.has_shown_description = false;
     }
 }
+
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
+pub struct DrawMessage {}
 
 impl Reducer<DataState> for DrawMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
@@ -212,6 +218,9 @@ impl Reducer<DataState> for DrawMessage {
         (*state).clone().next_card().into()
     }
 }
+
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
+pub struct ReplaceMessage {}
 
 impl Reducer<DataState> for ReplaceMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
@@ -227,6 +236,9 @@ impl Reducer<DataState> for ToggleDescriptionMessage {
         (*state).clone().toggle_description().into()
     }
 }
+
+#[derive(Copy, Clone, PartialEq, Eq)]
+pub struct ResetMessage;
 
 impl Reducer<DataState> for ResetMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
@@ -248,6 +260,9 @@ impl Reducer<DataState> for LoadSpreadMessage {
     }
 }
 
+#[derive(Copy, Clone, PartialEq, Eq)]
+pub struct ChangeSpreadTypeMessage(pub SpreadType);
+
 impl Reducer<DataState> for ChangeSpreadTypeMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         let mut state = (*state).clone();
@@ -261,6 +276,9 @@ impl Reducer<DataState> for ChangeSpreadTypeMessage {
         state.into()
     }
 }
+
+#[derive(Copy, Clone, PartialEq, Eq)]
+pub struct ChangeGuideMessage(pub Guide);
 
 impl Reducer<DataState> for ChangeGuideMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
@@ -298,6 +316,17 @@ impl Reducer<DataState> for SetCustomSpreadMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         let mut state = (*state).clone();
         state.custom_spread = Some(self.custom);
+        state.into()
+    }
+}
+
+#[derive(Clone, PartialEq, Eq)]
+pub struct BackToTopMessage;
+
+impl Reducer<DataState> for BackToTopMessage {
+    fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
+        let mut state = (*state).clone();
+        state.back_to_top();
         state.into()
     }
 }

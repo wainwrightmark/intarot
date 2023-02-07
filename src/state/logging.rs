@@ -71,6 +71,9 @@ pub enum LoggableEvent {
     Cheat {
         cards: String,
     },
+    Custom {
+        cards: String,
+    },
 }
 
 impl LoggableEvent {
@@ -119,6 +122,7 @@ impl LoggableEvent {
             LoggableEvent::ReceivedShare { .. } => "Received Share",
             LoggableEvent::Social { .. } => "Social",
             LoggableEvent::Cheat { .. } => "Cheat",
+            LoggableEvent::Custom { .. } => "Custom",
         }
     }
 }
