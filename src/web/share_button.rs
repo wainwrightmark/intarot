@@ -1,59 +1,61 @@
-use crate::data::prelude::*;
+use crate::data::{prelude::*,};
 use crate::state::prelude::*;
-use crate::web::share_component::ShareComponent;
+use web_sys::{window, ShareData};
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct ShareButtonProps {
     pub label: Option<AttrValue>,
-    pub for_id: AttrValue,
     pub src_data: SrcData,
+    pub share_text: AttrValue,
+}
+
+async fn share(text: AttrValue, src_data: SrcData) {
+    let window = window().unwrap();
+
+    // if !window.navigator().can_share(){
+    //     log::error!("Cannot Share");
+    //     return ;
+    // }
+
+    let mut data = ShareData::new();
+
+    data.text(text.as_str());
+    data.url(src_data.share_url().as_str());
+
+    let promise = window.navigator().share_with_data(&data);
+    let future = wasm_bindgen_futures::JsFuture::from(promise);
+
+    let result = future.await;
+
+    match result {
+        Ok(ok_result) =>{
+            log::info!("{ok_result:?}");
+            LoggableEvent::try_log(src_data.clone())
+        } ,
+        Err(err) => log::error!("{err:?}"),
+    }
 }
 
 #[function_component(ShareButton)]
 pub fn share_button(props: &ShareButtonProps) -> Html {
     let src_data: SrcData = props.src_data.clone();
+    let text = props.share_text.clone();
 
     let on_click = move |_: MouseEvent| {
-        LoggableEvent::try_log(src_data.clone());
+
+        let future = share(text.clone(), src_data.clone());
+
+        wasm_bindgen_futures::spawn_local(future);
     };
 
     if let Some(label) = &props.label {
-        html!(<label class="paper-btn margin nice-button card-button" for={props.for_id.clone()} onclick={on_click} style="pointer-events:auto;">{label.clone()}</label>)
+        html!(<button class="paper-btn margin nice-button card-button" onclick={on_click} style="pointer-events:auto;">{label.clone()}</button>)
     } else {
-        html!(<label class="" for={props.for_id.clone()}  onclick={on_click} style="pointer-events:auto; border:none; background: transparent;"><ShareIcon /></label>)
+        html!(<button class="" onclick={on_click} style="pointer-events:auto; border:none; background: transparent;"><ShareIcon /></button>)
     }
 }
 
-#[derive(Properties, PartialEq)]
-pub struct ShareModalProps {
-    pub id: AttrValue,
-    pub share_text: AttrValue,
-    pub src_data: SrcData,
-}
-
-#[function_component(ShareModal)]
-pub fn share_modal(props: &ShareModalProps) -> Html {
-    let src_data = props.src_data.clone();
-    html!(
-        <>
-        <input class="modal-state" id={props.id.clone()} type="checkbox"/>
-        <div class="modal" style="pointer-events:auto;">
-          <label class="modal-bg" for={props.id.clone()}></label>
-          <div class="modal-body">
-            <h4 class="modal-title">{"Share" }</h4>
-                      <ShareComponent
-                      title="intarot"
-                      {src_data}
-                      text={props.share_text.clone()}
-                      media={props.src_data.image.src()}>
-                      </ShareComponent>
-
-              </div>
-      </div>
-      </>
-    )
-}
 
 #[function_component(ShareIcon)]
 pub fn share_icon() -> Html {
