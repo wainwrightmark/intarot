@@ -42,6 +42,7 @@ pub enum LoggableEvent {
         ref_param: String,
         referrer: String,
         user_agent: String,
+        language: String
     },
     NewSpread {
         question_data: QuestionData,
