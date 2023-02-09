@@ -9,6 +9,7 @@ use yewdux::store::Store;
 use crate::data::image_data::ImageData;
 use crate::data::image_data::ImageType;
 use crate::data::prelude::*;
+use crate::web::capacitor::*;
 
 use super::achievements_state::AchievementsState;
 use super::messages::*;
@@ -212,6 +213,9 @@ impl Reducer<DataState> for DrawMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         Dispatch::<AchievementsState>::new()
             .apply(AchievementEarnedMessage(Achievement::SwipeCard));
+        Haptics::notification(&NotificationOptions {
+            notification_type: NotificationType::Success,
+        });
         (*state).clone().next_card().into()
     }
 }
@@ -223,6 +227,9 @@ impl Reducer<DataState> for ReplaceMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         Dispatch::<AchievementsState>::new()
             .apply(AchievementEarnedMessage(Achievement::SwipeCard));
+        Haptics::notification(&NotificationOptions {
+            notification_type: NotificationType::Success,
+        });
         (*state).clone().previous_card().into()
     }
 }
@@ -230,6 +237,11 @@ impl Reducer<DataState> for ToggleDescriptionMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         Dispatch::<AchievementsState>::new()
             .apply(AchievementEarnedMessage(Achievement::ViewDescription));
+        Haptics::notification(&NotificationOptions {
+            notification_type: NotificationType::Success,
+        });
+
+        Haptics::impact(&ImpactOptions { style: ImpactStyle::Light });
         (*state).clone().toggle_description().into()
     }
 }

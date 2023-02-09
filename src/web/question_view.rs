@@ -6,7 +6,8 @@ use yewdux::prelude::{use_store_value, Dispatch};
 use super::app::Route;
 use crate::{
     state::{prelude::*, prompts_state::PromptsState},
-    web::{logo::Logo, prelude::scroll_to_top},
+    web::{logo::Logo, prelude::*},
+
 };
 
 #[derive(Properties, PartialEq)]
@@ -30,6 +31,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         let is_clickable_state = is_clickable_state.clone();
         Callback::from(move |_e: MouseEvent| {
             if *is_clickable_state {
+                Haptics::vibrate(&VibrateOptions{duration: 300.});
                 Dispatch::<DataState>::new().apply(ResetMessage {});
 
                 let data = Dispatch::<DataState>::new().get();

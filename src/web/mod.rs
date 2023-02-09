@@ -15,6 +15,7 @@ pub mod share_card_view;
 pub mod share_component;
 mod social;
 mod spread_view;
+pub mod capacitor;
 
 pub mod prelude {
 
@@ -28,4 +29,5 @@ pub mod prelude {
     pub use crate::web::share_card_view::*;
     pub use crate::web::share_component::*;
     pub use crate::web::social::*;
+    pub use crate::web::capacitor::*;
 }

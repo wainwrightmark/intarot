@@ -36,6 +36,9 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         } else {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
+                            Haptics::notification(&NotificationOptions {
+                                notification_type: NotificationType::Error,
+                            });
                             angry_animate_top_card_right();
                         }
                     }
@@ -45,6 +48,9 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         } else {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
+                            Haptics::notification(&NotificationOptions {
+                                notification_type: NotificationType::Error,
+                            });
                             angry_animate_top_card_left();
                         }
                     }

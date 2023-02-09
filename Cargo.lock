@@ -658,6 +658,7 @@ dependencies = [
  "rand",
  "reqwest",
  "serde",
+ "serde-wasm-bindgen",
  "strum",
  "url-escape",
  "uuid",
