@@ -1,3 +1,3 @@
-export function open_link_in_new_tab(url) {
-    window.open(url, '_blank').focus();
+export function open_link_in_same_tab(url) {
+    window.open(url).focus();
 }

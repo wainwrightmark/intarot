@@ -1,3 +1,3 @@
-export function get_user_agent() {
-  return window.navigator.userAgent;
+export function get_referrer() {
+  return document.referrer;
 }
