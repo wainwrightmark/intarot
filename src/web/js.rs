@@ -1,12 +1,3 @@
-// #[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function get_user_agent() {
-//   return window.navigator.userAgent;
-// }"##)]
-// extern "C" {
-//     pub fn get_user_agent() -> String;
-// }
-
-// pub fn get_user_
-
 #[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function get_referrer() {
   return document.referrer;
 }"##)]
