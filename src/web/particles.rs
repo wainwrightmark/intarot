@@ -23,9 +23,13 @@ impl Component for ParticlesCanvas {
             Closure::wrap(Box::new(move || comp_ctx.send_message(())) as Box<dyn FnMut()>);
         ctx.link().send_message(());
 
+        let window = window().unwrap();
+        let width = window.inner_width().unwrap().as_f64().unwrap();
+        let height = window.inner_height().unwrap().as_f64().unwrap();
+
         Self {
             canvas: NodeRef::default(),
-            particles: Particle::new_vec(100),
+            particles: Particle::new_vec(100, width, height),
             callback,
         }
     }
@@ -135,11 +139,11 @@ const LIGHTNESS_RANGE: Range<f64> = 0.0..50.0;
 const ALPHA_RANGE: Range<f64> = 0.08..0.12;
 
 impl Particle {
-    pub fn new_vec(count: usize) -> Vec<Self> {
+    pub fn new_vec(count: usize, width: f64, height: f64) -> Vec<Self> {
         let mut rng = ThreadRng::default();
 
         (0..count)
-            .map(|_| Particle::new(&mut rng, 375., 667.))
+            .map(|_| Particle::new(&mut rng, width, height))
             .collect_vec()
     }
 
