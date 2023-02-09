@@ -3,8 +3,19 @@ use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
 
 #[wasm_bindgen()]
 extern "C" {
+
+    //SHARE
+
+
+
+
+    //TOAST
+
     #[wasm_bindgen(js_namespace = ["Capacitor", "Plugins", "Toast"])]
     async fn show(options: JsValue);
+
+
+    //HAPTICS
 
     /// Vibrate the device
     #[wasm_bindgen(js_namespace = ["Capacitor", "Plugins", "Haptics"])]
