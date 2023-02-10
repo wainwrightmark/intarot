@@ -1,0 +1,6 @@
+{
+  "appId": "com.intarot.app",
+  "appName": "intarot",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

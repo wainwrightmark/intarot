@@ -15,6 +15,8 @@ use super::spread_view::SpreadView;
 use crate::web::advanced_view::AdvancedView;
 use crate::web::question_view::QuestionView;
 
+use capacitor_bindings::status_bar::*;
+
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
     #[at("/")]
@@ -42,6 +44,7 @@ pub enum Route {
 #[function_component(App)]
 pub fn app() -> Html {
     let ref_param = use_search_param("ref".to_string()).unwrap_or_default();
+    StatusBar::set_overlays_web_view(&SetOverlaysWebViewOptions { overlay:true });
 
     Dispatch::<UserState>::new().apply(CreateUserIfNewMessage { ref_param });
     Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
