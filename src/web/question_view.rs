@@ -2,6 +2,7 @@ use yew::prelude::*;
 use yew_hooks::{use_effect_once, use_interval};
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::{use_store_value, Dispatch};
+use capacitor_bindings::haptics::*;
 
 use super::app::Route;
 use crate::{

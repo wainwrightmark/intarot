@@ -9,6 +9,8 @@ use crate::state::prelude::*;
 use crate::web::card_view::*;
 use crate::web::prelude::*;
 
+use capacitor_bindings::haptics::*;
+
 #[derive(Properties, PartialEq, Clone)]
 pub struct SpreadViewProps {}
 

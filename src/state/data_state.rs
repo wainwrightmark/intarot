@@ -9,7 +9,7 @@ use yewdux::store::Store;
 use crate::data::image_data::ImageData;
 use crate::data::image_data::ImageType;
 use crate::data::prelude::*;
-use crate::web::capacitor::*;
+use capacitor_bindings::haptics::*;
 
 use super::achievements_state::AchievementsState;
 use super::messages::*;
