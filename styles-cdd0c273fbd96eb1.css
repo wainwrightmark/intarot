@@ -41,7 +41,7 @@ img {
 
 .advanced-view-button {
   width: 15em;
-  max-width: 15em;
+  max-width: 100%;
   position: relative;
   margin: 0 auto;
   text-align: center;
