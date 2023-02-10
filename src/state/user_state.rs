@@ -1,9 +1,9 @@
 use std::rc::Rc;
+use web_sys::window;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
 
 use crate::web::js::get_referrer;
-use crate::web::js::get_user_agent;
 
 use super::logging::EventLog;
 use super::logging::LoggableEvent;
@@ -25,7 +25,11 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
             state
         } else {
             let user_id = uuid::Uuid::new_v4();
-            let user_agent = get_user_agent();
+            let navigator = window().unwrap().navigator();
+            let language = navigator.language().unwrap();
+
+
+            let user_agent = navigator.user_agent().unwrap();
             let referrer = get_referrer();
 
             let message = EventLog {
@@ -35,6 +39,7 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
                     user_agent,
                     ref_param: self.ref_param,
                     referrer,
+                    language
                 },
                 resent: false,
             };

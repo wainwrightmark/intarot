@@ -12,7 +12,6 @@ pub mod particles;
 pub mod question_view;
 pub mod share_button;
 pub mod share_card_view;
-pub mod share_component;
 mod social;
 mod spread_view;
 pub mod capacitor;
@@ -27,7 +26,6 @@ pub mod prelude {
     pub use crate::web::logo::*;
     pub use crate::web::share_button::*;
     pub use crate::web::share_card_view::*;
-    pub use crate::web::share_component::*;
     pub use crate::web::social::*;
     pub use crate::web::capacitor::*;
 }

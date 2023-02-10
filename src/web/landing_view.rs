@@ -43,6 +43,10 @@ pub fn landing_view() -> Html {
             <div class="sm-4 col" style="margin: auto;">
 
             <Logo clickable={true}/>
+            <button onclick={on_begin_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Quick Reading"}</button>
+            <br/>
+            <button onclick={on_advanced_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Advanced Reading"}</button>
+            <br/>
             <p class="landing-paragraph">
             {paragraph1}
             </p>
@@ -53,10 +57,7 @@ pub fn landing_view() -> Html {
             {paragraph3}
             </p>
                 </div>
-                <button onclick={on_begin_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Basic Reading"}</button>
-                <br/>
-                <button onclick={on_advanced_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Advanced Reading"}</button>
-                <br/>
+
                 <br/>
                 <br/>
                 <div class={"advanced-view-item"}  >

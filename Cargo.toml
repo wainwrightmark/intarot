@@ -6,8 +6,6 @@ authors = ["Mark Wainwright <wainwrightml@gmail.com>"]
 license = "MIT"
 keywords = ["tarot", "ai"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 itertools = "0.10"
 serde = { version = "1", features = ["derive", "rc"] }
@@ -47,7 +45,8 @@ features = [
     "HtmlInputElement",
     "HtmlSelectElement",
     "HtmlDialogElement",
-    "HtmlCanvasElement", "CanvasRenderingContext2d"
+    "HtmlCanvasElement", "CanvasRenderingContext2d",
+    "Navigator", "ShareData"
 ]
 
 
