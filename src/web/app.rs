@@ -41,9 +41,10 @@ pub enum Route {
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let ref_param = use_search_param("ref".to_string()).unwrap_or_default();
+    let ref_param = use_search_param("ref".to_string());
+    let gclid_param = use_search_param("gclid".to_string());
 
-    Dispatch::<UserState>::new().apply(CreateUserIfNewMessage { ref_param });
+    Dispatch::<UserState>::new().apply(CreateUserIfNewMessage { ref_param, gclid_param });
     Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
 
     html! {

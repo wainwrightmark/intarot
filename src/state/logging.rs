@@ -1,4 +1,7 @@
+use std::ops::Not;
+
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
 use uuid::Uuid;
 use yewdux::prelude::Dispatch;
 
@@ -36,13 +39,15 @@ impl EventLog {
     }
 }
 
+#[skip_serializing_none]
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum LoggableEvent {
     NewUser {
-        ref_param: String,
-        referrer: String,
+        ref_param: Option<String>,
+        referrer: Option<String>,
+        gclid: Option<String>,
         user_agent: String,
-        language: String
+        language: String,
     },
     NewSpread {
         question_data: QuestionData,
@@ -63,8 +68,8 @@ pub enum LoggableEvent {
         achievement: Achievement,
     },
     ReceivedShare {
-        ref_param: String,
-        referrer: String,
+        ref_param: Option<String>,
+        referrer: Option<String>,
         spread_id: Option<String>,
         img_id: Option<String>,
     },
@@ -103,8 +108,9 @@ impl LoggableEvent {
         }
     }
 
-    pub fn new_share(ref_param: String, spread_id: Option<String>, img_id: Option<String>) -> Self {
+    pub fn new_share(ref_param: Option<String>, spread_id: Option<String>, img_id: Option<String>) -> Self {
         let referrer = get_referrer();
+        let referrer = referrer.is_empty().not().then_some(referrer);
         Self::ReceivedShare {
             referrer,
             ref_param,
