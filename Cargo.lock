@@ -103,11 +103,12 @@ checksum = "89b2fd2a0dcf38d7971e2194b6b6eebab45ae01067456a7fd93d5547a61b70be"
 [[package]]
 name = "capacitor_bindings"
 version = "0.1.0"
-source = "git+https://github.com/wainwrightmark/capacitor_bindings#3b4091a19c24dd8d7188fba3a7d2bcbd8d60979d"
+source = "git+https://github.com/wainwrightmark/capacitor_bindings#d1a3d7ffb621e923350c48d043d4a302a2a1346b"
 dependencies = [
  "js-sys",
  "serde",
  "serde-wasm-bindgen",
+ "serde_with",
  "wasm-bindgen",
  "wasm-bindgen-futures",
 ]

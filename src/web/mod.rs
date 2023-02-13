@@ -14,6 +14,7 @@ pub mod share_button;
 pub mod share_card_view;
 mod social;
 mod spread_view;
+pub mod notifications;
 
 pub mod prelude {
 
@@ -26,4 +27,5 @@ pub mod prelude {
     pub use crate::web::share_button::*;
     pub use crate::web::share_card_view::*;
     pub use crate::web::social::*;
+    pub use crate::web::notifications::*;
 }

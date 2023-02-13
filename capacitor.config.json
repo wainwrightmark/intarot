@@ -2,5 +2,11 @@
   "appId": "com.intarot.app",
   "appName": "intarot",
   "webDir": "dist",
-  "bundledWebRuntime": false
+  "bundledWebRuntime": false,
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "icon512",
+      "iconColor": "#FFFFFF"
+    }
+  }
 }

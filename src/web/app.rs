@@ -17,6 +17,7 @@ use crate::web::question_view::QuestionView;
 
 use capacitor_bindings::status_bar::*;
 
+
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
     #[at("/")]
@@ -56,6 +57,9 @@ pub fn app() -> Html {
             style: Style::Light,
         });
         StatusBar::set_overlays_web_view(&SetOverlaysWebViewOptions { overlay: true });
+
+        crate::setup_notifications();
+
         || ()
     });
 
