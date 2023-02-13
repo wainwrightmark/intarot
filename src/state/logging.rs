@@ -41,6 +41,7 @@ impl EventLog {
 
 #[skip_serializing_none]
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(tag = "type")]
 pub enum LoggableEvent {
     NewUser {
         ref_param: Option<String>,
