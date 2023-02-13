@@ -33,7 +33,7 @@ async fn share(text: AttrValue, src_data: SrcData) {
             log::info!("{ok_result:?}");
             LoggableEvent::try_log(src_data.clone())
         } ,
-        Err(err) => log::error!("{err:?}"),
+        Err(err) => LoggableEvent::try_log_error(err.as_string().unwrap_or_default()),
     }
 }
 

@@ -106,6 +106,15 @@ pub enum LoggableEvent {
 }
 
 impl LoggableEvent {
+
+    pub fn try_log_error(message: String){
+        log::error!("{}", message);
+        let event = LoggableEvent::Error { message };
+
+        Self::try_log(event)
+
+    }
+
     pub fn try_log(data: impl Into<Self>) {
         let user = Dispatch::<UserState>::new().get();
         let event = data.into();
@@ -126,8 +135,8 @@ impl LoggableEvent {
 
     pub fn get_severity(&self) -> Severity {
         match self {
-            LoggableEvent::Warn { message } => Severity::Warn,
-            LoggableEvent::Error { message } => Severity::Error,
+            LoggableEvent::Warn { .. } => Severity::Warn,
+            LoggableEvent::Error { .. } => Severity::Error,
             _ => Severity::Info,
         }
     }
@@ -204,7 +213,7 @@ impl EventLog {
     async fn log(data: Self) {
         let r = Self::try_log(&data).await;
         if let Err(err) = r {
-            log::error!("Logging Error {}", err);
+            log::error!("Failed to log: {}", err);
             Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(data.event));
         } else {
             let discriminant: LoggableEvent = data.event.into();
