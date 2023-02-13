@@ -1,3 +1,4 @@
+use std::ops::Not;
 use std::rc::Rc;
 use web_sys::window;
 use yewdux::store::Reducer;
@@ -16,7 +17,8 @@ pub struct UserState {
 
 #[derive(Default, Clone, PartialEq, Eq)]
 pub struct CreateUserIfNewMessage {
-    pub ref_param: String,
+    pub ref_param: Option<String>,
+    pub gclid_param: Option<String>
 }
 
 impl Reducer<UserState> for CreateUserIfNewMessage {
@@ -31,6 +33,7 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
 
             let user_agent = navigator.user_agent().unwrap();
             let referrer = get_referrer();
+            let referrer = referrer.is_empty().not().then_some(referrer);
 
             let message = EventLog {
                 user_id,
@@ -38,10 +41,12 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
                 event: LoggableEvent::NewUser {
                     user_agent,
                     ref_param: self.ref_param,
+                    gclid: self.gclid_param,
                     referrer,
                     language
                 },
                 resent: false,
+                severity: super::logging::Severity::Info
             };
             message.send_log();
 

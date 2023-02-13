@@ -5,7 +5,7 @@ use crate::web::particles::*;
 
 use yew::prelude::*;
 
-use yew_hooks::use_search_param;
+use yew_hooks::{use_effect_once, use_search_param};
 use yew_router::prelude::*;
 use yewdux::prelude::Dispatch;
 
@@ -43,11 +43,21 @@ pub enum Route {
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let ref_param = use_search_param("ref".to_string()).unwrap_or_default();
-    StatusBar::set_overlays_web_view(&SetOverlaysWebViewOptions { overlay:true });
+    let ref_param = use_search_param("ref".to_string());
+    let gclid_param = use_search_param("gclid".to_string());
 
-    Dispatch::<UserState>::new().apply(CreateUserIfNewMessage { ref_param });
-    Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
+    use_effect_once(|| {
+        Dispatch::<UserState>::new().apply(CreateUserIfNewMessage {
+            ref_param,
+            gclid_param,
+        });
+        Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
+        StatusBar::set_style(&StyleOptions {
+            style: Style::Light,
+        });
+        StatusBar::set_overlays_web_view(&SetOverlaysWebViewOptions { overlay: true });
+        || ()
+    });
 
     html! {
 

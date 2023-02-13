@@ -1,4 +1,8 @@
+use std::ops::Not;
+
 use serde::{Deserialize, Serialize};
+use serde_with::skip_serializing_none;
+use strum::EnumDiscriminants;
 use uuid::Uuid;
 use yewdux::prelude::Dispatch;
 
@@ -10,6 +14,8 @@ use crate::{
 
 use super::data_state::DataState;
 
+// cSpell:ignore xaat
+
 /// This token can only be used to ingest data into our bucket
 const API_TOKEN: &str = "xaat-ba30896b-604b-4837-8924-ec8097e55eee";
 
@@ -19,30 +25,47 @@ pub struct EventLog {
     #[serde(skip_serializing_if = "is_false")]
     pub resent: bool,
     pub event: LoggableEvent,
+    #[serde(skip_serializing_if = "is_info_or_lower")]
+    pub severity: Severity,
 }
 
 fn is_false(b: &bool) -> bool {
     !b
 }
 
+fn is_info_or_lower(severity: &Severity) -> bool {
+    severity != &Severity::Warn && severity != &Severity::Error
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub enum Severity {
+    Info,
+    Warn,
+    Error,
+}
+
 impl EventLog {
     pub fn new_resent(user_id: Uuid, event: LoggableEvent) -> Self {
-        //let user_agent = get_user_agent();
+        let severity = event.get_severity();
         Self {
             user_id,
             resent: true,
             event,
+            severity,
         }
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[skip_serializing_none]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, EnumDiscriminants)]
+#[serde(tag = "type")]
 pub enum LoggableEvent {
     NewUser {
-        ref_param: String,
-        referrer: String,
+        ref_param: Option<String>,
+        referrer: Option<String>,
+        gclid: Option<String>,
         user_agent: String,
-        language: String
+        language: String,
     },
     NewSpread {
         question_data: QuestionData,
@@ -63,8 +86,8 @@ pub enum LoggableEvent {
         achievement: Achievement,
     },
     ReceivedShare {
-        ref_param: String,
-        referrer: String,
+        ref_param: Option<String>,
+        referrer: Option<String>,
         spread_id: Option<String>,
         img_id: Option<String>,
     },
@@ -75,21 +98,48 @@ pub enum LoggableEvent {
     Custom {
         cards: String,
     },
+
+    Warn {
+        message: String,
+    },
+    Error {
+        message: String,
+    },
 }
 
 impl LoggableEvent {
+
+    pub fn try_log_error(message: String){
+        log::error!("{}", message);
+        let event = LoggableEvent::Error { message };
+
+        Self::try_log(event)
+
+    }
+
     pub fn try_log(data: impl Into<Self>) {
         let user = Dispatch::<UserState>::new().get();
+        let event = data.into();
+        let severity = event.get_severity();
         if let Some(user_id) = user.user_id {
             let message = EventLog {
-                event: data.into(),
+                event,
                 user_id,
                 resent: false,
+                severity,
             };
             message.send_log();
         } else {
-            Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(data.into()));
+            Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(event));
             log::error!("User Id not set");
+        }
+    }
+
+    pub fn get_severity(&self) -> Severity {
+        match self {
+            LoggableEvent::Warn { .. } => Severity::Warn,
+            LoggableEvent::Error { .. } => Severity::Error,
+            _ => Severity::Info,
         }
     }
 
@@ -103,27 +153,18 @@ impl LoggableEvent {
         }
     }
 
-    pub fn new_share(ref_param: String, spread_id: Option<String>, img_id: Option<String>) -> Self {
+    pub fn new_share(
+        ref_param: Option<String>,
+        spread_id: Option<String>,
+        img_id: Option<String>,
+    ) -> Self {
         let referrer = get_referrer();
+        let referrer = referrer.is_empty().not().then_some(referrer);
         Self::ReceivedShare {
             referrer,
             ref_param,
             spread_id,
             img_id,
-        }
-    }
-
-    pub fn type_name(&self) -> &'static str {
-        match self {
-            LoggableEvent::NewUser { .. } => "New User",
-            LoggableEvent::NewSpread { .. } => "New Spread",
-            LoggableEvent::ClickShare { .. } => "Click Share",
-            LoggableEvent::ShareOn { .. } => "Share On",
-            LoggableEvent::Achievement { .. } => "Achievement",
-            LoggableEvent::ReceivedShare { .. } => "Received Share",
-            LoggableEvent::Social { .. } => "Social",
-            LoggableEvent::Cheat { .. } => "Cheat",
-            LoggableEvent::Custom { .. } => "Custom",
         }
     }
 }
@@ -174,10 +215,11 @@ impl EventLog {
     async fn log(data: Self) {
         let r = Self::try_log(&data).await;
         if let Err(err) = r {
-            log::error!("Logging Error {}", err);
+            log::error!("Failed to log: {}", err);
             Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(data.event));
         } else {
-            log::debug!("Log {} sent successfully", data.event.type_name());
+            let discriminant: LoggableEvent = data.event.into();
+            log::debug!("Log {discriminant:?} sent successfully",);
         }
     }
 }
