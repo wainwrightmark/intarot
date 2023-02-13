@@ -2,6 +2,7 @@ use std::ops::Not;
 
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
+use strum::EnumDiscriminants;
 use uuid::Uuid;
 use yewdux::prelude::Dispatch;
 
@@ -22,25 +23,39 @@ pub struct EventLog {
     #[serde(skip_serializing_if = "is_false")]
     pub resent: bool,
     pub event: LoggableEvent,
+    #[serde(skip_serializing_if = "is_info_or_lower")]
+    pub severity: Severity,
 }
 
 fn is_false(b: &bool) -> bool {
     !b
 }
 
+fn is_info_or_lower(severity: &Severity) -> bool {
+    severity != &Severity::Warn && severity != &Severity::Error
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub enum Severity {
+    Info,
+    Warn,
+    Error,
+}
+
 impl EventLog {
     pub fn new_resent(user_id: Uuid, event: LoggableEvent) -> Self {
-        //let user_agent = get_user_agent();
+        let severity = event.get_severity();
         Self {
             user_id,
             resent: true,
             event,
+            severity,
         }
     }
 }
 
 #[skip_serializing_none]
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, EnumDiscriminants)]
 #[serde(tag = "type")]
 pub enum LoggableEvent {
     NewUser {
@@ -81,21 +96,39 @@ pub enum LoggableEvent {
     Custom {
         cards: String,
     },
+
+    Warn {
+        message: String,
+    },
+    Error {
+        message: String,
+    },
 }
 
 impl LoggableEvent {
     pub fn try_log(data: impl Into<Self>) {
         let user = Dispatch::<UserState>::new().get();
+        let event = data.into();
+        let severity = event.get_severity();
         if let Some(user_id) = user.user_id {
             let message = EventLog {
-                event: data.into(),
+                event,
                 user_id,
                 resent: false,
+                severity,
             };
             message.send_log();
         } else {
-            Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(data.into()));
+            Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(event));
             log::error!("User Id not set");
+        }
+    }
+
+    pub fn get_severity(&self) -> Severity {
+        match self {
+            LoggableEvent::Warn { message } => Severity::Warn,
+            LoggableEvent::Error { message } => Severity::Error,
+            _ => Severity::Info,
         }
     }
 
@@ -109,7 +142,11 @@ impl LoggableEvent {
         }
     }
 
-    pub fn new_share(ref_param: Option<String>, spread_id: Option<String>, img_id: Option<String>) -> Self {
+    pub fn new_share(
+        ref_param: Option<String>,
+        spread_id: Option<String>,
+        img_id: Option<String>,
+    ) -> Self {
         let referrer = get_referrer();
         let referrer = referrer.is_empty().not().then_some(referrer);
         Self::ReceivedShare {
@@ -117,20 +154,6 @@ impl LoggableEvent {
             ref_param,
             spread_id,
             img_id,
-        }
-    }
-
-    pub fn type_name(&self) -> &'static str {
-        match self {
-            LoggableEvent::NewUser { .. } => "New User",
-            LoggableEvent::NewSpread { .. } => "New Spread",
-            LoggableEvent::ClickShare { .. } => "Click Share",
-            LoggableEvent::ShareOn { .. } => "Share On",
-            LoggableEvent::Achievement { .. } => "Achievement",
-            LoggableEvent::ReceivedShare { .. } => "Received Share",
-            LoggableEvent::Social { .. } => "Social",
-            LoggableEvent::Cheat { .. } => "Cheat",
-            LoggableEvent::Custom { .. } => "Custom",
         }
     }
 }
@@ -184,7 +207,8 @@ impl EventLog {
             log::error!("Logging Error {}", err);
             Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(data.event));
         } else {
-            log::debug!("Log {} sent successfully", data.event.type_name());
+            let discriminant: LoggableEvent = data.event.into();
+            log::debug!("Log {discriminant:?} sent successfully",);
         }
     }
 }

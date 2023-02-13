@@ -46,6 +46,7 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
                     language
                 },
                 resent: false,
+                severity: super::logging::Severity::Info
             };
             message.send_log();
 
