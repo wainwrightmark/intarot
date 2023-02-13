@@ -14,6 +14,8 @@ use crate::{
 
 use super::data_state::DataState;
 
+// cSpell:ignore xaat
+
 /// This token can only be used to ingest data into our bucket
 const API_TOKEN: &str = "xaat-ba30896b-604b-4837-8924-ec8097e55eee";
 
