@@ -1,4 +1,4 @@
-use crate::data::{prelude::*,};
+use crate::data::prelude::*;
 use crate::state::prelude::*;
 use capacitor_bindings::share::Share;
 use yew::prelude::*;
@@ -59,7 +59,6 @@ pub fn share_button(props: &ShareButtonProps) -> Html {
     let text = props.share_text.clone();
 
     let on_click = move |_: MouseEvent| {
-
         let future = share(text.clone(), src_data.clone());
 
         wasm_bindgen_futures::spawn_local(future);
@@ -71,7 +70,6 @@ pub fn share_button(props: &ShareButtonProps) -> Html {
         html!(<button class="" onclick={on_click} style="pointer-events:auto; border:none; background: transparent;"><ShareIcon /></button>)
     }
 }
-
 
 #[function_component(ShareIcon)]
 pub fn share_icon() -> Html {

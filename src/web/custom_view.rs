@@ -44,7 +44,8 @@ fn get_custom_spread(str: &str) -> CustomSpread {
                 id: id.to_string().into(),
                 image_type: ImageType::Custom,
             },
-        }).rev()
+        })
+        .rev()
         .collect_vec();
     CustomSpread { cards }
 }

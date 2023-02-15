@@ -10,8 +10,8 @@ pub fn landing_view() -> Html {
     use_effect_once(|| scroll_to_top);
 
     let paragraph1 = include_str!(r#"../text/opening_p1.txt"#);
-    let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
-    let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
+    // let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
+    // let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
 
     let on_begin_click = {
         let navigator = navigator.clone();
@@ -43,28 +43,32 @@ pub fn landing_view() -> Html {
             <div class="sm-4 col" style="margin: auto;">
 
             <Logo clickable={true}/>
+
             <button onclick={on_begin_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Quick Reading"}</button>
-            <br/>
+                <br/>
+                <br/>
             <button onclick={on_advanced_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Advanced Reading"}</button>
-            <br/>
+                <br/>
+                <br/>
             <p class="landing-paragraph">
             {paragraph1}
             </p>
-            <p class="landing-paragraph">
-            {paragraph2}
-            </p>
-            <p class="landing-paragraph">
-            {paragraph3}
-            </p>
+            <br/>
+                <br/>
+
+            // <p class="landing-paragraph">
+            // {paragraph2}
+            // </p>
+            // <p class="landing-paragraph">
+            // {paragraph3}
+            // </p>
                 </div>
 
-                <br/>
-                <br/>
-                <div class={"advanced-view-item"}  >
+
+                <footer class={"advanced-view-item"}  >
                 <SocialIcons />
                 <br/>
-                <br/>
-            </div>
+                </footer>
             </div>
         </div>
     }

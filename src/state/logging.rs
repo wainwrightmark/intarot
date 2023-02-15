@@ -109,13 +109,11 @@ pub enum LoggableEvent {
 }
 
 impl LoggableEvent {
-
-    pub fn try_log_error(message: String){
+    pub fn try_log_error(message: String) {
         log::error!("{}", message);
         let event = LoggableEvent::Error { message };
 
         Self::try_log(event)
-
     }
 
     pub fn try_log(data: impl Into<Self>) {
