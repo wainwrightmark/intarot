@@ -1,3 +1,4 @@
+use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
 use yew_hooks::{use_effect_once, use_interval};
 use yew_router::prelude::use_navigator;
@@ -24,7 +25,10 @@ pub fn question_view(_props: &QuestionProps) -> Html {
     {
         let is_clickable_state = is_clickable_state.clone();
         let millis = if *is_clickable_state { 0 } else { 5250 };
-        use_interval(move || is_clickable_state.set(true), millis);
+        use_interval(move || {
+            is_clickable_state.set(true);
+            spawn_local(Haptics::vibrate(300.))
+        }, millis);
     };
 
     let on_begin_click = {
@@ -32,7 +36,6 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         let is_clickable_state = is_clickable_state.clone();
         Callback::from(move |_e: MouseEvent| {
             if *is_clickable_state {
-                Haptics::vibrate(&VibrateOptions{duration: 300.});
                 Dispatch::<DataState>::new().apply(ResetMessage {});
 
                 let data = Dispatch::<DataState>::new().get();

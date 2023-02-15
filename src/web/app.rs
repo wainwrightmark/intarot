@@ -3,6 +3,7 @@ use crate::state::prelude::*;
 use crate::web::landing_view::LandingView;
 use crate::web::particles::*;
 
+use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
 
 use yew_hooks::{use_effect_once, use_search_param};
@@ -53,10 +54,8 @@ pub fn app() -> Html {
             gclid_param,
         });
         Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
-        StatusBar::set_style(&StyleOptions {
-            style: Style::Light,
-        });
-        StatusBar::set_overlays_web_view(&SetOverlaysWebViewOptions { overlay: true });
+        spawn_local(StatusBar::set_style(Style::Light));
+        spawn_local(StatusBar::set_background_color("#FFFFFF"));
 
         crate::setup_notifications();
 

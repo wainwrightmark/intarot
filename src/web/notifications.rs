@@ -1,4 +1,5 @@
 use capacitor_bindings::local_notifications::*;
+use wasm_bindgen_futures::spawn_local;
 use yewdux::prelude::Dispatch;
 
 use crate::state::{prelude::*};
@@ -11,7 +12,7 @@ pub fn setup_notifications(){
             title: "Your daily reading".to_string(),
             schedule: Schedule {
                 on: ScheduleOn {
-                    second: None,
+                    second: None,// Some(0),// None,
                     year: None,
                     minute: None,
                     month: None,
@@ -35,18 +36,10 @@ pub fn setup_notifications(){
         }],
     };
 
-    let action_type_options = RegisterActionTypesOptions{
-        types: vec![ActionType{
-            id: "DailyReading".to_string(),
-            actions: vec![Action{
-                id: "ViewReading".to_string(),
-                title: "View Reading".to_string()
-            }]
-        }],
-    };
+
 
     let on_action = move |action:ActionPerformed|{
-        if action.action_id == "ViewReading"{
+        if action.action_id == "ViewReading" || action.action_id == "tap"{
             Dispatch::<DataState>::new().apply(ChangeSpreadTypeMessage(crate::data::prelude::SpreadType::DayAhead));
             let event = LoggableEvent::ViewDailyReading {  };
             LoggableEvent::try_log(event);
@@ -55,10 +48,23 @@ pub fn setup_notifications(){
         }
     };
 
-    log::info!("Registering Action Types");
-    LocalNotifications::register_action_types(&action_type_options);
+    async fn register_action_types(){
+        let action_type_options = RegisterActionTypesOptions{
+            types: vec![ActionType{
+                id: "DailyReading".to_string(),
+                actions: vec![Action{
+                    id: "ViewReading".to_string(),
+                    title: "View Reading".to_string()
+                }]
+            }],
+        };
+        LocalNotifications::register_action_types(&action_type_options).await;
+    }
 
-    wasm_bindgen_futures::spawn_local(schedule_notification(schedule_options,
+    log::info!("Registering Action Types");
+    spawn_local(register_action_types());
+
+    spawn_local(schedule_notification(schedule_options,
         on_action
 
     ));

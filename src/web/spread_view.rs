@@ -1,3 +1,4 @@
+use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 
@@ -38,9 +39,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         } else {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
-                            Haptics::notification(&NotificationOptions {
-                                notification_type: NotificationType::Warning,
-                            });
+                            spawn_local(Haptics::notification(NotificationType::Warning));
                             angry_animate_top_card_right();
                         }
                     }
@@ -50,9 +49,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         } else {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
-                            Haptics::notification(&NotificationOptions {
-                                notification_type: NotificationType::Warning,
-                            });
+                            spawn_local(Haptics::notification(NotificationType::Warning));
                             angry_animate_top_card_left();
                         }
                     }
