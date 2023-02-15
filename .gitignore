@@ -16,3 +16,5 @@ Cargo.lock
 
 node_modules/
 android/gradle/wrapper/gradle-wrapper.jar
+android/capacitor.settings.gradle
+android/app/capacitor.build.gradle
