@@ -44,7 +44,10 @@ pub fn app() -> Html {
     let ref_param = use_search_param("ref".to_string());
     let gclid_param = use_search_param("gclid".to_string());
 
-    Dispatch::<UserState>::new().apply(CreateUserIfNewMessage { ref_param, gclid_param });
+    Dispatch::<UserState>::new().apply(CreateUserIfNewMessage {
+        ref_param,
+        gclid_param,
+    });
     Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
 
     html! {

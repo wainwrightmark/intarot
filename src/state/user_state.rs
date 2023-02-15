@@ -18,7 +18,7 @@ pub struct UserState {
 #[derive(Default, Clone, PartialEq, Eq)]
 pub struct CreateUserIfNewMessage {
     pub ref_param: Option<String>,
-    pub gclid_param: Option<String>
+    pub gclid_param: Option<String>,
 }
 
 impl Reducer<UserState> for CreateUserIfNewMessage {
@@ -29,7 +29,6 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
             let user_id = uuid::Uuid::new_v4();
             let navigator = window().unwrap().navigator();
             let language = navigator.language().unwrap();
-
 
             let user_agent = navigator.user_agent().unwrap();
             let referrer = get_referrer();
@@ -43,10 +42,10 @@ impl Reducer<UserState> for CreateUserIfNewMessage {
                     ref_param: self.ref_param,
                     gclid: self.gclid_param,
                     referrer,
-                    language
+                    language,
                 },
                 resent: false,
-                severity: super::logging::Severity::Info
+                severity: super::logging::Severity::Info,
             };
             message.send_log();
 

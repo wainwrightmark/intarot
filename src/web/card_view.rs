@@ -171,12 +171,12 @@ pub fn card_view(props: &CardViewProps) -> Html {
 pub struct SlotProperties {
     pub slot: &'static str,
     pub guide: Guide,
-    pub hide : bool
+    pub hide: bool,
 }
 
 #[function_component(SlotView)]
 pub fn slot_view(props: &SlotProperties) -> Html {
-    let visibility = if props.hide {"hidden"}else{"initial"};
+    let visibility = if props.hide { "hidden" } else { "initial" };
     let primary = props.guide.primary_color();
     let secondary = props.guide.secondary_color();
     html! {
