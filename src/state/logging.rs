@@ -105,6 +105,7 @@ pub enum LoggableEvent {
     Error {
         message: String,
     },
+    ViewDailyReading{}
 }
 
 impl LoggableEvent {

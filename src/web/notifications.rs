@@ -1,46 +1,80 @@
 use capacitor_bindings::local_notifications::*;
+use yewdux::prelude::Dispatch;
+
+use crate::state::{prelude::*};
 
 pub fn setup_notifications(){
-    let options = ScheduleOptions {
+    let schedule_options = ScheduleOptions {
         notifications: vec![LocalNotificationSchema {
             auto_cancel: true,
             body: "Your Daily Reading is ready".to_string(),
             title: "Your daily reading".to_string(),
             schedule: Schedule {
                 on: ScheduleOn {
-                    second: Some(0),
+                    second: None,
                     year: None,
                     minute: None,
                     month: None,
                     day: None,
                     weekday: None,
-                    hour: None,
+                    hour: Some(9), //Trigger at 9am each day
                 },
                 allow_while_idle: true,
             },
-            large_body: Some("Notification Large Body".to_string()),
-            summary_text: Some("Notification Summary Text".to_string()),
+            large_body: None,
+            summary_text: Some("Your Daily Reading is ready".to_string()),
             id: -1125158782, //Very Random number
             ongoing: false,
-            inbox_list: vec![
-                // "N One".to_string(),
-                // "N Two".to_string(),
-                // "N Three".to_string(),
-                // "N Four".to_string(),
-                // "N Five".to_string(),
-            ],
+            inbox_list: None,
+            action_type_id: Some("DailyReading".to_string()),
+            small_icon: Some("icon512".to_string()),
+            large_icon: Some("splash".to_string()),
+            icon_color: Some("#000000".to_string()),
+            group: None,
+            group_summary: None,
         }],
     };
 
-    wasm_bindgen_futures::spawn_local(schedule_notification(options));
+    let action_type_options = RegisterActionTypesOptions{
+        types: vec![ActionType{
+            id: "DailyReading".to_string(),
+            actions: vec![Action{
+                id: "ViewReading".to_string(),
+                title: "View Reading".to_string()
+            }]
+        }],
+    };
+
+    let on_action = move |action:ActionPerformed|{
+        if action.action_id == "ViewReading"{
+            Dispatch::<DataState>::new().apply(ChangeSpreadTypeMessage(crate::data::prelude::SpreadType::DayAhead));
+            let event = LoggableEvent::ViewDailyReading {  };
+            LoggableEvent::try_log(event);
+
+            web_sys::window().expect("Could not get window").open_with_url("/question").expect("Could not open question page");
+        }
+    };
+
+    log::info!("Registering Action Types");
+    LocalNotifications::register_action_types(&action_type_options);
+
+    wasm_bindgen_futures::spawn_local(schedule_notification(schedule_options,
+        on_action
+
+    ));
+
+
 }
 
 
 
-async fn schedule_notification(options: ScheduleOptions) -> () {
+async fn schedule_notification<F: Fn(ActionPerformed) + 'static,>(schedule_options: ScheduleOptions, on_action: F) -> () {
     log::info!("Scheduling local notification...");
-    log::info!("{options:?}");
-    let result = LocalNotifications::schedule(&options).await;
+    let result = LocalNotifications::schedule(&schedule_options).await;
 
     log::info!("Notification Scheduled {:?}", result.notifications);
+
+    log::info!("Registering Action Listener");
+    LocalNotifications::add_action_performed_listener(on_action).await;
+    log::info!("Action Listener Registered");
 }
