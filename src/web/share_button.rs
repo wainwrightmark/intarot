@@ -1,6 +1,6 @@
 use crate::data::{prelude::*,};
 use crate::state::prelude::*;
-use web_sys::{window, ShareData};
+use capacitor_bindings::share::Share;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -11,30 +11,46 @@ pub struct ShareButtonProps {
 }
 
 async fn share(text: AttrValue, src_data: SrcData) {
-    let window = window().unwrap();
+    //let window = window().unwrap();
 
     // if !window.navigator().can_share(){
     //     log::error!("Cannot Share");
     //     return ;
     // }
 
-    let mut data = ShareData::new();
+    LoggableEvent::try_log(src_data.clone());
 
-    data.text(text.as_str());
-    data.url(src_data.share_url().as_str());
+    let result = Share::share(capacitor_bindings::share::ShareOptions{
+        title: Some("intarot".to_string()),
+        text: Some(text.to_string()),
+        url: Some(src_data.share_url()),
+        dialog_title: Some("intarot".to_string()),
+        files: None,
+    }).await;
 
-    let promise = window.navigator().share_with_data(&data);
-    let future = wasm_bindgen_futures::JsFuture::from(promise);
 
-    let result = future.await;
 
-    match result {
-        Ok(ok_result) =>{
-            log::info!("{ok_result:?}");
-            LoggableEvent::try_log(src_data.clone())
-        } ,
-        Err(err) => LoggableEvent::try_log_error(err.as_string().unwrap_or_default()),
-    }
+    LoggableEvent::try_log(LoggableEvent::ShareOn { platform: result.activity_type });
+
+    // let mut data = ShareData::new();
+
+    // data.text(text.as_str());
+    // data.url(src_data.share_url().as_str());
+
+    // let promise = window.navigator().share_with_data(&data);
+    // let future = wasm_bindgen_futures::JsFuture::from(promise);
+
+    // let result = future.await;
+
+    // result.
+
+    // match result {
+    //     Ok(ok_result) =>{
+    //         log::info!("{ok_result:?}");
+    //         LoggableEvent::try_log(src_data.clone())
+    //     } ,
+    //     Err(err) => LoggableEvent::try_log_error(err.as_string().unwrap_or_default()),
+    // }
 }
 
 #[function_component(ShareButton)]

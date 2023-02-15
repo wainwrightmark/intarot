@@ -103,7 +103,7 @@ checksum = "89b2fd2a0dcf38d7971e2194b6b6eebab45ae01067456a7fd93d5547a61b70be"
 [[package]]
 name = "capacitor_bindings"
 version = "0.1.0"
-source = "git+https://github.com/wainwrightmark/capacitor_bindings#85c964861e9dcb3bbaf42e9cfeac281b9b47f6a6"
+source = "git+https://github.com/wainwrightmark/capacitor_bindings#5e46b27ccf8420925bee5dae7370ac5672bf85e6"
 dependencies = [
  "js-sys",
  "serde",

@@ -75,7 +75,7 @@ pub enum LoggableEvent {
         src_data: SrcData,
     },
     ShareOn {
-        platform: SharePlatform,
+        platform: String,
     },
 
     Social {
@@ -182,11 +182,11 @@ impl From<SocialPlatform> for LoggableEvent {
     }
 }
 
-impl From<SharePlatform> for LoggableEvent {
-    fn from(platform: SharePlatform) -> Self {
-        Self::ShareOn { platform }
-    }
-}
+// impl From<SharePlatform> for LoggableEvent {
+//     fn from(platform: SharePlatform) -> Self {
+//         Self::ShareOn { platform }
+//     }
+// }
 
 impl From<SrcData> for LoggableEvent {
     fn from(src_data: SrcData) -> Self {

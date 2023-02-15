@@ -50,27 +50,27 @@ pub enum SocialPlatform {
     Tiktok,
 }
 
-#[derive(
-    Debug,
-    Copy,
-    Clone,
-    Serialize,
-    Deserialize,
-    PartialEq,
-    Eq,
-    Hash,
-    EnumCount,
-    EnumIter,
-    PartialOrd,
-    Ord,
-)]
-pub enum SharePlatform {
-    Facebook,
-    Pintrest,
-    Twitter,
-    Whatsapp,
-    Reddit,
-    Telegram,
-    Mastodon,
-    Clipboard,
-}
+// #[derive(
+//     Debug,
+//     Copy,
+//     Clone,
+//     Serialize,
+//     Deserialize,
+//     PartialEq,
+//     Eq,
+//     Hash,
+//     EnumCount,
+//     EnumIter,
+//     PartialOrd,
+//     Ord,
+// )]
+// pub enum SharePlatform {
+//     Facebook,
+//     Pintrest,
+//     Twitter,
+//     Whatsapp,
+//     Reddit,
+//     Telegram,
+//     Mastodon,
+//     Clipboard,
+// }
