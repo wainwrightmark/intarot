@@ -12,7 +12,6 @@ use super::app::Route;
 use crate::{
     data::prelude::*,
     state::{
-        mailchimp_state::{AVViewMessage, MailchimpState},
         prelude::*,
         prompts_state::PromptsState,
     },
@@ -25,14 +24,12 @@ pub struct AdvancedProps {}
 #[function_component(AdvancedView)]
 pub fn advanced_view(_props: &AdvancedProps) -> Html {
     use_effect_once(|| {
-        Dispatch::<MailchimpState>::new().apply(AVViewMessage);
         scroll_to_top
     });
 
     let navigator = use_navigator().unwrap();
 
     let data_state = use_store_value::<DataState>();
-    let _mailchimp_state = use_store_value::<MailchimpState>();
 
     let description_state = use_store_value::<SpreadDescriptionState>();
 

@@ -1,8 +1,5 @@
 use yew::prelude::*;
-use yewdux::prelude::Dispatch;
 
-use crate::state::mailchimp_state::{MailchimpState, ShowMailchimpMessage};
-use crate::web::mailchimp::*;
 use crate::{data::achievement::SocialPlatform, state::prelude::*};
 
 #[derive(Properties, PartialEq)]
@@ -40,15 +37,8 @@ pub fn social_icons(_props: &SocialButtonProps) -> Html {
         })
     };
 
-    let on_mailchimp_click = {
-        Callback::from(move |_e: MouseEvent| {
-            Dispatch::<MailchimpState>::new().apply(ShowMailchimpMessage);
-        })
-    };
-
     html! {
         <>
-        <Mailchimp />
         <div class="social-row">
 
         <a href="https://www.facebook.com/profile.php?id=100089979217774" class="social-icon si-facebook tooltip" target="_blank" onclick={on_facebook_click}>
@@ -71,11 +61,6 @@ pub fn social_icons(_props: &SocialButtonProps) -> Html {
         <a href="https://www.tiktok.com/@intarot?_t=8ZZXQSKNQIv&_r=1" class="social-icon si-tiktok tooltip" target="_blank" onclick={on_tiktok_click}>
             <img src="social/tiktok.svg" width="40" height="40" alt="tiktok"/>
             <span class="tooltiptext">{"Follow us on the clock app"}</span>
-        </a>
-
-        <a class="social-icon si-mailchimp tooltip"  onclick={on_mailchimp_click}>
-            <img src="social/mailchimp.svg" width="40" height="40" alt="mailchimp"/>
-            <span class="tooltiptext">{"Join our mailing list"}</span>
         </a>
         </div>
         </>
