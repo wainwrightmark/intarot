@@ -99,13 +99,15 @@ pub fn card_view(props: &CardViewProps) -> Html {
                                 {
                                     if props.show_extra_buttons{
                                         html!{
-                                            <div class =" buttons-grid" style="margin-top:1em;">
-                                            <div class="row flex-spaces child-borders" style="flex-direction: column; margin-bottom:0">
-                                            <ShareButton label="Readings can be mysterious, why not share and discuss yours?" {share_text} {src_data}/>
-                                            </div>
-                                            <button class="margin nice-button card-button" style="pointer-events:auto;" onclick={on_survey_click}  >{"Want to help improve intarot? Please fill out our 2 minute survey"} </button>
-                                            <button class="margin nice-button card-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
-                                            <button class="margin nice-button card-button" style="pointer-events:auto;" onclick={on_discord_click}  >{"Discuss on Discord"} </button>
+                                            <div class ="buttons-grid">
+
+                                            <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
+                                            <ShareButton label="Share your reading" {share_text} {src_data}/>
+
+                                            <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_discord_click}  >{"Discuss on Discord"} </button>
+
+                                            <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_survey_click}  >{"Fill out our two minute survey"} </button>
+
                                             </div>
 
                                         }
