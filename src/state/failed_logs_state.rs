@@ -19,7 +19,7 @@ impl Reducer<FailedLogsState> for ResentFailedLogsMessage {
             return state;
         }
         let user = Dispatch::<UserState>::new().get();
-        let Some(user_id) = user.user_id else{
+        let Some(user_id) = &user.user_id1 else{
             log::error!("User Id not set");
             return state;
         };
@@ -27,7 +27,7 @@ impl Reducer<FailedLogsState> for ResentFailedLogsMessage {
         log::info!("{} failed logs found", state.logs.len());
 
         for event in state.logs.iter() {
-            let log = EventLog::new_resent(user_id, event.clone());
+            let log = EventLog::new_resent(user_id.clone(), event.clone());
             log.send_log();
         }
 

@@ -1,57 +1,80 @@
+use capacitor_bindings::device::Device;
 use std::ops::Not;
 use std::rc::Rc;
-use web_sys::window;
-use yewdux::store::Reducer;
+use yewdux::store::AsyncReducer;
 use yewdux::store::Store;
 
 use crate::web::js::get_referrer;
 
+use super::device_uuid::DeviceUUID;
 use super::logging::EventLog;
 use super::logging::LoggableEvent;
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug, Default)]
 #[store(storage = "local", storage_tab_sync)]
 pub struct UserState {
-    pub user_id: Option<uuid::Uuid>,
-}
-
-#[derive(Default, Clone, PartialEq, Eq)]
-pub struct CreateUserIfNewMessage {
+    pub user_id1: Option<DeviceUUID>,
     pub ref_param: Option<String>,
     pub gclid_param: Option<String>,
 }
 
-impl Reducer<UserState> for CreateUserIfNewMessage {
-    fn apply(self, state: Rc<UserState>) -> Rc<UserState> {
-        if state.user_id.is_some() {
+
+
+
+
+#[derive(Default, Clone, PartialEq, Eq)]
+pub struct UpdateParamsIfNewMessage {
+    pub ref_param: Option<String>,
+    pub gclid_param: Option<String>,
+}
+
+#[yewdux::prelude::async_reducer]
+impl AsyncReducer<UserState> for UpdateParamsIfNewMessage {
+    /// Mutate state.
+    async fn apply(self, state: Rc<UserState>) -> Rc<UserState> {
+        log::info!("Updating params if new");
+        if state.user_id1.is_some() {
+            log::info!("Not new");
             state
         } else {
-            let user_id = uuid::Uuid::new_v4();
-            let navigator = window().unwrap().navigator();
-            let language = navigator.language().unwrap();
+            log::info!("User is new");
+            let mut state = state.as_ref().clone();
+            let device_id = Device::get_id().await;
+            state.user_id1 = Some(DeviceUUID(device_id.uuid));
+            state.gclid_param = self.gclid_param;
+            state.ref_param = self.ref_param;
+            log::info!("Params updated");
+            let state : Rc<UserState> = state.into();
+            UpdateParamsIfNewMessage::try_send_log(state.clone()).await;
+            state
+        }
+    }
+}
 
-            let user_agent = navigator.user_agent().unwrap();
+impl UpdateParamsIfNewMessage {
+    async fn try_send_log(state: Rc<UserState>) {
+        log::info!("User state has changed");
+        if let Some(device_id) = &state.as_ref().user_id1 {
             let referrer = get_referrer();
             let referrer = referrer.is_empty().not().then_some(referrer);
 
+            let device_info = Device::get_info().await;
+            let language = Device::get_language_tag().await;
+
             let message = EventLog {
-                user_id,
+                user_id: device_id.clone(),
 
                 event: LoggableEvent::NewUser {
-                    user_agent,
-                    ref_param: self.ref_param,
-                    gclid: self.gclid_param,
+                    device: device_info.into(),
+                    ref_param: state.ref_param.clone(),
+                    gclid: state.gclid_param.clone(),
                     referrer,
-                    language,
+                    language: language.value,
                 },
                 resent: false,
                 severity: super::logging::Severity::Info,
             };
-            message.send_log();
-
-            Rc::new(UserState {
-                user_id: Some(user_id),
-            })
+            message.send_log_async().await;
         }
     }
 }

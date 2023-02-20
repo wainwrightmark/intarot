@@ -9,6 +9,7 @@ mod meta_state;
 pub mod prompts_state;
 pub mod spread_descriptions;
 mod user_state;
+pub mod device_uuid;
 
 pub mod prelude {
 

@@ -1,9 +1,9 @@
 use std::ops::Not;
 
+use capacitor_bindings::device::{DeviceInfo, OperatingSystem, Platform};
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 use strum::EnumDiscriminants;
-use uuid::Uuid;
 use yewdux::prelude::Dispatch;
 
 use crate::{
@@ -12,7 +12,7 @@ use crate::{
     web::js::get_referrer,
 };
 
-use super::data_state::DataState;
+use super::{data_state::DataState, device_uuid::DeviceUUID};
 
 // cSpell:ignore xaat
 
@@ -21,7 +21,7 @@ const API_TOKEN: &str = "xaat-ba30896b-604b-4837-8924-ec8097e55eee";
 
 #[derive(Debug, Clone, Serialize)]
 pub struct EventLog {
-    pub user_id: Uuid,
+    pub user_id: DeviceUUID,
     #[serde(skip_serializing_if = "is_false")]
     pub resent: bool,
     pub event: LoggableEvent,
@@ -45,13 +45,40 @@ pub enum Severity {
 }
 
 impl EventLog {
-    pub fn new_resent(user_id: Uuid, event: LoggableEvent) -> Self {
+    pub fn new_resent(user_id: DeviceUUID, event: LoggableEvent) -> Self {
         let severity = event.get_severity();
         Self {
             user_id,
             resent: true,
             event,
             severity,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct LogDeviceInfo {
+    pub name: String,
+    pub model: String,
+    pub platform: Platform,
+    pub os: OperatingSystem,
+    pub os_version: String,
+    pub manufacturer: String,
+    pub is_virtual: bool,
+    pub web_view_version: String,
+}
+
+impl From<DeviceInfo> for LogDeviceInfo {
+    fn from(d: DeviceInfo) -> Self {
+        Self {
+            name: d.name,
+            model: d.model,
+            platform: d.platform,
+            os: d.operating_system,
+            os_version: d.os_version,
+            manufacturer: d.manufacturer,
+            is_virtual: d.is_virtual,
+            web_view_version: d.web_view_version,
         }
     }
 }
@@ -64,8 +91,8 @@ pub enum LoggableEvent {
         ref_param: Option<String>,
         referrer: Option<String>,
         gclid: Option<String>,
-        user_agent: String,
         language: String,
+        device: LogDeviceInfo,
     },
     NewSpread {
         question_data: QuestionData,
@@ -105,7 +132,7 @@ pub enum LoggableEvent {
     Error {
         message: String,
     },
-    ViewDailyReading{}
+    ViewDailyReading {},
 }
 
 impl LoggableEvent {
@@ -120,10 +147,10 @@ impl LoggableEvent {
         let user = Dispatch::<UserState>::new().get();
         let event = data.into();
         let severity = event.get_severity();
-        if let Some(user_id) = user.user_id {
+        if let Some(user_id) = &user.user_id1 {
             let message = EventLog {
                 event,
-                user_id,
+                user_id: user_id.clone(),
                 resent: false,
                 severity,
             };
@@ -195,6 +222,10 @@ impl From<SrcData> for LoggableEvent {
 impl EventLog {
     pub fn send_log(self) {
         wasm_bindgen_futures::spawn_local(Self::log(self));
+    }
+
+    pub async fn send_log_async(self) {
+        Self::log(self).await
     }
 
     async fn try_log<T: Serialize>(data: &T) -> Result<(), reqwest::Error> {

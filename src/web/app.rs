@@ -43,23 +43,27 @@ pub enum Route {
     Cheat { cards: String },
 }
 
+async fn setup(ref_param: Option<String>, gclid_param: Option<String> ){
+    Dispatch::<UserState>::new().apply_future(UpdateParamsIfNewMessage {
+        ref_param,
+        gclid_param,
+    }).await;
+    Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
+    StatusBar::set_style(Style::Light).await;
+    StatusBar::set_background_color("#FFFFFF").await;
+
+    crate::setup_notifications_async().await;
+}
+
 #[function_component(App)]
 pub fn app() -> Html {
     let ref_param = use_search_param("ref".to_string());
     let gclid_param = use_search_param("gclid".to_string());
 
-    use_effect_once(|| {
-        Dispatch::<UserState>::new().apply(CreateUserIfNewMessage {
-            ref_param,
-            gclid_param,
-        });
-        Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
-        spawn_local(StatusBar::set_style(Style::Light));
-        spawn_local(StatusBar::set_background_color("#FFFFFF"));
 
-        crate::setup_notifications();
-
-        || ()
+    use_effect_once( ||{
+        spawn_local(setup(ref_param, gclid_param));
+        ||()
     });
 
     html! {
