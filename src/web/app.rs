@@ -18,7 +18,6 @@ use crate::web::question_view::QuestionView;
 
 use capacitor_bindings::status_bar::*;
 
-
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
     #[at("/")]
@@ -49,8 +48,13 @@ async fn setup(ref_param: Option<String>, gclid_param: Option<String> ){
         gclid_param,
     }).await;
     Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
-    StatusBar::set_style(Style::Light).await;
-    StatusBar::set_background_color("#FFFFFF").await;
+
+    #[cfg(feature="android")]
+    {
+        StatusBar::set_style(Style::Light).await;
+        StatusBar::set_background_color("#FFFFFF").await;
+    }
+
 
     crate::setup_notifications_async().await;
 }

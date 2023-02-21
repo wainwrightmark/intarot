@@ -60,7 +60,11 @@ pub async fn setup_notifications_async() {
             }],
         }],
     };
-    LocalNotifications::register_action_types(action_type_options).await;
+    #[cfg(any(feature="ios", feature="android") )]
+    {
+        LocalNotifications::register_action_types(action_type_options).await;
+    }
+
 
     schedule_notification(schedule_options, on_action).await;
 }

@@ -1,5 +1,4 @@
 [build]
-target = "index.html"
 dist = "dist"
 
 [serve]
