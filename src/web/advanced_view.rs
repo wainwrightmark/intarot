@@ -70,7 +70,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
         <div class="site" style="">
 
             <div class="container" style=""  >
-            <div class="sm-4 col" style="margin: auto;">
+            <div class="xs-6 sm-8 col" style="margin: auto;">
 
             <div>
             <div class={"advanced-view-item"}  >

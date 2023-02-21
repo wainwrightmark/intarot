@@ -80,7 +80,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
         <div class="site" style="overflow: hidden ">
             <div class="container" >
 
-        <div class="sm-4 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
+        <div class="xs-6 sm-8 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
         <div class="cards-grid" key="cards-grid">
         { cards }
         </div>
