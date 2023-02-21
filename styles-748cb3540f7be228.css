@@ -412,16 +412,6 @@ img {
   margin: 1rem;
 }
 
-@media only screen and (min-width: 768px) {
-
-
-  .sm-4 {
-    flex: 0 0 33.3333333333%;
-    max-width: 33.3333333333%;
-  }
-
-}
-
 .lds-ripple {
   position: relative;
   width: 160px;
