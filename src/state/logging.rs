@@ -56,9 +56,10 @@ impl EventLog {
     }
 }
 
+#[skip_serializing_none]
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct LogDeviceInfo {
-    pub name: String,
+    pub name: Option<String> ,
     pub model: String,
     pub platform: Platform,
     pub os: OperatingSystem,
@@ -102,7 +103,7 @@ pub enum LoggableEvent {
         src_data: SrcData,
     },
     ShareOn {
-        platform: String,
+        platform: Option<String>,
     },
 
     Social {

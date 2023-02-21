@@ -60,7 +60,7 @@ pub async fn setup_notifications_async() {
             }],
         }],
     };
-    LocalNotifications::register_action_types(&action_type_options).await;
+    LocalNotifications::register_action_types(action_type_options).await;
 
     schedule_notification(schedule_options, on_action).await;
 }
@@ -70,7 +70,7 @@ async fn schedule_notification<F: Fn(ActionPerformed) + 'static>(
     on_action: F,
 ) -> () {
     log::info!("Scheduling local notification...");
-    let result = LocalNotifications::schedule(&schedule_options).await;
+    let result = LocalNotifications::schedule(schedule_options).await;
 
     log::info!("Notification Scheduled {:?}", result.notifications);
 
