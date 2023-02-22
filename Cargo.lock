@@ -94,7 +94,8 @@ checksum = "89b2fd2a0dcf38d7971e2194b6b6eebab45ae01067456a7fd93d5547a61b70be"
 [[package]]
 name = "capacitor_bindings"
 version = "0.1.0"
-source = "git+https://github.com/wainwrightmark/capacitor_bindings#402cb5ba28b2bc877404617521e316493d4db403"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e583f7be3dcc34cfc74ae17cea4a8e058df9d89296a6eb8f992f2494ca21f788"
 dependencies = [
  "js-sys",
  "serde",
