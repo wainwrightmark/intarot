@@ -20,8 +20,13 @@ use capacitor_bindings::status_bar::*;
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
+
     #[at("/")]
     #[not_found]
+    NoRoute,
+
+    #[at("/landing")]
+    
     Landing,
     #[at("/question")]
     Question,
@@ -29,6 +34,7 @@ pub enum Route {
     #[at("/spread")]
     Spread,
 
+    
     #[at("/advanced")]
     Advanced,
 
@@ -83,6 +89,7 @@ pub fn app() -> Html {
 
 fn switch(routes: Route) -> Html {
     match routes {
+
         Route::Landing => {
             html! {
                html!{
@@ -101,6 +108,9 @@ fn switch(routes: Route) -> Html {
         </>
 
          },
+        Route::NoRoute{}=> html!{
+            <AdvancedView  />
+        },
         Route::Advanced {} => html! {
             <AdvancedView  />
         },
