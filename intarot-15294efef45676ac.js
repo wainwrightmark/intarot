@@ -4,6 +4,8 @@ import { open_link_in_same_tab } from './snippets/intarot-31e5e252b2c79c8d/inlin
 import * as __wbg_star0 from './snippets/intarot-31e5e252b2c79c8d/inline3.js';
 import * as __wbg_star1 from './snippets/intarot-31e5e252b2c79c8d/inline4.js';
 import * as __wbg_star2 from './snippets/intarot-31e5e252b2c79c8d/inline5.js';
+import * as __wbg_star3 from './snippets/intarot-31e5e252b2c79c8d/inline6.js';
+import * as __wbg_star4 from './snippets/intarot-31e5e252b2c79c8d/inline7.js';
 
 let wasm;
 
@@ -1166,25 +1168,27 @@ function getImports() {
         const ret = getObject(arg0).sessionStorage;
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
     }, arguments) };
-    imports.wbg.__wbindgen_closure_wrapper265 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper267 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 75, __wbg_adapter_46);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper729 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper731 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 72, __wbg_adapter_49);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1876 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1879 = function(arg0, arg1, arg2) {
         const ret = makeClosure(arg0, arg1, 72, __wbg_adapter_52);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper3203 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper3206 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 105, __wbg_adapter_55);
         return addHeapObject(ret);
     };
     imports['./snippets/intarot-31e5e252b2c79c8d/inline3.js'] = __wbg_star0;
     imports['./snippets/intarot-31e5e252b2c79c8d/inline4.js'] = __wbg_star1;
     imports['./snippets/intarot-31e5e252b2c79c8d/inline5.js'] = __wbg_star2;
+    imports['./snippets/intarot-31e5e252b2c79c8d/inline6.js'] = __wbg_star3;
+    imports['./snippets/intarot-31e5e252b2c79c8d/inline7.js'] = __wbg_star4;
 
     return imports;
 }
@@ -1222,7 +1226,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-678137d663283d95_bg.wasm', import.meta.url);
+        input = new URL('intarot-15294efef45676ac_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 

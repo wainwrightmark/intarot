@@ -190,6 +190,14 @@ img {
   }
 }
 
+.pc1{
+  grid-row: 1;
+  grid-column: 1;
+  z-index: 10;
+  position: relative;
+  aspect-ratio: 1/2;
+}
+
 .prophecy-card {
   display: grid;
   grid-template-columns: 1fr;
@@ -200,6 +208,7 @@ img {
   transition-duration: 1s, 1s;
   font-size: large;
   user-select: none;
+  backface-visibility: hidden;
 }
 
 .prophecy-image {
@@ -209,21 +218,31 @@ img {
   width: -webkit-fill-available;
   width: -moz-available;
   aspect-ratio: 1 / 2;
-  box-shadow: 0px 0px 5px #888;
+   box-shadow: 0px 0px 5px #EEE;
+  background: #888;
+  object-fit: cover;
 }
 
 .prophecy-back {
   border-radius: 10px;
+  transform: rotatey(180deg);
+
+}
+
+.prophecy-middle{
   background-color: white;
 }
 
 .prophecy-back,
+.prophecy-middle,
 .prophecy-image,
 .image-overlay {
   grid-row: 1;
   grid-column: 1;
   z-index: 10;
   position: relative;
+  aspect-ratio: 1/2;
+
 }
 
 .image-overlay-text {
@@ -243,6 +262,16 @@ img {
 
 .image_greyed {
   opacity: 40%;
+}
+
+.fade-in-slow{
+  animation-delay: 1s;
+  animation-duration: 1.125s;
+  animation-name: fade-in;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  opacity: 0%;
 }
 
 .fade-in {
@@ -284,8 +313,8 @@ img {
   text-align: center;
   margin-left: 2rem;
   margin-right: 2rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  /* margin-top: 1rem;
+  margin-bottom: 1rem; */
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
@@ -353,12 +382,19 @@ img {
   opacity: 0;
 }
 
-.buttons-grid {
+
+.final-card-grid{
   position: absolute;
   width: 100%;
   display: inline-grid;
-  grid-template-rows: max-content;
+  height: 90%;
+  /* grid-template-rows: max-content; */
   align-items: center;
+}
+
+.final-card-buttons{
+   transition: opacity 1s ease-in-out;
+   display: grid;
 }
 
 .social-row{
