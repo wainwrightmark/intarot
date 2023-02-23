@@ -19,8 +19,12 @@ pub struct FinalCardProps {
 
 #[function_component(FinalCard)]
 pub fn final_card(props: &FinalCardProps) -> Html {
-    //let data_state = use_store_value::<DataState>();
+    let data_state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
+
+    let guide = data_state.question_data.guide;
+
+
 
     let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
@@ -55,6 +59,8 @@ pub fn final_card(props: &FinalCardProps) -> Html {
     let share_text = include_str!(r#"../text/opening_p1.txt"#);
     let src_data = props.src_data.clone();
 
+    let img_style = format!("background: linear-gradient(30deg, {}, {});", guide.primary_color(), guide.secondary_color());
+
     html! {
 
             <div class={card_classes} style = {props.style.get_style()} >
@@ -67,15 +73,27 @@ pub fn final_card(props: &FinalCardProps) -> Html {
                     }
                 }
 
-                <img class={image_classes} style="background: linear-gradient(30deg, darkgrey, lightgrey);" />
+                <img class={image_classes} style={img_style} />
 
                 <div class="image-overlay" style="pointer-events:none;">
                     <div class ="buttons-grid">
                         <Logo clickable={false}/>
-                        <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
-                        <ShareButton label="Share your reading" {share_text} {src_data}/>
-                        <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_discord_click}  >{"Discuss on Discord"} </button>
-                        <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_survey_click}  >{"Fill out our two minute survey"} </button>
+                        {
+                            if props.top_card{
+                                html!(
+                                    <>
+                                        <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
+                                        <ShareButton label="Share your reading" {share_text} {src_data}/>
+                                        <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_discord_click}  >{"Discuss on Discord"} </button>
+                                        <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_survey_click}  >{"Do our quick survey"} </button>
+                                    </>
+                                )
+                            }
+                            else{
+                                html!(<></>)
+                            }
+                        }
+
                     </div>
 
                 </div>

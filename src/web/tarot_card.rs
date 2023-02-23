@@ -77,7 +77,7 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
                 }
             }
 
-                    <img class={image_classes}  src={props.src_data.image.src()} onclick={toggle.clone()} />
+                    <img class={image_classes} style="cursor: pointer;"  src={props.src_data.image.src()} onclick={toggle.clone()} />
                     {
                         if show_description{
                             let src_data = props.src_data.clone();
