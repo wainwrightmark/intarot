@@ -209,7 +209,6 @@ img {
   width: -webkit-fill-available;
   width: -moz-available;
   aspect-ratio: 1 / 2;
-  cursor: pointer;
   box-shadow: 0px 0px 5px #888;
 }
 
@@ -357,8 +356,6 @@ img {
 .buttons-grid {
   position: absolute;
   width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
   display: inline-grid;
   grid-template-rows: max-content;
   align-items: center;
