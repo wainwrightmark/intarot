@@ -13,6 +13,7 @@ use crate::data::spread_id::SpreadId;
 use crate::state::prelude::*;
 use crate::web::card_view::*;
 use crate::web::logo::Logo;
+use crate::web::tarot_card::TarotCard;
 
 #[derive(Properties, PartialEq)]
 pub struct ShareCardViewProps {}
@@ -48,7 +49,8 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         let description = descriptions_state
             .descriptions
             .get(&(image_meta.guide, image_meta.card))
-            .copied();
+            .unwrap()
+            .clone();
 
         let src_data = SrcData {
             image: image_meta.image_data,
@@ -63,7 +65,7 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         <div class="xs-6 sm-8 col" style="margin: auto; width: 90vw; height: 100vh; ">
         <Logo clickable={true}/>
         <div class="cards-grid" key="cards-grid">
-        <CardView top_card={true} {src_data} show_extra_buttons={false} {description} style={CardStyle::default()} {description_layout} />
+        <TarotCard top_card={true} {src_data} {description} style={CardStyle::default()} {description_layout} />
         </div>
         </div>
         </div>

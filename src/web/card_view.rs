@@ -1,173 +1,11 @@
 use yew::prelude::*;
-
-use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
 use crate::data::prelude::*;
 use crate::state::prelude::*;
-use crate::web::prelude::Route;
-use crate::web::prelude::*;
+use crate::web::final_card::FinalCard;
+use crate::web::tarot_card::TarotCard;
 
-#[derive(Properties, PartialEq)]
-pub struct CardViewProps {
-    pub top_card: bool,
-    pub style: CardStyle,
-    pub src_data: SrcData,
-    pub description: Option<ImageDescription>,
-    pub show_extra_buttons: bool,
-    pub slot: Option<&'static str>,
-    pub description_layout: DescriptionLayout,
-}
-
-#[function_component(CardView)]
-pub fn card_view(props: &CardViewProps) -> Html {
-    let data_state = use_store_value::<DataState>();
-    let navigator = use_navigator().unwrap();
-
-    let guide = data_state.question_data.guide;
-    let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
-    let description_layout = props.description_layout;
-
-    let on_continue_click = {
-        Callback::from(move |_e: MouseEvent| {
-            Dispatch::<AchievementsState>::new()
-                .apply(AchievementEarnedMessage(Achievement::ClickAnotherReading));
-            navigator.replace(&Route::Advanced {});
-        })
-    };
-
-    let on_survey_click = {
-        Callback::from(move |_e: MouseEvent| {
-            Dispatch::<AchievementsState>::new()
-                .apply(AchievementEarnedMessage(Achievement::ClickSurvey));
-            open_link_in_new_tab("https://docs.google.com/forms/d/e/1FAIpQLSep7npbKOtYcA_ruRFK8ByHz0Zjl_7-gp6YQ3XPhJ_QHLgw4w/viewform".to_string());
-        })
-    };
-    let on_discord_click = {
-        Callback::from(move |_e: MouseEvent| {
-            Dispatch::<AchievementsState>::new()
-                .apply(AchievementEarnedMessage(Achievement::ClickDiscord));
-            open_link_in_same_tab("https://discord.gg/eRm5YdMNAw".to_string());
-        })
-    };
-
-    let mut card_classes = classes!("prophecy-card");
-    let mut image_classes = classes!("prophecy-image");
-
-    let show_description = if props.top_card {
-        card_classes.push("top_card");
-
-        if data_state.show_description {
-            image_classes.push("image_greyed");
-            true
-        } else {
-            false
-        }
-    } else {
-        false
-    };
-
-    let should_shake = props.top_card && !data_state.has_shown_description;
-
-    if should_shake {
-        card_classes.push("card-shake");
-    }
-
-    let share_text = match props.description {
-        Some(d) => d.description_sections(&description_layout).first().unwrap(),
-        None => include_str!(r#"../text/opening_p1.txt"#),
-    };
-
-    html! {
-
-            <div class={card_classes} style = {props.style.get_style()} >
-            {
-                if props.top_card{
-                    html!(<div class="prophecy-back"/>)
-                }
-                else{
-                    html!(<></>)
-                }
-            }
-
-                    <img class={image_classes}  src={props.src_data.image.src()} onclick={toggle.clone()} />
-                    {
-                        if show_description{
-                            let src_data = props.src_data.clone();
-                            html!{
-                                <div class="image-overlay" style="pointer-events:none;">
-                                {
-                                    if props.show_extra_buttons{
-                                        html!{
-                                            <div class ="buttons-grid">
-
-                                            <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
-                                            <ShareButton label="Share your reading" {share_text} {src_data}/>
-
-                                            <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_discord_click}  >{"Discuss on Discord"} </button>
-
-                                            <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_survey_click}  >{"Fill out our two minute survey"} </button>
-
-                                            </div>
-
-                                        }
-                                    }else{
-                                        html!{
-                                            <div style="position:absolute; top: 90%; left:50%; transform: translateX(-50%);" >
-                                                <ShareButton {share_text}  {src_data}/>
-                                            </div>
-                                        }
-                                    }
-
-                                }
-                                {
-                                    if let Some(description) = props.description{
-
-                                        let sections = description.description_sections(&description_layout).iter().map(|x| html!(
-                                           <>
-                                           <span>
-                                           {x}
-                                           </span>
-                                           <br/>
-                                           <br/>
-                                           </>
-                                        )).collect::<Html>();
-                                        html!{
-                                            <p class="image-overlay-text">
-                                    {sections}
-                                </p>
-                                        }
-                                    }else{
-                                        html!{
-                                            <></>
-                                        }
-                                    }
-                                }
-
-                                </div>
-                            }
-                        }
-                        else{
-                            html!{
-                                <></>
-                            }
-                        }
-                    }
-                    {
-                        if let Some(slot) = props.slot.filter(|_|props.top_card){
-                            let hide = data_state.show_description;
-                            html!{
-                                <SlotView {slot} {guide} {hide}/>
-                            }
-                        }
-                        else{
-                            html!(<></>)
-                        }
-                    }
-        </div>
-
-    }
-}
 
 #[derive(Debug, Properties, Clone, PartialEq)]
 pub struct SlotProperties {
@@ -212,23 +50,24 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
 
     let style = get_style(props.index, data_state.as_ref());
 
-    let meta = data_state.get_image_meta(props.index, metas);
-    let show_extra_buttons = meta.is_none();
-    let description: Option<ImageDescription> = meta
-        .clone()
-        .and_then(|meta| descriptions.get(&(meta.guide, meta.card)))
-        .copied();
-
-    let src_data = meta
-        .map(|image| SrcData {
-            image: image.image_data,
+    if let Some(meta) = data_state.get_image_meta(props.index, metas){
+        let description = descriptions.get(&(meta.guide, meta.card)).unwrap().clone();
+        let src_data = SrcData {
+            image: meta.image_data,
             spread_option: None,
-        })
-        .unwrap_or_else(|| data_state.spread_src(metas));
-
-    html! {
-        <CardView {top_card} {src_data} {style} {description} {show_extra_buttons} {slot} {description_layout} />
+        };
+        html! {
+            <TarotCard {top_card} {src_data} {style} {description} {slot} {description_layout} />
+        }
     }
+    else{
+        let src_data = data_state.spread_src(metas);
+        html! {
+            <FinalCard {top_card} {src_data} {style}  />
+        }
+    }
+
+
 }
 
 fn get_style(index: u8, state: &DataState) -> CardStyle {

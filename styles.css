@@ -357,8 +357,6 @@ img {
 .buttons-grid {
   position: absolute;
   width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
   display: inline-grid;
   grid-template-rows: max-content;
   align-items: center;
