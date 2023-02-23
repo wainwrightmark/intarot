@@ -190,13 +190,6 @@ img {
   }
 }
 
-.pc1{
-  grid-row: 1;
-  grid-column: 1;
-  z-index: 10;
-  position: relative;
-  aspect-ratio: 1/2;
-}
 
 .prophecy-card {
   display: grid;
@@ -244,6 +237,7 @@ img {
   aspect-ratio: 1/2;
 
 }
+
 
 .image-overlay-text {
   position: relative;
