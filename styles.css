@@ -220,6 +220,7 @@ img {
   aspect-ratio: 1 / 2;
    box-shadow: 0px 0px 5px #EEE;
   background: #888;
+  object-fit: cover;
 }
 
 .prophecy-back {
@@ -261,6 +262,16 @@ img {
 
 .image_greyed {
   opacity: 40%;
+}
+
+.fade-in-slow{
+  animation-delay: 1s;
+  animation-duration: 1.125s;
+  animation-name: fade-in;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  opacity: 0%;
 }
 
 .fade-in {
@@ -371,13 +382,19 @@ img {
   opacity: 0;
 }
 
-.buttons-grid {
+
+.final-card-grid{
   position: absolute;
   width: 100%;
   display: inline-grid;
   height: 90%;
   /* grid-template-rows: max-content; */
   align-items: center;
+}
+
+.final-card-buttons{
+   transition: opacity 1s ease-in-out;
+   display: grid;
 }
 
 .social-row{

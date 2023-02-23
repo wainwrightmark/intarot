@@ -20,7 +20,7 @@ pub fn slot_view(props: &SlotProperties) -> Html {
     let primary = props.guide.primary_color();
     let secondary = props.guide.secondary_color();
     html! {
-        <div class="slot fade-in" style={format!("visibility: {visibility}; background-image: linear-gradient({primary}, {secondary});")}>
+        <div class="slot fade-in-slow" style={format!("visibility: {visibility}; background-image: linear-gradient({primary}, {secondary});")}>
             {props.slot}
         </div>
     }

@@ -11,12 +11,6 @@ pub struct ShareButtonProps {
 }
 
 async fn share(text: AttrValue, src_data: SrcData) {
-    //let window = window().unwrap();
-
-    // if !window.navigator().can_share(){
-    //     log::error!("Cannot Share");
-    //     return ;
-    // }
 
     LoggableEvent::try_log(src_data.clone());
 
@@ -31,26 +25,6 @@ async fn share(text: AttrValue, src_data: SrcData) {
 
 
     LoggableEvent::try_log(LoggableEvent::ShareOn { platform: result.activity_type });
-
-    // let mut data = ShareData::new();
-
-    // data.text(text.as_str());
-    // data.url(src_data.share_url().as_str());
-
-    // let promise = window.navigator().share_with_data(&data);
-    // let future = wasm_bindgen_futures::JsFuture::from(promise);
-
-    // let result = future.await;
-
-    // result.
-
-    // match result {
-    //     Ok(ok_result) =>{
-    //         log::info!("{ok_result:?}");
-    //         LoggableEvent::try_log(src_data.clone())
-    //     } ,
-    //     Err(err) => LoggableEvent::try_log_error(err.as_string().unwrap_or_default()),
-    // }
 }
 
 #[function_component(ShareButton)]
@@ -67,7 +41,7 @@ pub fn share_button(props: &ShareButtonProps) -> Html {
     if let Some(label) = &props.label {
         html!(<button class="paper-btn nice-button card-button" onclick={on_click} style="pointer-events:auto;">{label.clone()}</button>)
     } else {
-        html!(<button class="" onclick={on_click} style="pointer-events:auto; border:none; background: transparent;"><ShareIcon /></button>)
+        html!(<button class="" onclick={on_click} style="border:none; background: transparent;"><ShareIcon /></button>)
     }
 }
 

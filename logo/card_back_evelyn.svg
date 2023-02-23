@@ -39,13 +39,13 @@
      inkscape:pagecheckerboard="true"
      showgrid="false"
      inkscape:zoom="0.08"
-     inkscape:cx="912.5"
-     inkscape:cy="2656.25"
-     inkscape:window-width="1307"
-     inkscape:window-height="1082"
-     inkscape:window-x="-1894"
-     inkscape:window-y="-94"
-     inkscape:window-maximized="0"
+     inkscape:cx="-200"
+     inkscape:cy="3937.5"
+     inkscape:window-width="1536"
+     inkscape:window-height="889"
+     inkscape:window-x="-1939"
+     inkscape:window-y="1085"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer2"
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
@@ -77,42 +77,6 @@
         fill-rule: evenodd;
       }
     </style>
-    <filter
-       style="color-interpolation-filters:sRGB;"
-       inkscape:label="Drop Shadow"
-       id="filter896"
-       x="-0.055673328"
-       y="-0.055415055"
-       width="1.1145586"
-       height="1.1140528">
-      <feFlood
-         flood-opacity="0.498039"
-         flood-color="rgb(0,0,0)"
-         result="flood"
-         id="feFlood886" />
-      <feComposite
-         in="flood"
-         in2="SourceGraphic"
-         operator="in"
-         result="composite1"
-         id="feComposite888" />
-      <feGaussianBlur
-         in="composite1"
-         stdDeviation="32.3353"
-         result="blur"
-         id="feGaussianBlur890" />
-      <feOffset
-         dx="6"
-         dy="6"
-         result="offset"
-         id="feOffset892" />
-      <feComposite
-         in="SourceGraphic"
-         in2="offset"
-         operator="over"
-         result="composite2"
-         id="feComposite894" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3610"
@@ -121,103 +85,38 @@
        y1="3118"
        x2="2075"
        y2="1137.5"
-       gradientUnits="userSpaceOnUse" />
-    <filter
-       style="color-interpolation-filters:sRGB;"
-       height="1.0250776"
-       width="1.0501551"
-       y="-0.012538784"
-       x="-0.025077568"
-       inkscape:label="Outline"
-       id="filter1215">
-      <feGaussianBlur
-         in="SourceAlpha"
-         stdDeviation="15.6309"
-         result="blur1"
-         id="feGaussianBlur1191" />
-      <feComposite
-         in="blur1"
-         in2="SourceGraphic"
-         operator="xor"
-         result="composite1"
-         id="feComposite1193" />
-      <feColorMatrix
-         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 100 -0 "
-         result="colormatrix1"
-         id="feColorMatrix1195" />
-      <feGaussianBlur
-         stdDeviation="15.8703"
-         result="blur2"
-         id="feGaussianBlur1197" />
-      <feComposite
-         in="blur2"
-         in2="blur2"
-         operator="over"
-         result="composite2"
-         id="feComposite1199" />
-      <feColorMatrix
-         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 -0 "
-         result="colormatrix2"
-         id="feColorMatrix1201" />
-      <feGaussianBlur
-         stdDeviation="1"
-         result="blur3"
-         id="feGaussianBlur1203" />
-      <feColorMatrix
-         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -1 "
-         result="colormatrix3"
-         id="feColorMatrix1205" />
-      <feFlood
-         flood-opacity="1"
-         flood-color="rgb(0,0,0)"
-         result="flood"
-         id="feFlood1207" />
-      <feComposite
-         in="flood"
-         in2="colormatrix3"
-         k2="1"
-         operator="in"
-         result="composite3"
-         id="feComposite1209" />
-      <feComposite
-         in="SourceGraphic"
-         in2="colormatrix3"
-         operator="out"
-         result="composite4"
-         id="feComposite1211" />
-      <feComposite
-         in="composite4"
-         in2="composite3"
-         k2="1"
-         k3="1"
-         operator="arithmetic"
-         result="composite5"
-         id="feComposite1213" />
-    </filter>
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.99987879,0,0,0.9999394,0.18895932,0.18895932)" />
+    <style
+       id="style2-8">
+      .cls-1 {
+        fill-rule: evenodd;
+      }
+    </style>
   </defs>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Background">
     <rect
-       style="fill:url(#linearGradient3612);fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.377953;stroke-linecap:round;stroke-linejoin:round;filter:url(#filter1215)"
+       style="fill:url(#linearGradient3612);fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.377919;stroke-linecap:round;stroke-linejoin:round"
        id="rect841-3"
-       width="3118"
-       height="6236"
-       x="0"
-       y="0" />
+       width="3117.6221"
+       height="6235.6221"
+       x="0.18895932"
+       y="0.18895932" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer1"
      inkscape:label="Shape">
     <g
-       id="g848"
-       style="stroke-width:1.20804;filter:url(#filter896)"
-       transform="matrix(0.82794238,0,0,0.82762812,268.23781,537.45542)">
+       id="layer1-1"
+       inkscape:label="Shape"
+       transform="matrix(0.5,0,0,0.5,779.5,2338.5)">
       <path
          sodipodi:type="star"
-         style="opacity:1;fill:none;stroke:#000000;stroke-width:66.14;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:54.7497;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none"
          id="path3802"
          inkscape:flatsided="false"
          sodipodi:sides="8"
@@ -230,17 +129,18 @@
          inkscape:rounded="0"
          inkscape:randomized="0"
          d="M 2624.7872,2614.8817 1944.1947,2490.0008 1551.7378,3051.7472 1158.7903,2482.1914 484.06671,2601.8972 608.94761,1921.3046 47.201184,1528.8478 616.75695,1135.9003 497.05114,461.17669 l 680.59256,124.8809 392.4569,-561.74642 392.9475,569.55576 674.7236,-119.7058 -124.8809,680.59257 561.7464,392.4569 -569.5558,392.9475 z"
-         transform="matrix(1.0091656,0,0,0.99999991,-16.22595,1579.971)" />
+         transform="matrix(1.0091656,0,0,0.99999991,-16.22595,20.970964)" />
       <circle
-         style="opacity:1;fill:none;stroke:#000000;stroke-width:66.4424;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:55;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
          id="path2989-5"
          cx="1559"
-         cy="3118"
+         cy="1559"
          r="1007.5402" />
       <path
          id="path3802-2"
-         style="opacity:1;fill:none;stroke:#000000;stroke-width:66.4424;stroke-linecap:round;stroke-linejoin:bevel"
-         d="m 2493.0138,3495.8299 -502.3678,77.5263 -44.4834,470.0598 -407.9773,-297.8812 -365.6685,303.3711 -74.5991,-498.7938 -472.65011,-41.0284 302.47814,-407.5198 -302.75952,-361.3939 502.36779,-77.5263 44.4834,-470.0598 407.9772,297.8812 365.6686,-303.3711 74.5992,498.7938 472.65,41.0284 -302.4782,407.5198 z M 2186.4881,3118 A 627.4881,627.4881 66.020774 0 1 1559,3745.4881 627.4881,627.4881 66.020774 0 1 931.5119,3118 627.4881,627.4881 66.020774 0 1 1559,2490.5119 627.4881,627.4881 66.020774 0 1 2186.4881,3118 Z" />
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:84.4015;stroke-linecap:round;stroke-linejoin:bevel"
+         transform="matrix(0.59812774,-0.26604398,0.26362765,0.59269527,219.90392,1062.6905)"
+         d="M 2630.0008,2655.387 1880.693,2449.847 1526.7828,3084.0753 1142.2808,2408.896 443.56137,2607.1108 649.10132,1857.803 14.873033,1503.8927 690.05234,1119.3908 491.83757,420.67135 1241.1453,626.21131 1595.0556,-8.0169816 1979.5575,667.16232 2678.277,468.94755 2472.7371,1218.2553 3106.9653,1572.1656 2431.786,1956.6675 Z M 2436.7333,1931.1572 A 958.54331,967.32903 1.4329812e-5 0 1 1171.3618,2421.8708 958.54331,967.32903 1.4329812e-5 0 1 685.10506,1144.9013 958.54331,967.32903 1.4329812e-5 0 1 1950.4765,654.18767 958.54331,967.32903 1.4329812e-5 0 1 2436.7333,1931.1572 Z" />
     </g>
   </g>
 </svg>

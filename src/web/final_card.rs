@@ -60,7 +60,7 @@ pub fn final_card(props: &FinalCardProps) -> Html {
     let src_data = props.src_data.clone();
 
     let img_style = format!("background: linear-gradient(30deg, {}, {});", guide.primary_color(), guide.secondary_color());
-    let buttons_div_style = if props.top_card {"opacity: 1; transition: opacity 1s ease-in-out;"} else{"opacity: 0;transition: opacity 1s ease-in-out;"};
+    let buttons_div_style = if props.top_card {"opacity: 1; pointer-events:auto;"} else{"opacity: 0; pointer-events:none;"};
 
     html! {
 
@@ -69,13 +69,13 @@ pub fn final_card(props: &FinalCardProps) -> Html {
                 <img class={image_classes} style={img_style} />
 
                 <div class="image-overlay" style="pointer-events:none;">
-                    <div class ="buttons-grid">
+                    <div class ="final-card-grid">
                         <Logo clickable={false}/>
-                        <div style={buttons_div_style}>
-                                <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_continue_click} >{"Do another reading"} </button>
+                        <div class="final-card-buttons" style={buttons_div_style}>
+                                <button class="nice-button card-button" onclick={on_continue_click} >{"Do another reading"} </button>
                                 <ShareButton label="Share your reading" {share_text} {src_data}/>
-                                <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_discord_click}  >{"Discuss on Discord"} </button>
-                                <button class="nice-button card-button" style="pointer-events:auto;" onclick={on_survey_click}  >{"Do our quick survey"} </button>
+                                <button class="nice-button card-button" onclick={on_discord_click}  >{"Discuss on Discord"} </button>
+                                <button class="nice-button card-button" onclick={on_survey_click}  >{"Do our quick survey"} </button>
                             </div>
 
                     </div>
