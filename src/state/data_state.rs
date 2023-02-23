@@ -24,6 +24,7 @@ pub struct DataState {
     pub question_data: QuestionData,
     pub perm: Perm,
     pub top_card_index: u8,
+    pub cards_facing_up: u8,
 
     pub last_hidden_card_index: u8,
     pub show_description: bool,
@@ -42,12 +43,13 @@ impl Default for DataState {
             show_description: false,
             has_shown_description: false,
             custom_spread: None,
+            cards_facing_up: 0,
         }
     }
 }
 
 impl DataState {
-    pub fn finish_card_index(&self) -> u8 {
+    pub fn ad_card_index(&self) -> u8 {
         if self.question_data.spread_type.is_ad_card_first() {
             0
         } else {
@@ -62,31 +64,16 @@ impl DataState {
         }
     }
 
-    pub fn next_card(mut self) -> Self {
-        self.top_card_index = (self.top_card_index + 1) % (self.total_cards() + 1);
-        self.last_hidden_card_index = (self.top_card_index + 1)
-            .max(self.last_hidden_card_index)
-            .min(self.total_cards()); //DO NOT USE CLAMP
-
-        if self.top_card_index == self.finish_card_index() {
-            self.show_description = true;
-            self.has_shown_description = true;
-        } else {
-            self.show_description = false;
-        }
-        self
-    }
-
     pub fn get_image_meta(
         &self,
         mut index: u8,
         metas: &HashMap<MetaKey, Vec<ImageMeta>>,
     ) -> Option<ImageMeta> {
-        if index == self.finish_card_index() {
+        if index == self.ad_card_index() {
             return None;
         }
 
-        if index > self.finish_card_index() {
+        if index > self.ad_card_index() {
             index -= 1;
         }
 
@@ -136,24 +123,78 @@ impl DataState {
         index == self.top_card_index
     }
 
-    pub fn previous_card(mut self) -> Self {
-        self.top_card_index = (self.top_card_index + self.total_cards()) % (self.total_cards() + 1);
-        if self.top_card_index == self.finish_card_index() {
-            self.show_description = true;
-            self.has_shown_description = true;
-        } else {
-            self.show_description = false;
+    /// If the card front face is up
+    pub fn is_card_facing_up(&self, index: u8) -> bool {
+        if index == self.ad_card_index() {
+            //log::info!("Index {index} is flipped (ad card)");
+            return true;
         }
+        if self.question_data.spread_type.is_ad_card_first() {
+            if self.total_cards().saturating_sub(index) < self.cards_facing_up {
+                true
+            } else {
+                false
+            }
+        } else {
 
-        self.last_hidden_card_index = (self.top_card_index + 1)
-            .max(self.last_hidden_card_index)
-            .min(self.total_cards()); //DO NOT USE CLAMP
-        self
+
+            if index < self.cards_facing_up {
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    pub fn next_card(mut self) -> Self {
+        if self.is_card_facing_up(self.top_card_index) || self.question_data.spread_type.is_ad_card_first() {
+            self.top_card_index = (self.top_card_index + 1) % (self.total_cards() + 1);
+            self.last_hidden_card_index = (self.top_card_index + 1)
+                .max(self.last_hidden_card_index)
+                .min(self.total_cards()); //DO NOT USE CLAMP
+
+            if self.top_card_index == self.ad_card_index() {
+                self.show_description = true;
+                self.has_shown_description = true;
+            } else {
+                self.show_description = false;
+            }
+            self
+        } else {
+            self.cards_facing_up += 1;
+            self
+        }
+    }
+
+    pub fn previous_card(mut self) -> Self {
+        if self.is_card_facing_up(self.top_card_index) || !self.question_data.spread_type.is_ad_card_first()  {
+            self.top_card_index =
+                (self.top_card_index + self.total_cards()) % (self.total_cards() + 1);
+            if self.top_card_index == self.ad_card_index() {
+                self.show_description = true;
+                self.has_shown_description = true;
+            } else {
+                self.show_description = false;
+            }
+
+            self.last_hidden_card_index = (self.top_card_index + 1)
+                .max(self.last_hidden_card_index)
+                .min(self.total_cards()); //DO NOT USE CLAMP
+            self
+        } else {
+            self.cards_facing_up += 1;
+            self
+        }
     }
 
     pub fn toggle_description(mut self) -> Self {
-        self.show_description = !self.show_description;
+        log::info!("Toggle Desc");
+        if self.is_card_facing_up(self.top_card_index){
+            self.show_description = !self.show_description;
         self.has_shown_description = true;
+        }else{
+            self.cards_facing_up += 1;
+        }
         self
     }
 
@@ -198,6 +239,7 @@ impl DataState {
     }
 
     pub fn back_to_top(&mut self) {
+        self.cards_facing_up = 0;
         self.top_card_index = self.initial_top_card_index();
         self.show_description = false;
         self.last_hidden_card_index = self.initial_top_card_index() + 1;
@@ -226,6 +268,10 @@ impl Reducer<DataState> for ReplaceMessage {
         (*state).clone().previous_card().into()
     }
 }
+
+#[derive(Default, Copy, Clone, PartialEq, Eq)]
+pub struct ToggleDescriptionMessage {}
+
 impl Reducer<DataState> for ToggleDescriptionMessage {
     fn apply(self, state: Rc<DataState>) -> Rc<DataState> {
         Dispatch::<AchievementsState>::new()

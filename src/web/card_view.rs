@@ -47,8 +47,10 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     let metas = &metas_state.metas;
 
     let top_card = data_state.is_top_card(props.index);
+    let faceup = data_state.is_card_facing_up(props.index);
+    let style = get_style(props.index, faceup, data_state.as_ref());
 
-    let style = get_style(props.index, data_state.as_ref());
+    //log::info!("Index: {} Style: {:?}", props.index, style);
 
     if let Some(meta) = data_state.get_image_meta(props.index, metas){
         let description = descriptions.get(&(meta.guide, meta.card)).unwrap().clone();
@@ -56,8 +58,9 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
             image: meta.image_data,
             spread_option: None,
         };
+
         html! {
-            <TarotCard {top_card} {src_data} {style} {description} {slot} {description_layout} />
+            <TarotCard {top_card} {src_data} {style} {description} {slot} {description_layout}face_up={faceup}  />
         }
     }
     else{
@@ -70,13 +73,15 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
 
 }
 
-fn get_style(index: u8, state: &DataState) -> CardStyle {
+fn get_style(index: u8, faceup: bool, state: &DataState) -> CardStyle {
+    let face_down = !faceup;
     if index == state.top_card_index + 1 {
         CardStyle {
             transform: Some(TransformStyle {
                 translate_x: 15,
                 translate_y: 5,
                 rotate_z: -30,
+                face_down
             }),
             hidden: true,
             no_pointer_events: true,
@@ -108,6 +113,7 @@ fn get_style(index: u8, state: &DataState) -> CardStyle {
                 translate_x,
                 translate_y,
                 rotate_z,
+                face_down
             }),
             hidden: true,
             no_pointer_events: true,
@@ -116,7 +122,7 @@ fn get_style(index: u8, state: &DataState) -> CardStyle {
         CardStyle {
             hidden: false,
             no_pointer_events: false,
-            transform: None,
+            transform: Some(TransformStyle { translate_x: 0, translate_y: 0, rotate_z: 0, face_down }),
         }
     } else {
         let rotate_z = match index % 4 {
@@ -146,6 +152,7 @@ fn get_style(index: u8, state: &DataState) -> CardStyle {
                 translate_x,
                 translate_y,
                 rotate_z,
+                face_down
             }),
         }
     }
@@ -156,6 +163,7 @@ pub struct TransformStyle {
     pub translate_x: i32,
     pub translate_y: i32,
     pub rotate_z: i32,
+    pub face_down: bool
 }
 
 impl TransformStyle {
@@ -163,7 +171,8 @@ impl TransformStyle {
         let translate_x = -self.translate_x;
         let translate_y = self.translate_y;
         let rotate_z = self.rotate_z;
-        let transform = format!("transform: translateX({translate_x}em) translateY({translate_y}em)  rotateZ({rotate_z}deg); ");
+        let rotate_y = if self.face_down{180} else{0};
+        let transform = format!("transform:  translateX({translate_x}em) translateY({translate_y}em) rotateZ({rotate_z}deg) rotateY({rotate_y}deg); ");
 
         transform
     }

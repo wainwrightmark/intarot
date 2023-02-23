@@ -5,8 +5,7 @@ use super::prelude::LoggableEvent;
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct LoadSpreadMessage(pub QuestionData, pub Perm);
 
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
-pub struct ToggleDescriptionMessage {}
+
 
 #[derive(Default, Copy, Clone, PartialEq, Eq)]
 pub struct ToggleShareDialogMessage {}

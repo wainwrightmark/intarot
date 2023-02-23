@@ -64,14 +64,6 @@ pub fn final_card(props: &FinalCardProps) -> Html {
     html! {
 
             <div class={card_classes} style = {props.style.get_style()} >
-                {
-                    if props.top_card{
-                        html!(<div class="prophecy-back"/>)
-                    }
-                    else{
-                        html!(<></>)
-                    }
-                }
 
                 <img class={image_classes} style={img_style} />
 
@@ -97,6 +89,8 @@ pub fn final_card(props: &FinalCardProps) -> Html {
                     </div>
 
                 </div>
+
+
 
         </div>
 

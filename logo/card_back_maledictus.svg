@@ -5,7 +5,7 @@
    viewBox="0 0 3118 6236"
    version="1.1"
    id="svg7"
-   sodipodi:docname="card_back.svg"
+   sodipodi:docname="card_back_maledictus.svg"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
    inkscape:export-filename="C:\Users\wainw\source\repos\intarot\logo\card_icon.png"
    inkscape:export-xdpi="15.763951"
@@ -39,13 +39,13 @@
      inkscape:pagecheckerboard="true"
      showgrid="false"
      inkscape:zoom="0.08"
-     inkscape:cx="3375"
-     inkscape:cy="3631.25"
-     inkscape:window-width="1307"
-     inkscape:window-height="1082"
-     inkscape:window-x="-1907"
-     inkscape:window-y="1337"
-     inkscape:window-maximized="0"
+     inkscape:cx="506.25"
+     inkscape:cy="2662.5"
+     inkscape:window-width="1536"
+     inkscape:window-height="889"
+     inkscape:window-x="-1939"
+     inkscape:window-y="1085"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer2"
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
@@ -63,11 +63,11 @@
        inkscape:collect="always"
        id="linearGradient3610">
       <stop
-         style="stop-color:#ffd5d5;stop-opacity:1;"
+         style="stop-color:#f6d5ff;stop-opacity:1"
          offset="0"
          id="stop3606" />
       <stop
-         style="stop-color:#ffe5d5;stop-opacity:1"
+         style="stop-color:#ffffff;stop-opacity:1"
          offset="1"
          id="stop3608" />
     </linearGradient>
@@ -119,16 +119,88 @@
        id="linearGradient3612"
        x1="0"
        y1="3118"
-       x2="2075"
-       y2="1137.5"
+       x2="3118"
+       y2="0"
        gradientUnits="userSpaceOnUse" />
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       height="1.0250776"
+       width="1.0501551"
+       y="-0.012538784"
+       x="-0.025077568"
+       inkscape:label="Outline"
+       id="filter1215">
+      <feGaussianBlur
+         in="SourceAlpha"
+         stdDeviation="15.6309"
+         result="blur1"
+         id="feGaussianBlur1191" />
+      <feComposite
+         in="blur1"
+         in2="SourceGraphic"
+         operator="xor"
+         result="composite1"
+         id="feComposite1193" />
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 100 -0 "
+         result="colormatrix1"
+         id="feColorMatrix1195" />
+      <feGaussianBlur
+         stdDeviation="15.8703"
+         result="blur2"
+         id="feGaussianBlur1197" />
+      <feComposite
+         in="blur2"
+         in2="blur2"
+         operator="over"
+         result="composite2"
+         id="feComposite1199" />
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 -0 "
+         result="colormatrix2"
+         id="feColorMatrix1201" />
+      <feGaussianBlur
+         stdDeviation="1"
+         result="blur3"
+         id="feGaussianBlur1203" />
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 -1 "
+         result="colormatrix3"
+         id="feColorMatrix1205" />
+      <feFlood
+         flood-opacity="1"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood1207" />
+      <feComposite
+         in="flood"
+         in2="colormatrix3"
+         k2="1"
+         operator="in"
+         result="composite3"
+         id="feComposite1209" />
+      <feComposite
+         in="SourceGraphic"
+         in2="colormatrix3"
+         operator="out"
+         result="composite4"
+         id="feComposite1211" />
+      <feComposite
+         in="composite4"
+         in2="composite3"
+         k2="1"
+         k3="1"
+         operator="arithmetic"
+         result="composite5"
+         id="feComposite1213" />
+    </filter>
   </defs>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Background">
     <rect
-       style="fill:url(#linearGradient3612);fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.377953;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:url(#linearGradient3612);fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.377953;stroke-linecap:round;stroke-linejoin:round;filter:url(#filter1215)"
        id="rect841-3"
        width="3118"
        height="6236"

@@ -40,7 +40,13 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
                             spawn_local(Haptics::notification(NotificationType::Warning));
-                            angry_animate_top_card_right();
+                            if data_state.cards_facing_up == 0{
+                                angry_animate_top_card_right_facedown();
+                            }
+                            else{
+                                angry_animate_top_card_right();
+                            }
+
                         }
                     }
                     UseSwipeDirection::Left => {
@@ -50,7 +56,12 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
                             spawn_local(Haptics::notification(NotificationType::Warning));
-                            angry_animate_top_card_left();
+                            if data_state.cards_facing_up == 0{
+                                angry_animate_top_card_left_facedown();
+                            }else{
+                                angry_animate_top_card_left();
+                            }
+
                         }
                     }
                     _ => (),
@@ -75,13 +86,15 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
         .map(|index| html!(<IndexedCardView index={index} key={index} />))
         .collect::<Html>();
 
+        let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
+
     html!(
         <>
         <div class="site" style="overflow: hidden ">
             <div class="container" >
 
         <div class="xs-6 sm-8 col" style="margin: auto; width: 90vw; height: 100vh;" ref={node}>
-        <div class="cards-grid" key="cards-grid">
+        <div class="cards-grid" key="cards-grid" onclick={toggle}>
         { cards }
         </div>
         <div class="card-actions" style="pointer-events: none;">
