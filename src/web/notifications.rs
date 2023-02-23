@@ -50,18 +50,19 @@ pub async fn setup_notifications_async() {
         }
     };
 
-    log::info!("Registering Action Types");
-    let action_type_options = RegisterActionTypesOptions {
-        types: vec![ActionType {
-            id: "DailyReading".to_string(),
-            actions: vec![Action {
-                id: "ViewReading".to_string(),
-                title: "View Reading".to_string(),
-            }],
-        }],
-    };
+
     #[cfg(any(feature="ios", feature="android") )]
     {
+        log::info!("Registering Action Types");
+        let action_type_options = RegisterActionTypesOptions {
+            types: vec![ActionType {
+                id: "DailyReading".to_string(),
+                actions: vec![Action {
+                    id: "ViewReading".to_string(),
+                    title: "View Reading".to_string(),
+                }],
+            }],
+        };
         LocalNotifications::register_action_types(action_type_options).await;
     }
 

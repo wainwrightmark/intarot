@@ -16,7 +16,7 @@ use super::spread_view::SpreadView;
 use crate::web::advanced_view::AdvancedView;
 use crate::web::question_view::QuestionView;
 
-use capacitor_bindings::status_bar::*;
+
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
@@ -57,6 +57,7 @@ async fn setup(ref_param: Option<String>, gclid_param: Option<String> ){
 
     #[cfg(feature="android")]
     {
+        use capacitor_bindings::status_bar::*;
         StatusBar::set_style(Style::Light).await;
         StatusBar::set_background_color("#FFFFFF").await;
     }
