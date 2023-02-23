@@ -97,8 +97,8 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
                     }
                 }
                 {
-                    if let Some(slot) = props.slot.filter(|_|props.top_card && props.face_up){
-                        let hide = data_state.show_description;
+                    if let Some(slot) = props.slot.filter(|_|props.top_card){
+                        let hide = data_state.show_description  || !props.face_up;
                         html!{
                             <SlotView {slot} {guide} {hide}/>
                         }

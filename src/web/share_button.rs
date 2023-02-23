@@ -39,9 +39,9 @@ pub fn share_button(props: &ShareButtonProps) -> Html {
     };
 
     if let Some(label) = &props.label {
-        html!(<button class="paper-btn nice-button card-button" onclick={on_click} style="pointer-events:auto;">{label.clone()}</button>)
+        html!(<button class="paper-btn nice-button card-button" onclick={on_click}>{label.clone()}</button>)
     } else {
-        html!(<button class="" onclick={on_click} style="border:none; background: transparent;"><ShareIcon /></button>)
+        html!(<button class="" onclick={on_click} style="border:none; background: transparent; pointer-events:auto;"><ShareIcon /></button>)
     }
 }
 
