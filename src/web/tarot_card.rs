@@ -63,13 +63,14 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
 
          let card_back_src = guide.card_back();
 
+    let back_style = format!("background: {};", guide.primary_color());
     html! {
 
             <div class={card_classes} style={props.style.get_style()}  >
 
 
                 <div class="prophecy-back">
-                    <img class="prophecy-image" src={card_back_src} />
+                    <img class="prophecy-image" src={card_back_src} style={back_style} />
                 </div>
 
                 <div class="prophecy-middle"/>
