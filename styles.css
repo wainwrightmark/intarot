@@ -158,6 +158,7 @@ img {
 .cards-grid {
   display: grid;
   grid-template-columns: 1fr;
+  perspective: 600px;
 }
 
 .guide-name {
@@ -202,6 +203,7 @@ img {
   font-size: large;
   user-select: none;
   backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .prophecy-image {
