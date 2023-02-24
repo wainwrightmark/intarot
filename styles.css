@@ -220,12 +220,12 @@ img {
 
 .prophecy-back {
   border-radius: 10px;
-  transform: rotatey(180deg);
-
+  transform: translateZ(-10px) rotatey(180deg);
 }
 
 .prophecy-middle{
   background-color: white;
+  transform: translateZ(-5px) rotatey(180deg);
 }
 
 .prophecy-back,
@@ -261,7 +261,7 @@ img {
 }
 
 .fade-in-slow{
-  animation-delay: 1s;
+  animation-delay: 0.5s;
   animation-duration: 1.125s;
   animation-name: fade-in;
   animation-direction: normal;
@@ -309,8 +309,8 @@ img {
   text-align: center;
   margin-left: 2rem;
   margin-right: 2rem;
-  /* margin-top: 1rem;
-  margin-bottom: 1rem; */
+  /* margin-top: 1rem;*/
+  margin-bottom: 1rem;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
