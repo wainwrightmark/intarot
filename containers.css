@@ -1,4 +1,4 @@
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 30em) {
     .xs-1 {
       flex: 0 0 8.3333333333%;
       max-width: 8.3333333333%;
@@ -59,7 +59,7 @@
       max-width: 100%;
     }
   }
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 48em) {
     .sm-1 {
       flex: 0 0 8.3333333333%;
       max-width: 8.3333333333%;
@@ -120,7 +120,7 @@
       max-width: 100%;
     }
   }
-  @media only screen and (min-width: 992px) {
+  @media only screen and (min-width: 62em) {
     .md-1 {
       flex: 0 0 8.3333333333%;
       max-width: 8.3333333333%;
@@ -181,7 +181,7 @@
       max-width: 100%;
     }
   }
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 75em) {
     .lg-1 {
       flex: 0 0 8.3333333333%;
       max-width: 8.3333333333%;
