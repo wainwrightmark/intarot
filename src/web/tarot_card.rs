@@ -76,11 +76,19 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
             <div class={card_classes} style={props.style.get_style()}  >
 
 
+
                 <div class="prophecy-back">
                     <img class="prophecy-image" src={card_back_src} style={back_style} />
                 </div>
 
-                <div class="prophecy-middle"/>
+                {
+                    if show_description{
+                        html!(<div class="prophecy-middle"/>)
+                    }else{
+                        html!(<></>)
+                    }
+                }
+
 
                 <img class={image_classes} style="cursor: pointer;"  src={props.src_data.image.src()} />
                 {
