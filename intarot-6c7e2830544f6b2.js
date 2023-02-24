@@ -630,13 +630,6 @@ function getImports() {
         getInt32Memory0()[arg0 / 4 + 1] = len0;
         getInt32Memory0()[arg0 / 4 + 0] = ptr0;
     };
-    imports.wbg.__wbg_getreferrer_034991d866cece51 = function(arg0) {
-        const ret = get_referrer();
-        const ptr0 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-        const len0 = WASM_VECTOR_LEN;
-        getInt32Memory0()[arg0 / 4 + 1] = len0;
-        getInt32Memory0()[arg0 / 4 + 0] = ptr0;
-    };
     imports.wbg.__wbg_openlinkinnewtab_8940cd7b292009fe = function(arg0, arg1) {
         try {
             open_link_in_new_tab(getStringFromWasm0(arg0, arg1));
@@ -650,6 +643,13 @@ function getImports() {
         } finally {
             wasm.__wbindgen_free(arg0, arg1);
         }
+    };
+    imports.wbg.__wbg_getreferrer_034991d866cece51 = function(arg0) {
+        const ret = get_referrer();
+        const ptr0 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        getInt32Memory0()[arg0 / 4 + 1] = len0;
+        getInt32Memory0()[arg0 / 4 + 0] = ptr0;
     };
     imports.wbg.__wbg_new_abda76e883ba8a5f = function() {
         const ret = new Error();
@@ -1226,7 +1226,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-39daf2403a5baff0_bg.wasm', import.meta.url);
+        input = new URL('intarot-6c7e2830544f6b2_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
