@@ -68,8 +68,6 @@ extern "C" {
     pub fn angry_animate_top_card_left();
 }
 
-
-
 #[wasm_bindgen::prelude::wasm_bindgen(
     inline_js = r##"export function angry_animate_top_card_right_facedown() {
 

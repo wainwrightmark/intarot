@@ -24,8 +24,6 @@ pub fn final_card(props: &FinalCardProps) -> Html {
 
     let guide = data_state.question_data.guide;
 
-
-
     let on_continue_click = {
         Callback::from(move |_e: MouseEvent| {
             Dispatch::<AchievementsState>::new()
@@ -59,8 +57,16 @@ pub fn final_card(props: &FinalCardProps) -> Html {
     let share_text = include_str!(r#"../text/opening_p1.txt"#);
     let src_data = props.src_data.clone();
 
-    let img_style = format!("background: linear-gradient(30deg, {}, {});", guide.primary_color(), guide.secondary_color());
-    let buttons_div_style = if props.top_card {"opacity: 1; pointer-events:auto;"} else{"opacity: 0; pointer-events:none;"};
+    let img_style = format!(
+        "background: linear-gradient(30deg, {}, {});",
+        guide.primary_color(),
+        guide.secondary_color()
+    );
+    let buttons_div_style = if props.top_card {
+        "opacity: 1; pointer-events:auto;"
+    } else {
+        "opacity: 0; pointer-events:none;"
+    };
 
     html! {
 

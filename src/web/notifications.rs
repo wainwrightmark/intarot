@@ -50,8 +50,7 @@ pub async fn setup_notifications_async() {
         }
     };
 
-
-    #[cfg(any(feature="ios", feature="android") )]
+    #[cfg(any(feature = "ios", feature = "android"))]
     {
         log::info!("Registering Action Types");
         let action_type_options = RegisterActionTypesOptions {
@@ -65,7 +64,6 @@ pub async fn setup_notifications_async() {
         };
         LocalNotifications::register_action_types(action_type_options).await;
     }
-
 
     schedule_notification(schedule_options, on_action).await;
 }

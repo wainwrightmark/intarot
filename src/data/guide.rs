@@ -68,7 +68,7 @@ impl Guide {
         }
     }
 
-    pub fn card_back(&self) -> &'static str{
+    pub fn card_back(&self) -> &'static str {
         self.get_str("card_back").unwrap()
     }
 

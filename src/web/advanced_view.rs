@@ -11,10 +11,7 @@ use yewdux::prelude::*;
 use super::app::Route;
 use crate::{
     data::prelude::*,
-    state::{
-        prelude::*,
-        prompts_state::PromptsState,
-    },
+    state::{prelude::*, prompts_state::PromptsState},
     web::prelude::*,
 };
 
@@ -23,9 +20,7 @@ pub struct AdvancedProps {}
 
 #[function_component(AdvancedView)]
 pub fn advanced_view(_props: &AdvancedProps) -> Html {
-    use_effect_once(|| {
-        scroll_to_top
-    });
+    use_effect_once(|| scroll_to_top);
 
     let navigator = use_navigator().unwrap();
 

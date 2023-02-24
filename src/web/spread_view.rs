@@ -40,13 +40,11 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
                             spawn_local(Haptics::notification(NotificationType::Warning));
-                            if data_state.cards_facing_up == 0{
+                            if data_state.cards_facing_up == 0 {
                                 angry_animate_top_card_right_facedown();
-                            }
-                            else{
+                            } else {
                                 angry_animate_top_card_right();
                             }
-
                         }
                     }
                     UseSwipeDirection::Left => {
@@ -56,12 +54,11 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
                             spawn_local(Haptics::notification(NotificationType::Warning));
-                            if data_state.cards_facing_up == 0{
+                            if data_state.cards_facing_up == 0 {
                                 angry_animate_top_card_left_facedown();
-                            }else{
+                            } else {
                                 angry_animate_top_card_left();
                             }
-
                         }
                     }
                     _ => (),
@@ -86,7 +83,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
         .map(|index| html!(<IndexedCardView index={index} key={index} />))
         .collect::<Html>();
 
-        let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
+    let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
     html!(
         <>

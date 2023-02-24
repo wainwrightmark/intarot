@@ -11,20 +11,20 @@ pub struct ShareButtonProps {
 }
 
 async fn share(text: AttrValue, src_data: SrcData) {
-
     LoggableEvent::try_log(src_data.clone());
 
-    let result = Share::share(capacitor_bindings::share::ShareOptions{
+    let result = Share::share(capacitor_bindings::share::ShareOptions {
         title: Some("intarot".to_string()),
         text: Some(text.to_string()),
         url: Some(src_data.share_url()),
         dialog_title: Some("intarot".to_string()),
         files: None,
-    }).await;
+    })
+    .await;
 
-
-
-    LoggableEvent::try_log(LoggableEvent::ShareOn { platform: result.activity_type });
+    LoggableEvent::try_log(LoggableEvent::ShareOn {
+        platform: result.activity_type,
+    });
 }
 
 #[function_component(ShareButton)]

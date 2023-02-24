@@ -17,7 +17,7 @@ pub struct TarotCardProps {
     pub description: ImageDescription,
     pub slot: Option<&'static str>,
     pub description_layout: DescriptionLayout,
-    pub face_up: bool
+    pub face_up: bool,
 }
 
 #[function_component(TarotCard)]
@@ -30,7 +30,7 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
     let mut card_classes = classes!("prophecy-card");
     let mut image_classes = classes!("prophecy-image");
 
-    if props.top_card{
+    if props.top_card {
         card_classes.push("top_card"); //needed for animate animations
         if data_state.show_description {
             image_classes.push("image_greyed");
@@ -51,17 +51,24 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
         .first()
         .unwrap();
 
-        let sections = props.description.description_sections(&description_layout).iter().map(|x| html!(
-            <>
-            <span>
-            {x}
-            </span>
-            <br/>
-            <br/>
-            </>
-         )).collect::<Html>();
+    let sections = props
+        .description
+        .description_sections(&description_layout)
+        .iter()
+        .map(|x| {
+            html!(
+               <>
+               <span>
+               {x}
+               </span>
+               <br/>
+               <br/>
+               </>
+            )
+        })
+        .collect::<Html>();
 
-         let card_back_src = guide.card_back();
+    let card_back_src = guide.card_back();
 
     let back_style = format!("background: {};", guide.primary_color());
     html! {

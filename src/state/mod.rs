@@ -1,6 +1,7 @@
 pub mod achievements_state;
 mod data_state;
 mod description_state;
+pub mod device_uuid;
 pub mod failed_logs_state;
 pub mod logging;
 mod messages;
@@ -8,7 +9,6 @@ mod meta_state;
 pub mod prompts_state;
 pub mod spread_descriptions;
 mod user_state;
-pub mod device_uuid;
 
 pub mod prelude {
 

@@ -16,17 +16,13 @@ use super::spread_view::SpreadView;
 use crate::web::advanced_view::AdvancedView;
 use crate::web::question_view::QuestionView;
 
-
-
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
-
     #[at("/")]
     #[not_found]
     NoRoute,
 
     #[at("/landing")]
-    
     Landing,
     #[at("/question")]
     Question,
@@ -34,7 +30,6 @@ pub enum Route {
     #[at("/spread")]
     Spread,
 
-    
     #[at("/advanced")]
     Advanced,
 
@@ -48,20 +43,21 @@ pub enum Route {
     Cheat { cards: String },
 }
 
-async fn setup(ref_param: Option<String>, gclid_param: Option<String> ){
-    Dispatch::<UserState>::new().apply_future(UpdateParamsIfNewMessage {
-        ref_param,
-        gclid_param,
-    }).await;
+async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
+    Dispatch::<UserState>::new()
+        .apply_future(UpdateParamsIfNewMessage {
+            ref_param,
+            gclid_param,
+        })
+        .await;
     Dispatch::<FailedLogsState>::new().apply(ResentFailedLogsMessage);
 
-    #[cfg(feature="android")]
+    #[cfg(feature = "android")]
     {
         use capacitor_bindings::status_bar::*;
         StatusBar::set_style(Style::Light).await;
         StatusBar::set_background_color("#FFFFFF").await;
     }
-
 
     crate::setup_notifications_async().await;
 }
@@ -71,10 +67,9 @@ pub fn app() -> Html {
     let ref_param = use_search_param("ref".to_string());
     let gclid_param = use_search_param("gclid".to_string());
 
-
-    use_effect_once( ||{
+    use_effect_once(|| {
         spawn_local(setup(ref_param, gclid_param));
-        ||()
+        || ()
     });
 
     html! {
@@ -90,7 +85,6 @@ pub fn app() -> Html {
 
 fn switch(routes: Route) -> Html {
     match routes {
-
         Route::Landing => {
             html! {
                html!{
@@ -109,7 +103,7 @@ fn switch(routes: Route) -> Html {
         </>
 
          },
-        Route::NoRoute{}=> html!{
+        Route::NoRoute {} => html! {
             <AdvancedView  />
         },
         Route::Advanced {} => html! {

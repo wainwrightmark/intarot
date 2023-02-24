@@ -1,15 +1,14 @@
+use capacitor_bindings::haptics::*;
 use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
 use yew_hooks::{use_effect_once, use_interval};
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::{use_store_value, Dispatch};
-use capacitor_bindings::haptics::*;
 
 use super::app::Route;
 use crate::{
     state::{prelude::*, prompts_state::PromptsState},
     web::{logo::Logo, prelude::*},
-
 };
 
 #[derive(Properties, PartialEq)]
@@ -25,10 +24,13 @@ pub fn question_view(_props: &QuestionProps) -> Html {
     {
         let is_clickable_state = is_clickable_state.clone();
         let millis = if *is_clickable_state { 0 } else { 5250 };
-        use_interval(move || {
-            is_clickable_state.set(true);
-            spawn_local(Haptics::vibrate(300.))
-        }, millis);
+        use_interval(
+            move || {
+                is_clickable_state.set(true);
+                spawn_local(Haptics::vibrate(300.))
+            },
+            millis,
+        );
     };
 
     let on_begin_click = {

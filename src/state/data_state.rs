@@ -136,8 +136,6 @@ impl DataState {
                 false
             }
         } else {
-
-
             if index < self.cards_facing_up {
                 true
             } else {
@@ -147,7 +145,9 @@ impl DataState {
     }
 
     pub fn next_card(mut self) -> Self {
-        if self.is_card_facing_up(self.top_card_index) || self.question_data.spread_type.is_ad_card_first() {
+        if self.is_card_facing_up(self.top_card_index)
+            || self.question_data.spread_type.is_ad_card_first()
+        {
             self.top_card_index = (self.top_card_index + 1) % (self.total_cards() + 1);
             self.last_hidden_card_index = (self.top_card_index + 1)
                 .max(self.last_hidden_card_index)
@@ -167,7 +167,9 @@ impl DataState {
     }
 
     pub fn previous_card(mut self) -> Self {
-        if self.is_card_facing_up(self.top_card_index) || !self.question_data.spread_type.is_ad_card_first()  {
+        if self.is_card_facing_up(self.top_card_index)
+            || !self.question_data.spread_type.is_ad_card_first()
+        {
             self.top_card_index =
                 (self.top_card_index + self.total_cards()) % (self.total_cards() + 1);
             if self.top_card_index == self.ad_card_index() {
@@ -189,10 +191,10 @@ impl DataState {
 
     pub fn toggle_description(mut self) -> Self {
         log::info!("Toggle Desc");
-        if self.is_card_facing_up(self.top_card_index){
+        if self.is_card_facing_up(self.top_card_index) {
             self.show_description = !self.show_description;
-        self.has_shown_description = true;
-        }else{
+            self.has_shown_description = true;
+        } else {
             self.cards_facing_up += 1;
         }
         self

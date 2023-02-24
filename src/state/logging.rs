@@ -59,7 +59,7 @@ impl EventLog {
 #[skip_serializing_none]
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct LogDeviceInfo {
-    pub name: Option<String> ,
+    pub name: Option<String>,
     pub model: String,
     pub platform: Platform,
     pub os: OperatingSystem,

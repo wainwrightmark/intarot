@@ -18,10 +18,6 @@ pub struct UserState {
     pub gclid_param: Option<String>,
 }
 
-
-
-
-
 #[derive(Default, Clone, PartialEq, Eq)]
 pub struct UpdateParamsIfNewMessage {
     pub ref_param: Option<String>,
@@ -44,7 +40,7 @@ impl AsyncReducer<UserState> for UpdateParamsIfNewMessage {
             state.gclid_param = self.gclid_param;
             state.ref_param = self.ref_param;
             log::info!("Params updated");
-            let state : Rc<UserState> = state.into();
+            let state: Rc<UserState> = state.into();
             UpdateParamsIfNewMessage::try_send_log(state.clone()).await;
             state
         }
