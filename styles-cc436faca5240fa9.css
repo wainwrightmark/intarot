@@ -224,7 +224,6 @@ img {
 }
 
 .prophecy-middle{
-  background-color: white;
   transform: translateZ(-5px) rotatey(180deg);
 }
 
