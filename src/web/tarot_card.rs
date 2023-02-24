@@ -69,6 +69,7 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
         .collect::<Html>();
 
     let card_back_src = guide.card_back();
+    let frame_src = guide.frame();
 
     let back_style = format!("background: {};", guide.primary_color());
     html! {
@@ -82,7 +83,9 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
                 </div>
 
                 
-                <div class="prophecy-middle"/>
+                <div class="prophecy-middle">
+                    <img class="prophecy-image" src={frame_src} style={"background: white;"} />
+                </div>
                 
 
 
