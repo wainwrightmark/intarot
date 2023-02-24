@@ -173,7 +173,7 @@ impl TransformStyle {
         let translate_y = self.translate_y;
         let rotate_z = self.rotate_z;
         let rotate_y = if self.face_down { 180 } else { 0 };
-        let transform = format!("transform:  translateX({translate_x}em) translateY({translate_y}em) rotateZ({rotate_z}deg) rotateY({rotate_y}deg); ");
+        let transform = format!("transform:  translateX({translate_x}em) translateY({translate_y}em) translateZ(0) rotateZ({rotate_z}deg) rotateY({rotate_y}deg); ");
 
         transform
     }
