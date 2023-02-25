@@ -52,7 +52,7 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     //log::info!("Index: {} Style: {:?}", props.index, style);
 
     if let Some(meta) = data_state.get_image_meta(props.index, metas) {
-        let description = descriptions.get(&(meta.guide, meta.card)).unwrap().clone();
+        let description = *descriptions.get(&(meta.guide, meta.card)).unwrap();
         let src_data = SrcData {
             image: meta.image_data,
             spread_option: None,

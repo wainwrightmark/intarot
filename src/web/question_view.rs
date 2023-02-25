@@ -7,7 +7,7 @@ use yewdux::prelude::{use_store_value, Dispatch};
 use super::app::Route;
 use crate::{
     state::{prelude::*, prompts_state::PromptsState},
-    web::{logo::Logo, prelude::*, capacitor},
+    web::{capacitor, logo::Logo, prelude::*},
 };
 
 #[derive(Properties, PartialEq)]
@@ -26,7 +26,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         use_interval(
             move || {
                 is_clickable_state.set(true);
-                capacitor::do_or_report_error(||async{Haptics::vibrate(300.).await} );
+                capacitor::do_or_report_error(|| async { Haptics::vibrate(300.).await });
             },
             millis,
         );

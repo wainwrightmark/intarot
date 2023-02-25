@@ -1,7 +1,7 @@
 use capacitor_bindings::local_notifications::*;
 use yewdux::prelude::Dispatch;
 
-use crate::{state::prelude::*, web::capacitor};
+use crate::state::prelude::*;
 
 pub async fn setup_notifications_async() {
     let schedule_options = ScheduleOptions {
@@ -65,7 +65,8 @@ pub async fn setup_notifications_async() {
                 }],
             };
             LocalNotifications::register_action_types(action_type_options)
-        }).await;
+        })
+        .await;
     }
 
     schedule_notification(schedule_options, on_action).await;
@@ -74,7 +75,7 @@ pub async fn setup_notifications_async() {
 async fn schedule_notification<F: Fn(ActionPerformed) + 'static>(
     schedule_options: ScheduleOptions,
     on_action: F,
-) -> () {
+) {
     log::info!("Scheduling local notification...");
     let schedule_result = LocalNotifications::schedule(schedule_options).await;
 
@@ -90,8 +91,10 @@ async fn schedule_notification<F: Fn(ActionPerformed) + 'static>(
     log::info!("Registering Action Listener");
     let listener_result = LocalNotifications::add_action_performed_listener(on_action).await;
     match listener_result {
-        Ok(_) => {},
-        Err(err) => {LoggableEvent::try_log_error_message_async(err.to_string()).await;},
+        Ok(_) => {}
+        Err(err) => {
+            LoggableEvent::try_log_error_message_async(err.to_string()).await;
+        }
     }
     log::info!("Action Listener Registered");
 }

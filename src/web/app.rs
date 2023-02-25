@@ -1,7 +1,7 @@
 use crate::state::failed_logs_state::FailedLogsState;
 use crate::state::prelude::*;
 use crate::web::landing_view::LandingView;
-use crate::web::{particles::*, capacitor};
+use crate::web::particles::*;
 
 use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
@@ -50,14 +50,19 @@ async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
             gclid_param,
         })
         .await;
-    Dispatch::<FailedLogsState>::new().apply_future(ResentFailedLogsMessage).await;
+    Dispatch::<FailedLogsState>::new()
+        .apply_future(ResentFailedLogsMessage)
+        .await;
 
     #[cfg(feature = "android")]
     {
         use capacitor_bindings::status_bar::*;
-        capacitor::do_or_report_error_async(||async{StatusBar::set_style(Style::Light).await}).await;
-        capacitor::do_or_report_error_async(||async{StatusBar::set_background_color("#FFFFFF").await}).await;
-
+        capacitor::do_or_report_error_async(|| async { StatusBar::set_style(Style::Light).await })
+            .await;
+        capacitor::do_or_report_error_async(|| async {
+            StatusBar::set_background_color("#FFFFFF").await
+        })
+        .await;
     }
 
     crate::setup_notifications_async().await;

@@ -48,11 +48,10 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
     let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
     if let Some(image_meta) = image_meta {
-        let description = descriptions_state
+        let description = *descriptions_state
             .descriptions
             .get(&(image_meta.guide, image_meta.card))
-            .unwrap()
-            .clone();
+            .unwrap();
 
         let src_data = SrcData {
             image: image_meta.image_data,

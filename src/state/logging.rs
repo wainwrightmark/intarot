@@ -1,4 +1,4 @@
-use std::{ops::Not};
+use std::ops::Not;
 
 use capacitor_bindings::device::{DeviceInfo, OperatingSystem, Platform};
 use serde::{Deserialize, Serialize};
@@ -150,9 +150,8 @@ impl LoggableEvent {
     }
 
     pub fn try_log_error(err: impl Into<anyhow::Error> + 'static) {
-        spawn_local(async move{Self::try_log_error_async(err).await})
+        spawn_local(async move { Self::try_log_error_async(err).await })
     }
-
 
     /// Either logs the message or sends it to be retried later
     pub async fn try_log_async(data: impl Into<Self>) {
@@ -173,7 +172,7 @@ impl LoggableEvent {
         }
     }
 
-    pub fn try_log(data: impl Into<Self>+ 'static) {
+    pub fn try_log(data: impl Into<Self> + 'static) {
         wasm_bindgen_futures::spawn_local(async move { Self::try_log_async(data).await });
     }
 
@@ -260,7 +259,7 @@ impl EventLog {
             log::error!("Failed to log: {}", err);
             Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(data.event));
         } else {
-            let discriminant: LoggableEvent = data.event.into();
+            let discriminant: LoggableEvent = data.event;
             log::debug!("Log {discriminant:?} sent successfully",);
         }
     }

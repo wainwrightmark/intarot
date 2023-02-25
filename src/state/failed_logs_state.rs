@@ -1,6 +1,6 @@
 use std::rc::Rc;
-use yewdux::prelude::Dispatch;
 use yewdux::prelude::async_reducer;
+use yewdux::prelude::Dispatch;
 use yewdux::store::AsyncReducer;
 use yewdux::store::Reducer;
 use yewdux::store::Store;

@@ -1,5 +1,6 @@
 pub mod advanced_view;
 mod app;
+pub mod capacitor;
 pub mod card_view;
 pub mod cheat;
 pub mod custom_view;
@@ -16,7 +17,6 @@ pub mod share_card_view;
 mod social;
 mod spread_view;
 pub mod tarot_card;
-pub mod capacitor;
 
 pub mod prelude {
 

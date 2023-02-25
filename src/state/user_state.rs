@@ -62,11 +62,11 @@ impl UpdateParamsIfNewMessage {
                 user_id: device_id.clone(),
 
                 event: LoggableEvent::NewUser {
-                    device: device_info.map(|x|x.into()),
+                    device: device_info.map(|x| x.into()),
                     ref_param: state.ref_param.clone(),
                     gclid: state.gclid_param.clone(),
                     referrer,
-                    language: language.map(|x|x.value),
+                    language: language.map(|x| x.value),
                 },
                 resent: false,
                 severity: super::logging::Severity::Info,

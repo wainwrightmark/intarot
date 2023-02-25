@@ -130,17 +130,9 @@ impl DataState {
             return true;
         }
         if self.question_data.spread_type.is_ad_card_first() {
-            if self.total_cards().saturating_sub(index) < self.cards_facing_up {
-                true
-            } else {
-                false
-            }
+            self.total_cards().saturating_sub(index) < self.cards_facing_up
         } else {
-            if index < self.cards_facing_up {
-                true
-            } else {
-                false
-            }
+            index < self.cards_facing_up
         }
     }
 
