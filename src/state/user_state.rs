@@ -4,6 +4,7 @@ use std::rc::Rc;
 use yewdux::store::AsyncReducer;
 use yewdux::store::Store;
 
+use crate::web::capacitor;
 use crate::web::js::get_referrer;
 
 use super::device_uuid::DeviceUUID;
@@ -35,8 +36,8 @@ impl AsyncReducer<UserState> for UpdateParamsIfNewMessage {
         } else {
             log::info!("User is new");
             let mut state = state.as_ref().clone();
-            let device_id = Device::get_id().await;
-            state.user_id1 = Some(DeviceUUID(device_id.uuid));
+            let device_id = capacitor::get_or_log_error_async(Device::get_id).await;
+            state.user_id1 = device_id.map(|x| DeviceUUID(x.uuid));
             state.gclid_param = self.gclid_param;
             state.ref_param = self.ref_param;
             log::info!("Params updated");
@@ -54,18 +55,18 @@ impl UpdateParamsIfNewMessage {
             let referrer = get_referrer();
             let referrer = referrer.is_empty().not().then_some(referrer);
 
-            let device_info = Device::get_info().await;
-            let language = Device::get_language_tag().await;
+            let device_info = capacitor::get_or_log_error_async(Device::get_info).await;
+            let language = capacitor::get_or_log_error_async(Device::get_language_tag).await;
 
             let message = EventLog {
                 user_id: device_id.clone(),
 
                 event: LoggableEvent::NewUser {
-                    device: device_info.into(),
+                    device: device_info.map(|x|x.into()),
                     ref_param: state.ref_param.clone(),
                     gclid: state.gclid_param.clone(),
                     referrer,
-                    language: language.value,
+                    language: language.map(|x|x.value),
                 },
                 resent: false,
                 severity: super::logging::Severity::Info,

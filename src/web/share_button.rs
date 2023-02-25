@@ -22,9 +22,14 @@ async fn share(text: AttrValue, src_data: SrcData) {
     })
     .await;
 
-    LoggableEvent::try_log(LoggableEvent::ShareOn {
-        platform: result.activity_type,
-    });
+    match result {
+        Ok(share_result) => {
+            if let Some(platform) = share_result.activity_type {
+                LoggableEvent::try_log(LoggableEvent::ShareOn { platform });
+            }
+        }
+        Err(err) => LoggableEvent::try_log_error_message_async(err.to_string()).await,
+    }
 }
 
 #[function_component(ShareButton)]

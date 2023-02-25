@@ -1,9 +1,10 @@
-use std::ops::Not;
+use std::{ops::Not};
 
 use capacitor_bindings::device::{DeviceInfo, OperatingSystem, Platform};
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 use strum::EnumDiscriminants;
+use wasm_bindgen_futures::spawn_local;
 use yewdux::prelude::Dispatch;
 
 use crate::{
@@ -66,7 +67,7 @@ pub struct LogDeviceInfo {
     pub os_version: String,
     pub manufacturer: String,
     pub is_virtual: bool,
-    pub web_view_version: String,
+    pub web_view_version: Option<String>,
 }
 
 impl From<DeviceInfo> for LogDeviceInfo {
@@ -92,8 +93,8 @@ pub enum LoggableEvent {
         ref_param: Option<String>,
         referrer: Option<String>,
         gclid: Option<String>,
-        language: String,
-        device: LogDeviceInfo,
+        language: Option<String>,
+        device: Option<LogDeviceInfo>,
     },
     NewSpread {
         question_data: QuestionData,
@@ -103,7 +104,7 @@ pub enum LoggableEvent {
         src_data: SrcData,
     },
     ShareOn {
-        platform: Option<String>,
+        platform: String,
     },
 
     Social {
@@ -137,14 +138,24 @@ pub enum LoggableEvent {
 }
 
 impl LoggableEvent {
-    pub fn try_log_error(message: String) {
+    pub async fn try_log_error_message_async(message: String) {
         log::error!("{}", message);
         let event = LoggableEvent::Error { message };
 
-        Self::try_log(event)
+        Self::try_log_async(event).await
     }
 
-    pub fn try_log(data: impl Into<Self>) {
+    pub async fn try_log_error_async(err: impl Into<anyhow::Error>) {
+        Self::try_log_error_message_async(err.into().to_string()).await
+    }
+
+    pub fn try_log_error(err: impl Into<anyhow::Error> + 'static) {
+        spawn_local(async move{Self::try_log_error_async(err).await})
+    }
+
+
+    /// Either logs the message or sends it to be retried later
+    pub async fn try_log_async(data: impl Into<Self>) {
         let user = Dispatch::<UserState>::new().get();
         let event = data.into();
         let severity = event.get_severity();
@@ -155,11 +166,15 @@ impl LoggableEvent {
                 resent: false,
                 severity,
             };
-            message.send_log();
+            message.send_log_async().await;
         } else {
             Dispatch::<FailedLogsState>::new().apply(LogFailedMessage(event));
             log::error!("User Id not set");
         }
+    }
+
+    pub fn try_log(data: impl Into<Self>+ 'static) {
+        wasm_bindgen_futures::spawn_local(async move { Self::try_log_async(data).await });
     }
 
     pub fn get_severity(&self) -> Severity {
@@ -221,10 +236,6 @@ impl From<SrcData> for LoggableEvent {
 }
 
 impl EventLog {
-    pub fn send_log(self) {
-        wasm_bindgen_futures::spawn_local(Self::log(self));
-    }
-
     pub async fn send_log_async(self) {
         Self::log(self).await
     }

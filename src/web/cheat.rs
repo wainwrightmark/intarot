@@ -31,7 +31,7 @@ pub fn cheat_view(props: &CheatProps) -> Html {
             navigator.push(&Route::Spread);
         }
         Err(err) => {
-            LoggableEvent::try_log_error(err.to_string());
+            LoggableEvent::try_log_error(err);
             navigator.push(&Route::Landing);
         }
     }

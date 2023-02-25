@@ -1,4 +1,3 @@
-use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
 use yew_hooks::{use_swipe, UseSwipeDirection};
 
@@ -7,6 +6,7 @@ use yewdux::prelude::*;
 use crate::data::achievement::Achievement;
 use crate::state::prelude::*;
 
+use crate::web::capacitor;
 use crate::web::card_view::*;
 use crate::web::prelude::*;
 
@@ -39,7 +39,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         } else {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
-                            spawn_local(Haptics::notification(NotificationType::Warning));
+                            capacitor::do_or_report_error(||async{Haptics::notification(NotificationType::Warning).await} );
                             if data_state.cards_facing_up == 0 {
                                 angry_animate_top_card_right_facedown();
                             } else {
@@ -53,7 +53,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         } else {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
-                            spawn_local(Haptics::notification(NotificationType::Warning));
+                            capacitor::do_or_report_error(||async{Haptics::notification(NotificationType::Warning).await} );
                             if data_state.cards_facing_up == 0 {
                                 angry_animate_top_card_left_facedown();
                             } else {

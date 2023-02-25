@@ -1,7 +1,7 @@
 use capacitor_bindings::local_notifications::*;
 use yewdux::prelude::Dispatch;
 
-use crate::state::prelude::*;
+use crate::{state::prelude::*, web::capacitor};
 
 pub async fn setup_notifications_async() {
     let schedule_options = ScheduleOptions {
@@ -53,16 +53,19 @@ pub async fn setup_notifications_async() {
     #[cfg(any(feature = "ios", feature = "android"))]
     {
         log::info!("Registering Action Types");
-        let action_type_options = RegisterActionTypesOptions {
-            types: vec![ActionType {
-                id: "DailyReading".to_string(),
-                actions: vec![Action {
-                    id: "ViewReading".to_string(),
-                    title: "View Reading".to_string(),
+
+        capacitor::do_or_report_error_async(|| {
+            let action_type_options = RegisterActionTypesOptions {
+                types: vec![ActionType {
+                    id: "DailyReading".to_string(),
+                    actions: vec![Action {
+                        id: "ViewReading".to_string(),
+                        title: "View Reading".to_string(),
+                    }],
                 }],
-            }],
-        };
-        LocalNotifications::register_action_types(action_type_options).await;
+            };
+            LocalNotifications::register_action_types(action_type_options)
+        }).await;
     }
 
     schedule_notification(schedule_options, on_action).await;
@@ -73,11 +76,22 @@ async fn schedule_notification<F: Fn(ActionPerformed) + 'static>(
     on_action: F,
 ) -> () {
     log::info!("Scheduling local notification...");
-    let result = LocalNotifications::schedule(schedule_options).await;
+    let schedule_result = LocalNotifications::schedule(schedule_options).await;
 
-    log::info!("Notification Scheduled {:?}", result.notifications);
+    match schedule_result {
+        Ok(sr) => {
+            log::info!("Notification Scheduled {:?}", sr.notifications);
+        }
+        Err(err) => {
+            LoggableEvent::try_log_error_message_async(err.to_string()).await;
+        }
+    }
 
     log::info!("Registering Action Listener");
-    LocalNotifications::add_action_performed_listener(on_action).await;
+    let listener_result = LocalNotifications::add_action_performed_listener(on_action).await;
+    match listener_result {
+        Ok(_) => {},
+        Err(err) => {LoggableEvent::try_log_error_message_async(err.to_string()).await;},
+    }
     log::info!("Action Listener Registered");
 }

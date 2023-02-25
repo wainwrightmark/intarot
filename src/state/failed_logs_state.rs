@@ -1,5 +1,7 @@
 use std::rc::Rc;
 use yewdux::prelude::Dispatch;
+use yewdux::prelude::async_reducer;
+use yewdux::store::AsyncReducer;
 use yewdux::store::Reducer;
 use yewdux::store::Store;
 
@@ -12,14 +14,15 @@ pub struct FailedLogsState {
     pub logs: Vec<LoggableEvent>,
 }
 
-impl Reducer<FailedLogsState> for ResentFailedLogsMessage {
-    fn apply(self, state: Rc<FailedLogsState>) -> Rc<FailedLogsState> {
+#[async_reducer]
+impl AsyncReducer<FailedLogsState> for ResentFailedLogsMessage {
+    async fn apply(self, state: Rc<FailedLogsState>) -> Rc<FailedLogsState> {
         //log::info!("Checking for failed logs");
         if state.logs.is_empty() {
             return state;
         }
         let user = Dispatch::<UserState>::new().get();
-        let Some(user_id) = &user.user_id1 else{
+        let Some(user_id) = user.as_ref().user_id1.clone() else{
             log::error!("User Id not set");
             return state;
         };
@@ -28,7 +31,7 @@ impl Reducer<FailedLogsState> for ResentFailedLogsMessage {
 
         for event in state.logs.iter() {
             let log = EventLog::new_resent(user_id.clone(), event.clone());
-            log.send_log();
+            log.send_log_async().await;
         }
 
         FailedLogsState::default().into()
