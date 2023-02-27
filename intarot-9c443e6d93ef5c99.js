@@ -651,6 +651,9 @@ function getImports() {
         getInt32Memory0()[arg0 / 4 + 1] = len0;
         getInt32Memory0()[arg0 / 4 + 0] = ptr0;
     };
+    imports.wbg.__wbg_stopImmediatePropagation_7e8fb42645b6d793 = function(arg0) {
+        getObject(arg0).stopImmediatePropagation();
+    };
     imports.wbg.__wbg_String_91fba7ded13ba54c = function(arg0, arg1) {
         const ret = String(getObject(arg1));
         const ptr0 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
@@ -1168,23 +1171,23 @@ function getImports() {
         const ret = getObject(arg0).sessionStorage;
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
     }, arguments) };
-    imports.wbg.__wbindgen_closure_wrapper267 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper268 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 79, __wbg_adapter_46);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper719 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper720 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 76, __wbg_adapter_49);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1737 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1738 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 74, __wbg_adapter_49);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper1909 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1910 = function(arg0, arg1, arg2) {
         const ret = makeClosure(arg0, arg1, 76, __wbg_adapter_54);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper3260 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper3261 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 108, __wbg_adapter_57);
         return addHeapObject(ret);
     };
@@ -1230,7 +1233,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('intarot-c3fbdeee6d70e3b5_bg.wasm', import.meta.url);
+        input = new URL('intarot-9c443e6d93ef5c99_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 

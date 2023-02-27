@@ -33,6 +33,7 @@ footer{
   display: block;
   margin-bottom: 6vh;
   margin-top: 6vh;
+  padding: 10%;
 }
 
 img {
@@ -200,7 +201,6 @@ img {
   grid-row: 1 / 1;
   transition-property: visibility, all;
   transition-duration: 1s, 1s;
-  font-size: large;
   user-select: none;
 
   transform-style: preserve-3d;
@@ -245,8 +245,12 @@ img {
   top: 10%;
   margin: 10%;
   color: black;
-  pointer-events:none ;
+  pointer-events: all;
+  /* pointer-events:none ; */
   user-select: contain;
+  max-height: 75%;
+  overflow: auto;
+
 }
 
 .image-overlay-text > span{
