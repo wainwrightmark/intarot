@@ -1,12 +1,40 @@
 
-@media only screen{
-  .contained{
-    flex: 0 0 12.5%;
-    max-width: 12.5%;
-}
+.contained{
+  flex: 0 0 12.5%;
+  max-width: 12.5%;
 }
 
-@media only screen and (max-aspect-ratio: 33/9), (min-height: 340px){
+.prophecy-card, .advanced-view-item{
+  font-size: small;
+}
+
+@media only screen and  (min-width: 360px) and (min-height: 600px) {
+  .prophecy-card, .advanced-view-item{
+    font-size: medium;
+  }
+}
+
+
+@media only screen and  (min-width: 375px) and (min-height: 667px),only screen and (min-width: 1024px) and (min-height: 600px) {
+  .prophecy-card, .advanced-view-item{
+    font-size: large;
+  }
+}
+
+@media only screen and  (min-width: 768px) and (min-height: 1024px){
+  .prophecy-card, .advanced-view-item{
+    font-size: x-large;
+  }
+}
+
+@media only screen and (min-width: 912px) and (min-height: 1368px){
+  .prophecy-card, .advanced-view-item{
+    font-size: xx-large;
+  }
+}
+
+
+@media only screen and (max-aspect-ratio: 33/9),only screen and (min-height: 340px){
   .contained{
     flex: 0 0 18.75%;
     max-width: 18.75%;
@@ -14,14 +42,14 @@
 }
 
 
-@media only screen and (max-aspect-ratio: 22/9), (min-height: 512px){
+@media only screen and (max-aspect-ratio: 22/9),only screen and (min-height: 512px){
   .contained{
     flex: 0 0 25%;
     max-width: 25%;
 }
 }
 
-@media only screen and (max-aspect-ratio: 16/9), (min-height: 760px){
+@media only screen and (max-aspect-ratio: 16/9),only screen and (min-height: 760px){
   .contained{
     flex: 0 0 37.5%;
     max-width: 37.5%;
@@ -31,21 +59,21 @@
 
 
 
-@media only screen and (max-aspect-ratio: 11/9), (min-height: 1024px){
+@media only screen and (max-aspect-ratio: 11/9),only screen and (min-height: 1024px){
   .contained{
     flex: 0 0 50%;
     max-width: 50%;
 }
 }
 
-@media only screen and (max-aspect-ratio: 16/18), (min-height: 1520px){
+@media only screen and (max-aspect-ratio: 16/18),only screen and (min-height: 1520px){
   .contained{
     flex: 0 0 62.5%;
     max-width: 62.5%;
 }
 }
 
-@media only screen and (max-aspect-ratio: 11/18), (min-height: 2048px){
+@media only screen and (max-aspect-ratio: 11/18),only screen and (min-height: 2048px){
 
   .contained{
     flex: 0 0 100%;

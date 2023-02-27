@@ -201,7 +201,6 @@ img {
   grid-row: 1 / 1;
   transition-property: visibility, all;
   transition-duration: 1s, 1s;
-  font-size: large;
   user-select: none;
 
   transform-style: preserve-3d;
