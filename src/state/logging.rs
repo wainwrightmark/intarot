@@ -140,9 +140,21 @@ pub enum LoggableEvent {
 impl LoggableEvent {
     pub async fn try_log_error_message_async(message: String) {
         log::error!("{}", message);
-        let event = LoggableEvent::Error { message };
+        if !Self::should_ignore_error(&message){
+            let event = LoggableEvent::Error { message };
+            Self::try_log_async(event).await
+        }
+    }
 
-        Self::try_log_async(event).await
+    pub fn should_ignore_error(error: &str)-> bool{
+        if error == "Js Exception: Notifications not supported in this browser."{
+            return true;
+        }
+        else if error == "Js Exception: Browser does not support the vibrate API"{
+            return true;
+        }
+
+        return false;
     }
 
     pub async fn try_log_error_async(err: impl Into<anyhow::Error>) {

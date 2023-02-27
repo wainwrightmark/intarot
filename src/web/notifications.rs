@@ -54,7 +54,7 @@ pub async fn setup_notifications_async() {
     {
         log::info!("Registering Action Types");
 
-        capacitor::do_or_report_error_async(|| {
+        crate::web::capacitor::do_or_report_error_async(|| {
             let action_type_options = RegisterActionTypesOptions {
                 types: vec![ActionType {
                     id: "DailyReading".to_string(),

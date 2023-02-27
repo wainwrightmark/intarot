@@ -57,9 +57,9 @@ async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
     #[cfg(feature = "android")]
     {
         use capacitor_bindings::status_bar::*;
-        capacitor::do_or_report_error_async(|| async { StatusBar::set_style(Style::Light).await })
+        crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::set_style(Style::Light).await })
             .await;
-        capacitor::do_or_report_error_async(|| async {
+        crate::web::capacitor::do_or_report_error_async(|| async {
             StatusBar::set_background_color("#FFFFFF").await
         })
         .await;
