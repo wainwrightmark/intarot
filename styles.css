@@ -19,7 +19,7 @@ footer{
 }
 
 .container {
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
 }
 
