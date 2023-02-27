@@ -245,8 +245,12 @@ img {
   top: 10%;
   margin: 10%;
   color: black;
-  pointer-events:none ;
+  pointer-events: all;
+  /* pointer-events:none ; */
   user-select: contain;
+  max-height: 75%;
+  overflow: auto;
+
 }
 
 .image-overlay-text > span{
