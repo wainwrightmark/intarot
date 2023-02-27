@@ -37,7 +37,9 @@ pub fn share_button(props: &ShareButtonProps) -> Html {
     let src_data: SrcData = props.src_data.clone();
     let text = props.share_text.clone();
 
-    let on_click = move |_: MouseEvent| {
+    let on_click = move |me: MouseEvent| {
+        //log::info!("Share button click");
+        me.stop_immediate_propagation();
         let future = share(text.clone(), src_data.clone());
 
         wasm_bindgen_futures::spawn_local(future);
@@ -46,7 +48,7 @@ pub fn share_button(props: &ShareButtonProps) -> Html {
     if let Some(label) = &props.label {
         html!(<button class="paper-btn nice-button card-button" onclick={on_click}>{label.clone()}</button>)
     } else {
-        html!(<button class="" onclick={on_click} style="border:none; background: transparent; pointer-events:auto;"><ShareIcon /></button>)
+        html!(<button class="" onclick={on_click} style="border:none; background: transparent; pointer-events:auto; padding: 0px;"><ShareIcon /></button>)
     }
 }
 

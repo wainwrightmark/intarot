@@ -182,7 +182,7 @@ impl DataState {
     }
 
     pub fn toggle_description(mut self) -> Self {
-        log::info!("Toggle Desc");
+        //log::info!("Toggle Desc");
         if self.is_card_facing_up(self.top_card_index) {
             self.show_description = !self.show_description;
             self.has_shown_description = true;
