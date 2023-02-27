@@ -220,11 +220,11 @@ img {
 
 .prophecy-back {
   border-radius: 10px;
-  transform: translateZ(-10px) rotatey(180deg);
+  transform: translateZ(-2px) rotatey(180deg);
 }
 
 .prophecy-middle{
-  transform: translateZ(-5px) rotatey(180deg);
+  transform: translateZ(-1px);
 }
 
 .prophecy-back,

@@ -82,10 +82,17 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
                     <img class="prophecy-image" src={card_back_src} style={back_style} />
                 </div>
 
+                {
+                    if show_description{
+                    html!(
+                        <div class="prophecy-middle">
+                            <img class="prophecy-image" src={frame_src} style={"background: white;"} />
+                        </div>
+                    )
+                }else{html!(<></>)}
+                }
 
-                <div class="prophecy-middle">
-                    <img class="prophecy-image" src={frame_src} style={"background: white;"} />
-                </div>
+
 
 
 
