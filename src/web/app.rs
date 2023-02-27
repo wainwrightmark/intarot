@@ -64,6 +64,12 @@ async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
         })
         .await;
     }
+    #[cfg(feature = "ios")]
+    {
+        use capacitor_bindings::status_bar::*;
+        crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::hide().await })
+            .await;
+    }
 
     crate::setup_notifications_async().await;
 }

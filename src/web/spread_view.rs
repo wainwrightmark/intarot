@@ -94,7 +94,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
         <div class="site" style="overflow: hidden ">
             <div class="container" >
 
-        <div class="contained col" style="width: 90vw; height: 100vh;" ref={node}>
+        <div class="contained col" style="width: 90vw; height: 100vh - env(safe-area-inset-top, 0px); padding-top: env(safe-area-inset-top, 0px);" ref={node}>
         <div class="cards-grid" key="cards-grid" onclick={toggle}>
         { cards }
         </div>
