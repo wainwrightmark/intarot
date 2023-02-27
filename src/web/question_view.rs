@@ -76,8 +76,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         <>
         <div class="site" style="overflow: hidden ">
             <div class="container" style="height: 100vh; white-space: nowrap;" onclick={background_click}  >
-
-            <div class="col">
+                <div class = "col contained">
             <div class="row" style="margin-bottom: 0;">
             <Logo clickable={*is_clickable_state}/>
             </div>
@@ -103,8 +102,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
             <button onclick={on_begin_click} style={button_style} class={if *is_clickable_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
             </div>
             </div>
-
-            </div>
+                </div>
         </div>
         </>
     }

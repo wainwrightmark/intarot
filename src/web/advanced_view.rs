@@ -65,7 +65,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
         <div class="site" style="">
 
             <div class="container" style=""  >
-            <div class="contained col" style="margin: auto;">
+            <div class="contained col">
 
             <div>
             <div class={"advanced-view-item"}  >

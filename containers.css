@@ -2,6 +2,7 @@
 .contained{
   flex: 0 0 12.5%;
   max-width: 12.5%;
+  margin: auto;
 }
 
 .prophecy-card, .advanced-view-item{

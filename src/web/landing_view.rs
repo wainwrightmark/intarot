@@ -40,7 +40,7 @@ pub fn landing_view() -> Html {
     html! {
         <div class="site">
             <div class="container" >
-            <div class="contained col" style="margin: auto;">
+            <div class="contained col">
 
             <Logo clickable={true}/>
 
