@@ -129,6 +129,7 @@ img {
 .carousel-actions button {
   border-radius: 12px;
   transform: none;
+  padding: 0.9rem;
 }
 
 .card-actions {
