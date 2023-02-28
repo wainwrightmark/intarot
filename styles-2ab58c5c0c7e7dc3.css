@@ -10,10 +10,6 @@ body {
 
 
 footer{
-  /* position: absolute!important; */
-  left: 0;
-  /* bottom: 0; */
-  width: 100%;
   background-color: var(--main-background);
   padding-top: 1em;
 }
@@ -400,7 +396,7 @@ img {
 .social-row{
   display: flex;
   margin:auto;
-  width: 15em;
+  width: fit-content;
   pointer-events: none;
 }
 
