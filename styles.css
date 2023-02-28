@@ -1,15 +1,40 @@
+html {
+  --card-feature: #41403e;
+}
+
+html {
+  --primary: #41403e;
+  --secondary: #0b74d5;
+  --muted-text: #868e96;
+  --main-background: #f4f1ec;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    --primary: #f4f1ec;
+    --secondary: #5595ce;
+    --muted-text: #949ba2;
+    --main-background: #41403e;
+  }
+
+  .logo{
+    filter: invert(80%);
+  }
+
+  .prophecy-image{
+    filter: brightness(60%);
+  }
+}
+
 body {
   touch-action: manipulation;
   overscroll-behavior-x: none;
   overscroll-behavior-y: none;
-  background-color: #f4f1ec;
+  background-color: var(--main-background);
   -webkit-tap-highlight-color: transparent;
-
 }
 
-
-
-footer{
+footer {
   background-color: var(--main-background);
   padding-top: 1em;
 }
@@ -33,7 +58,7 @@ footer{
 }
 
 img {
-  border-color: #41403e;
+  border-color: var(--card-feature);
   display: block;
   height: auto;
   max-width: 100%;
@@ -109,9 +134,9 @@ img {
 .card-actions {
   display: flex;
   width: 100%;
-  justify-content: space-between; /* put space between the navigation buttons */
-  position: absolute; /* position navigation buttons on top */
-  top: 25vh; /* center navigation buttons on the slide */
+  justify-content: space-between;
+  position: absolute;
+  top: 25vh;
   left: 0%;
 }
 
@@ -119,44 +144,30 @@ img {
   border-radius: 12px;
   background-color: transparent;
   border-color: transparent;
-
-  /* cursor: pointer; */
-  /* width: 20px;
-    height: 20px;
-    padding: 0%; */
   box-shadow: none;
   transform: none;
   user-select: none;
 }
 
-/* .card-actions button[disabled] {
-  visibility: hidden;
-} */
-
 .card-actions button#card-button-prev {
-  margin-left: 2%; /* prevent previous button from touching the side*/
+  margin-left: 2%;
 }
 
 .card-actions button#card-button-next {
-  margin-right: 2%; /* prevent next button from touching the side*/
+  margin-right: 2%;
 }
 
-/* .carousel .carousel-actions button[disabled] {
-  visibility: hidden;
-} */
-
 .carousel .carousel-actions button#carousel-button-prev {
-  margin-left: 2%; /* prevent previous button from touching the side*/
+  margin-left: 2%;
 }
 
 .carousel .carousel-actions button#carousel-button-next {
-  margin-right: 2%; /* prevent next button from touching the side*/
+  margin-right: 2%;
 }
 
 .cards-grid {
   display: grid;
   grid-template-columns: 1fr;
-  /* perspective: 600px; */
 }
 
 .guide-name {
@@ -167,7 +178,6 @@ img {
 .guide-image {
   border-radius: 20px;
   border-style: hidden;
-  /* border-color: var(--success-dark); */
   width: -webkit-fill-available;
   width: -moz-available;
   aspect-ratio: 448/576;
@@ -189,7 +199,6 @@ img {
   }
 }
 
-
 .prophecy-card {
   display: grid;
   grid-template-columns: 1fr;
@@ -210,7 +219,7 @@ img {
   width: -webkit-fill-available;
   width: -moz-available;
   aspect-ratio: 1 / 2;
-  box-shadow: 0px 0px 5px #EEE;
+  box-shadow: 0px 0px 5px #eee;
   backface-visibility: hidden;
   object-fit: cover;
 }
@@ -220,7 +229,7 @@ img {
   transform: translateZ(-2px) rotatey(180deg);
 }
 
-.prophecy-middle{
+.prophecy-middle {
   transform: translateZ(-1px);
 }
 
@@ -233,34 +242,30 @@ img {
   z-index: 10;
   position: relative;
   aspect-ratio: 1/2;
-
 }
-
 
 .image-overlay-text {
   position: relative;
   top: 10%;
   margin: 10%;
-  color: black;
+  color: var(--card-feature);
   pointer-events: all;
   /* pointer-events:none ; */
   user-select: contain;
   max-height: 75%;
   overflow: auto;
-
 }
 
-.image-overlay-text > span{
-  pointer-events:all ;
-  user-select:text;
-
+.image-overlay-text > span {
+  pointer-events: all;
+  user-select: text;
 }
 
 .image_greyed {
   opacity: 40%;
 }
 
-.fade-in-slow{
+.fade-in-slow {
   animation-delay: 0.5s;
   animation-duration: 1.125s;
   animation-name: fade-in;
@@ -299,10 +304,9 @@ img {
   aspect-ratio: 1/1;
 }
 
-
 .nice-button {
   border-radius: 40px !important;
-  background-color: #ffffff88;
+  background-color: var(--main-background);
 }
 
 .card-button {
@@ -378,8 +382,7 @@ img {
   opacity: 0;
 }
 
-
-.final-card-grid{
+.final-card-grid {
   position: absolute;
   width: 100%;
   display: inline-grid;
@@ -388,24 +391,24 @@ img {
   align-items: center;
 }
 
-.final-card-buttons{
-   transition: opacity 1s ease-in-out;
-   display: grid;
+.final-card-buttons {
+  transition: opacity 1s ease-in-out;
+  display: grid;
 }
 
-.social-row{
+.social-row {
   display: flex;
-  margin:auto;
+  margin: auto;
   width: fit-content;
   pointer-events: none;
 }
 
-.social-icon > img{
+.social-icon > img {
   border: none;
 }
 
-.social-icon{
-  background: none!important;
+.social-icon {
+  background: none !important;
   margin-left: 10px;
   margin-right: 10px;
   pointer-events: all;

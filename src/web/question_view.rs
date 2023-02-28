@@ -98,7 +98,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
             <div class="row">
             <p style="margin: auto; animation-delay: 4.5s; pointer-events:none;" class={if *is_clickable_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt2}</p>
             </div>
-            <div class="row align-middle">
+            <div class="row" style="align-self: center;">
             <button onclick={on_begin_click} style={button_style} class={if *is_clickable_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
             </div>
             </div>
