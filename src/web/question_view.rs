@@ -74,7 +74,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
     html! {
 
         <>
-        <div class="site" style="overflow: hidden ">
+        <div class="site">
             <div class="container" style="height: 100vh; white-space: nowrap;" onclick={background_click}  >
                 <div class = "col contained">
             <div class="row" style="margin-bottom: 0;">
