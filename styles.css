@@ -249,7 +249,7 @@ img {
   position: relative;
   top: 10%;
   margin: 10%;
-  color: var(--card-feature);
+  color: var(--primary);
   pointer-events: all;
   /* pointer-events:none ; */
   user-select: contain;
