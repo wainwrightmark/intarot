@@ -37,29 +37,32 @@ pub fn social_icons(_props: &SocialButtonProps) -> Html {
         })
     };
 
+    let width = "50";
+    let height = "50";
+
     html! {
         <>
         <div class="social-row">
 
         <a href="https://www.facebook.com/profile.php?id=100089979217774" class="social-icon si-facebook tooltip" target="_blank" onclick={on_facebook_click}>
-                <img src="social/facebook.svg" width="40" height="40" alt="facebook" />
+                <img src="social/facebook.svg" width={width} height={height} alt="facebook" />
                 <span class="tooltiptext">{"Follow us on Facebook"}</span>
         </a>
         <a href="https://twitter.com/intarotapp" class="social-icon si-twitter tooltip" target="_blank" onclick={on_twitter_click}>
-            <img src="social/twitter.svg" width="40" height="40" alt="twitter"/>
+            <img src="social/twitter.svg" width={width} height={height} alt="twitter"/>
             <span class="tooltiptext">{"Follow us on Twitter"}</span>
         </a>
         <a href="https://discord.gg/eRm5YdMNAw" class="social-icon si-discord tooltip" target="_blank" onclick={on_discord_click}>
-            <img src="social/discord.svg" width="40" height="40" alt="discord"/>
+            <img src="social/discord.svg" width={width} height={height} alt="discord"/>
             <span class="tooltiptext">{"Join our Discord"}</span>
         </a>
         <a href="https://www.instagram.com/intarotapp/" class="social-icon si-instagram tooltip" target="_blank" onclick={on_instagram_click}>
-            <img src="social/instagram.svg" width="40" height="40" alt="instagram"/>
+            <img src="social/instagram.svg" width={width} height={height} alt="instagram"/>
             <span class="tooltiptext">{"Follow us on Instagram"}</span>
         </a>
 
         <a href="https://www.tiktok.com/@intarot?_t=8ZZXQSKNQIv&_r=1" class="social-icon si-tiktok tooltip" target="_blank" onclick={on_tiktok_click}>
-            <img src="social/tiktok.svg" width="40" height="40" alt="tiktok"/>
+            <img src="social/tiktok.svg" width={width} height={height} alt="tiktok"/>
             <span class="tooltiptext">{"Follow us on the clock app"}</span>
         </a>
         </div>

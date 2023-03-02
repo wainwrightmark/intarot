@@ -99,9 +99,7 @@ fn switch(routes: Route) -> Html {
     match routes {
         Route::Landing => {
             html! {
-               html!{
-                   <LandingView />
-               }
+               <LandingView />
             }
         }
 
@@ -116,7 +114,9 @@ fn switch(routes: Route) -> Html {
 
          },
         Route::NoRoute {} => html! {
-            <AdvancedView  />
+            html! {
+               <LandingView />
+            }
         },
         Route::Advanced {} => html! {
             <AdvancedView  />

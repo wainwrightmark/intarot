@@ -10,7 +10,7 @@ pub fn landing_view() -> Html {
     use_effect_once(|| scroll_to_top);
 
     let paragraph1 = include_str!(r#"../text/opening_p1.txt"#);
-    // let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
+    let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
     // let paragraph3 = include_str!(r#"../text/opening_p3.txt"#);
 
     let on_begin_click = {
@@ -46,15 +46,21 @@ pub fn landing_view() -> Html {
 
             <button onclick={on_begin_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Quick Reading"}</button>
                 <br/>
+                <p class="landing-paragraph">
+                    {paragraph1}
+                </p>
                 <br/>
             <button onclick={on_advanced_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Advanced Reading"}</button>
                 <br/>
+                <p class="landing-paragraph">
+                    {paragraph2}
+                </p>
                 <br/>
-            <p class="landing-paragraph">
-            {paragraph1}
-            </p>
-            <br/>
-                <br/>
+            // <p class="landing-paragraph">
+            // {paragraph1}
+            // </p>
+            // <br/>
+            // <br/>
 
             // <p class="landing-paragraph">
             // {paragraph2}

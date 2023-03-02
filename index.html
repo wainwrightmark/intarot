@@ -52,13 +52,13 @@
       <link data-trunk rel="copy-dir" href="social" />
       <link data-trunk rel="copy-dir" href="netlify" />
       <link data-trunk rel="copy-file" href="netlify.toml" />
-      <link rel="icon" href="logo/icon192.png" />
-      <link rel="apple-touch-icon" sizes="76x76" href="logo/icon76.png" />
-      <link rel="apple-touch-icon" sizes="120x120" href="logo/icon120.png" />
-      <link rel="apple-touch-icon" sizes="152x152" href="logo/icon152.png" />
-      <meta name="msapplication-square70x70logo" content="logo/icon70.png" />
-      <meta name="msapplication-square150x150logo" content="logo/icon150.png" />
-      <meta name="msapplication-wide310x150logo" content="logo/icon310.png" />
+      <link rel="icon" href="/logo/icon192.png" />
+      <link rel="apple-touch-icon" sizes="76x76" href="/logo/icon76.png" />
+      <link rel="apple-touch-icon" sizes="120x120" href="/logo/icon120.png" />
+      <link rel="apple-touch-icon" sizes="152x152" href="/logo/icon152.png" />
+      <meta name="msapplication-square70x70logo" content="/logo/icon70.png" />
+      <meta name="msapplication-square150x150logo" content="/logo/icon150.png" />
+      <meta name="msapplication-wide310x150logo" content="/logo/icon310.png" />
       <link data-trunk rel="css" href="paper_styles.min.css" data-wasm-opt="{z}" />
       <link data-trunk rel="css" href="styles.css" data-wasm-opt="{z}" />
       <link data-trunk rel="css" href="containers.css" data-wasm-opt="{z}" />
@@ -67,7 +67,7 @@
       <link data-trunk rel="copy-file" href="manifest.json" />
 
       <link rel="manifest" href="/manifest.json" />
-      <script type="text/javascript" src="capacitor.js" data-trunk></script>
+      <script type="text/javascript" src="/capacitor.js" data-trunk></script>
       <script
       type="module"
       src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.esm.js"
@@ -77,11 +77,11 @@
       src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.js"
     ></script>
 
-    <script src="./plugins/@capacitor/device.js" type="module"></script>
-    <script src="./plugins/@capacitor/haptics.js" type="module"></script>
-    <script src="./plugins/@capacitor/local-notifications.js" type="module"></script>
-    <script src="./plugins/@capacitor/share.js" type="module"></script>
-    <script src="./plugins/@capacitor/status-bar.js" type="module"></script>
+    <script src="/plugins/@capacitor/device.js" type="module"></script>
+    <script src="/plugins/@capacitor/haptics.js" type="module"></script>
+    <script src="/plugins/@capacitor/local-notifications.js" type="module"></script>
+    <script src="/plugins/@capacitor/share.js" type="module"></script>
+    <script src="/plugins/@capacitor/status-bar.js" type="module"></script>
 
     <link data-trunk rel="copy-file" href="capacitor.js" />
 
@@ -94,11 +94,3 @@
       <link rel="rust" data-trunk href="Cargo.toml" data-bin="intarot" data-cargo-features="web" />
    </body>
 </html>
-<!-- <script>
-   if (
-     window.matchMedia &&
-     window.matchMedia("(prefers-color-scheme: dark)").matches
-   ) {
-     document.body.classList.add("dark");
-   }
-</script>
