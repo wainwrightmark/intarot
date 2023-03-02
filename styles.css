@@ -397,6 +397,7 @@ img {
   transform: translateX(12.5%) translateY(-200%);
   pointer-events: none;
   opacity: 0;
+  color: var(--card-feature);
 }
 
 .final-card-grid {
