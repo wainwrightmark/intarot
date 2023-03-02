@@ -57,7 +57,7 @@ async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
     #[cfg(feature = "android")]
     {
         use capacitor_bindings::status_bar::*;
-        crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::set_overlays_web_view(SetOverlaysWebViewOptions{overlay: true}).await })
+        crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::set_overlays_web_view(SetOverlaysWebViewOptions{overlay: false}).await })
              .await;
         // crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::set_style(Style::Light).await })
         //     .await;
