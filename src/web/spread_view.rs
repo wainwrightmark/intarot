@@ -94,7 +94,7 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
         <div class="site" style="overflow: hidden ">
             <div class="container" >
 
-        <div class="contained col spread-area" ref={node}>
+        <div class="contained col spread-area" style="margin: auto" ref={node}> //For some reason this margin: auto is needed on mobile
         <div class="cards-grid" key="cards-grid" onclick={toggle}>
         { cards }
         </div>
