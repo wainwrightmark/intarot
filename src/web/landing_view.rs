@@ -56,18 +56,6 @@ pub fn landing_view() -> Html {
                     {paragraph2}
                 </p>
                 <br/>
-            // <p class="landing-paragraph">
-            // {paragraph1}
-            // </p>
-            // <br/>
-            // <br/>
-
-            // <p class="landing-paragraph">
-            // {paragraph2}
-            // </p>
-            // <p class="landing-paragraph">
-            // {paragraph3}
-            // </p>
                 </div>
 
 
