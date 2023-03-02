@@ -206,12 +206,12 @@ img {
 .spread-area{
   width: 90vw; 
   height: 100vh; 
-  padding-top: env(safe-area-inset-top, 0px); 
+  padding-top: max(env(safe-area-inset-top, 10px), 10px);
   padding-bottom: env(safe-area-inset-bottom, 0px); 
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
-  margin-left: 5vw;
-  margin-right: 5vw;
+  /* margin-left: 5vw;
+  margin-right: 5vw; */
 }
 
 .prophecy-card {
