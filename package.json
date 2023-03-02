@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@capacitor/android": "^4.6.3",
-    "@capacitor/core": "^4.6.3",
+    "@capacitor/android": "^4.7.0",
+    "@capacitor/core": "^4.7.0",
     "@capacitor/device": "^4.1.0",
     "@capacitor/haptics": "^4.1.0",
     "@capacitor/ios": "^4.7.0",
@@ -10,6 +10,6 @@
     "@capacitor/status-bar": "^4.1.1"
   },
   "devDependencies": {
-    "@capacitor/cli": "^4.6.3"
+    "@capacitor/cli": "^4.7.0"
   }
 }

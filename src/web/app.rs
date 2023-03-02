@@ -57,23 +57,39 @@ async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
     #[cfg(feature = "android")]
     {
         use capacitor_bindings::status_bar::*;
-        crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::set_overlays_web_view(SetOverlaysWebViewOptions{overlay: false}).await })
-             .await;
+        crate::web::capacitor::do_or_report_error_async(|| async {
+            StatusBar::set_overlays_web_view(SetOverlaysWebViewOptions { overlay: true }).await
+        })
+        .await;
         // crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::set_style(Style::Light).await })
         //     .await;
         // crate::web::capacitor::do_or_report_error_async(|| async {
-        //     StatusBar::set_background_color("#FFFFFF").await
+        //     StatusBar::set_background_color("#0000FF").await
         // })
         // .await;
     }
     #[cfg(feature = "ios")]
     {
         use capacitor_bindings::status_bar::*;
-        crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::hide().await })
-            .await;
+        crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::hide().await }).await;
     }
 
     crate::setup_notifications_async().await;
+}
+
+fn android_show_status() {
+    #[cfg(feature = "android")]
+    {
+        use capacitor_bindings::status_bar::*;
+        crate::web::capacitor::do_or_report_error(|| async { StatusBar::show().await });
+    }
+}
+fn android_hide_status() {
+    #[cfg(feature = "android")]
+    {
+        use capacitor_bindings::status_bar::*;
+        crate::web::capacitor::do_or_report_error(|| async { StatusBar::hide().await });
+    }
 }
 
 #[function_component(App)]
@@ -98,40 +114,51 @@ pub fn app() -> Html {
 }
 
 fn switch(routes: Route) -> Html {
+    use Route::*;
     match routes {
-        Route::Landing => {
+        NoRoute | Landing | Question | Advanced => {
+            android_show_status();
+        }
+        Share | Spread => {
+            android_hide_status();
+        }
+        _ => {}
+    }
+
+    match routes {
+        Landing => {
             html! {
                <LandingView />
             }
         }
 
-        Route::Question {} => html! {
+        Question {} => html! {
            <QuestionView  />
         },
-        Route::Spread {} => html! {
-            <>
+        Spread {} => html! {
+        <>
             <ParticlesCanvas />
-        <SpreadView />
+            <SpreadView />
         </>
 
          },
-        Route::NoRoute {} => html! {
+        NoRoute {} => html! {
             html! {
                <LandingView />
             }
         },
-        Route::Advanced {} => html! {
+        Advanced {} => html! {
             <AdvancedView  />
         },
-        Route::Share => {
+        Share => {
             html!(
                 <ShareCardView />
             )
         }
-        Route::Cheat { cards } => {
+        Cheat { cards } => {
             html!(<CheatView {cards} />)
         }
-        Route::Custom { cards } => {
+        Custom { cards } => {
             html!(<CustomView {cards} />)
         }
     }
