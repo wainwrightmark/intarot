@@ -210,8 +210,6 @@ img {
   padding-bottom: env(safe-area-inset-bottom, 0px); 
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
-  /* margin-left: 5vw;
-  margin-right: 5vw; */
 }
 
 .prophecy-card {

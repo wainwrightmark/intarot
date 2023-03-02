@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@capacitor/android": "4.6.3",
+    "@capacitor/android": "^4.6.3",
     "@capacitor/core": "^4.6.3",
     "@capacitor/device": "^4.1.0",
     "@capacitor/haptics": "^4.1.0",
