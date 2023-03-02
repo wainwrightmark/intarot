@@ -3,7 +3,10 @@
   max-width: 12.5%;
   margin: auto;
   overflow-x: visible;
+}
 
+.min-width-contained{
+  min-width: 50%;
 }
 
 .prophecy-card, .advanced-view-item{

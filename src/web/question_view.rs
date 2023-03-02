@@ -76,7 +76,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         <>
         <div class="site">
             <div class="container" style="height: 100vh; white-space: nowrap;" onclick={background_click}  >
-                <div class = "col contained">
+                <div class = "col contained min-width-contained">
             <div class="row" style="margin-bottom: 0;">
             <Logo clickable={*is_clickable_state}/>
             </div>

@@ -63,7 +63,7 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         <div class="site" >
             <div class="container" style="overflow: auto;" >
 
-        <div class="contained col" style="width: 90vw; height: 100vh; ">
+        <div class="contained col spread-area" style="margin: auto">
         <Logo clickable={true}/>
         <div class="cards-grid" key="cards-grid" onclick={toggle}>
         <TarotCard top_card={true} {src_data} {description} style={CardStyle::default()} {description_layout} face_up={true} />

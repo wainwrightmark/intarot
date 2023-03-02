@@ -6,12 +6,12 @@ html {
   --primary: #41403e;
   --secondary: #0b74d5;
   --muted-text: #868e96;
-  --main-background: #f4f1ec;
+  --main-background: #f0f0f0;
 }
 
 @media (prefers-color-scheme: dark) {
   html {
-    --primary: #f4f1ec;
+    --primary: #f0f0f0;
     --secondary: #5595ce;
     --muted-text: #949ba2;
     --main-background: #41403e;
@@ -206,10 +206,10 @@ img {
 .spread-area{
   width: 90vw; 
   height: 100vh; 
-  padding-top: max(env(safe-area-inset-top, 10px), 10px);
-  padding-bottom: env(safe-area-inset-bottom, 0px); 
-  padding-left: env(safe-area-inset-left, 0px);
-  padding-right: env(safe-area-inset-right, 0px);
+  padding-top: max(env(safe-area-inset-top, 20px), 20px);
+  padding-bottom: max(env(safe-area-inset-bottom, 20px), 20px);
+  padding-left: max(env(safe-area-inset-left, 20px), 20px);
+  padding-right: max(env(safe-area-inset-right, 20px), 20px);
 }
 
 .prophecy-card {
@@ -434,8 +434,8 @@ img {
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
-  background-color: black;
-  color: white;
+  background-color: var(--primary);
+  color: var(--main-background);
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
