@@ -337,6 +337,8 @@ img {
   );
   animation: background-animation 5s ease infinite;
   background-size: 200% 100%;
+  color: var(--card-feature);
+  border-color: (var(--card-feature));
 }
 
 @keyframes background-animation {

@@ -36,6 +36,7 @@ impl FromStr for ImageMeta {
             image_data: ImageData {
                 id: id.to_string().into(),
                 image_type: super::image_data::ImageType::Card,
+                alt:card.name().to_string().into()
             },
             guide,
             card,

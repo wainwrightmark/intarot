@@ -43,6 +43,7 @@ fn get_custom_spread(str: &str) -> CustomSpread {
             Err(_) => ImageData {
                 id: id.to_string().into(),
                 image_type: ImageType::Custom,
+                alt: "Custom Image".to_string().into()
             },
         })
         .rev()

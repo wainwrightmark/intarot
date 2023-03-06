@@ -76,14 +76,14 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
 
             <div class={card_classes} style={props.style.get_style()}  >
                 <div class="prophecy-back">
-                    <img class="prophecy-image" src={card_back_src} style={back_style} />
+                    <img class="prophecy-image" src={card_back_src} style={back_style} alt="the back of a tarot card" />
                 </div>
 
                 <div class="prophecy-middle">
                     <img class="prophecy-image" src={frame_src} style={"background: white;"} />
                 </div>
 
-                <img class={image_classes} style="cursor: pointer;"  src={props.src_data.image.src()} />
+                <img class={image_classes} style="cursor: pointer;" src={props.src_data.image.src()} alt={props.src_data.image.alt()} />
                 {
                     if show_description{
                         let src_data = props.src_data.clone();

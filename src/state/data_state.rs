@@ -215,6 +215,7 @@ impl DataState {
             image: ImageData {
                 id: self.question_data.guide.ad_image_data().to_string().into(),
                 image_type: ImageType::Final,
+                alt: "Plain Card".to_string().into()
             },
         }
     }

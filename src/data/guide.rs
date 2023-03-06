@@ -84,6 +84,7 @@ impl Guide {
         ImageData {
             id,
             image_type: ImageType::Guide,
+            alt: self.get_str("name").unwrap().to_string().into()
         }
     }
 
