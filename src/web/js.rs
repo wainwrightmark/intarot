@@ -5,6 +5,16 @@ extern "C" {
     pub fn get_referrer() -> String;
 }
 
+
+// #[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function get_referrer() {
+//   return document.referrer;
+// }"##)]
+// extern "C" {
+//     pub fn get_referrer() -> String;
+// }
+
+
+
 #[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function open_link_in_new_tab(url) {
     window.open(url, '_blank').focus();
 }"##)]
