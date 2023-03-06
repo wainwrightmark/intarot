@@ -2,7 +2,6 @@
   color-scheme: light dark;
 }
 
-
 html {
   --card-feature: #41403e;
 }
@@ -22,11 +21,11 @@ html {
     --main-background: #41403e;
   }
 
-  .logo{
+  .logo {
     filter: invert(80%);
   }
 
-  .prophecy-image{
+  .prophecy-image {
     filter: brightness(60%);
   }
 }
@@ -44,7 +43,6 @@ footer {
   padding-top: 1em;
   width: 100%;
   overflow-x: hidden;
-
 }
 
 .container {
@@ -208,13 +206,21 @@ img {
   }
 }
 
-.spread-area{
-  width: 90vw; 
-  height: 100vh; 
-  padding-top: max(env(safe-area-inset-top, 20px), 20px);
-  padding-bottom: max(env(safe-area-inset-bottom, 20px), 20px);
-  padding-left: max(env(safe-area-inset-left, 20px), 20px);
-  padding-right: max(env(safe-area-inset-right, 20px), 20px);
+.spread-area {
+  width: 90vw;
+  height: 100vh;
+  padding-top: calc(
+    max(var(--notch-inset-top), env(safe-area-inset-top)) + 20px
+  );
+  padding-bottom: calc(
+    max(var(--notch-inset-bottom), env(safe-area-inset-bottom)) + 20px
+  );
+  padding-left: calc(
+    max(var(--notch-inset-left), env(safe-area-inset-left)) + 20px
+  );
+  padding-right: calc(
+    max(var(--notch-inset-right), env(safe-area-inset-right)) + 20px
+  );
 }
 
 .prophecy-card {
@@ -326,15 +332,49 @@ img {
   background-color: var(--main-background);
 }
 
+.begin-button {
+  margin: auto;
+  animation-delay: 5.25s;
+  margin-top: 6vh;
+  font-weight: bold;
+  border-color: transparent;
+  background-color: #333333;
+
+  color: var(--guide-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .begin-button {
+    background: linear-gradient(
+      0.25turn,
+      var(--guide-primary),
+      var(--guide-secondary)
+    );
+    animation: background-animation 5s ease infinite;
+    background-size: 200% 100%;
+    color: var(--card-feature);
+  }
+
+  @keyframes background-animation {
+    0% {
+      background-position: 20% 0%;
+    }
+    50% {
+      background-position: 80% 0%;
+    }
+    100% {
+      background-position: 20% 0%;
+    }
+  }
+}
+
 .card-button {
   text-align: center;
   margin-left: 2rem;
   margin-right: 2rem;
   /* margin-top: 1rem;*/
   margin-bottom: 1rem;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  box-shadow: none;
 }
 
 @keyframes fade-in {

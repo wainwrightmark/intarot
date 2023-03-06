@@ -1,5 +1,6 @@
 {
   "imports": {
+    "@capacitor/app": "./@capacitor/app.js",
     "@capacitor/core": "./@capacitor/core.js",
     "@capacitor/device": "./@capacitor/device.js",
     "@capacitor/haptics": "./@capacitor/haptics.js",

@@ -1,0 +1,11 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.intarot.app",
+        "sha256_cert_fingerprints":
+          ["49:8D:A3:1D:43:2A:5A:87:FD:90:F7:54:10:E3:2E:C8:4D:91:86:2A:4C:AE:47:A6:26:BA:02:96:E4:67:BC:B8"]
+      }
+    }
+  ]
