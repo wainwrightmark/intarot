@@ -1,6 +1,9 @@
 use std::ops::Not;
 
-use capacitor_bindings::device::{DeviceInfo, OperatingSystem, Platform};
+use capacitor_bindings::{
+    app::AppInfo,
+    device::{Device, DeviceInfo, OperatingSystem, Platform},
+};
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 use strum::EnumDiscriminants;
@@ -10,7 +13,7 @@ use yewdux::prelude::Dispatch;
 use crate::{
     data::{prelude::*, spread_id::SpreadId},
     state::prelude::*,
-    web::js::get_referrer,
+    web::{capacitor, js::get_referrer},
 };
 
 use super::{data_state::DataState, device_uuid::DeviceUUID};
@@ -59,6 +62,37 @@ impl EventLog {
 
 #[skip_serializing_none]
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct LogAppInfo {
+    build: String,
+    version: String,
+}
+
+impl From<AppInfo> for LogAppInfo {
+    fn from(value: AppInfo) -> Self {
+        Self {
+            build: value.build,
+            version: value.version,
+        }
+    }
+}
+
+impl LogAppInfo {
+    pub async fn try_get_async() -> Option<LogAppInfo> {
+        #[cfg(any(feature = "android", feature = "ios"))]
+        {
+            crate::web::capacitor::get_or_log_error_async(capacitor_bindings::app::App::get_info)
+                .await
+                .map(|x| x.into())
+        }
+        #[cfg(not(any(feature = "android", feature = "ios")))]
+        {
+            None
+        }
+    }
+}
+
+#[skip_serializing_none]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct LogDeviceInfo {
     pub name: Option<String>,
     pub model: String,
@@ -85,6 +119,14 @@ impl From<DeviceInfo> for LogDeviceInfo {
     }
 }
 
+impl LogDeviceInfo {
+    pub async fn try_get_async() -> Option<LogDeviceInfo> {
+        capacitor::get_or_log_error_async(Device::get_info)
+            .await
+            .map(|x| x.into())
+    }
+}
+
 #[skip_serializing_none]
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, EnumDiscriminants)]
 #[serde(tag = "type")]
@@ -95,10 +137,13 @@ pub enum LoggableEvent {
         gclid: Option<String>,
         language: Option<String>,
         device: Option<LogDeviceInfo>,
+        app: Option<LogAppInfo>,
     },
     NewSpread {
         question_data: QuestionData,
         spread_id: String,
+        device: Option<LogDeviceInfo>,
+        app: Option<LogAppInfo>,
     },
     ClickShare {
         src_data: SrcData,
@@ -140,17 +185,16 @@ pub enum LoggableEvent {
 impl LoggableEvent {
     pub async fn try_log_error_message_async(message: String) {
         log::error!("{}", message);
-        if !Self::should_ignore_error(&message){
+        if !Self::should_ignore_error(&message) {
             let event = LoggableEvent::Error { message };
             Self::try_log_async(event).await
         }
     }
 
-    pub fn should_ignore_error(error: &str)-> bool{
-        if error == "Js Exception: Notifications not supported in this browser."{
+    pub fn should_ignore_error(error: &str) -> bool {
+        if error == "Js Exception: Notifications not supported in this browser." {
             return true;
-        }
-        else if error == "Js Exception: Browser does not support the vibrate API"{
+        } else if error == "Js Exception: Browser does not support the vibrate API" {
             return true;
         }
 
@@ -196,13 +240,26 @@ impl LoggableEvent {
         }
     }
 
-    pub fn new_spread(data: &DataState) -> Self {
+    pub fn try_log_new_spread(data: &DataState) {
         let question_data = data.question_data;
-        let spread_id = SpreadId::new(&question_data, &data.perm).encode();
+        let perm = data.perm;
+        spawn_local(async move {
+            let log = Self::new_spread_async(question_data, perm).await;
+
+            Self::try_log_async(log).await;
+        })
+    }
+
+    pub async fn new_spread_async(question_data: QuestionData, perm: Perm) -> Self {
+        let spread_id = SpreadId::new(&question_data, &perm).encode();
+        let device = LogDeviceInfo::try_get_async().await;
+        let app = LogAppInfo::try_get_async().await;
 
         Self::NewSpread {
             question_data,
             spread_id,
+            device,
+            app,
         }
     }
 

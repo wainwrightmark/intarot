@@ -1,5 +1,3 @@
-use crate::state::failed_logs_state::FailedLogsState;
-use crate::state::prelude::*;
 use crate::web::landing_view::LandingView;
 use crate::web::particles::*;
 
@@ -8,7 +6,6 @@ use yew::prelude::*;
 
 use yew_hooks::{use_effect_once, use_search_param};
 use yew_router::prelude::*;
-use yewdux::prelude::Dispatch;
 
 use super::custom_view::CustomView;
 use super::prelude::{CheatView, ShareCardView};
@@ -43,40 +40,6 @@ pub enum Route {
     Cheat { cards: String },
 }
 
-async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
-    Dispatch::<UserState>::new()
-        .apply_future(UpdateParamsIfNewMessage {
-            ref_param,
-            gclid_param,
-        })
-        .await;
-    Dispatch::<FailedLogsState>::new()
-        .apply_future(ResentFailedLogsMessage)
-        .await;
-
-    #[cfg(feature = "android")]
-    {
-        use capacitor_bindings::status_bar::*;
-        crate::web::capacitor::do_or_report_error_async(|| async {
-            StatusBar::set_overlays_web_view(SetOverlaysWebViewOptions { overlay: true }).await
-        })
-        .await;
-        // crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::set_style(Style::Light).await })
-        //     .await;
-        // crate::web::capacitor::do_or_report_error_async(|| async {
-        //     StatusBar::set_background_color("#0000FF").await
-        // })
-        // .await;
-    }
-    #[cfg(feature = "ios")]
-    {
-        use capacitor_bindings::status_bar::*;
-        crate::web::capacitor::do_or_report_error_async(|| async { StatusBar::hide().await }).await;
-    }
-
-    crate::setup_notifications_async().await;
-}
-
 fn android_show_status() {
     #[cfg(feature = "android")]
     {
@@ -98,7 +61,7 @@ pub fn app() -> Html {
     let gclid_param = use_search_param("gclid".to_string());
 
     use_effect_once(|| {
-        spawn_local(setup(ref_param, gclid_param));
+        spawn_local(crate::web::startup::setup(ref_param, gclid_param));
         || ()
     });
 

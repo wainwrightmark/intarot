@@ -4,6 +4,8 @@ use std::rc::Rc;
 use yewdux::store::AsyncReducer;
 use yewdux::store::Store;
 
+use crate::state::logging::LogAppInfo;
+use crate::state::logging::LogDeviceInfo;
 use crate::web::capacitor;
 use crate::web::js::get_referrer;
 
@@ -55,14 +57,17 @@ impl UpdateParamsIfNewMessage {
             let referrer = get_referrer();
             let referrer = referrer.is_empty().not().then_some(referrer);
 
-            let device_info = capacitor::get_or_log_error_async(Device::get_info).await;
+            let device = LogDeviceInfo::try_get_async().await;
+            let app = LogAppInfo::try_get_async().await;
+
             let language = capacitor::get_or_log_error_async(Device::get_language_tag).await;
 
             let message = EventLog {
                 user_id: device_id.clone(),
 
                 event: LoggableEvent::NewUser {
-                    device: device_info.map(|x| x.into()),
+                    device,
+                    app,
                     ref_param: state.ref_param.clone(),
                     gclid: state.gclid_param.clone(),
                     referrer,

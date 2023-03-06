@@ -16,6 +16,7 @@ pub mod share_button;
 pub mod share_card_view;
 mod social;
 mod spread_view;
+pub mod startup;
 pub mod tarot_card;
 
 pub mod prelude {
