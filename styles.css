@@ -2,7 +2,6 @@
   color-scheme: light dark;
 }
 
-
 html {
   --card-feature: #41403e;
 }
@@ -22,11 +21,11 @@ html {
     --main-background: #41403e;
   }
 
-  .logo{
+  .logo {
     filter: invert(80%);
   }
 
-  .prophecy-image{
+  .prophecy-image {
     filter: brightness(60%);
   }
 }
@@ -44,7 +43,6 @@ footer {
   padding-top: 1em;
   width: 100%;
   overflow-x: hidden;
-
 }
 
 .container {
@@ -208,9 +206,9 @@ img {
   }
 }
 
-.spread-area{
-  width: 90vw; 
-  height: 100vh; 
+.spread-area {
+  width: 90vw;
+  height: 100vh;
   padding-top: max(env(safe-area-inset-top, 20px), 20px);
   padding-bottom: max(env(safe-area-inset-bottom, 20px), 20px);
   padding-left: max(env(safe-area-inset-left, 20px), 20px);
@@ -324,6 +322,27 @@ img {
 .nice-button {
   border-radius: 40px !important;
   background-color: var(--main-background);
+}
+
+.begin-button {
+  margin: auto;
+  animation-delay: 5.25s;
+  margin-top: 6vh;
+  font-weight: bold;
+  border-width: medium;
+  background: linear-gradient(
+    0.25turn,
+    var(--guide-primary),
+    var(--guide-secondary)
+  );
+  animation: background-animation 5s ease infinite;
+  background-size: 200% 100%;
+}
+
+@keyframes background-animation {
+  0%{background-position:20% 0%}
+  50%{background-position:80% 0%}
+  100%{background-position:20% 0%}
 }
 
 .card-button {

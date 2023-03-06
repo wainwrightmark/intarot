@@ -16,7 +16,7 @@ pub struct QuestionProps {}
 #[function_component(QuestionView)]
 pub fn question_view(_props: &QuestionProps) -> Html {
     use_effect_once(|| scroll_to_top);
-    let card_page_state = use_store_value::<DataState>();
+    let data_state = use_store_value::<DataState>();
     let navigator = use_navigator().unwrap();
     let is_clickable_state = use_state(|| false);
 
@@ -55,20 +55,27 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         })
     };
 
+    let guide = data_state.question_data.guide;
+    let spread_type = data_state.question_data.spread_type;
+
     let prompts_state = use_store_value::<PromptsState>();
-    let (prompt0, prompt1, prompt2) = prompts_state.get_three_prompts(
-        &card_page_state.question_data.guide,
-        &card_page_state.question_data.spread_type,
-    );
+    let (prompt0, prompt1, prompt2) = prompts_state.get_three_prompts(&guide, &spread_type);
     let prompt0 = format!("Why not ask about {prompt0}?");
     let prompt1 = format!("{prompt1}?");
     let prompt2 = format!("{prompt2}?");
 
-    let button_style = if *is_clickable_state {
-        "margin: auto; animation-delay: 5.25s; margin-top: 6vh;"
-    } else {
-        "margin: auto; animation-delay: 5.25s; pointer-events:none; margin-top: 6vh;"
-    };
+    let mut button_classes = classes!("nice-button", "begin-button");
+
+    let mut button_style = format!(
+        "--guide-primary: {}; --guide-secondary: {}",
+        guide.primary_color(),
+        guide.secondary_color()
+    );
+
+    if !(*is_clickable_state) {
+        button_classes.push("fade-in");
+        button_style.push_str(" pointer-events:none;");
+    }
 
     html! {
 
@@ -98,7 +105,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
             <p style="margin: auto; animation-delay: 4.5s; pointer-events:none;" class={if *is_clickable_state {classes!("capitalize_first_letter")} else {classes!{"fade-in", "capitalize_first_letter"}}}>{prompt2}</p>
             </div>
             <div class="row" style="align-self: center;">
-            <button onclick={on_begin_click} style={button_style} class={if *is_clickable_state {classes!("nice-button")} else {classes!{"fade-in", "nice-button"}}}>{"Begin your reading"}</button>
+            <button onclick={on_begin_click} style={button_style} class={button_classes}>{"Begin your reading"}</button>
             </div>
             </div>
                 </div>
