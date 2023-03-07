@@ -1,7 +1,7 @@
 use std::str::FromStr;
-
 use itertools::Itertools;
 use strum::IntoEnumIterator;
+use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlSelectElement;
 use yew::prelude::*;
 use yew_hooks::use_effect_once;
@@ -11,7 +11,11 @@ use yewdux::prelude::*;
 use super::app::Route;
 use crate::{
     data::prelude::*,
-    state::{prelude::*, prompts_state::PromptsState},
+    state::{
+        nagging_state::{AdvancedPageVisitMessage, NaggingState},
+        prelude::*,
+        prompts_state::PromptsState,
+    },
     web::prelude::*,
 };
 
@@ -20,7 +24,17 @@ pub struct AdvancedProps {}
 
 #[function_component(AdvancedView)]
 pub fn advanced_view(_props: &AdvancedProps) -> Html {
-    use_effect_once(|| scroll_to_top);
+    use_effect_once(|| {
+        scroll_to_top();
+        spawn_local(async {
+            Dispatch::<NaggingState>::new()
+                .apply_future(AdvancedPageVisitMessage {})
+                .await;
+        });
+
+
+         || ()
+    });
 
     let navigator = use_navigator().unwrap();
 

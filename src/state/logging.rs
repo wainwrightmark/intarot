@@ -180,6 +180,9 @@ pub enum LoggableEvent {
         message: String,
     },
     ViewDailyReading {},
+
+    SubmitEmail{address: String, advanced_visits: u32},
+    NoSubmitEmail{ advanced_visits: u32},
 }
 
 impl LoggableEvent {

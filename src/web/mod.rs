@@ -18,6 +18,7 @@ mod social;
 mod spread_view;
 pub mod startup;
 pub mod tarot_card;
+pub mod modal_dialog;
 
 pub mod prelude {
 
