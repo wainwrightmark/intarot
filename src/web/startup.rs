@@ -4,6 +4,11 @@ use web_sys::window;
 use yewdux::prelude::Dispatch;
 
 pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
+
+    Dispatch::<ImageMetaState>::new()
+        .apply_future(SetUpImageMetaStateMessage)
+        .await;
+
     Dispatch::<UserState>::new()
         .apply_future(UpdateParamsIfNewMessage {
             ref_param,
