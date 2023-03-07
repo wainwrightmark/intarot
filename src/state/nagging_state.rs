@@ -47,27 +47,29 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
                                 continue; //Did not pass my sophisticated email validation
                             }
 
-                            let client = reqwest::Client::new();
-                            let response = client
+                            // let client = reqwest::Client::new();
+                            // let response = client
 
-                                .post(MAILCHIMP_URL)
-                                .header("Content-Type", "application/json")
-                                .form(&FormData {
-                                    email: email.clone(),
-                                })
-                                .send()
-                                .await;
+                            //     .post(MAILCHIMP_URL)
+                            //     .header("Content-Type", "Content-Type: application/json")
+                            //     .form(&FormData {
+                            //         email: email.clone(),
+                            //     })
+                            //     .send()
+                            //     .await;
 
-                            match response {
-                                Ok(_) => {
-                                    LoggableEvent::try_log_async(LoggableEvent::SubmitEmail {
-                                        address: email,
-                                        advanced_visits: state.advanced_visits,
-                                    })
-                                    .await;
-                                }
-                                Err(err) => LoggableEvent::try_log_error_async(err).await,
-                            }
+                            LoggableEvent::try_log_async(LoggableEvent::SubmitEmail {
+                                address: email,
+                                advanced_visits: state.advanced_visits,
+                            })
+                            .await;
+
+                            // match response {
+                            //     Ok(_) => {
+
+                            //     }
+                            //     Err(err) => LoggableEvent::try_log_error_async(err).await,
+                            // }
                             break;
                         }
                         Err(err) => {
@@ -84,7 +86,7 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
     }
 }
 
-const MAILCHIMP_URL: &'static str = r#"https://app.us21.list-manage.com/subscribe/post?u=b9e9d767448b6f3485a30c05b&amp;id=6234ad4091&amp;f_id=00d5dee1f0"#;
+// const MAILCHIMP_URL: &'static str = r#"https://app.us21.list-manage.com/subscribe/post-json?u=b9e9d767448b6f3485a30c05b&amp;id=6234ad4091&amp;f_id=00d5dee1f0"#;
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "SCREAMING-KEBAB-CASE")]
