@@ -9,7 +9,7 @@ pub mod card;
 pub mod guide;
 
 fn main() -> Result<(), anyhow::Error> {
-    let dir_path = r#"C:\Users\wainw\Pictures\EighthArcana\RenamedThumbnails"#;
+    let dir_path = r#"C:\Users\wainw\Pictures\EighthArcana\BlankImages"#;
 
     let mut map: HashMap<(Guide, Card), Vec<DirEntry>> = Default::default();
 

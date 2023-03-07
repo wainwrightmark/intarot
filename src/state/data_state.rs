@@ -97,17 +97,29 @@ impl DataState {
         }
 
         let key = MetaKey { guide, card };
-        let vec = metas.get(&key)?;
-
-        if vec.is_empty() {
-            None
-        } else if vec.len() == 1 {
-            vec.get(0).cloned()
+        let result: Option<ImageMeta>;
+        if let Some(vec) = metas.get(&key) {
+            result = if vec.is_empty() {
+                None
+            } else if vec.len() == 1 {
+                vec.get(0).cloned()
+            } else {
+                let variant_index = Self::variant_index(self.perm);
+                let variant_index = variant_index % (vec.len() as u64);
+                vec.get(variant_index as usize).cloned()
+            };
         } else {
-            let variant_index = Self::variant_index(self.perm);
-            let variant_index = variant_index % (vec.len() as u64);
-            vec.get(variant_index as usize).cloned()
+            result = None;
+        };
+
+        if result.is_none() {
+            return Some(ImageMeta {
+                image_data: ImageData::placeholder(guide, card),
+                guide,
+                card,
+            });
         }
+        result
     }
 
     fn variant_index(perm: Perm) -> u64 {
@@ -215,7 +227,7 @@ impl DataState {
             image: ImageData {
                 id: self.question_data.guide.ad_image_data().to_string().into(),
                 image_type: ImageType::Final,
-                alt: "Plain Card".to_string().into()
+                alt: "Plain Card".to_string().into(),
             },
         }
     }

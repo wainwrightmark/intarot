@@ -18,7 +18,7 @@ impl FromStr for ImageMeta {
     type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let id = s; // Box::leak(s.to_string().into_boxed_str());
+        let id = s;
 
         let guide = Guide::iter()
             .find(|g| id.starts_with(g.short_name()))

@@ -59,7 +59,7 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
         };
 
         html! {
-            <TarotCard {top_card} {src_data} {style} {description} {slot} {description_layout}face_up={faceup}  />
+            <TarotCard {top_card} {src_data} {style} {description} {slot} {description_layout}face_up={faceup} card={meta.card}  />
         }
     } else {
         let src_data = data_state.spread_src(metas);

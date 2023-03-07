@@ -2,6 +2,7 @@ use yew::prelude::*;
 
 use yewdux::prelude::*;
 
+use crate::data::image_data::ImageData;
 use crate::data::prelude::*;
 use crate::state::prelude::*;
 use crate::web::card_view::SlotView;
@@ -18,6 +19,7 @@ pub struct TarotCardProps {
     pub slot: Option<&'static str>,
     pub description_layout: DescriptionLayout,
     pub face_up: bool,
+    pub card: Card
 }
 
 #[function_component(TarotCard)]
@@ -69,7 +71,7 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
         .collect::<Html>();
 
     let card_back_src = guide.card_back();
-    let frame_src = guide.frame();
+    let frame_src = ImageData::placeholder(guide,props.card).src();
 
     let back_style = format!("background: {};", guide.primary_color());
     html! {

@@ -66,9 +66,9 @@ impl Guide {
         }
     }
 
-    pub fn try_from_short_name(s: &str)-> Self{
+    // pub fn try_from_short_name(s: &str)-> Self{
 
-    }
+    // }
 
     pub fn filter_image(&self, name: &str) -> bool {
         name.to_ascii_lowercase()

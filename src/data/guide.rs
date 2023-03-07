@@ -31,7 +31,6 @@ pub enum Guide {
         primary_color = "#ffd5d5",
         secondary_color = "#ffe5d5",
         card_back = "/logo/card_back_evelyn.svg",
-        frame = "/logo/SimpleFrameEvelyn-notext.svg"
     ))]
     #[default]
     #[strum(serialize = "Evelyn", serialize = "E")]
@@ -44,7 +43,6 @@ pub enum Guide {
         primary_color = "#d7e3f4",
         secondary_color = "#dbdee3",
         card_back = "/logo/card_back_sosoteris.svg",
-        frame = "/logo/SimpleFrameSosoteris-notext.svg"
     ))]
     #[strum(serialize = "Madame", serialize = "S")]
     Madame,
@@ -56,7 +54,6 @@ pub enum Guide {
         primary_color = "#f6d5ff",
         secondary_color = "#ffffff",
         card_back = "/logo/card_back_maledictus.svg",
-        frame = "/logo/SimpleFrameMaledictus-notext.svg"
     ))]
     #[strum(serialize = "Maledictus", serialize = "M")]
     Maledictus,
@@ -75,9 +72,6 @@ impl Guide {
         self.get_str("card_back").unwrap()
     }
 
-    pub fn frame(&self) -> &'static str {
-        self.get_str("frame").unwrap()
-    }
 
     pub fn image_data(&self) -> ImageData {
         let id = self.get_str("image_id").unwrap().to_string().into();
