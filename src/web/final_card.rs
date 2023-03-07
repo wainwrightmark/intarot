@@ -39,13 +39,13 @@ pub fn final_card(props: &FinalCardProps) -> Html {
             open_link_in_new_tab("https://docs.google.com/forms/d/e/1FAIpQLSep7npbKOtYcA_ruRFK8ByHz0Zjl_7-gp6YQ3XPhJ_QHLgw4w/viewform".to_string());
         })
     };
-    let on_discord_click = {
-        Callback::from(move |_e: MouseEvent| {
-            Dispatch::<AchievementsState>::new()
-                .apply(AchievementEarnedMessage(Achievement::ClickDiscord));
-            open_link_in_same_tab("https://discord.gg/eRm5YdMNAw".to_string());
-        })
-    };
+    // let on_discord_click = {
+    //     Callback::from(move |_e: MouseEvent| {
+    //         Dispatch::<AchievementsState>::new()
+    //             .apply(AchievementEarnedMessage(Achievement::ClickDiscord));
+    //         open_link_in_same_tab("https://discord.gg/eRm5YdMNAw".to_string());
+    //     })
+    // };
 
     let mut card_classes = classes!("prophecy-card");
     let image_classes = classes!("prophecy-image");
@@ -80,7 +80,6 @@ pub fn final_card(props: &FinalCardProps) -> Html {
                         <div class="final-card-buttons" style={buttons_div_style}>
                                 <button class="nice-button card-button" onclick={on_continue_click} >{"Do another reading"} </button>
                                 <ShareButton label="Share your reading" {share_text} {src_data}/>
-                                <button class="nice-button card-button" onclick={on_discord_click}  >{"Discuss on Discord"} </button>
                                 <button class="nice-button card-button" onclick={on_survey_click}  >{"Do our quick survey"} </button>
                             </div>
 
