@@ -83,7 +83,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
 
             <div>
             <div class={"advanced-view-item"}  >
-            <Logo clickable={true}/>
+            <Logo clickable={true} invertible={true}/>
 
             </div>
             </div>

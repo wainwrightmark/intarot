@@ -23,7 +23,7 @@ pub fn preferences_view() -> Html {
             <div class="container" >
             <div class="contained col min-width-contained">
 
-                <Logo clickable={true}/>
+                <Logo clickable={true} invertible={true}/>
 
                 <div class="checkbox-wrapper">
                     <DarkModeButton/>

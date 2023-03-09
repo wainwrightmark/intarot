@@ -52,7 +52,7 @@ pub fn landing_view() -> Html {
             <div class="container" >
             <div class="contained col min-width-contained">
 
-            <Logo clickable={true}/>
+            <Logo clickable={true} invertible={true}/>
 
             <button onclick={on_begin_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Quick Reading"}</button>
                 <br/>

@@ -80,7 +80,7 @@ pub fn final_card(props: &FinalCardProps) -> Html {
 
                 <div class="image-overlay" style="pointer-events:none;">
                     <div class ="final-card-grid">
-                        <Logo clickable={false}/>
+                        <Logo clickable={false} invertible={false}/>
                         <div class="final-card-buttons" style={buttons_div_style}>
                                 <button class="nice-button card-button" onclick={on_continue_click} >{"Do another reading"} </button>
                                 <ShareButton label="Share your reading" {share_text} {src_data}/>

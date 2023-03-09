@@ -64,7 +64,7 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
             <div class="container" style="overflow: auto;" >
 
         <div class="contained col spread-area" style="margin: auto">
-        <Logo clickable={true}/>
+        <Logo clickable={true} invertible={true}/>
         <div class="cards-grid" key="cards-grid" onclick={toggle}>
         <TarotCard top_card={true} {src_data} {description} style={CardStyle::default()} {description_layout} face_up={true} card={image_meta.card} />
         </div>
@@ -74,6 +74,6 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         </>
         )
     } else {
-        html!(<> <Logo clickable={true}/> </> )
+        html!(<> <Logo clickable={true} invertible={true}/> </> )
     }
 }

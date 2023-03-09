@@ -36,7 +36,7 @@ pub fn cheat_view(props: &CheatProps) -> Html {
         }
     }
 
-    html!(<Logo clickable={true}/>)
+    html!(<Logo clickable={true} invertible={true}/>)
 }
 
 pub fn get_cheat_perm(s: &str) -> Result<Perm, anyhow::Error> {

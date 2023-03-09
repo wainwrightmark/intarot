@@ -32,7 +32,7 @@ pub fn custom_view(props: &CustomViewProps) -> Html {
     };
     LoggableEvent::try_log(event);
 
-    html!(<> <Logo clickable={true}/> </> )
+    html!(<> <Logo clickable={true} invertible={true}/> </> )
 }
 
 fn get_custom_spread(str: &str) -> CustomSpread {

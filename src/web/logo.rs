@@ -1,5 +1,5 @@
 use web_sys::MouseEvent;
-use yew::{function_component, html, Callback, Html, Properties};
+use yew::{function_component, html, Callback, Html, Properties, classes};
 use yew_router::prelude::use_navigator;
 
 use crate::web::app::Route;
@@ -7,6 +7,7 @@ use crate::web::app::Route;
 #[derive(Properties, Debug, PartialEq, Clone, Copy)]
 pub struct LogoProps {
     pub clickable: bool,
+    pub invertible: bool
 }
 
 #[function_component(Logo)]
@@ -28,7 +29,12 @@ pub fn logo(props: &LogoProps) -> Html {
         })
     };
 
+    let mut classes = classes!("logo");
+    if props.invertible{
+        classes.push("invertible");
+    }
+
     html!(
-    <img   {style} class="logo" alt="intarot logo" {onclick} src="/logo/full logo small.svg"/>
+    <img   {style} class={classes} alt="intarot logo" {onclick} src="/logo/full logo small.svg"/>
     )
 }
