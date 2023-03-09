@@ -13,6 +13,10 @@ html {
   --main-background: #f0f0f0;
 }
 
+.prophecy-middle img{
+  background-color: white;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     --primary: #f0f0f0;
@@ -26,7 +30,11 @@ html {
   }
 
   .prophecy-image {
-    filter: brightness(60%);
+    filter:  brightness(80%);
+  }
+
+  .prophecy-middle img{
+    background-color: black;
   }
 }
 
@@ -255,6 +263,7 @@ img {
 .prophecy-middle {
   transform: translateZ(-1px);
 }
+
 
 .prophecy-back,
 .prophecy-middle,

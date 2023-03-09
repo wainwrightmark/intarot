@@ -82,7 +82,7 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
                 </div>
 
                 <div class="prophecy-middle">
-                    <img class="prophecy-image" src={frame_src} style={"background: white;"} />
+                    <img class="prophecy-image" src={frame_src}  />
                 </div>
 
                 <img class={image_classes} style="cursor: pointer;" src={props.src_data.image.src()} alt={props.src_data.image.alt()} />
