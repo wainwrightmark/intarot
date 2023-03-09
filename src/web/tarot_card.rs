@@ -4,6 +4,7 @@ use yewdux::prelude::*;
 
 use crate::data::image_data::ImageData;
 use crate::data::prelude::*;
+use crate::state::preferences_state::CardShakeState;
 use crate::state::prelude::*;
 use crate::web::card_view::SlotView;
 use crate::web::prelude::*;
@@ -25,6 +26,7 @@ pub struct TarotCardProps {
 #[function_component(TarotCard)]
 pub fn tarot_card(props: &TarotCardProps) -> Html {
     let data_state = use_store_value::<DataState>();
+    let shake_state = use_store_value::<CardShakeState>();
 
     let guide = data_state.question_data.guide;
     let description_layout = props.description_layout;
@@ -41,7 +43,7 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
 
     let show_description = props.top_card && props.face_up && data_state.show_description;
 
-    let should_shake = props.top_card && !data_state.has_shown_description && props.face_up;
+    let should_shake = props.top_card && shake_state.enabled && !data_state.has_shown_description && props.face_up;
 
     if should_shake {
         card_classes.push("card-shake");

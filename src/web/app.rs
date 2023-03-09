@@ -1,5 +1,6 @@
 use crate::web::landing_view::LandingView;
 use crate::web::particles::*;
+use crate::web::preferences_view::PreferencesView;
 
 use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
@@ -32,6 +33,9 @@ pub enum Route {
 
     #[at("/share")]
     Share,
+
+    #[at("/preferences")]
+    Preferences,
 
     #[at("/custom/:cards")]
     Custom { cards: String },
@@ -93,6 +97,9 @@ fn switch(routes: Route) -> Html {
             html! {
                <LandingView />
             }
+        },
+        Preferences=>{
+            html!(<PreferencesView/>)
         }
 
         Question {} => html! {

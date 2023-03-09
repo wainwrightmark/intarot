@@ -1,10 +1,9 @@
 use crate::state::failed_logs_state::FailedLogsState;
 use crate::state::prelude::*;
-use web_sys::window;
+
 use yewdux::prelude::Dispatch;
 
 pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
-
     Dispatch::<ImageMetaState>::new()
         .apply_future(SetUpImageMetaStateMessage)
         .await;
@@ -24,16 +23,6 @@ pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
         use capacitor_bindings::status_bar::*;
         crate::web::capacitor::do_or_report_error_async(|| async {
             StatusBar::set_overlays_web_view(SetOverlaysWebViewOptions { overlay: true }).await
-        })
-        .await;
-
-        let style = if is_dark_mode() { //TODO watch dark mode changes
-            Style::Dark
-        } else {
-            Style::Light
-        };
-        crate::web::capacitor::do_or_report_error_async(move || async move {
-            StatusBar::set_style(style).await
         })
         .await;
 
@@ -62,19 +51,10 @@ pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
     crate::setup_notifications_async().await;
 }
 
-fn is_dark_mode() -> bool {
-    let Some(window) = window() else{return false;};
-    match window.match_media("(prefers-color-scheme: dark)") {
-        Ok(list) => match list {
-            Some(mql) => mql.matches(),
-            None => false,
-        },
-        Err(_) => false,
-    }
-}
-
+#[cfg(feature = "android")]
 /// Goes back, returns true if successful
 fn try_go_back() -> bool {
+    use web_sys::window;
     match window() {
         Some(w) => match w.history() {
             Ok(h) => match h.back() {

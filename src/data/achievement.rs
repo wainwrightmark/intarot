@@ -17,6 +17,7 @@ use strum::{EnumCount, EnumIter};
 pub enum Achievement {
     LandingClickBegin,
     LandingClickAdvanced,
+    LandingClickPreferences,
     ChangeGuide,
     ChangeSpreadType,
     SwipeCard,

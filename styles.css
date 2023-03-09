@@ -6,40 +6,8 @@ html {
   --card-feature: #41403e;
 }
 
-html {
-  --primary: #41403e;
-  --secondary: #0b74d5;
-  --muted-text: #868e96;
-  --main-background: #f0f0f0;
-}
-
 .prophecy-middle img{
   background-color: white;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    --primary: #f0f0f0;
-    --secondary: #5595ce;
-    --muted-text: #949ba2;
-    --main-background: #41403e;
-  }
-
-  .logo {
-    filter: invert(80%);
-  }
-
-  .prophecy-image {
-    filter:  brightness(80%);
-  }
-
-  .prophecy-middle img{
-    background-color: black;
-  }
-
-  button svg{
-    filter: invert(1);
-  }
 }
 
 body {
@@ -356,30 +324,7 @@ img {
   color: var(--guide-primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  .begin-button {
-    background: linear-gradient(
-      0.25turn,
-      var(--guide-primary),
-      var(--guide-secondary)
-    );
-    animation: background-animation 5s ease infinite;
-    background-size: 200% 100%;
-    color: var(--card-feature);
-  }
 
-  @keyframes background-animation {
-    0% {
-      background-position: 20% 0%;
-    }
-    50% {
-      background-position: 80% 0%;
-    }
-    100% {
-      background-position: 20% 0%;
-    }
-  }
-}
 
 .card-button {
   text-align: center;
@@ -401,7 +346,7 @@ img {
 
 .card-shake {
   animation-duration: 2s;
-  animation-delay: 16s;
+  animation-delay: 8s;
   animation-name: shake;
   animation-iteration-count: infinite;
   animation-direction: both;
@@ -562,4 +507,21 @@ img {
     height: 72px;
     opacity: 0;
   }
+}
+
+
+.checkbox-wrapper{
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1.1;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+  place-content: center;
+
+}
+
+
+.checkbox-wrapper>input{
+  accent-color: darkred;
 }

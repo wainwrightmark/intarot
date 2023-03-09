@@ -28,12 +28,22 @@ pub fn landing_view() -> Html {
     };
 
     let on_advanced_click = {
-        let navigator = navigator;
+        let navigator = navigator.clone();
 
         Callback::from(move |_: MouseEvent| {
             Dispatch::<AchievementsState>::new()
                 .apply(AchievementEarnedMessage(Achievement::LandingClickAdvanced));
             navigator.push(&Route::Advanced {});
+        })
+    };
+
+    let on_preferences_click = {
+        let navigator = navigator;
+
+        Callback::from(move |_: MouseEvent| {
+            Dispatch::<AchievementsState>::new()
+                .apply(AchievementEarnedMessage(Achievement::LandingClickPreferences));
+            navigator.push(&Route::Preferences {});
         })
     };
 
@@ -55,6 +65,8 @@ pub fn landing_view() -> Html {
                 <p class="landing-paragraph">
                     {paragraph2}
                 </p>
+                <br/>
+                <button onclick={on_preferences_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Preferences"}</button>
                 <br/>
                 </div>
 

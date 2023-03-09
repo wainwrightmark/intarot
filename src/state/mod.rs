@@ -10,6 +10,7 @@ pub mod prompts_state;
 pub mod spread_descriptions;
 mod user_state;
 pub mod nagging_state;
+pub mod preferences_state;
 
 pub mod prelude {
 

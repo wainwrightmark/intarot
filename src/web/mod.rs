@@ -19,6 +19,7 @@ mod spread_view;
 pub mod startup;
 pub mod tarot_card;
 pub mod modal_dialog;
+pub mod preferences_view;
 
 pub mod prelude {
 
