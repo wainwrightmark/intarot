@@ -1,3 +1,4 @@
+use num_traits::FromPrimitive;
 use yew::prelude::*;
 
 use yew_router::prelude::use_navigator;
@@ -16,6 +17,9 @@ pub struct FinalCardProps {
     pub style: CardStyle,
     pub src_data: SrcData,
 }
+
+
+
 
 #[function_component(FinalCard)]
 pub fn final_card(props: &FinalCardProps) -> Html {
@@ -54,7 +58,7 @@ pub fn final_card(props: &FinalCardProps) -> Html {
         card_classes.push("top_card");
     };
 
-    let share_text = include_str!(r#"../text/opening_p1.txt"#);
+    let share_text = get_share_text(&props.src_data);
     let src_data = props.src_data.clone();
 
     let img_style = format!(
@@ -92,4 +96,24 @@ pub fn final_card(props: &FinalCardProps) -> Html {
         </div>
 
     }
+}
+
+
+fn get_share_text(data: &SrcData)-> String{
+    let Some(spread_share) = &data.spread_option else{
+        return "The tarot app that combines AI-generated insight with self-reflection.".to_string();
+    };
+
+    let mut text = spread_share.question_data.spread_type.long_name().to_string();
+
+    if spread_share.question_data.spread_type.total_cards() <=7{
+        text.push_str("\r\n");
+        for card_index in (0..spread_share.question_data.spread_type.total_cards()).rev(){
+            let card: Card = spread_share.perm.element_at_index(card_index, |x| Card::from_u8(x).expect("Could not make card from u8"));
+            text.push_str(card.name());
+            text.push_str("\r\n");
+        }
+    }
+
+    text
 }

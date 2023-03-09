@@ -36,6 +36,10 @@ html {
   .prophecy-middle img{
     background-color: black;
   }
+
+  button svg{
+    filter: invert(1);
+  }
 }
 
 body {

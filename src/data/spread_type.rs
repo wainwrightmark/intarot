@@ -59,6 +59,20 @@ impl SpreadType {
         }
     }
 
+    pub fn long_name(&self)-> &'static str{
+        match self {
+            SpreadType::One => "One Card",
+            SpreadType::Love => "Love Reading",
+            SpreadType::Career => "Career Reading",
+            SpreadType::DayAhead => "Your Day Ahead",
+            SpreadType::Personal => "Past Present Future",
+            SpreadType::Problem => "A Problem",
+            SpreadType::Three => "Three Cards",
+            SpreadType::Five => "Five Cards",
+            SpreadType::All => "Full Deck",
+        }
+    }
+
     /// total cards, excluding the finish card
     pub fn total_cards(&self) -> u8 {
         match self {
