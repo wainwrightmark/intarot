@@ -17,13 +17,10 @@ pub struct SpreadViewProps {}
 
 #[function_component(SpreadView)]
 pub fn spread_view(props: &SpreadViewProps) -> Html {
-    // log::info!("Spread View");
-
     let node = use_node_ref();
     let swipe_state = use_swipe(node.clone());
 
     let data_state = use_store_value::<DataState>();
-    // log::info!("{:?}", cp);
     let _props = props.clone();
 
     {

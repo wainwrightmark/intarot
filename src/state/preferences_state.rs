@@ -31,17 +31,7 @@ impl Reducer<CardShakeState> for CardShakeToggleMessage {
     }
 }
 
-#[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Debug)]
-pub struct DarkModeState {
-    pub is_dark: bool,
-}
 
-impl Default for DarkModeState {
-    fn default() -> Self {
-        let is_dark = is_media_prefers_dark();
-        Self { is_dark }
-    }
-}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct DarkModeToggleMessage;
@@ -64,21 +54,7 @@ pub fn is_media_prefers_dark() -> bool {
     }
 }
 
-struct DarkModeListener;
-impl Listener for DarkModeListener {
-    type Store = DarkModeState;
 
-    fn on_change(&mut self, state: Rc<Self::Store>) {
-        set_dark(state.is_dark);
-
-        log::info!("Saving dark mode state {state:?}");
-        #[cfg(target_arch = "wasm32")]
-        {
-            use yewdux::storage::save;
-            save(state.as_ref(), storage::Area::Local).expect("unable to save state");
-        }
-    }
-}
 
 fn set_dark(dark: bool) -> Option<()> {
     #[cfg(feature = "android")]
@@ -96,6 +72,8 @@ fn set_dark(dark: bool) -> Option<()> {
         });
     }
 
+    log::info!("Setting Dark");
+
     let window = window()?;
     let document = window.document()?;
     let body = document.body()?;
@@ -104,6 +82,8 @@ fn set_dark(dark: bool) -> Option<()> {
     let contains_dark = class_name
         .split_ascii_whitespace()
         .any(|x| x.eq_ignore_ascii_case("dark"));
+
+        log::info!("Setting Dark 2");
 
     if dark {
         if contains_dark {
@@ -118,6 +98,18 @@ fn set_dark(dark: bool) -> Option<()> {
     Some(())
 }
 
+#[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Debug)]
+pub struct DarkModeState {
+    pub is_dark: bool,
+}
+
+impl Default for DarkModeState {
+    fn default() -> Self {
+        let is_dark = is_media_prefers_dark();
+        Self { is_dark }
+    }
+}
+
 impl Store for DarkModeState {
     #[cfg(not(target_arch = "wasm32"))]
     fn new() -> Self {
@@ -130,6 +122,7 @@ impl Store for DarkModeState {
     #[cfg(target_arch = "wasm32")]
 
     fn new() -> Self {
+        log::info!("Loading Dark Mode State");
         init_listener(DarkModeListener);
 
         let state: DarkModeState = storage::load(storage::Area::Local)
@@ -137,11 +130,28 @@ impl Store for DarkModeState {
             .flatten()
             .unwrap_or_default();
 
+
         set_dark(state.is_dark);
         state
     }
 
     fn should_notify(&self, other: &Self) -> bool {
         self != other
+    }
+}
+
+struct DarkModeListener;
+impl Listener for DarkModeListener {
+    type Store = DarkModeState;
+
+    fn on_change(&mut self, state: Rc<Self::Store>) {
+        set_dark(state.is_dark);
+
+        log::info!("Saving dark mode state {state:?}");
+        #[cfg(target_arch = "wasm32")]
+        {
+            use yewdux::storage::save;
+            save(state.as_ref(), storage::Area::Local).expect("unable to save state");
+        }
     }
 }
