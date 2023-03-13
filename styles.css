@@ -27,6 +27,7 @@ footer {
 
 .container {
   overflow: visible;
+  overflow-x: hidden;
   width: 100%;
 }
 
