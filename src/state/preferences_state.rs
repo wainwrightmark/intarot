@@ -1,6 +1,5 @@
 use std::rc::Rc;
 
-
 use web_sys::window;
 #[cfg(target_arch = "wasm32")]
 use yewdux::storage;
@@ -9,13 +8,13 @@ use yewdux::{
     store::{Reducer, Store},
 };
 
-#[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Debug,  Store)]
+#[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Debug, Store)]
 #[store(storage = "local", storage_tab_sync)]
 pub struct CardShakeState {
     pub enabled: bool,
 }
 
-impl Default for CardShakeState{
+impl Default for CardShakeState {
     fn default() -> Self {
         Self { enabled: true }
     }
@@ -30,8 +29,6 @@ impl Reducer<CardShakeState> for CardShakeToggleMessage {
         state
     }
 }
-
-
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct DarkModeToggleMessage;
@@ -53,8 +50,6 @@ pub fn is_media_prefers_dark() -> bool {
         Err(_) => false,
     }
 }
-
-
 
 fn set_dark(dark: bool) -> Option<()> {
     #[cfg(feature = "android")]
@@ -83,17 +78,15 @@ fn set_dark(dark: bool) -> Option<()> {
         .split_ascii_whitespace()
         .any(|x| x.eq_ignore_ascii_case("dark"));
 
-        log::info!("Setting Dark 2");
+    log::info!("Setting Dark 2");
 
     if dark {
         if contains_dark {
         } else {
             root.set_class_name(format!("{class_name} dark").as_str());
         }
-    } else {
-        if contains_dark {
-            root.set_class_name(class_name.replace("dark", "").trim())
-        }
+    } else if contains_dark {
+        root.set_class_name(class_name.replace("dark", "").trim())
     }
     Some(())
 }
@@ -129,7 +122,6 @@ impl Store for DarkModeState {
             .ok()
             .flatten()
             .unwrap_or_default();
-
 
         set_dark(state.is_dark);
         state

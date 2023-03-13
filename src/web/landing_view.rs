@@ -41,8 +41,9 @@ pub fn landing_view() -> Html {
         let navigator = navigator;
 
         Callback::from(move |_: MouseEvent| {
-            Dispatch::<AchievementsState>::new()
-                .apply(AchievementEarnedMessage(Achievement::LandingClickPreferences));
+            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(
+                Achievement::LandingClickPreferences,
+            ));
             navigator.push(&Route::Preferences {});
         })
     };

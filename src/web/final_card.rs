@@ -18,9 +18,6 @@ pub struct FinalCardProps {
     pub src_data: SrcData,
 }
 
-
-
-
 #[function_component(FinalCard)]
 pub fn final_card(props: &FinalCardProps) -> Html {
     let data_state = use_store_value::<DataState>();
@@ -98,18 +95,23 @@ pub fn final_card(props: &FinalCardProps) -> Html {
     }
 }
 
-
-fn get_share_text(data: &SrcData)-> String{
+fn get_share_text(data: &SrcData) -> String {
     let Some(spread_share) = &data.spread_option else{
         return "The tarot app that combines AI-generated insight with self-reflection.".to_string();
     };
 
-    let mut text = spread_share.question_data.spread_type.long_name().to_string();
+    let mut text = spread_share
+        .question_data
+        .spread_type
+        .long_name()
+        .to_string();
 
-    if spread_share.question_data.spread_type.total_cards() <=7{
+    if spread_share.question_data.spread_type.total_cards() <= 7 {
         text.push_str("\r\n");
-        for card_index in (0..spread_share.question_data.spread_type.total_cards()).rev(){
-            let card: Card = spread_share.perm.element_at_index(card_index, |x| Card::from_u8(x).expect("Could not make card from u8"));
+        for card_index in (0..spread_share.question_data.spread_type.total_cards()).rev() {
+            let card: Card = spread_share.perm.element_at_index(card_index, |x| {
+                Card::from_u8(x).expect("Could not make card from u8")
+            });
             text.push_str(card.name());
             text.push_str("\r\n");
         }

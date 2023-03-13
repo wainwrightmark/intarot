@@ -1,5 +1,5 @@
-use std::str::FromStr;
 use itertools::Itertools;
+use std::str::FromStr;
 use strum::IntoEnumIterator;
 use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlSelectElement;
@@ -32,8 +32,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
                 .await;
         });
 
-
-         || ()
+        || ()
     });
 
     let navigator = use_navigator().unwrap();

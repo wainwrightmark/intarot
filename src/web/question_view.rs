@@ -26,7 +26,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         use_interval(
             move || {
                 is_clickable_state.set(true);
-                capacitor::do_or_report_error(|| async { Haptics::vibrate(300.).await });
+                capacitor::do_or_report_error(|| Haptics::vibrate(300.));
             },
             millis,
         );
