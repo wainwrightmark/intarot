@@ -78,7 +78,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
 
         <div class="site" style="">
 
-            <div class="container" style=""  >
+            <div class="container" style="overflow-x: hidden"  >
             <div class="contained col min-width-contained">
 
             <div>

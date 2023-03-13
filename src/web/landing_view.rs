@@ -49,7 +49,7 @@ pub fn landing_view() -> Html {
 
     html! {
         <div class="site">
-            <div class="container" >
+            <div class="container" style="overflow-x: hidden" >
             <div class="contained col min-width-contained">
 
             <Logo clickable={true} invertible={true}/>

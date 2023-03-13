@@ -26,9 +26,23 @@ footer {
 }
 
 .container {
+  margin: 0 auto;
+  max-width: 960px;
+  position: relative;
   overflow: visible;
-  overflow-x: hidden;
+
   width: 100%;
+}
+
+@media only screen and (max-width: 992px) {
+  .container {
+    width: 85%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .container {
+    width: 90%;
+  }
 }
 
 .carousel {
