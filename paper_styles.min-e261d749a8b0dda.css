@@ -126,22 +126,6 @@ html {
 *:after {
   box-sizing: inherit;
 }
-.container {
-  margin: 0 auto;
-  max-width: 960px;
-  position: relative;
-  width: 100%;
-}
-@media only screen and (max-width: 992px) {
-  .container {
-    width: 85%;
-  }
-}
-@media only screen and (max-width: 480px) {
-  .container {
-    width: 90%;
-  }
-}
 .row {
   display: flex;
   flex-flow: row wrap;
@@ -156,23 +140,6 @@ html {
   .col {
     flex: 0 0 100%;
     max-width: 100%;
-  }
-}
-
-.container {
-  margin: 0 auto;
-  max-width: 960px;
-  position: relative;
-  width: 100%;
-}
-@media only screen and (max-width: 992px) {
-  .container {
-    width: 85%;
-  }
-}
-@media only screen and (max-width: 480px) {
-  .container {
-    width: 90%;
   }
 }
 html {
