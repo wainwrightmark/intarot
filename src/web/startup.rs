@@ -22,13 +22,13 @@ pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
 
     #[cfg(any(feature = "ios", feature = "android"))]
     {
-        LoggableEvent::try_log(LoggableEvent::Internal {
-            message: format!("Launched on mobile"),
-        });
+        // LoggableEvent::try_log(LoggableEvent::Internal {
+        //     message: format!("Launched on mobile"),
+        // });
         if let Ok(Some(url)) = App::get_launch_url().await {
-            LoggableEvent::try_log(LoggableEvent::Internal {
-                message: format!("app launch url: {url:?}"),
-            });
+            // LoggableEvent::try_log(LoggableEvent::Internal {
+            //     message: format!("app launch url: {url:?}"),
+            // });
             let url = url.url;
             if let Some(window) = web_sys::window() {
                 if let Ok(href) = window.location().href() {
@@ -39,11 +39,11 @@ pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
                         let fixed_url = "http://localhost/".to_string() + url_suffix;
 
                         if href != fixed_url {
-                            LoggableEvent::try_log(LoggableEvent::Internal {
-                                message: format!(
-                                    "Should route: current: {href}, path: {url} fixed: {fixed_url}"
-                                ),
-                            });
+                            // LoggableEvent::try_log(LoggableEvent::Internal {
+                            //     message: format!(
+                            //         "Should route: current: {href}, path: {url} fixed: {fixed_url}"
+                            //     ),
+                            // });
                             let _  = window.location().set_href(&fixed_url);
                         }
                     }
