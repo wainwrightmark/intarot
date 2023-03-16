@@ -4,36 +4,18 @@ use yewdux::prelude::Dispatch;
 use crate::state::prelude::*;
 
 pub async fn setup_notifications_async() {
-    let schedule_options = ScheduleOptions {
-        notifications: vec![LocalNotificationSchema {
-            auto_cancel: true,
-            body: "Your Daily Reading is ready".to_string(),
-            title: "Your daily reading".to_string(),
-            schedule: Schedule {
-                on: ScheduleOn {
-                    second: None, // Some(0),// None,
-                    year: None,
-                    minute: None,
-                    month: None,
-                    day: None,
-                    weekday: None,
-                    hour: Some(9), //Trigger at 9am each day
-                },
-                allow_while_idle: true,
-            },
-            large_body: None,
-            summary_text: Some("Your Daily Reading is ready".to_string()),
-            id: -1125158782, //Very Random number
-            ongoing: false,
-            inbox_list: None,
-            action_type_id: Some("DailyReading".to_string()),
-            small_icon: Some("icon512".to_string()),
-            large_icon: Some("splash".to_string()),
-            icon_color: Some("#000000".to_string()),
-            group: None,
-            group_summary: None,
-        }],
-    };
+    let schedule_options = LocalNotificationSchema::builder()
+        .title("Your daily reading")
+        .body("Your Daily Reading is ready")
+        .summary_text("Your Daily Reading is ready")
+        .id(-1125158782)
+        .action_type_id("DailyReading")
+        .small_icon("icon512") //Very Random number
+        .large_icon("splash") //Very Random number
+        .icon_color("#000000")
+        .schedule(ScheduleOn::builder().hour(9).build()) //Very Random number
+        .auto_cancel(true)
+        .build();
 
     let on_action = move |action: ActionPerformed| {
         if action.action_id == "ViewReading" || action.action_id == "tap" {
@@ -73,7 +55,7 @@ pub async fn setup_notifications_async() {
 }
 
 async fn schedule_notification<F: Fn(ActionPerformed) + 'static>(
-    schedule_options: ScheduleOptions,
+    schedule_options: impl Into<ScheduleOptions>,
     on_action: F,
 ) {
     log::info!("Scheduling local notification...");

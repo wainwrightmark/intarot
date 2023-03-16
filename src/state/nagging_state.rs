@@ -1,4 +1,4 @@
-use super::logging::LoggableEvent;
+
 use std::rc::Rc;
 use yewdux::prelude::async_reducer;
 use yewdux::store::AsyncReducer;
@@ -21,6 +21,7 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
 
         #[cfg(feature = "web")]
         {
+            use super::logging::LoggableEvent;
             if !state.has_submitted_email
                 && state.advanced_visits > 1
                 && state.advanced_visits.is_power_of_two()
@@ -63,13 +64,6 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
                                 advanced_visits: state.advanced_visits,
                             })
                             .await;
-
-                            // match response {
-                            //     Ok(_) => {
-
-                            //     }
-                            //     Err(err) => LoggableEvent::try_log_error_async(err).await,
-                            // }
                             break;
                         }
                         Err(err) => {
