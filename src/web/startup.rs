@@ -1,12 +1,9 @@
 use crate::state::failed_logs_state::FailedLogsState;
 use crate::state::prelude::*;
-
-use web_sys::Url;
-use yew_router::Routable;
 use yewdux::prelude::Dispatch;
 
 #[cfg(any(feature = "ios", feature = "android"))]
-use capacitor_bindings::app::{App, URLOpenListenerEvent};
+use capacitor_bindings::app::{App};
 
 pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
     Dispatch::<ImageMetaState>::new()
@@ -35,9 +32,9 @@ pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
             let url = url.url;
             if let Some(window) = web_sys::window() {
                 if let Ok(href) = window.location().href() {
-                    const prefix: &'static str = "https://intarot.app/";
-                    if url.to_ascii_lowercase().starts_with(prefix) {
-                        let (_, url_suffix) = url.split_at(prefix.len());
+                    const PREFIX: &'static str = "https://intarot.app/";
+                    if url.to_ascii_lowercase().starts_with(PREFIX) {
+                        let (_, url_suffix) = url.split_at(PREFIX.len());
 
                         let fixed_url = "http://localhost/".to_string() + url_suffix;
 
@@ -47,7 +44,7 @@ pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
                                     "Should route: current: {href}, path: {url} fixed: {fixed_url}"
                                 ),
                             });
-                            window.location().set_href(&fixed_url);
+                            let _  = window.location().set_href(&fixed_url);
                         }
                     }
                 }

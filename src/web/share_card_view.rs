@@ -8,7 +8,7 @@ use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
 use crate::data::description_layout::DescriptionLayout;
-use crate::data::prelude::{ImageMeta, SpreadShare, SrcData};
+use crate::data::prelude::{ImageMeta, SrcData};
 use crate::data::spread_id::SpreadId;
 use crate::state::prelude::*;
 use crate::web::card_view::*;
