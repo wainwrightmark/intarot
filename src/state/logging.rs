@@ -188,6 +188,10 @@ pub enum LoggableEvent {
     NoSubmitEmail {
         advanced_visits: u32,
     },
+
+    Internal{
+        message: String
+    }
 }
 
 impl LoggableEvent {

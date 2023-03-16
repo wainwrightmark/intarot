@@ -102,7 +102,7 @@ fn switch(routes: Route) -> Html {
         NoRoute | Landing | Question | Advanced => {
             android_show_status();
         }
-        Share | Spread => {
+        Share | Spread | Cheat { .. } | Custom { .. } => {
             android_hide_status();
         }
         _ => {}
@@ -171,9 +171,7 @@ fn switch(routes: Route) -> Html {
             });
 
             Dispatch::<DataState>::new().apply(BackToTopMessage);
-            let event = LoggableEvent::Custom {
-                cards,
-            };
+            let event = LoggableEvent::Custom { cards };
             LoggableEvent::try_log(event);
 
             html!(
