@@ -189,9 +189,9 @@ pub enum LoggableEvent {
         advanced_visits: u32,
     },
 
-    Internal{
-        message: String
-    }
+    Internal {
+        message: String,
+    },
 }
 
 impl LoggableEvent {

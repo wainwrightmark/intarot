@@ -36,7 +36,9 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         } else {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
-                            capacitor::do_or_report_error(|| Haptics::notification(NotificationType::Warning));
+                            capacitor::do_or_report_error(|| {
+                                Haptics::notification(NotificationType::Warning)
+                            });
                             if data_state.cards_facing_up == 0 {
                                 angry_animate_top_card_right_facedown();
                             } else {
@@ -50,7 +52,9 @@ pub fn spread_view(props: &SpreadViewProps) -> Html {
                         } else {
                             Dispatch::<AchievementsState>::new()
                                 .apply(AchievementEarnedMessage(Achievement::SwipeWrongWay));
-                            capacitor::do_or_report_error(|| Haptics::notification(NotificationType::Warning));
+                            capacitor::do_or_report_error(|| {
+                                Haptics::notification(NotificationType::Warning)
+                            });
                             if data_state.cards_facing_up == 0 {
                                 angry_animate_top_card_left_facedown();
                             } else {

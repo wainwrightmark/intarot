@@ -48,7 +48,7 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     let top_card = data_state.is_top_card(props.index);
     let faceup = data_state.is_card_facing_up(props.index);
     let style = get_style(props.index, faceup, data_state.as_ref());
-    let guide =data_state.question_data.guide;
+    let guide = data_state.question_data.guide;
 
     //log::info!("Index: {} Style: {:?}", props.index, style);
 

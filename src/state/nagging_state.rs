@@ -1,4 +1,3 @@
-
 use std::rc::Rc;
 use yewdux::prelude::async_reducer;
 use yewdux::store::AsyncReducer;
