@@ -48,6 +48,7 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     let top_card = data_state.is_top_card(props.index);
     let faceup = data_state.is_card_facing_up(props.index);
     let style = get_style(props.index, faceup, data_state.as_ref());
+    let guide =data_state.question_data.guide;
 
     //log::info!("Index: {} Style: {:?}", props.index, style);
 
@@ -59,7 +60,7 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
         };
 
         html! {
-            <TarotCard {top_card} {src_data} {style} {description} {slot} {description_layout}face_up={faceup} card={meta.card}  />
+            <TarotCard {top_card} {src_data} {style} {description} {slot} {description_layout}face_up={faceup} card={meta.card} {guide}  />
         }
     } else {
         let src_data = data_state.spread_src(metas);

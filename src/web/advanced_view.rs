@@ -81,10 +81,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             <div class="contained col min-width-contained">
 
             <div>
-            <div class={"advanced-view-item"}  >
-            <Logo clickable={true} invertible={true}/>
-
-            </div>
+                <Logo clickable={true} invertible={true}/>
             </div>
             <div>
             <div class={"advanced-view-item"}  >

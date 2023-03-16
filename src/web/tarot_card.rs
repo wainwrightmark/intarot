@@ -21,14 +21,14 @@ pub struct TarotCardProps {
     pub description_layout: DescriptionLayout,
     pub face_up: bool,
     pub card: Card,
+    pub guide: Guide,
 }
 
 #[function_component(TarotCard)]
 pub fn tarot_card(props: &TarotCardProps) -> Html {
     let data_state = use_store_value::<DataState>();
     let shake_state = use_store_value::<CardShakeState>();
-
-    let guide = data_state.question_data.guide;
+    let guide = props.guide;
     let description_layout = props.description_layout;
 
     let mut card_classes = classes!("prophecy-card");
