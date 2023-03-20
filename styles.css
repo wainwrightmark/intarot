@@ -54,7 +54,7 @@ footer {
   margin: auto;
   display: block;
   margin-bottom: 4vh;
-  margin-top: 0;
+  margin-top: 2vh;
   padding: 10%;
 }
 
@@ -70,7 +70,7 @@ img {
   max-width: 15em; */
   position: relative;
   margin: 0 auto;
-  text-align: justify;
+  text-align: left;
 }
 
 .advanced-view-button {
