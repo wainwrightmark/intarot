@@ -8,7 +8,7 @@ use yew_hooks::use_effect_once;
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
-use super::app::Route;
+
 use crate::{
     data::prelude::*,
     state::{

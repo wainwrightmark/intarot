@@ -18,6 +18,9 @@ mod social;
 mod spread_view;
 pub mod startup;
 pub mod tarot_card;
+pub mod app_redirect;
+pub mod route;
+
 
 pub mod prelude {
 
@@ -29,4 +32,6 @@ pub mod prelude {
     pub use crate::web::share_button::*;
     pub use crate::web::share_card_view::*;
     pub use crate::web::social::*;
+    pub use crate::web::app_redirect::*;
+    pub use crate::web::route::*;
 }

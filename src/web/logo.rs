@@ -2,7 +2,7 @@ use web_sys::MouseEvent;
 use yew::{classes, function_component, html, Callback, Html, Properties};
 use yew_router::prelude::use_navigator;
 
-use crate::web::app::Route;
+use crate::web::route::Route;
 
 #[derive(Properties, Debug, PartialEq, Clone, Copy)]
 pub struct LogoProps {

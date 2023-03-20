@@ -27,35 +27,6 @@ use anyhow::{anyhow, bail};
 use num_traits::FromPrimitive;
 use strum::{EnumCount, IntoEnumIterator};
 
-#[derive(Clone, Routable, PartialEq)]
-pub enum Route {
-    #[at("/")]
-    #[not_found]
-    NoRoute,
-
-    #[at("/landing")]
-    Landing,
-    #[at("/question")]
-    Question,
-
-    #[at("/spread")]
-    Spread,
-
-    #[at("/advanced")]
-    Advanced,
-
-    #[at("/share")]
-    Share,
-
-    #[at("/preferences")]
-    Preferences,
-
-    #[at("/custom/:cards")]
-    Custom { cards: String },
-
-    #[at("/cheat/:cards")]
-    Cheat { cards: String },
-}
 
 fn android_show_status() {
     #[cfg(feature = "android")]
@@ -74,14 +45,16 @@ fn android_hide_status() {
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let ref_param = use_search_param("ref".to_string());
-    let gclid_param = use_search_param("gclid".to_string());
+    // let ref_param = use_search_param("ref".to_string());
+    // let gclid_param = use_search_param("gclid".to_string());
+    // let spread_param = use_search_param("spread".to_string());
+    // let id_param = use_search_param("id".to_string());
 
     //Load the dark mode state here to make sure dark mode is set correctly
     let _dms = use_store::<DarkModeState>();
 
     use_effect_once(|| {
-        spawn_local(crate::web::startup::setup(ref_param, gclid_param));
+        spawn_local(crate::web::startup::setup());
         || ()
     });
 

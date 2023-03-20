@@ -1,3 +1,8 @@
+use std::future::Future;
+
+use wasm_bindgen_futures::spawn_local;
+use web::app_redirect;
+
 use crate::web::prelude::*;
 
 extern crate wee_alloc;
@@ -12,8 +17,5 @@ pub mod web;
 
 fn main() {
     wasm_logger::init(wasm_logger::Config::default());
-
-    //wasm_bindgen_futures::spawn_local(ImageMetaState::setup());
-    //wasm_bindgen_futures::spawn_local(ImageDescriptionState::setup());
     yew::Renderer::<App>::new().render();
 }

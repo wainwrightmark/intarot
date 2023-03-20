@@ -38,9 +38,9 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
 
     if let Some((qd, perm)) = spread_data {
         Dispatch::<DataState>::new().apply(LoadSpreadMessage(qd, perm));
-        navigator.unwrap().push(&crate::web::app::Route::Spread);
+        navigator.unwrap().push(&crate::web::route::Route::Spread);
     } else if id.is_none() {
-        navigator.unwrap().push(&crate::web::app::Route::Landing);
+        navigator.unwrap().push(&crate::web::route::Route::Landing);
     }
 
     let image_meta = ImageMeta::from_str(id.unwrap_or_default().as_str()).ok();

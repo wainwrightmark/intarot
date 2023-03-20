@@ -48,7 +48,7 @@ features = [
     "HtmlSelectElement",
     "HtmlDialogElement",
     "HtmlCanvasElement", "CanvasRenderingContext2d",
-    "Navigator", "ShareData", "MediaQueryList"
+    "Navigator", "ShareData", "MediaQueryList", "Url", "UrlSearchParams"
 ]
 
 

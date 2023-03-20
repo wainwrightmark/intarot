@@ -1,11 +1,46 @@
 use crate::state::failed_logs_state::FailedLogsState;
 use crate::state::prelude::*;
+use capacitor_bindings::app::App;
+use web_sys::{window, UrlSearchParams};
 use yewdux::prelude::Dispatch;
 
-#[cfg(any(feature = "ios", feature = "android"))]
-use capacitor_bindings::app::{App};
+use super::app_redirect;
 
-pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
+pub async fn get_url_search_params() -> Option<UrlSearchParams> {
+    #[cfg(any(feature = "android", feature = "ios"))]
+    {
+        let url = App::get_launch_url().await.ok()??;
+
+        let url = web_sys::Url::new(&url.url).ok()?;
+        let params = url.search_params();
+        return Some(params);
+    }
+
+    #[cfg(not(any(feature = "android", feature = "ios")))]
+    {
+        let window = window()?;
+        let search = window.location().search().ok()?;
+        let params = UrlSearchParams::new_with_str(search.as_str()).ok()?;
+        Some(params)
+    }
+}
+
+pub async fn setup() {
+    Dispatch::<FailedLogsState>::new()
+        .apply_future(ResentFailedLogsMessage)
+        .await;
+
+    #[cfg(any(feature = "android", feature = "ios"))]
+    {
+        app_redirect::subscribe_to_app_url_events().await;
+    }
+
+
+
+    let url_search_params = get_url_search_params().await;
+    let ref_param = url_search_params.clone().and_then(|u| u.get("ref"));
+    let gclid_param = url_search_params.clone().and_then(|u| u.get("gclid"));
+
     Dispatch::<ImageMetaState>::new()
         .apply_future(SetUpImageMetaStateMessage)
         .await;
@@ -16,41 +51,6 @@ pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
             gclid_param,
         })
         .await;
-    Dispatch::<FailedLogsState>::new()
-        .apply_future(ResentFailedLogsMessage)
-        .await;
-
-    #[cfg(any(feature = "ios", feature = "android"))]
-    {
-        // LoggableEvent::try_log(LoggableEvent::Internal {
-        //     message: format!("Launched on mobile"),
-        // });
-        if let Ok(Some(url)) = App::get_launch_url().await {
-            // LoggableEvent::try_log(LoggableEvent::Internal {
-            //     message: format!("app launch url: {url:?}"),
-            // });
-            let url = url.url;
-            if let Some(window) = web_sys::window() {
-                if let Ok(href) = window.location().href() {
-                    const PREFIX: &'static str = "https://intarot.app/";
-                    if url.to_ascii_lowercase().starts_with(PREFIX) {
-                        let (_, url_suffix) = url.split_at(PREFIX.len());
-
-                        let fixed_url = "http://localhost/".to_string() + url_suffix;
-
-                        if href != fixed_url {
-                            // LoggableEvent::try_log(LoggableEvent::Internal {
-                            //     message: format!(
-                            //         "Should route: current: {href}, path: {url} fixed: {fixed_url}"
-                            //     ),
-                            // });
-                            let _  = window.location().set_href(&fixed_url);
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     #[cfg(feature = "android")]
     {
@@ -62,9 +62,7 @@ pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
 
         match capacitor_bindings::app::App::add_back_button_listener(move |event| {
             if !(event.can_go_back && try_go_back()) {
-                crate::web::capacitor::do_or_report_error(
-                    capacitor_bindings::app::App::minimize_app,
-                );
+                crate::web::capacitor::do_or_report_error(capacitor_bindings::app::App::exit_app);
             }
         })
         .await
@@ -88,11 +86,10 @@ pub async fn setup(ref_param: Option<String>, gclid_param: Option<String>) {
 #[cfg(feature = "android")]
 /// Goes back, returns true if successful
 fn try_go_back() -> bool {
-    use web_sys::window;
     match window() {
         Some(w) => match w.history() {
             Ok(h) => match h.back() {
-                Ok(_) => true,
+                Ok(()) => true,
                 Err(_) => false,
             },
             Err(_) => false,
