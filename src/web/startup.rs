@@ -89,7 +89,13 @@ fn try_go_back() -> bool {
     match web_sys::window() {
         Some(w) => match w.history() {
             Ok(h) => match h.back() {
-                Ok(()) => true,
+                Ok(()) => {
+                    if w.location().pathname().unwrap_or_default().is_empty() {
+                        return false;
+                    }
+
+                    return true;
+                }
                 Err(_) => false,
             },
             Err(_) => false,

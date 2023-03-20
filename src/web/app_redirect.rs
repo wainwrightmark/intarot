@@ -27,5 +27,6 @@ fn redirect_to_url(url: String) {
 
     if current_href != url {
         let _ = window.location().set_href(&url);
+        //let _ = window.history().unwrap().push_state_with_url(&wasm_bindgen::JsValue::NULL, "", Some(&url));
     }
 }

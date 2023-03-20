@@ -40,13 +40,6 @@ pub fn final_card(props: &FinalCardProps) -> Html {
             open_link_in_new_tab("https://docs.google.com/forms/d/e/1FAIpQLSep7npbKOtYcA_ruRFK8ByHz0Zjl_7-gp6YQ3XPhJ_QHLgw4w/viewform".to_string());
         })
     };
-    // let on_discord_click = {
-    //     Callback::from(move |_e: MouseEvent| {
-    //         Dispatch::<AchievementsState>::new()
-    //             .apply(AchievementEarnedMessage(Achievement::ClickDiscord));
-    //         open_link_in_same_tab("https://discord.gg/eRm5YdMNAw".to_string());
-    //     })
-    // };
 
     let mut card_classes = classes!("prophecy-card");
     let image_classes = classes!("prophecy-image");
