@@ -1,8 +1,3 @@
-use std::future::Future;
-
-use wasm_bindgen_futures::spawn_local;
-use web::app_redirect;
-
 use crate::web::prelude::*;
 
 extern crate wee_alloc;

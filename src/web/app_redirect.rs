@@ -1,8 +1,7 @@
-use capacitor_bindings::app::App;
-use web_sys::window;
-
 #[cfg(any(feature = "android", feature = "ios"))]
 pub async fn subscribe_to_app_url_events() {
+    use capacitor_bindings::app::App;
+
     if let Ok(handle) = App::add_app_url_open_listener(|x| redirect_to_url(x.url)).await {
         handle.leak();
     }
@@ -10,6 +9,7 @@ pub async fn subscribe_to_app_url_events() {
 
 #[cfg(any(feature = "android", feature = "ios"))]
 fn redirect_to_url(url: String) {
+    use web_sys::window;
     let Some(url)  = web_sys::Url::new(&url).ok() else {
         return ;};
     let Some(window) = window() else{return ;};

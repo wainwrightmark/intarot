@@ -98,7 +98,7 @@ fn deconstruct_line<const N: usize>(line: &'static str) -> Option<(&'static str,
 
     let bools = split.map(|x| x.eq_ignore_ascii_case("true"));
     let mut arr = [false; N];
-    for (i,b) in bools.enumerate().take(N){
+    for (i, b) in bools.enumerate().take(N) {
         arr[i] = b;
     }
 

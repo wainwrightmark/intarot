@@ -13,7 +13,7 @@ use itertools::Itertools;
 use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
 
-use yew_hooks::{use_effect_once, use_search_param};
+use yew_hooks::use_effect_once;
 use yew_router::prelude::*;
 use yewdux::prelude::{use_store, Dispatch};
 
@@ -26,7 +26,6 @@ use crate::state::prelude::*;
 use anyhow::{anyhow, bail};
 use num_traits::FromPrimitive;
 use strum::{EnumCount, IntoEnumIterator};
-
 
 fn android_show_status() {
     #[cfg(feature = "android")]

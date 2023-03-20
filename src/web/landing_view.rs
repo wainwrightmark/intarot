@@ -1,6 +1,6 @@
 use crate::{data::achievement::Achievement, state::prelude::*, web::prelude::*};
 use yew::prelude::*;
-use yew_hooks::use_effect_once;
+
 use yew_router::prelude::*;
 use yewdux::prelude::Dispatch;
 
@@ -12,7 +12,6 @@ pub fn landing_view() -> Html {
     //     let navigator = navigator.clone();
     //     use_effect_once(|| {maybe_redirect(navigator); ||()});
     // }
-
 
     let paragraph1 = include_str!(r#"../text/opening_p1.txt"#);
     let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);

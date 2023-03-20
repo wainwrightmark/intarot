@@ -1,15 +1,15 @@
 use crate::state::failed_logs_state::FailedLogsState;
 use crate::state::prelude::*;
-use capacitor_bindings::app::App;
-use web_sys::{window, UrlSearchParams};
-use yewdux::prelude::Dispatch;
 
-use super::app_redirect;
+use web_sys::UrlSearchParams;
+use yewdux::prelude::Dispatch;
 
 pub async fn get_url_search_params() -> Option<UrlSearchParams> {
     #[cfg(any(feature = "android", feature = "ios"))]
     {
-        let url = App::get_launch_url().await.ok()??;
+        let url = capacitor_bindings::app::App::get_launch_url()
+            .await
+            .ok()??;
 
         let url = web_sys::Url::new(&url.url).ok()?;
         let params = url.search_params();
@@ -18,6 +18,7 @@ pub async fn get_url_search_params() -> Option<UrlSearchParams> {
 
     #[cfg(not(any(feature = "android", feature = "ios")))]
     {
+        use web_sys::window;
         let window = window()?;
         let search = window.location().search().ok()?;
         let params = UrlSearchParams::new_with_str(search.as_str()).ok()?;
@@ -32,10 +33,9 @@ pub async fn setup() {
 
     #[cfg(any(feature = "android", feature = "ios"))]
     {
+        use super::app_redirect;
         app_redirect::subscribe_to_app_url_events().await;
     }
-
-
 
     let url_search_params = get_url_search_params().await;
     let ref_param = url_search_params.clone().and_then(|u| u.get("ref"));
@@ -86,7 +86,7 @@ pub async fn setup() {
 #[cfg(feature = "android")]
 /// Goes back, returns true if successful
 fn try_go_back() -> bool {
-    match window() {
+    match web_sys::window() {
         Some(w) => match w.history() {
             Ok(h) => match h.back() {
                 Ok(()) => true,
