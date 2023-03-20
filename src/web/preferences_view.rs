@@ -33,15 +33,13 @@ pub fn preferences_view() -> Html {
                 <br/>
                 <button onclick={on_back_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Back"}</button>
                 <br/>
-
+                <br/>
+                <div class={"advanced-view-item"}  >
+        <SocialIcons />
+        </div>
 
             </div>
-        <footer class={"advanced-view-item"}  >
-        <SocialIcons />
-        <br/>
 
-
-        </footer>
 
         </div>
     </div>

@@ -69,13 +69,16 @@ pub fn landing_view() -> Html {
                 <br/>
                 <button onclick={on_preferences_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Preferences"}</button>
                 <br/>
+                <br/>
+                <div class={"advanced-view-item"}  >
+                <SocialIcons />
+                <br/>
+                </div>
+
                 </div>
 
 
-                <footer class={"advanced-view-item"}  >
-                <SocialIcons />
-                <br/>
-                </footer>
+
             </div>
         </div>
     }
