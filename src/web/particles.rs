@@ -11,6 +11,21 @@ pub struct ParticlesCanvas {
     canvas: NodeRef,
     particles: Vec<Particle>,
     callback: Closure<dyn FnMut()>,
+
+    request_id: Option<i32>
+}
+
+impl Drop for ParticlesCanvas{
+    fn drop(&mut self) {
+
+        if let Some(handle) = self.request_id{
+            if let Some(window) = window(){
+                let _ = window.cancel_animation_frame(handle);
+            }
+        }
+
+
+    }
 }
 
 impl Component for ParticlesCanvas {
@@ -31,6 +46,7 @@ impl Component for ParticlesCanvas {
             canvas: NodeRef::default(),
             particles: Particle::new_vec(100, width, height),
             callback,
+            request_id: None
         }
     }
 
@@ -83,9 +99,11 @@ impl ParticlesCanvas {
             particle.draw(&mut ctx);
         }
 
+        let result =
         window
-            .request_animation_frame(self.callback.as_ref().unchecked_ref())
-            .unwrap();
+            .request_animation_frame(self.callback.as_ref().unchecked_ref());
+
+        self.request_id = result.ok();
     }
 }
 
