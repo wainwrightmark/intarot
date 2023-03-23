@@ -1,4 +1,3 @@
-use super::logging::LoggableEvent;
 use std::rc::Rc;
 use yewdux::prelude::async_reducer;
 use yewdux::store::AsyncReducer;
@@ -19,10 +18,18 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
         let state = Rc::make_mut(&mut nagging_state);
         state.advanced_visits += 1;
 
+        #[cfg(any(feature = "ios", feature = "android"))]
+        {
+            if state.advanced_visits > 4 {
+                crate::web::rate::prompt_user_to_review().await;
+            }
+        }
+
         #[cfg(feature = "web")]
         {
+            use super::logging::LoggableEvent;
             if !state.has_submitted_email
-                && state.advanced_visits > 1
+                && state.advanced_visits > 3
                 && state.advanced_visits.is_power_of_two()
             {
                 loop {
@@ -63,13 +70,6 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
                                 advanced_visits: state.advanced_visits,
                             })
                             .await;
-
-                            // match response {
-                            //     Ok(_) => {
-
-                            //     }
-                            //     Err(err) => LoggableEvent::try_log_error_async(err).await,
-                            // }
                             break;
                         }
                         Err(err) => {

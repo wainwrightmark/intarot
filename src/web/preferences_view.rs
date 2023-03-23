@@ -5,19 +5,10 @@ use crate::{
     web::prelude::*,
 };
 use yew::prelude::*;
-use yew_router::prelude::use_navigator;
 use yewdux::prelude::use_store;
 
 #[function_component(PreferencesView)]
 pub fn preferences_view() -> Html {
-    let navigator = use_navigator().unwrap();
-
-    let on_back_click = {
-        Callback::from(move |_: MouseEvent| {
-            navigator.push(&Route::Landing {});
-        })
-    };
-
     html! {
         <div class="site">
             <div class="container" style="overflow-x: hidden" >
@@ -30,18 +21,14 @@ pub fn preferences_view() -> Html {
                     <CardShakeButton/>
                 </div>
                 <br/>
+                <BackButton/>
                 <br/>
-                <button onclick={on_back_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Back"}</button>
-                <br/>
-
+                <div class={"advanced-view-item"}  >
+        <SocialIcons />
+        </div>
 
             </div>
-        <footer class={"advanced-view-item"}  >
-        <SocialIcons />
-        <br/>
 
-
-        </footer>
 
         </div>
     </div>

@@ -4,7 +4,6 @@ use yew_hooks::{use_effect_once, use_interval};
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::{use_store_value, Dispatch};
 
-use super::app::Route;
 use crate::{
     state::{prelude::*, prompts_state::PromptsState},
     web::{capacitor, logo::Logo, prelude::*},
@@ -26,7 +25,7 @@ pub fn question_view(_props: &QuestionProps) -> Html {
         use_interval(
             move || {
                 is_clickable_state.set(true);
-                capacitor::do_or_report_error(|| async { Haptics::vibrate(300.).await });
+                capacitor::do_or_report_error(|| Haptics::vibrate(300.));
             },
             millis,
         );

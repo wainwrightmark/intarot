@@ -1,13 +1,17 @@
 use crate::{data::achievement::Achievement, state::prelude::*, web::prelude::*};
 use yew::prelude::*;
-use yew_hooks::use_effect_once;
-use yew_router::prelude::use_navigator;
+
+use yew_router::prelude::*;
 use yewdux::prelude::Dispatch;
 
 #[function_component(LandingView)]
 pub fn landing_view() -> Html {
     let navigator = use_navigator().unwrap();
-    use_effect_once(|| scroll_to_top);
+    // use_effect_once(|| scroll_to_top);
+    // {
+    //     let navigator = navigator.clone();
+    //     use_effect_once(|| {maybe_redirect(navigator); ||()});
+    // }
 
     let paragraph1 = include_str!(r#"../text/opening_p1.txt"#);
     let paragraph2 = include_str!(r#"../text/opening_p2.txt"#);
@@ -41,8 +45,9 @@ pub fn landing_view() -> Html {
         let navigator = navigator;
 
         Callback::from(move |_: MouseEvent| {
-            Dispatch::<AchievementsState>::new()
-                .apply(AchievementEarnedMessage(Achievement::LandingClickPreferences));
+            Dispatch::<AchievementsState>::new().apply(AchievementEarnedMessage(
+                Achievement::LandingClickPreferences,
+            ));
             navigator.push(&Route::Preferences {});
         })
     };
@@ -68,13 +73,16 @@ pub fn landing_view() -> Html {
                 <br/>
                 <button onclick={on_preferences_click} style="margin: auto; display: block;" class="nice-button advanced-view-button">{"Preferences"}</button>
                 <br/>
+                <br/>
+                <div class={"advanced-view-item"}  >
+                <SocialIcons />
+                <br/>
+                </div>
+
                 </div>
 
 
-                <footer class={"advanced-view-item"}  >
-                <SocialIcons />
-                <br/>
-                </footer>
+
             </div>
         </div>
     }

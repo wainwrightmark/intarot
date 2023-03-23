@@ -72,13 +72,12 @@ impl Guide {
         self.get_str("card_back").unwrap()
     }
 
-
     pub fn image_data(&self) -> ImageData {
         let id = self.get_str("image_id").unwrap().to_string().into();
         ImageData {
             id,
             image_type: ImageType::Guide,
-            alt: self.get_str("name").unwrap().to_string().into()
+            alt: self.get_str("name").unwrap().to_string(),
         }
     }
 

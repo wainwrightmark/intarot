@@ -338,5 +338,11 @@ extern "C" {
     // #[wasm_bindgen(js_name = "modal")]
     // pub type JSModal;
     #[wasm_bindgen(catch, js_namespace=["modal"], js_name= "prompt")]
-    pub async fn prompt_dialog(content: String, title: String, okText: String, cancelText: String, placeHolderText: String) -> Result<JsValue, JsValue>;
+    pub async fn prompt_dialog(
+        content: String,
+        title: String,
+        okText: String,
+        cancelText: String,
+        placeHolderText: String,
+    ) -> Result<JsValue, JsValue>;
 }

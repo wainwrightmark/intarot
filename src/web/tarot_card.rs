@@ -20,15 +20,15 @@ pub struct TarotCardProps {
     pub slot: Option<&'static str>,
     pub description_layout: DescriptionLayout,
     pub face_up: bool,
-    pub card: Card
+    pub card: Card,
+    pub guide: Guide,
 }
 
 #[function_component(TarotCard)]
 pub fn tarot_card(props: &TarotCardProps) -> Html {
     let data_state = use_store_value::<DataState>();
     let shake_state = use_store_value::<CardShakeState>();
-
-    let guide = data_state.question_data.guide;
+    let guide = props.guide;
     let description_layout = props.description_layout;
 
     let mut card_classes = classes!("prophecy-card");
@@ -43,7 +43,8 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
 
     let show_description = props.top_card && props.face_up && data_state.show_description;
 
-    let should_shake = props.top_card && shake_state.enabled && !data_state.has_shown_description && props.face_up;
+    let should_shake =
+        props.top_card && shake_state.enabled && !data_state.has_shown_description && props.face_up;
 
     if should_shake {
         card_classes.push("card-shake");
@@ -73,7 +74,7 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
         .collect::<Html>();
 
     let card_back_src = guide.card_back();
-    let frame_src = ImageData::placeholder(guide,props.card).src();
+    let frame_src = ImageData::placeholder(guide, props.card).src();
 
     let back_style = format!("background: {};", guide.primary_color());
     html! {

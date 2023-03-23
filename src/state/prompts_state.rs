@@ -41,7 +41,7 @@ impl Default for PromptsState {
                                     v.insert(vec![line.trim()]);
                                 }
                                 std::collections::btree_map::Entry::Occupied(mut o) => {
-                                    o.get_mut().extend_one(line.trim())
+                                    o.get_mut().push(line.trim())
                                 }
                             }
                         }
@@ -63,7 +63,7 @@ impl Default for PromptsState {
                                     v.insert(vec![line]);
                                 }
                                 std::collections::btree_map::Entry::Occupied(mut o) => {
-                                    o.get_mut().extend_one(line)
+                                    o.get_mut().push(line)
                                 }
                             }
                         }
@@ -96,8 +96,11 @@ fn deconstruct_line<const N: usize>(line: &'static str) -> Option<(&'static str,
         return None;
     };
 
-    let mut bools = split.map(|x| x.eq_ignore_ascii_case("true"));
-    let arr = bools.next_chunk().unwrap();
+    let bools = split.map(|x| x.eq_ignore_ascii_case("true"));
+    let mut arr = [false; N];
+    for (i, b) in bools.enumerate().take(N) {
+        arr[i] = b;
+    }
 
     Some((line, arr))
 }

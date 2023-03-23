@@ -181,8 +181,17 @@ pub enum LoggableEvent {
     },
     ViewDailyReading {},
 
-    SubmitEmail{address: String, advanced_visits: u32},
-    NoSubmitEmail{ advanced_visits: u32},
+    SubmitEmail {
+        address: String,
+        advanced_visits: u32,
+    },
+    NoSubmitEmail {
+        advanced_visits: u32,
+    },
+
+    Internal {
+        message: String,
+    },
 }
 
 impl LoggableEvent {
@@ -195,13 +204,13 @@ impl LoggableEvent {
     }
 
     pub fn should_ignore_error(error: &str) -> bool {
-        if error == "Js Exception: Notifications not supported in this browser." {
-            return true;
-        } else if error == "Js Exception: Browser does not support the vibrate API" {
+        if error == "Js Exception: Notifications not supported in this browser."
+            || error == "Js Exception: Browser does not support the vibrate API"
+        {
             return true;
         }
 
-        return false;
+        false
     }
 
     pub async fn try_log_error_async(err: impl Into<anyhow::Error>) {

@@ -54,7 +54,7 @@ footer {
   margin: auto;
   display: block;
   margin-bottom: 4vh;
-  margin-top: 6vh;
+  margin-top: 2vh;
   padding: 10%;
 }
 
@@ -70,7 +70,7 @@ img {
   max-width: 15em; */
   position: relative;
   margin: 0 auto;
-  text-align: justify;
+  text-align: left;
 }
 
 .advanced-view-button {
@@ -94,7 +94,7 @@ img {
   margin-right: auto;
   width: 15em;
   max-width: 100%;
-  text-align: justify;
+  text-align: left;
 }
 
 .carousel .carousel-item-hidden {
@@ -533,10 +533,11 @@ img {
   grid-template-columns: 1em auto;
   gap: 0.5em;
   place-content: center;
-
+  pointer-events: none;
 }
 
 
 .checkbox-wrapper>input{
   accent-color: darkred;
+  pointer-events: auto;
 }

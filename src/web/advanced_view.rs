@@ -1,5 +1,5 @@
-use std::str::FromStr;
 use itertools::Itertools;
+use std::str::FromStr;
 use strum::IntoEnumIterator;
 use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlSelectElement;
@@ -8,7 +8,6 @@ use yew_hooks::use_effect_once;
 use yew_router::prelude::use_navigator;
 use yewdux::prelude::*;
 
-use super::app::Route;
 use crate::{
     data::prelude::*,
     state::{
@@ -32,8 +31,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
                 .await;
         });
 
-
-         || ()
+        || ()
     });
 
     let navigator = use_navigator().unwrap();
@@ -82,10 +80,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             <div class="contained col min-width-contained">
 
             <div>
-            <div class={"advanced-view-item"}  >
-            <Logo clickable={true} invertible={true}/>
-
-            </div>
+                <Logo clickable={true} invertible={true}/>
             </div>
             <div>
             <div class={"advanced-view-item"}  >
@@ -103,7 +98,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             </div>
             <br/>
             <div>
-            <p class="advanced-view-item" style="text-align: justify;">
+            <p class="advanced-view-item" style="text-align: left;">
                 {description_state.get_guide_spread_text(&user_data)}
             </p>
 
@@ -112,6 +107,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             <br/>
             <button onclick={on_begin_click} style="display: block;" class="nice-button advanced-view-item advanced-view-button">{"Begin"}</button>
             <br/>
+            <BackButton/>
             <br/>
             <br/>
             <div class={"advanced-view-item"}  >

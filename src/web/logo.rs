@@ -1,13 +1,13 @@
 use web_sys::MouseEvent;
-use yew::{function_component, html, Callback, Html, Properties, classes};
+use yew::{classes, function_component, html, Callback, Html, Properties};
 use yew_router::prelude::use_navigator;
 
-use crate::web::app::Route;
+use crate::web::route::Route;
 
 #[derive(Properties, Debug, PartialEq, Clone, Copy)]
 pub struct LogoProps {
     pub clickable: bool,
-    pub invertible: bool
+    pub invertible: bool,
 }
 
 #[function_component(Logo)]
@@ -30,7 +30,7 @@ pub fn logo(props: &LogoProps) -> Html {
     };
 
     let mut classes = classes!("logo");
-    if props.invertible{
+    if props.invertible {
         classes.push("invertible");
     }
 

@@ -227,7 +227,7 @@ impl DataState {
             image: ImageData {
                 id: self.question_data.guide.ad_image_data().to_string().into(),
                 image_type: ImageType::Final,
-                alt: "Plain Card".to_string().into(),
+                alt: "Plain Card".to_string(),
             },
         }
     }
@@ -303,6 +303,7 @@ impl Reducer<DataState> for LoadSpreadMessage {
         let mut state = (*state).clone();
         state.question_data = self.0;
         state.perm = self.1;
+        state.custom_spread = None;
 
         state.back_to_top();
 

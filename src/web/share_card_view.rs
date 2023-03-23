@@ -38,9 +38,9 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
 
     if let Some((qd, perm)) = spread_data {
         Dispatch::<DataState>::new().apply(LoadSpreadMessage(qd, perm));
-        navigator.unwrap().push(&crate::web::app::Route::Spread);
+        navigator.unwrap().push(&crate::web::route::Route::Spread);
     } else if id.is_none() {
-        navigator.unwrap().push(&crate::web::app::Route::Landing);
+        navigator.unwrap().push(&crate::web::route::Route::Landing);
     }
 
     let image_meta = ImageMeta::from_str(id.unwrap_or_default().as_str()).ok();
@@ -48,10 +48,9 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
     let toggle = Dispatch::<DataState>::new().apply_callback(|_| ToggleDescriptionMessage {});
 
     if let Some(image_meta) = image_meta {
-        let description = *descriptions_state
-            .descriptions
-            .get(&(image_meta.guide, image_meta.card))
-            .unwrap();
+        let guide = image_meta.guide;
+        let card = image_meta.card;
+        let description = *descriptions_state.descriptions.get(&(guide, card)).unwrap();
 
         let src_data = SrcData {
             image: image_meta.image_data,
@@ -61,12 +60,12 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         html!(
             <>
         <div class="site" >
-            <div class="container" style="overflow: auto;" >
+            <div class="container" style="overflow-x: hidden;" >
 
-        <div class="contained col spread-area" style="margin: auto"> //For some reason this margin: auto is needed on mobile
+        <div class="contained col spread-area" style="margin: auto; margin-top: 0; padding-top: 0;"> //For some reason this margin: auto is needed on mobile
         <Logo clickable={true} invertible={true}/>
         <div class="cards-grid" key="cards-grid" onclick={toggle}>
-        <TarotCard top_card={true} {src_data} {description} style={CardStyle::default()} {description_layout} face_up={true} card={image_meta.card} />
+        <TarotCard top_card={true} {src_data} {description} style={CardStyle::default()} {description_layout} face_up={true} {card} {guide} />
         </div>
         </div>
         </div>

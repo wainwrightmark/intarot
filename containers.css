@@ -1,103 +1,102 @@
-.contained{
+.contained {
   flex: 0 0 12.5%;
   max-width: 12.5%;
   margin: auto;
   overflow-x: visible;
 }
 
-.min-width-contained{
+.min-width-contained {
   min-width: 50%;
 }
 
-.prophecy-card, .advanced-view-item{
+.prophecy-card,
+.advanced-view-item {
   font-size: small;
 }
 
-@media only screen and  (min-width: 360px) and (min-height: 600px) {
-  .prophecy-card, .advanced-view-item{
+@media only screen and (min-width: 22.5em) and (min-height: 37.5em) {
+  .prophecy-card,
+  .advanced-view-item {
     font-size: medium;
   }
 }
 
-
-@media only screen and  (min-width: 375px) and (min-height: 667px),only screen and (min-width: 1024px) and (min-height: 600px) {
-  .prophecy-card, .advanced-view-item{
+@media only screen and (min-width: 23.4375em) and (min-height: 41.6875em),
+  only screen and (min-width: 64em) and (min-height: 37.5em  ) {
+  .prophecy-card,
+  .advanced-view-item {
     font-size: large;
   }
 }
 
-@media only screen and  (min-width: 768px) and (min-height: 1024px){
-  .prophecy-card, .advanced-view-item{
+@media only screen and (min-width: 48em) and (min-height: 64em) {
+  .prophecy-card,
+  .advanced-view-item {
     font-size: x-large;
   }
 }
 
-@media only screen and (min-width: 912px) and (min-height: 1368px){
-  .prophecy-card, .advanced-view-item{
+@media only screen and (min-width: 57em) and (min-height: 85em) {
+  .prophecy-card,
+  .advanced-view-item {
     font-size: xx-large;
   }
 }
 
-
-@media only screen and (max-aspect-ratio: 33/9),only screen and (min-height: 340px){
-  .contained{
-    flex: 0 0 18.75%;
+@media only screen and (max-aspect-ratio: 33/9),
+  only screen and (min-height: 340px) {
+  .contained {
     max-width: 18.75%;
-}
-}
-
-
-@media only screen and (max-aspect-ratio: 22/9),only screen and (min-height: 512px){
-  .contained{
-    flex: 0 0 25%;
-    max-width: 25%;
-}
-}
-
-@media only screen and (max-aspect-ratio: 16/9),only screen and (min-height: 760px){
-  .contained{
-    flex: 0 0 37.5%;
-    max-width: 37.5%;
-}
-}
-
-
-
-
-@media only screen and (max-aspect-ratio: 11/9),only screen and (min-height: 1024px){
-  .contained{
-    flex: 0 0 50%;
-    max-width: 50%;
-}
-}
-
-@media only screen and (max-aspect-ratio: 16/18),only screen and (min-height: 1520px){
-  .contained{
-    flex: 0 0 62.5%;
-    max-width: 62.5%;
-}
-}
-
-@media only screen and (max-aspect-ratio: 11/18),only screen and (min-height: 2048px){
-
-  .contained{
-    flex: 0 0 100%;
-    max-width: 100%;
-    overflow-x: visible;
-}
-}
-
-/* @media only screen and (min-width: 30em) and (min-height: 60em) {
-  .contained{
-      flex: 0 0 50%;
-      max-width: 50%;
   }
 }
 
-  @media only screen and (min-width: 48em) and (min-height: 96em) {
+@media only screen and (max-aspect-ratio: 22/9),
+  only screen and (min-height: 512px) {
+  .contained {
+    max-width: 25%;
+  }
+}
 
-    .contained {
-      flex: 0 0 66.6666666667%;
-      max-width: 66.6666666667%;
-    }
-  } */
+@media only screen and (max-aspect-ratio: 16/9),
+  only screen and (min-height: 760px) {
+  .contained {
+    max-width: 37.5%;
+  }
+}
+
+@media only screen and (max-aspect-ratio: 11/9),
+  only screen and (min-height: 1024px) {
+  .contained {
+    max-width: 50%;
+  }
+}
+
+@media only screen and (max-aspect-ratio: 1/1),
+  only screen and (min-height: 1520px) {
+  .contained {
+    max-width: 62.5%;
+  }
+}
+
+@media only screen and (max-aspect-ratio: 16/18),
+  only screen and (min-height: 1520px) {
+  .contained {
+    max-width: 69%;
+  }
+}
+
+
+@media only screen and (max-aspect-ratio: 3/4) and(max-height: 1024) {
+  .contained {
+    max-width: 75%;
+  }
+}
+
+@media only screen and (max-aspect-ratio: 11/18),
+  only screen and (min-height: 2048px) {
+  .contained {
+    max-width: 100%;
+    overflow-x: visible;
+  }
+}
+

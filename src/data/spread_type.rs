@@ -59,7 +59,7 @@ impl SpreadType {
         }
     }
 
-    pub fn long_name(&self)-> &'static str{
+    pub fn long_name(&self) -> &'static str {
         match self {
             SpreadType::One => "One Card",
             SpreadType::Love => "Love Reading",
