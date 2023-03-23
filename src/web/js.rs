@@ -1,4 +1,6 @@
-#[wasm_bindgen::prelude::wasm_bindgen(inline_js = r##"export function get_referrer() {
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen(inline_js = r##"export function get_referrer() {
   return document.referrer;
 }"##)]
 extern "C" {

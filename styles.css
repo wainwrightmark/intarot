@@ -94,7 +94,7 @@ img {
   margin-right: auto;
   width: 15em;
   max-width: 100%;
-  text-align: justify;
+  text-align: left;
 }
 
 .carousel .carousel-item-hidden {
@@ -533,10 +533,11 @@ img {
   grid-template-columns: 1em auto;
   gap: 0.5em;
   place-content: center;
-
+  pointer-events: none;
 }
 
 
 .checkbox-wrapper>input{
   accent-color: darkred;
+  pointer-events: auto;
 }

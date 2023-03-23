@@ -98,7 +98,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             </div>
             <br/>
             <div>
-            <p class="advanced-view-item" style="text-align: justify;">
+            <p class="advanced-view-item" style="text-align: left;">
                 {description_state.get_guide_spread_text(&user_data)}
             </p>
 
@@ -107,6 +107,7 @@ pub fn advanced_view(_props: &AdvancedProps) -> Html {
             <br/>
             <button onclick={on_begin_click} style="display: block;" class="nice-button advanced-view-item advanced-view-button">{"Begin"}</button>
             <br/>
+            <BackButton/>
             <br/>
             <br/>
             <div class={"advanced-view-item"}  >
