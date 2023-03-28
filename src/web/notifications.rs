@@ -8,12 +8,12 @@ pub async fn setup_notifications_async() {
         .title("Your daily reading")
         .body("Your Daily Reading is ready")
         .summary_text("Your Daily Reading is ready")
-        .id(-1125158782)
+        .id(-1125158782)//Very Random number
         .action_type_id("DailyReading")
         .small_icon("icon512") //Very Random number
         .large_icon("splash") //Very Random number
         .icon_color("#000000")
-        .schedule(ScheduleOn::builder().hour(9).build()) //Very Random number
+        .schedule(ScheduleOn::builder().hour(9).build())
         .auto_cancel(true)
         .build();
 
@@ -64,6 +64,7 @@ async fn schedule_notification<F: Fn(ActionPerformed) + 'static>(
     match schedule_result {
         Ok(sr) => {
             log::info!("Notification Scheduled {:?}", sr.notifications);
+
         }
         Err(err) => {
             LoggableEvent::try_log_error_message_async(err.to_string()).await;
@@ -73,7 +74,9 @@ async fn schedule_notification<F: Fn(ActionPerformed) + 'static>(
     log::info!("Registering Action Listener");
     let listener_result = LocalNotifications::add_action_performed_listener(on_action).await;
     match listener_result {
-        Ok(_) => {}
+        Ok(lr) => {
+            lr.leak();
+        }
         Err(err) => {
             LoggableEvent::try_log_error_message_async(err.to_string()).await;
         }
