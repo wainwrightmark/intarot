@@ -5,15 +5,15 @@ use crate::state::prelude::*;
 
 pub async fn setup_notifications_async() {
     let schedule_options = LocalNotificationSchema::builder()
-        .title("Your daily reading")
-        .body("Your Daily Reading is ready")
-        .summary_text("Your Daily Reading is ready")
+        .title("Your Daily Reading")
+        .body("Start your day with a mindful moment")
+        .summary_text("Start your day with a mindful moment")
         .id(-1125158782)//Very Random number
         .action_type_id("DailyReading")
-        .small_icon("icon512") //Very Random number
-        .large_icon("splash") //Very Random number
+        .small_icon("icon512")
+        .large_icon("splash")
         .icon_color("#000000")
-        .schedule(ScheduleOn::builder().hour(9).build())
+        .schedule(ScheduleOn::builder().hour(8).build())
         .auto_cancel(true)
         .build();
 
