@@ -204,9 +204,14 @@ impl LoggableEvent {
     }
 
     pub fn should_ignore_error(error: &str) -> bool {
-        if error == "Js Exception: Notifications not supported in this browser."
-            || error == "Js Exception: Browser does not support the vibrate API"
-        {
+        const ERRORS_TO_IGNORE: &[&'static str] = &[
+            "Js Exception: Notifications not supported in this browser.",
+            "Js Exception: Browser does not support the vibrate API",
+            "Js Exception: Abort due to cancellation of share.",
+            "Js Exception: Share canceled",
+            "Js Exception: Share API not available in this browser",
+        ];
+        if ERRORS_TO_IGNORE.contains(&error) {
             return true;
         }
 
