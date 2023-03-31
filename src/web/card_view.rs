@@ -32,7 +32,6 @@ pub struct IndexedCardViewProps {
 
 #[function_component(IndexedCardView)]
 pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
-    let image_descriptions_state = use_store_value::<ImageDescriptionState>();
     let metas_state = use_store_value::<ImageMetaState>();
     let data_state = use_store_value::<DataState>();
     let spread_descriptions_state = use_store_value::<SpreadDescriptionState>();
@@ -41,7 +40,6 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     let description_layout = spread_descriptions_state
         .try_get_layout(&data_state.question_data, props.index)
         .unwrap_or_default();
-    let descriptions = &image_descriptions_state.descriptions;
 
     let metas = &metas_state.metas;
 
@@ -53,14 +51,14 @@ pub fn indexed_card_view(props: &IndexedCardViewProps) -> Html {
     //log::info!("Index: {} Style: {:?}", props.index, style);
 
     if let Some(meta) = data_state.get_image_meta(props.index, metas) {
-        let description = *descriptions.get(&(meta.guide, meta.card)).unwrap();
+        //let description = *descriptions.get(&(meta.guide, meta.card)).unwrap();
         let src_data = SrcData {
             image: meta.image_data,
             spread_option: None,
         };
 
         html! {
-            <TarotCard {top_card} {src_data} {style} {description} {slot} {description_layout}face_up={faceup} card={meta.card} {guide}  />
+            <TarotCard {top_card} {src_data} {style} {slot} {description_layout}face_up={faceup} card={meta.card} {guide}  />
         }
     } else {
         let src_data = data_state.spread_src(metas);

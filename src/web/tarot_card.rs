@@ -16,7 +16,6 @@ pub struct TarotCardProps {
     pub top_card: bool,
     pub style: CardStyle,
     pub src_data: SrcData,
-    pub description: ImageDescription,
     pub slot: Option<&'static str>,
     pub description_layout: DescriptionLayout,
     pub face_up: bool,
@@ -26,10 +25,13 @@ pub struct TarotCardProps {
 
 #[function_component(TarotCard)]
 pub fn tarot_card(props: &TarotCardProps) -> Html {
+    let (layout, card, guide) = (props.description_layout, props.card, props.guide);
+    let descriptions = use_selector(move|x: &ImageDescriptionState|  {
+        x.get_layout_sections(&layout, &card, &guide)
+    });
     let data_state = use_store_value::<DataState>();
     let shake_state = use_store_value::<CardShakeState>();
     let guide = props.guide;
-    let description_layout = props.description_layout;
 
     let mut card_classes = classes!("prophecy-card");
     let mut image_classes = classes!("prophecy-image");
@@ -50,16 +52,10 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
         card_classes.push("card-shake");
     }
 
-    let share_text = *props
-        .description
-        .description_sections(&description_layout)
-        .first()
-        .unwrap();
+    let share_text = descriptions.first().cloned().unwrap_or_default();
 
-    let sections = props
-        .description
-        .description_sections(&description_layout)
-        .iter()
+    let sections =
+        descriptions.iter()
         .map(|x| {
             html!(
                <>

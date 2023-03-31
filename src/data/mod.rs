@@ -3,7 +3,7 @@ mod card;
 pub mod description_layout;
 mod guide;
 pub mod image_data;
-pub mod image_description;
+pub mod description_type;
 mod image_meta;
 pub mod question_data;
 pub mod spread_id;
@@ -15,7 +15,7 @@ pub mod prelude {
     pub use crate::data::card::*;
     pub use crate::data::description_layout::*;
     pub use crate::data::guide::*;
-    pub use crate::data::image_description::*;
+    pub use crate::data::description_type::*;
     pub use crate::data::image_meta::*;
     pub use crate::data::question_data::*;
     pub use crate::data::spread_type::*;

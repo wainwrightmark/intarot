@@ -21,7 +21,6 @@ pub struct ShareCardViewProps {}
 #[function_component(ShareCardView)]
 pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
     let navigator = use_navigator();
-    let descriptions_state = use_store_value::<ImageDescriptionState>();
     let description_layout: DescriptionLayout = Default::default();
     let id = use_search_param("id".to_string());
 
@@ -50,7 +49,6 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
     if let Some(image_meta) = image_meta {
         let guide = image_meta.guide;
         let card = image_meta.card;
-        let description = *descriptions_state.descriptions.get(&(guide, card)).unwrap();
 
         let src_data = SrcData {
             image: image_meta.image_data,
@@ -65,7 +63,7 @@ pub fn share_card_view(_props: &ShareCardViewProps) -> Html {
         <div class="contained col spread-area" style="margin: auto; margin-top: 0; padding-top: 0;"> //For some reason this margin: auto is needed on mobile
         <Logo clickable={true} invertible={true}/>
         <div class="cards-grid" key="cards-grid" onclick={toggle}>
-        <TarotCard top_card={true} {src_data} {description} style={CardStyle::default()} {description_layout} face_up={true} {card} {guide} />
+        <TarotCard top_card={true} {src_data}  style={CardStyle::default()} {description_layout} face_up={true} {card} {guide} />
         </div>
         </div>
         </div>
