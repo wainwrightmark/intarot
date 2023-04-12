@@ -1,9 +1,4 @@
-use crate::{
-    state::preferences_state::{
-        CardShakeState, CardShakeToggleMessage, DarkModeState, DarkModeToggleMessage,
-    },
-    web::prelude::*,
-};
+use crate::{state::preferences_state::*, web::prelude::*};
 use yew::prelude::*;
 use yewdux::prelude::use_store;
 
@@ -16,10 +11,9 @@ pub fn preferences_view() -> Html {
 
                 <Logo clickable={true} invertible={true}/>
 
-                <div class="checkbox-wrapper">
-                    <DarkModeButton/>
-                    <CardShakeButton/>
-                </div>
+                <DarkModeButton/>
+                <br/>
+                    <MotionStateButton/>
                 <br/>
                 <BackButton/>
                 <br/>
@@ -39,30 +33,52 @@ pub fn preferences_view() -> Html {
 fn dark_mode_button() -> Html {
     let (state, dispatch) = use_store::<DarkModeState>();
 
-    let onchange = dispatch.apply_callback(|_| DarkModeToggleMessage);
+    let onclick = dispatch.reduce_callback(|z| {
+        (match *z {
+            DarkModeState::Auto => DarkModeState::Light,
+            DarkModeState::Light => DarkModeState::Dark,
+            DarkModeState::Dark => DarkModeState::Auto,
+        })
+        .into()
+    });
+
+    let text = match *state {
+        DarkModeState::Auto => "Dynamic Theme",
+        DarkModeState::Light => "Light Theme",
+        DarkModeState::Dark => "Dark Theme",
+    };
 
     html!(
-        <>
-        <input type="checkbox" id="dm" checked={state.is_dark} {onchange}/>
-           <label for="dm">
-            {"Dark Mode"}
-           </label>
-           </>
+        <button style="margin: auto; display: block;" class="nice-button advanced-view-button" {onclick}>
+            {text}
+        < /button>
+
     )
 }
 
-#[function_component(CardShakeButton)]
-fn card_shake_button() -> Html {
-    let (state, dispatch) = use_store::<CardShakeState>();
+#[function_component(MotionStateButton)]
+fn motion_state_button() -> Html {
+    use MotionState::*;
 
-    let onchange = dispatch.apply_callback(|_| CardShakeToggleMessage);
+    let (state, dispatch) = use_store::<MotionState>();
+
+    let onclick = dispatch.reduce_callback(|z| {
+        (match *z {
+            FullMotion => ReducedMotion,
+            ReducedMotion => FullMotion,
+        })
+        .into()
+    });
+
+    let text = match *state {
+        FullMotion => "Full Motion",
+        ReducedMotion => "Reduced Motion",
+    };
 
     html!(
-        <>
-        <input type="checkbox" id="dm" checked={state.enabled} {onchange}/>
-           <label for="dm">
-            {"Card Shake"}
-           </label>
-           </>
+        <button style="margin: auto; display: block;" class="nice-button advanced-view-button" {onclick}>
+            {text}
+        < /button>
+
     )
 }

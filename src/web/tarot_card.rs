@@ -4,7 +4,7 @@ use yewdux::prelude::*;
 
 use crate::data::image_data::ImageData;
 use crate::data::prelude::*;
-use crate::state::preferences_state::CardShakeState;
+use crate::state::preferences_state::MotionState;
 use crate::state::prelude::*;
 use crate::web::card_view::SlotView;
 use crate::web::prelude::*;
@@ -26,11 +26,11 @@ pub struct TarotCardProps {
 #[function_component(TarotCard)]
 pub fn tarot_card(props: &TarotCardProps) -> Html {
     let (layout, card, guide) = (props.description_layout, props.card, props.guide);
-    let descriptions = use_selector(move|x: &ImageDescriptionState|  {
+    let descriptions = use_selector(move |x: &ImageDescriptionState| {
         x.get_layout_sections(&layout, &card, &guide)
     });
     let data_state = use_store_value::<DataState>();
-    let shake_state = use_store_value::<CardShakeState>();
+    let motion_enabled = *use_store_value::<MotionState>() == MotionState::FullMotion;
     let guide = props.guide;
 
     let mut card_classes = classes!("prophecy-card");
@@ -46,7 +46,7 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
     let show_description = props.top_card && props.face_up && data_state.show_description;
 
     let should_shake =
-        props.top_card && shake_state.enabled && !data_state.has_shown_description && props.face_up;
+        props.top_card && motion_enabled && !data_state.has_shown_description && props.face_up;
 
     if should_shake {
         card_classes.push("card-shake");
@@ -54,8 +54,8 @@ pub fn tarot_card(props: &TarotCardProps) -> Html {
 
     let share_text = descriptions.first().cloned().unwrap_or_default();
 
-    let sections =
-        descriptions.iter()
+    let sections = descriptions
+        .iter()
         .map(|x| {
             html!(
                <>

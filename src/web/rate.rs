@@ -1,5 +1,6 @@
+#[cfg(any(feature = "ios", feature = "android"))]
 use wasm_bindgen::prelude::*;
-
+#[cfg(any(feature = "ios", feature = "android"))]
 use crate::state::logging::LoggableEvent;
 
 #[cfg(any(feature = "ios", feature = "android"))]

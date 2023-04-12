@@ -1,44 +1,22 @@
-use std::rc::Rc;
+use std::{rc::Rc};
 
 use web_sys::window;
 #[cfg(target_arch = "wasm32")]
 use yewdux::storage;
 use yewdux::{
     prelude::{init_listener, Listener},
-    store::{Reducer, Store},
+    store::Store,
 };
 
-#[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Debug, Store)]
+#[derive(Default, PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Debug, Store)]
 #[store(storage = "local", storage_tab_sync)]
-pub struct CardShakeState {
-    pub enabled: bool,
+pub enum MotionState {
+    #[default]
+    FullMotion,
+    ReducedMotion
 }
 
-impl Default for CardShakeState {
-    fn default() -> Self {
-        Self { enabled: true }
-    }
-}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct CardShakeToggleMessage;
-impl Reducer<CardShakeState> for CardShakeToggleMessage {
-    fn apply(self, mut state: Rc<CardShakeState>) -> Rc<CardShakeState> {
-        let s = Rc::make_mut(&mut state);
-        s.enabled = !s.enabled;
-        state
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct DarkModeToggleMessage;
-impl Reducer<DarkModeState> for DarkModeToggleMessage {
-    fn apply(self, mut state: Rc<DarkModeState>) -> Rc<DarkModeState> {
-        let s = Rc::make_mut(&mut state);
-        s.is_dark = !s.is_dark;
-        state
-    }
-}
 
 pub fn is_media_prefers_dark() -> bool {
     let Some(window) = window() else{return false;};
@@ -51,16 +29,15 @@ pub fn is_media_prefers_dark() -> bool {
     }
 }
 
-fn set_dark(dark: bool) -> Option<()> {
+fn update_window_dark_state(state: DarkModeState) -> Option<()> {
     #[cfg(feature = "android")]
     {
         use capacitor_bindings::status_bar::StatusBar;
         use capacitor_bindings::status_bar::Style;
-        let style = if dark {
-            //TODO watch dark mode changes
-            Style::Dark
-        } else {
-            Style::Light
+        let style = match state {
+            DarkModeState::Auto => Style::Default,
+            DarkModeState::Light => Style::Light,
+            DarkModeState::Dark => Style::Dark,
         };
         crate::web::capacitor::do_or_report_error(move || async move {
             StatusBar::set_style(style).await
@@ -74,41 +51,33 @@ fn set_dark(dark: bool) -> Option<()> {
     let body = document.body()?;
     let root = body.parent_element()?;
     let class_name = root.class_name();
-    let contains_dark = class_name
-        .split_ascii_whitespace()
-        .any(|x| x.eq_ignore_ascii_case("dark"));
 
-    log::info!("Setting Dark 2");
+    let fixed_class_name = class_name.replace("dark", "").replace("light", "");
+    let suffix = match state {
+        DarkModeState::Auto => "",
+        DarkModeState::Light => " light",
+        DarkModeState::Dark => " dark",
+    };
 
-    if dark {
-        if contains_dark {
-        } else {
-            root.set_class_name(format!("{class_name} dark").as_str());
-        }
-    } else if contains_dark {
-        root.set_class_name(class_name.replace("dark", "").trim())
-    }
+    root.set_class_name(format!("{fixed_class_name}{suffix}").as_str());
     Some(())
 }
 
-#[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Debug)]
-pub struct DarkModeState {
-    pub is_dark: bool,
+#[derive(Default, PartialEq, Eq, Clone, Copy, serde:: Serialize, serde::Deserialize, Debug)]
+pub enum DarkModeState {
+    #[default]
+    Auto,
+    Light,
+    Dark,
 }
 
-impl Default for DarkModeState {
-    fn default() -> Self {
-        let is_dark = is_media_prefers_dark();
-        Self { is_dark }
-    }
-}
 
 impl Store for DarkModeState {
     #[cfg(not(target_arch = "wasm32"))]
     fn new() -> Self {
         init_listener(DarkModeListener);
         let state: DarkModeState = Default::default();
-        set_dark(state.is_dark);
+        update_window_dark_state(state);
         state
     }
 
@@ -123,7 +92,7 @@ impl Store for DarkModeState {
             .flatten()
             .unwrap_or_default();
 
-        set_dark(state.is_dark);
+            update_window_dark_state(state);
         state
     }
 
@@ -137,7 +106,7 @@ impl Listener for DarkModeListener {
     type Store = DarkModeState;
 
     fn on_change(&mut self, state: Rc<Self::Store>) {
-        set_dark(state.is_dark);
+        update_window_dark_state(*state);
 
         log::info!("Saving dark mode state {state:?}");
         #[cfg(target_arch = "wasm32")]
