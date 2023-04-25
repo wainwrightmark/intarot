@@ -192,6 +192,9 @@ pub enum LoggableEvent {
     Internal {
         message: String,
     },
+
+    GoToAppStore,
+    NoGoToAppStore
 }
 
 impl LoggableEvent {

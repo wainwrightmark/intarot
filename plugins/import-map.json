@@ -1,11 +1,13 @@
 {
   "imports": {
+    "@capacitor/action-sheet": "./@capacitor/action-sheet.js",
     "@capacitor/app": "./@capacitor/app.js",
     "@capacitor/core": "./@capacitor/core.js",
     "@capacitor/device": "./@capacitor/device.js",
     "@capacitor/haptics": "./@capacitor/haptics.js",
     "@capacitor/local-notifications": "./@capacitor/local-notifications.js",
     "@capacitor/share": "./@capacitor/share.js",
-    "@capacitor/status-bar": "./@capacitor/status-bar.js"
+    "@capacitor/status-bar": "./@capacitor/status-bar.js",
+    "capacitor-rate-app": "./capacitor-rate-app.js"
   }
 }
