@@ -1,14 +1,8 @@
-use capacitor_bindings::action_sheet::ActionSheetButton;
-use capacitor_bindings::action_sheet::ShowActionsOptions;
-use capacitor_bindings::device;
-use capacitor_bindings::device::Platform;
 use std::rc::Rc;
-use web_sys::window;
+
 use yewdux::prelude::async_reducer;
 use yewdux::store::AsyncReducer;
 use yewdux::store::Store;
-
-use super::logging::LoggableEvent;
 
 #[derive(PartialEq, Eq, Clone, serde:: Serialize, serde::Deserialize, Store, Debug, Default)]
 #[store(storage = "local", storage_tab_sync)]
@@ -39,7 +33,7 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
 
                 let Ok(info) = info_result else{ return nagging_state;};
 
-                if info.platform == Platform::IOs {
+                if info.platform == capacitor_bindings::device::Platform::IOs {
                     if state.advanced_visits > 3 {
                         loop {
                             let r#break = nag_for_email(state).await;
@@ -59,7 +53,12 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
     }
 }
 
+#[cfg(feature = "web")]
 async fn nag_for_app_store() {
+    use super::logging::LoggableEvent;
+    use capacitor_bindings::action_sheet::ActionSheetButton;
+    use capacitor_bindings::action_sheet::ShowActionsOptions;
+    use web_sys::window;
     let show_result =
         capacitor_bindings::action_sheet::ActionSheet::show_actions(ShowActionsOptions {
             title: "Looking for the Android App?".to_string(),
@@ -95,7 +94,10 @@ async fn nag_for_app_store() {
     }
 }
 
+#[cfg(feature = "web")]
 async fn nag_for_email(state: &mut NaggingState) -> bool {
+    use super::logging::LoggableEvent;
+
     let signup_result = crate::web::modal_dialog::prompt_dialog(
         "Enter your email to be notified when we're on the app store".to_string(),
         "Mobile App Coming Soon".to_string(),

@@ -34,9 +34,9 @@ num-derive = "0.3"
 num-traits = "0.2"
 
 importunate = {version="0.1", features= ["serde"]}
-serde_with = {version="2.2", default-feature = false}
+serde_with = {version="3", default-feature = false}
 
-capacitor_bindings = "0.5"
+capacitor_bindings = "0.6"
 
 [dev-dependencies]
 ntest = "0.9"
