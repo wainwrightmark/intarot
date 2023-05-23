@@ -2,8 +2,8 @@ use capacitor_bindings::action_sheet::ActionSheetButton;
 use capacitor_bindings::action_sheet::ShowActionsOptions;
 use capacitor_bindings::device;
 use capacitor_bindings::device::Platform;
-use web_sys::window;
 use std::rc::Rc;
+use web_sys::window;
 use yewdux::prelude::async_reducer;
 use yewdux::store::AsyncReducer;
 use yewdux::store::Store;
@@ -34,19 +34,18 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
 
         #[cfg(feature = "web")]
         {
-            if !state.has_submitted_email
-                && state.advanced_visits > 3
-                && state.advanced_visits.is_power_of_two()
-            {
+            if !state.has_submitted_email && state.advanced_visits.is_power_of_two() {
                 let info_result = capacitor_bindings::device::Device::get_info().await;
 
                 let Ok(info) = info_result else{ return nagging_state;};
 
                 if info.platform == Platform::IOs {
-                    loop {
-                        let r#break = nag_for_email(state).await;
-                        if r#break {
-                            break;
+                    if state.advanced_visits > 3 {
+                        loop {
+                            let r#break = nag_for_email(state).await;
+                            if r#break {
+                                break;
+                            }
                         }
                     }
                 } else {
@@ -61,26 +60,37 @@ impl AsyncReducer<NaggingState> for AdvancedPageVisitMessage {
 }
 
 async fn nag_for_app_store() {
-
-    let show_result = capacitor_bindings::action_sheet::ActionSheet::show_actions(ShowActionsOptions{
-        title: "Mobile app available".to_string(),
-        message:Some("Get the full app on the app store!".to_string()),
-        options: vec![
-            ActionSheetButton{ title: "Download".to_string(), icon: None, style: Some(capacitor_bindings::action_sheet::ActionSheetButtonStyle::Default) },
-            ActionSheetButton{ title: "Cancel".to_string(), icon: None, style: Some(capacitor_bindings::action_sheet::ActionSheetButtonStyle::Cancel) },
-
-            ]
-    }).await;
+    let show_result =
+        capacitor_bindings::action_sheet::ActionSheet::show_actions(ShowActionsOptions {
+            title: "Looking for the Android App?".to_string(),
+            message: None,
+            options: vec![
+                ActionSheetButton {
+                    title: "Get it on Google Play".to_string(),
+                    icon: None,
+                    style: Some(capacitor_bindings::action_sheet::ActionSheetButtonStyle::Default),
+                },
+                ActionSheetButton {
+                    title: "Cancel".to_string(),
+                    icon: None,
+                    style: Some(capacitor_bindings::action_sheet::ActionSheetButtonStyle::Cancel),
+                },
+            ],
+        })
+        .await;
 
     match show_result {
         Ok(a) => {
-            if a.index == 0{
+            if a.index == 0 {
                 LoggableEvent::try_log_async(LoggableEvent::GoToAppStore).await;
-                let _=  window().unwrap().location().replace("https://play.google.com/store/apps/details?id=com.intarot.app");
-            }else{
+                let _ = window()
+                    .unwrap()
+                    .location()
+                    .replace("https://play.google.com/store/apps/details?id=com.intarot.app");
+            } else {
                 LoggableEvent::try_log_async(LoggableEvent::NoGoToAppStore).await;
             }
-        },
+        }
         Err(e) => LoggableEvent::try_log_error_message_async(e.to_string()).await,
     }
 }
