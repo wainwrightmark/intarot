@@ -1,19 +1,19 @@
 {
   "dependencies": {
-    "@capacitor/action-sheet": "^4.1.0",
-    "@capacitor/android": "^4.7.0",
-    "@capacitor/app": "^4.1.1",
-    "@capacitor/core": "^4.7.0",
-    "@capacitor/device": "^4.1.0",
-    "@capacitor/haptics": "^4.1.0",
-    "@capacitor/ios": "^4.7.0",
-    "@capacitor/local-notifications": "^4.1.5",
-    "@capacitor/share": "^4.1.1",
-    "@capacitor/status-bar": "^4.1.1",
-    "capacitor-rate-app": "^3.1.0-beta.1",
+    "@capacitor/action-sheet": "^5.0.0",
+    "@capacitor/android": "^5.0.0",
+    "@capacitor/app": "^5.0.0",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/device": "^5.0.2",
+    "@capacitor/haptics": "^5.0.0",
+    "@capacitor/ios": "^5.0.0",
+    "@capacitor/local-notifications": "^5.0.0",
+    "@capacitor/share": "^5.0.0",
+    "@capacitor/status-bar": "^5.0.0",
+    "capacitor-rate-app": "^4.0.3",
     "cordova-plugin-android-notch": "^1.0.3"
   },
   "devDependencies": {
-    "@capacitor/cli": "^4.7.0"
+    "@capacitor/cli": "^5.0.0"
   }
 }
