@@ -697,6 +697,13 @@ function __wbg_get_imports() {
         getInt32Memory0()[arg0 / 4 + 1] = len1;
         getInt32Memory0()[arg0 / 4 + 0] = ptr1;
     };
+    imports.wbg.__wbg_getreferrer_034991d866cece51 = function(arg0) {
+        const ret = get_referrer();
+        const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        getInt32Memory0()[arg0 / 4 + 1] = len1;
+        getInt32Memory0()[arg0 / 4 + 0] = ptr1;
+    };
     imports.wbg.__wbg_openlinkinnewtab_8940cd7b292009fe = function(arg0, arg1) {
         let deferred0_0;
         let deferred0_1;
@@ -707,13 +714,6 @@ function __wbg_get_imports() {
         } finally {
             wasm.__wbindgen_free(deferred0_0, deferred0_1);
         }
-    };
-    imports.wbg.__wbg_getreferrer_034991d866cece51 = function(arg0) {
-        const ret = get_referrer();
-        const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-        const len1 = WASM_VECTOR_LEN;
-        getInt32Memory0()[arg0 / 4 + 1] = len1;
-        getInt32Memory0()[arg0 / 4 + 0] = ptr1;
     };
     imports.wbg.__wbg_stopImmediatePropagation_ab8c22ca7151076f = function(arg0) {
         getObject(arg0).stopImmediatePropagation();
@@ -1256,11 +1256,11 @@ function __wbg_get_imports() {
         const ret = makeMutClosure(arg0, arg1, 76, __wbg_adapter_51);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper2161 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper2163 = function(arg0, arg1, arg2) {
         const ret = makeClosure(arg0, arg1, 76, __wbg_adapter_54);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper3446 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper3449 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 102, __wbg_adapter_57);
         return addHeapObject(ret);
     };
@@ -1310,7 +1310,7 @@ async function __wbg_init(input) {
     if (wasm !== undefined) return wasm;
 
     if (typeof input === 'undefined') {
-        input = new URL('intarot-75a5469fe7b07918_bg.wasm', import.meta.url);
+        input = new URL('intarot-99ebf0d4548cd1b9_bg.wasm', import.meta.url);
     }
     const imports = __wbg_get_imports();
 
