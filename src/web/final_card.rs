@@ -41,6 +41,14 @@ pub fn final_card(props: &FinalCardProps) -> Html {
         })
     };
 
+    let on_coffee_click = {
+        Callback::from(move |_e: MouseEvent| {
+            Dispatch::<AchievementsState>::new()
+                .apply(AchievementEarnedMessage(Achievement::ClickCoffee));
+            open_link_in_new_tab("https://ko-fi.com/intarot".to_string());
+        })
+    };
+
     let mut card_classes = classes!("prophecy-card");
     let image_classes = classes!("prophecy-image");
 
@@ -75,6 +83,7 @@ pub fn final_card(props: &FinalCardProps) -> Html {
                                 <button class="nice-button card-button" onclick={on_continue_click} >{"Do another reading"} </button>
                                 <ShareButton label="Share your reading" {share_text} {src_data}/>
                                 <button class="nice-button card-button" onclick={on_survey_click}  >{"Do our quick survey"} </button>
+                                <button class="nice-button card-button" onclick={on_coffee_click}  >{"Buy us a coffee"} </button>
                             </div>
 
                     </div>

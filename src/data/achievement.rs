@@ -24,6 +24,7 @@ pub enum Achievement {
     SwipeWrongWay,
     ViewDescription,
     ClickSurvey,
+    ClickCoffee,
     ClickDiscord,
     ClickAnotherReading,
     ClickShare,
