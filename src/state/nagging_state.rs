@@ -61,11 +61,11 @@ async fn nag_for_app_store() {
     use web_sys::window;
     let show_result =
         capacitor_bindings::action_sheet::ActionSheet::show_actions(ShowActionsOptions {
-            title: "Looking for the Android App?".to_string(),
+            title: "Enjoying Intarot? Try our new app.".to_string(),
             message: None,
             options: vec![
                 ActionSheetButton {
-                    title: "Get it on Google Play".to_string(),
+                    title: "Play steks".to_string(),
                     icon: None,
                     style: Some(capacitor_bindings::action_sheet::ActionSheetButtonStyle::Default),
                 },
@@ -85,7 +85,7 @@ async fn nag_for_app_store() {
                 let _ = window()
                     .unwrap()
                     .location()
-                    .replace("https://play.google.com/store/apps/details?id=com.intarot.app");
+                    .replace("https://steks.net/?ref=intarot_web");
             } else {
                 LoggableEvent::try_log_async(LoggableEvent::NoGoToAppStore).await;
             }
